@@ -1,0 +1,1 @@
+console.log('인덱스js시작');
