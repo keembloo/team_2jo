@@ -18,7 +18,24 @@ function onView(){
 }
 
 
-
+function update(bno){
+	let bpwd = prompt('비밀번호를 입력하세요.');
+	
+	$.ajax({
+		url : "/team_2jo/SnsController" , 
+		method: "put" ,
+		data : {type : 'get', dno : dno, bpwd : bpwd},
+		success : r => { 
+			if(r){
+				location.href=`/team_2jo/sns_project/update.jsp?dno=${bno}`;
+			}else{
+				alert('비밀번호가 일치하지 않습니다.')
+			}
+			
+		} ,
+		error : e => { console.log(e) }
+		})
+}
 
 
 

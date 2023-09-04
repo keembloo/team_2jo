@@ -1,15 +1,5 @@
 
-function update(){
-	let bpwd = prompt('비밀번호를 입력하세요.');
-	
-	let urlParams = new URL(location.href).searchParams
-	let dno = urlParams.get('dno');
-	
-	
-	
-	
-	
-}
+
 
 function update(){
 
@@ -21,6 +11,8 @@ function update(){
 	
 	let urlParams = new URL(location.href).searchParams
 	let dno = urlParams.get('dno');
+	
+	boardData.append('type','update');
 	
 	
 	$.ajax({

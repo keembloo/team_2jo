@@ -45,6 +45,9 @@ public class SnsController extends HttpServlet {
 
 
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String type = request.getParameter("type");
+		response.setContentType("application/json;charset=UTF-8");
+		
 		String filePath = request.getSession().getServletContext().getRealPath("/sns_project/img");
 		
 		System.out.println(filePath);
@@ -56,18 +59,26 @@ public class SnsController extends HttpServlet {
 				new DefaultFileRenamePolicy()	// 첨부 파일 이름 중복 시 이름 끝에 숫자 붙여줌
 		);
 		
-		SnsDto dto = new SnsDto();
-		
-		dto.setBno(Integer.parseInt(multi.getParameter("bno")));
-		dto.setBfile(multi.getFilesystemName("bfile"));
-		dto.setBcontent(multi.getParameter("bcontent"));
-		dto.setBpwd(multi.getParameter("bpwd"));
-		
-		String bfile = multi.getFilesystemName("bfile");
-		
-		
-		response.setContentType("application/json;charset=UTF-8");
-		response.getWriter().print(SnsDao.getInstence().update(dto));
+		if(type.equals("update")) { // 게시글 수정
+			SnsDto dto = new SnsDto();
+			
+			dto.setBno(Integer.parseInt(multi.getParameter("bno")));
+			dto.setBfile(multi.getFilesystemName("bfile"));
+			dto.setBcontent(multi.getParameter("bcontent"));
+			dto.setBpwd(multi.getParameter("bpwd"));
+			
+			String bfile = multi.getFilesystemName("bfile");
+			
+			
+			
+			response.getWriter().print(SnsDao.getInstence().update(dto));
+		}else if(type.equals("get")) { // 비밀번호 일치여부 확인
+			String bpwd = request.getParameter("bpwd");
+			int bno = Integer.parseInt(request.getParameter("bno"));
+			
+			response.getWriter().print(SnsDao.getInstence().pwdCheck(bno, bpwd));
+			
+		}
 	}
 	
 
