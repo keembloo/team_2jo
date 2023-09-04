@@ -12,7 +12,17 @@
 
 	<div class="wrap"> <!-- 전체구역 -->
 	
-	
+		<div class="contentbox"> <!-- 게시물1개 -->
+			<div class="img_area">
+				<img src="/team_2jo\sns_project\img\firy.jpg">
+			</div>
+			<div class="content">
+				<div class="time">30분전</div>		
+				<div class="infotext">ㅁㄴㅇㄻㄴㅇㄹㄴㅇㄹㄴㅁㅇ리ㅓㄴ;ㅣㅇ러ㅣ;넝ㅁㄻㅇ집가고싶다아아아아앙</div>		
+			</div>
+			<button class="btn_update" type="button">수정</button>
+			<button class="btn_delete" type="button">삭제</button>
+		</div> <!-- 게시물1개end -->
 	
 	
 	</div><!-- 전체구역 end -->
