@@ -1,8 +1,16 @@
 @charset "UTF-8";
 
-*{margin: 0; padding: 0; box-sizing: border-box;} 
+*{margin: 0; padding: 0; box-sizing: border-box; font-family: 'HakgyoansimWoojuR';} 
 a{text-decoration: none;}
 li{ list-style-type: none; }
+
+@font-face {
+    font-family: 'HakgyoansimWoojuR';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-2@1.0/HakgyoansimWoojuR.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
 
 .wrap {
 	width: 350px;
@@ -36,16 +44,18 @@ li{ list-style-type: none; }
 }
 .time {
 	font-size: 12px;
-	color: gray;
+	color: #4B4453;
 	padding-left: 15px;
+	font-weight: bold;
 }
 
 .infotext{
 	font-size: 14px;
-	color: gray;
+	color: #4B4453;
 	padding: 0 15px;
 	margin: 10px 0;
 	height: 80px;
+	font-weight: bold;
 }
 .btn_update , .btn_delete {
 	border: none;
@@ -57,6 +67,7 @@ li{ list-style-type: none; }
 	font-size: 12px;
 	color: white;
 	line-height : -4px;	
+	font-weight: bold;
 }
 .btn_update {
 	margin-left: 15px;

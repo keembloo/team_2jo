@@ -1,5 +1,7 @@
 package team_2jo.sns.model.dao;
 
+import java.util.ArrayList;
+
 import team_2jo.sns.model.dto.SnsDto;
 
 public class SnsDao extends Dao{
@@ -15,7 +17,24 @@ public class SnsDao extends Dao{
 	
 	
 	
-	
+	// 글출력 규리
+	public ArrayList<SnsDto> onView() {
+		ArrayList<SnsDto> list = new ArrayList<>();
+		try {
+			String sql = "select * from board order by bno desc";
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				SnsDto snsDto = new SnsDto(
+						rs.getInt(1), rs.getString(2), 
+						rs.getString(3), rs.getString(4), rs.getString(5));
+				list.add(snsDto);
+				//System.out.println(snsDto);
+			}
+			return list;
+		}catch (Exception e) {System.out.println(e);}
+		return list;
+	}
 	
 	
 	
