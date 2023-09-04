@@ -39,11 +39,11 @@ function onView(){
 
 
 // 게시물 삭제 (이성호)
-function ondelete(bno){
+function ondelete(){
 	$.ajax({
 		url : "/team_2jo/SnsController",
 		method : "delete",
-		date : {bno : bno},
+		data : {bno : 4},
 		success : r => {console.log(r);
 			if(r){
 				alert('삭제성공');

@@ -21,7 +21,7 @@
 				<div class="infotext">ㅁㄴㅇㄻㄴㅇㄹㄴㅇㄹㄴㅁㅇ리ㅓㄴ;ㅣㅇ러ㅣ;넝ㅁㄻㅇ집가고싶다아아아아앙</div>		
 			</div>
 			<button class="btn_update" type="button">수정</button>
-			<button class="btn_delete" type="button">삭제</button>
+			<button onclick="ondelete()" class="btn_delete" type="button">삭제</button>
 		</div> <!-- 게시물1개end -->
 	
 	
@@ -30,7 +30,7 @@
 
 	<!-- 최신 JQUERY 불러오기 : AJAX 메소드 사용하기 위해 : JS가 외부로부터 통신하기 위해 -->
 	<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
-	
+	<script src=js/index.js" type="text/javascript"></script>
 	<script src="/team_2jo/sns_project/js/index.js" type="text/javascript"></script>
 </body>
 </html>
