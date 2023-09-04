@@ -15,7 +15,7 @@ function onView(){
 
 
 
-
+}
 
 
 
@@ -50,8 +50,6 @@ function ondelete(bno){
 				location.href="/team_2jo/sns_project/index.jsp";
 			}else{alert('삭제실패');}
 		},
-		error : e => { console.log(e)
-			
-		}
+		error : e => { console.log(e)}
 	})
 }
