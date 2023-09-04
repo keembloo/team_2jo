@@ -11,8 +11,17 @@
 	<%@include file ="header.jsp" %>
 
 	<div class="wrap"> <!-- 전체구역 -->
+	<h3>글 등록 페이지</h3>
 	
+	<form class="writeform"> 
+		첨부파일: <input class="bfile" name="bfile" type="file" ><br>
+		내용: <input class="bcontent" name="bcontent" type="text"><br>
+		비밀번호: <input class="bpwd" name="bpwd" type="password"><br>
+		내용: <input class="bcontent" name="bcontent" type="text"><br>
+		<button onclick="bwrite()"  name="" type="button">등록</button>
+		<button type="button">뒤로가기</button><br>
 	
+	</form>
 	
 	
 	</div><!-- 전체구역 end -->
