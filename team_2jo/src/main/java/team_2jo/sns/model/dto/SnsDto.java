@@ -25,12 +25,21 @@ public class SnsDto {
 	
 	// + 필요시 추가
 	
+	//글등록[고연진]
+	public SnsDto(String bfile, String bcontent, String bpwd) {
+		super();
+		this.bfile = bfile;
+		this.bcontent = bcontent;
+		this.bpwd = bpwd;
+	}
 	
 	
 	// 메소드
 	public int getBno() {
 		return bno;
 	}
+
+
 
 	public void setBno(int bno) {
 		this.bno = bno;

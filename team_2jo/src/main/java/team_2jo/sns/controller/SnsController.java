@@ -33,14 +33,26 @@ public class SnsController extends HttpServlet {
 		//1. 첨부파일 업로드[COS.jar]
 		MultipartRequest multi= new MultipartRequest(
 											request, //요청방식 
-											request.getServletContext().getRealPath("/board/upload"),
+											request.getServletContext().getRealPath("/sns_project/img"),
 											1024*1024*1024,//업로드허용용량
 											"UTF-8",//인코딩타입
 											new DefaultFileRenamePolicy()//제목 자동 변경
 											);
 		 //업로드 경로 확인
 		System.out.println(request.getServletContext().getRealPath("/board/upload"));
-	
+		
+		//1.(입력받은 매개변수)요청
+		String bfile=multi.getFilesystemName("bfile");	System.out.println("서블릿에서요청받은거: "+bfile);
+		String bcontent=multi.getParameter("bcontent");
+		String bpwd = multi.getParameter("bpwd");
+		//2. 객체화
+		SnsDto dto = new SnsDto(bfile, bcontent, bpwd);
+		//3.dao
+		boolean result= SnsDao.getInstence().bwrite(dto);
+		//4.응답
+		response.setContentType("application/json;charset=UTF-8");
+		response.getWriter().print(result);
+		
 	}
 
 

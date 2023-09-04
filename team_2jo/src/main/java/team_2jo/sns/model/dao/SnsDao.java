@@ -8,12 +8,21 @@ public class SnsDao extends Dao{
 	public static SnsDao getInstence() {return snsDao;}
 	private SnsDao() {}
 	
-	
-	
-	
-	
-	
-	
+	//글등록[고연진]
+	public boolean bwrite(SnsDto dto) {
+		System.out.println("Dao에서 객체화된 dto:"+dto);
+		try {
+			String sql="insert into board (bfile,bcontent,bpwd) values (?,?,?)";
+			ps=conn.prepareStatement(sql);
+			ps.setString(1, dto.getBfile());
+			ps.setString(2, dto.getBcontent());
+			ps.setString(3, dto.getBpwd());
+			int count = ps.executeUpdate();
+			if(count==1) {return true;}
+		} catch (Exception e) {System.out.println("Dao오류: "+e);}
+		
+		return false;
+	}//f()
 	
 	
 	

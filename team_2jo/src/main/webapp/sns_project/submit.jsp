@@ -14,10 +14,11 @@
 	<h3>글 등록 페이지</h3>
 	
 	<form class="writeform"> 
-		첨부파일: <input class="bfile" name="bfile" type="file" ><br>
-		내용: <input class="bcontent" name="bcontent" type="text"><br>
-		비밀번호: <input class="bpwd" name="bpwd" type="password"><br>
-		내용: <input class="bcontent" name="bcontent" type="text"><br>
+		첨부파일: <input class="bfile" name="bfile" type="file" accept="image/*" ><br>
+		제목: <input onkeyup="inputcheck()"class="bcontent" name="bcontent" type="text"><br>
+		비밀번호: <input onkeyup="inputcheck()" class="bpwd" name="bpwd" type="password"><br>
+		내용: <input onkeyup="inputcheck()" class="bcontent" name="bcontent" type="text"><br>
+		<div class="checkbox"><!-- js --></div>
 		<button onclick="bwrite()"  name="" type="button">등록</button>
 		<button type="button">뒤로가기</button><br>
 	
