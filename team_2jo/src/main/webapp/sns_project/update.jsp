@@ -14,12 +14,16 @@
    <h3>글 수정 페이지</h3>
    
    <form class="updateform"> 
-      첨부파일: <input class="bfile" name="bfile" type="file" ><br>
-      내용: <input class="bcontent" name="bcontent" type="text"><br>
-      비밀번호: <input class="bpwd" name="bpwd" type="password"><br>
-      내용: <input class="bcontent" name="bcontent" type="text"><br>
-      <button onclick="bwrite()"  name="" type="button">수정</button>
-      <button type="button">뒤로가기</button><br>
+      <p>첨부파일</p>
+      <input onchange="prechange(this)" class="bfile" name="bfile" type="file" >
+      <div class="preview"> 
+      	<img class="preimg" src="">
+      </div>
+      
+      <p>내용</p>
+      <textarea class="bcontent" name="bcontent"></textarea>
+      <button onclick="bwrite()" class="btn_update1" name="" type="button">수정</button>
+      <button class="btn_comback" type="button">뒤로가기</button>
    
    </form>
    
