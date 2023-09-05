@@ -28,7 +28,7 @@ function onView(){
 									<div class="infotext">${b.bcontent}</div>		
 								</div>
 								<button onclick="updata(bno)" class="btn_update" type="button">수정</button>
-								<button onclick="ondelet()" class="btn_delete" type="button">삭제</button>
+								<button onclick="ondelete(${b.bno})" class="btn_delete" type="button">삭제</button>
 							</div>`;
 				});
 				// 3. 구성된 html내용 출력 
@@ -67,17 +67,18 @@ function update(bno){
 
 
 // 게시물 삭제 (이성호)
-function ondelete(){
+function ondelete(bno){
+	let bpwd = prompt("비밀번호를 입력하세요.");
 	$.ajax({
 		url : "/team_2jo/SnsController",
 		method : "delete",
-		data : {bno : 4},
+		data : {bno : bno , bpwd : bpwd},
 		success : r => {console.log(r);
-			if(r){
+			if(r){			
 				alert('삭제성공');
-				location.href="/team_2jo/sns_project/index.jsp";
-			}else{alert('삭제실패');}
+			}else{alert('비밀번호가 다릅니다.');}
+			onView();
 		},
-		error : e => { console.log(e)}
+		error : e => { alert('삭제실패');}
 	})
 }

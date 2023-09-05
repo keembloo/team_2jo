@@ -13,15 +13,7 @@
 
 	
 		<div class="contentbox"> <!-- 게시물1개 -->
-			<div class="img_area">
-				<img src="/team_2jo\sns_project\img\firy.jpg">
-			</div>
-			<div class="content">
-				<div class="time"></div>		
-				<div class="infotext"></div>		
-			</div>
-			<button class="btn_update" type="button">수정</button>
-			<button onclick="ondelete()" class="btn_delete" type="button">삭제</button>
+			<!-- JS 에서 출력됨 -->
 		</div> <!-- 게시물1개end -->
 
 	</div><!-- 전체구역 end -->
