@@ -101,11 +101,12 @@ public class SnsDao extends Dao{
 
 	
 	//게시물 삭제(이성호)
-	public boolean ondelete(int bno) {
+	public boolean ondelete(int bno, String bpwd) {
 		try {
-			String sql="delete from board where bno = ?";
+			String sql="delete from board where bno = ? and bpwd= ?";
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, bno);
+			ps.setString(2, bpwd);
 			int count = ps.executeUpdate();
 			if( count == 1) return true;
 		}catch (Exception e) {System.out.println(e);}

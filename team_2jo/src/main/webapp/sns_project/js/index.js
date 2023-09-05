@@ -67,16 +67,17 @@ function update(bno){
 
 // 게시물 삭제 (이성호)
 function ondelete(bno){
+	let bpwd = prompt("비밀번호를 입력하세요.");
 	$.ajax({
 		url : "/team_2jo/SnsController",
 		method : "delete",
-		data : {bno : bno},
+		data : {bno : bno , bpwd : bpwd},
 		success : r => {console.log(r);
-			if(r){
+			if(r){			
 				alert('삭제성공');
-				location.href="/team_2jo/sns_project/index.jsp";
-			}else{alert('삭제실패');}
+			}else{alert('비밀번호가 다릅니다.');}
+			onView();
 		},
-		error : e => { console.log(e)}
+		error : e => { alert('삭제실패');}
 	})
 }

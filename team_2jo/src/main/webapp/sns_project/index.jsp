@@ -10,8 +10,7 @@
 <body>
 	<%@include file ="header.jsp" %>
 	<div class="wrap"> <!-- 전체구역 -->
-
-
+		<!-- JS 에서 출력됨 -->
 	</div><!-- 전체구역 end -->
 
 
