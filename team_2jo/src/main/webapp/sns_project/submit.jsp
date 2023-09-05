@@ -13,17 +13,26 @@
 	<div class="wrap"> <!-- 전체구역 -->
 	<h3>글 등록 페이지</h3>
 	
-	<form class="writeform"> 
-		첨부파일: <input class="bfile" name="bfile" type="file" accept="image/*" ><br>
-		제목: <input onkeyup="inputcheck()"class="bcontent" name="bcontent" type="text"><br>
-		비밀번호: <input onkeyup="inputcheck()" class="bpwd" name="bpwd" type="password"><br>
-		내용: <input onkeyup="inputcheck()" class="bcontent" name="bcontent" type="text"><br>
-		<div class="checkbox"><!-- js --></div>
-		<button onclick="bwrite()"  name="" type="button">등록</button>
-		<button type="button">뒤로가기</button><br>
-	
-	</form>
-	
+	<div class="bwritePrint">
+ 	
+		<form class="writeform"> 
+			첨부파일: <input onchange="preimg(this)" class="bfile" name="bfile" type="file" accept="image/*" ><br>
+			
+			<img  class="preimg" alt="" src="img/default.png">
+			
+			제목: <input onkeyup="inputcheck()"class="btitle" name="btitle" type="text"><br>
+			
+			비밀번호: <input onkeyup="inputcheck()" class="bpwd" name="bpwd" type="password"><br>
+			
+			내용: <input onkeyup="inputcheck()" class="bcontent" name="bcontent" type="text"><br>
+			
+			<div class="checkbox">유효성검사</div>
+			<button onclick="bwrite()"  name="" type="button">등록</button>
+			<button type="button">뒤로가기</button><br>
+		
+		</form>
+ 		
+	</div>
 	
 	</div><!-- 전체구역 end -->
 
