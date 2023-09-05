@@ -8,7 +8,7 @@ onView();
 
 // 출력 함수 규리
 function onView(){
-	console.log('함수실행');
+	//console.log('함수실행');
 	let wrap = document.querySelector('.wrap');
 	let html = '';
 		
@@ -16,7 +16,7 @@ function onView(){
 			url : "/team_2jo/SnsController" , 
 			method : "get" ,
 			data : { },
-			success : r => { console.log(r);
+			success : r => { //console.log(r);
 				// 배열명.forEach
 				r.forEach( b => {
 					html+= `<div class="contentbox">
@@ -33,7 +33,7 @@ function onView(){
 				});
 				// 3. 구성된 html내용 출력 
 				wrap.innerHTML = html;
-				console.log("html :"+html);
+				//console.log("html :"+html);
 				
 			} , 
 			error : e => {console.log(e);}		
@@ -43,10 +43,24 @@ function onView(){
 
 
 
-
-
-
-
+function update(bno){
+	let bpwd = prompt('비밀번호를 입력하세요.');
+	
+	$.ajax({
+		url : "/team_2jo/SnsController" , 
+		method: "put" ,
+		data : {type : 'get', dno : dno, bpwd : bpwd},
+		success : r => { 
+			if(r){
+				location.href=`/team_2jo/sns_project/update.jsp?dno=${bno}`;
+			}else{
+				alert('비밀번호가 일치하지 않습니다.')
+			}
+			
+		} ,
+		error : e => { console.log(e) }
+		})
+}
 
 
 

@@ -77,6 +77,27 @@ public class SnsDao extends Dao{
 		
 	}
 	
+	// 비밀번호 일치 여부
+	public boolean pwdCheck(int bno, String bpwd) {
+		try {
+			String sql = "select * from board where bno =? bpwd = ?";
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, bno);
+			ps.setString(2, bpwd);
+			rs = ps.executeQuery();
+			
+			if(rs.next()) {
+				return true;
+			}else {
+				return false;
+			}
+			
+		}catch (Exception e) {
+			System.out.println("비밀번호 유효검 검사 sql 예외 : "+e);
+			return false;
+		}
+			
+	}
 
 	
 	//게시물 삭제(이성호)
