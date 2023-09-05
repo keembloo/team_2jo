@@ -16,7 +16,7 @@ li{ list-style-type: none; }
 	font-size: 23px;
 	font-weight: bold;
 }
-.updateform {
+.updateform , .writeform{
 	display: flex;
     flex-direction: column;
 }

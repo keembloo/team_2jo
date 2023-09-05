@@ -56,6 +56,7 @@ public class SnsController extends HttpServlet {
 		String bpwd = multi.getParameter("bpwd");
 		//2. 객체화
 		SnsDto dto = new SnsDto(bfile, bcontent, bpwd);
+		System.out.println("객체화됨? : "+dto);
 		//3.dao
 		boolean result= SnsDao.getInstence().bwrite(dto);
 		//4.응답

@@ -1,8 +1,7 @@
 console.log('글쓰기페이지열림')
 
-let inputState=[false,false,false]
 
-//사진 미리보기=======================================================
+//사진 미리보기[고연진]=======================================================
 function preimg(o){console.log('onchange 실행')
 	let file= new FileReader();
 	file.readAsDataURL(o.files[0]);
@@ -10,49 +9,6 @@ function preimg(o){console.log('onchange 실행')
 	file.onload =e=>{
 		document.querySelector('.preimg').src=e.target.result;}//img src속성에 대입
 	}
-
-//유효성=========================================================
-function inputcheck(){
-	let checkbox =document.querySelector('.checkbox');
-	let btitle = document.querySelector('.btitle').value;
-	let bpwd = document.querySelector('.bpwd').value;
-	let bcontent = document.querySelector('.bcontent').value;
-	if(btitle==''){inputState[0]==false;}
-	else {inputState[0]==true}
-	
-	if(bpwd==''){inputState[1]==false;}
-	else {inputState[1]==true}
-	
-	if(bcontent==''){inputState[2]==false;}
-	else {inputState[2]==true}	
-	
-	if()
-	}//f()
-
-
-
-/* 무시하셈!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//제목 공백======================================================
-function titlecheck(){
-	let btitle= document.querySelector('.btitle').value;
-	if(btitle!=''){inputState[0]==true}
-	else{inputState[0]==false}
-	}//f()
-	
-//비밀번호 공백=====================================================
-function pwdcheck(){
-	let bpwd= document.querySelector('.bpwd').value;
-	if(bpwd!=''){inputState[1]==true}
-	else{inputState[1]==false}
-	}
-	
-//내용 공백=========================================================
-function contentcheck(){
-	let bcontent= document.querySelector('.bcontent').value;
-	if(bcontent!=''){inputState[2]==true}
-	else{inputState[2]==false}
-	}
-*/
 
 
 
@@ -62,9 +18,10 @@ function bwrite(){
 	console.log('form: '+form);
 	let formData= new FormData(form);
 	console.log('formData: '+formData)
-	
-	
-	if(inputState[0]&&inputState[1]&&inputState[2]){
+	let bfile=document.querySelector('.bfile').value; console.log('파일들어옴'+bfile)
+	let bpwd=document.querySelector('.bpwd').value; console.log('패스워드받음')
+	let bcontent=document.querySelector('.bcontent').value; console.log('내용받음')
+	if(bfile!=''&&bpwd!=''&&bcontent!=''){
 		$.ajax({
 	      	url : "/team_2jo/SnsController",     
 	     	method : "post",   
@@ -72,15 +29,22 @@ function bwrite(){
 	    	contentType:false,
 	    	processData:false,
 	      	success : r=>{console.log('통신성공'+formData)
-		      	if(r){alert('글등록성공')}
+		      	if(r){
+					  alert('글등록성공');
+					  location.href="/team_2jo/sns_project/index.jsp"}
 		      	else{alert('글등록실패')}
-	      	
+	      	//onView()
 	      	
 	      	} ,       
 	      	error : e=>{console.log('통신실패')} ,         
 	   });
-	}else{//버튼 활성화 x
-	}
+		
+		
+	}else{alert('공란 없이 입력해주세요')}
+	
+	
 
 
 }//f()
+
+

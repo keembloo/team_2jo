@@ -18,17 +18,16 @@
 		<form class="writeform"> 
 			첨부파일: <input onchange="preimg(this)" class="bfile" name="bfile" type="file" accept="image/*" ><br>
 			
-			<img  class="preimg" alt="" src="img/default.png">
+			<img  class="preimg" alt="" src="img/default.png"><!-- 이미지 미리보기 -->
 			
-			제목: <input onkeyup="inputcheck()"class="btitle" name="btitle" type="text"><br>
+		 
+			비밀번호: <input onkeyup="inputcheck()" class="bpwd" name="bpwd" type="password">
 			
-			비밀번호: <input onkeyup="inputcheck()" class="bpwd" name="bpwd" type="password"><br>
+			내용: <input onkeyup="inputcheck()" class="bcontent" name="bcontent">
+		 	
 			
-			내용: <input onkeyup="inputcheck()" class="bcontent" name="bcontent" type="text"><br>
-			
-			<div class="checkbox">유효성검사</div>
-			<button onclick="bwrite()"  name="" type="button">등록</button>
-			<button type="button">뒤로가기</button><br>
+			<button onclick="bwrite()" class="btn_update1" name="" type="button">등록</button>
+			<a href="index.jsp"><button type="button" class="btn_comback" >뒤로가기</button></a>
 		
 		</form>
  		
@@ -39,7 +38,11 @@
 
 	<!-- 최신 JQUERY 불러오기 : AJAX 메소드 사용하기 위해 : JS가 외부로부터 통신하기 위해 -->
 	<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
-	
 	<script src="/team_2jo/sns_project/js/submit.js" type="text/javascript"></script>
+	<!--
+	<script src="/team_2jo/sns_project/js/index.js"type="text/javascript"></script>
+	  -->
+	 
+	
 </body>
 </html>
