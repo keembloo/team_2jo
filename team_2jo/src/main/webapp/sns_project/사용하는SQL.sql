@@ -1,6 +1,6 @@
-drop database if exists 2jo;
-create database 2jo;
-use 2jo;
+drop database if exists sns;
+create database sns;
+use sns;
 drop table if exists board;
 create table board (
 	bno int auto_increment,

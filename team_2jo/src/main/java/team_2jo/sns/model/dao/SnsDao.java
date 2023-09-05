@@ -49,7 +49,30 @@ public class SnsDao extends Dao{
 	
 	
 	
-	
+	// 개별 조회
+	public SnsDto uprint(int bno) {
+		try {
+			String sql = "select * from board where bno = ?";
+			
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, bno);
+			rs = ps.executeQuery();
+			
+			rs.next();
+			SnsDto dto = new SnsDto();
+			dto.setBno(rs.getInt(1));
+			dto.setBfile(rs.getString(2));
+			dto.setBdate(rs.getString(3));
+			dto.setBcontent(rs.getString(4));
+			return dto;
+			
+		}catch (Exception e) {
+			System.out.println("업데이트 개별 출력 sql문 예외 : "+e);
+			return null;
+		}
+		
+		
+	}
 	
 	
 
@@ -80,7 +103,7 @@ public class SnsDao extends Dao{
 	// 비밀번호 일치 여부
 	public boolean pwdCheck(int bno, String bpwd) {
 		try {
-			String sql = "select * from board where bno =? bpwd = ?";
+			String sql = "select * from board where bno =? and bpwd = ?";
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, bno);
 			ps.setString(2, bpwd);

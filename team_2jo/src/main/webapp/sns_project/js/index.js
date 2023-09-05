@@ -18,7 +18,7 @@ function onView(){
 			data : { },
 			success : r => { //console.log(r);
 				// 배열명.forEach
-				r.forEach( b => {
+				r.forEach( b => {console.log(b.bno)
 					html+= `<div class="contentbox">
 								<div class="img_area">
 									<img alt="이미지" src="img/${b.bfile}">
@@ -27,8 +27,8 @@ function onView(){
 									<div class="time">${b.bdate}</div>		
 									<div class="infotext">${b.bcontent}</div>		
 								</div>
-								<button onclick="updata(bno)" class="btn_update" type="button">수정</button>
-								<button onclick="ondelet()" class="btn_delete" type="button">삭제</button>
+								<button onclick="update(${b.bno})" class="btn_update" type="button">수정</button>
+								<button onclick="ondelet(${b.bno})" class="btn_delete" type="button">삭제</button>
 							</div>`;
 				});
 				// 3. 구성된 html내용 출력 
@@ -49,10 +49,10 @@ function update(bno){
 	$.ajax({
 		url : "/team_2jo/SnsController" , 
 		method: "put" ,
-		data : {type : 'get', dno : dno, bpwd : bpwd},
+		data : {type : 'get', bno : bno, bpwd : bpwd},
 		success : r => { 
 			if(r){
-				location.href=`/team_2jo/sns_project/update.jsp?dno=${bno}`;
+				location.href=`/team_2jo/sns_project/update.jsp?bno=${bno}`;
 			}else{
 				alert('비밀번호가 일치하지 않습니다.')
 			}

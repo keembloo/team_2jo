@@ -14,10 +14,15 @@
    <h3>글 수정 페이지</h3>
    
    <form class="updateform"> 
-      첨부파일: <input class="bfile" name="bfile" type="file" ><br>
+      첨부파일: <input onchange="prechange(this)" class="bfile" name="bfile" type="file" ><br>
+      <div class="preview">
+      	<img  class="preimg" src="">
+      </div>
+      
       내용: <input class="bcontent" name="bcontent" type="text"><br>
+      
       비밀번호: <input class="bpwd" name="bpwd" type="password"><br>
-      내용: <input class="bcontent" name="bcontent" type="text"><br>
+      내용: <input class="bcontent" name="bcontent" type="textarea"><br>
       <button onclick="bwrite()"  name="" type="button">수정</button>
       <button type="button">뒤로가기</button><br>
    
@@ -26,11 +31,13 @@
    
    </div><!-- 전체구역 end -->
 
-
+	
+   
    <!-- 최신 JQUERY 불러오기 : AJAX 메소드 사용하기 위해 : JS가 외부로부터 통신하기 위해 -->
    <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
    
    <script src="/team_2jo/sns_project/js/submit.js" type="text/javascript"></script>
+	<script src="./js/update.js"></script>
 
 </body>
 </html>

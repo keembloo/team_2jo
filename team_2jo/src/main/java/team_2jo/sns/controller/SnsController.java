@@ -67,20 +67,21 @@ public class SnsController extends HttpServlet {
 
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String type = request.getParameter("type");
+		System.out.println("type : " +type);
 		response.setContentType("application/json;charset=UTF-8");
 		
-		String filePath = request.getSession().getServletContext().getRealPath("/sns_project/img");
-		
-		System.out.println(filePath);
-		MultipartRequest multi = new MultipartRequest(
-				request, 				//1. 요청 방식
-				filePath, 				// 첨부파일을 저장할 폴더 경로
-				1024*1024*100,			// 100메가 바이트 최대 허용 용량 [ 바이트 단위 ]
-				"UTF-8",				// 인코딩 타입
-				new DefaultFileRenamePolicy()	// 첨부 파일 이름 중복 시 이름 끝에 숫자 붙여줌
-		);
 		
 		if(type.equals("update")) { // 게시글 수정
+			String filePath = request.getSession().getServletContext().getRealPath("/sns_project/img");
+			
+			System.out.println(filePath);
+			MultipartRequest multi = new MultipartRequest(
+					request, 				//1. 요청 방식
+					filePath, 				// 첨부파일을 저장할 폴더 경로
+					1024*1024*100,			// 100메가 바이트 최대 허용 용량 [ 바이트 단위 ]
+					"UTF-8",				// 인코딩 타입
+					new DefaultFileRenamePolicy()	// 첨부 파일 이름 중복 시 이름 끝에 숫자 붙여줌
+					);
 			SnsDto dto = new SnsDto();
 			
 			dto.setBno(Integer.parseInt(multi.getParameter("bno")));
@@ -90,15 +91,23 @@ public class SnsController extends HttpServlet {
 			
 			String bfile = multi.getFilesystemName("bfile");
 			
-			
-			
 			response.getWriter().print(SnsDao.getInstence().update(dto));
 		}else if(type.equals("get")) { // 비밀번호 일치여부 확인
+			System.out.println("get 실행");
 			String bpwd = request.getParameter("bpwd");
 			int bno = Integer.parseInt(request.getParameter("bno"));
 			
+			
 			response.getWriter().print(SnsDao.getInstence().pwdCheck(bno, bpwd));
 			
+		}else if(type.equals("print")) {
+			int bno = Integer.parseInt(request.getParameter("bno"));
+			System.out.println("bno : "+bno);
+			
+			
+			ObjectMapper objectMapper = new ObjectMapper();
+			String json = objectMapper.writeValueAsString(SnsDao.getInstence().uprint(bno));
+			response.getWriter().print(json);
 		}
 	}
 	
