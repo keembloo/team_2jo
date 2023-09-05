@@ -27,7 +27,7 @@ li{ list-style-type: none; }
 
 .img_area {
 	width: 334px;
-	height: 334px;
+	/*height: 334px;*/
 	overflow: hidden;
 	margin: 0 auto;
 	border-radius: 10px;
