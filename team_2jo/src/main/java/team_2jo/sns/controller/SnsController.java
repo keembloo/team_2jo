@@ -1,6 +1,7 @@
 package team_2jo.sns.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
@@ -23,11 +25,18 @@ public class SnsController extends HttpServlet {
 
     public SnsController() {    }
 
-
+    // 게시물출력 규리
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		ArrayList<SnsDto> result = SnsDao.getInstence().onView();
+		
+		ObjectMapper objectMapper = new ObjectMapper();
+		String jsonArray = objectMapper.writeValueAsString(result);
+		
+	  	response.setContentType("application/json;charset=UTF-8");
+    	response.getWriter().print(jsonArray);
 	}
 
+	
 	//게시글 등록[고연진]
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//1. 첨부파일 업로드[COS.jar]
