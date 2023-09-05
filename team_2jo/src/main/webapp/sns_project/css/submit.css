@@ -26,10 +26,11 @@ li{ list-style-type: none; }
 }
 .preview {
 	border: 1px solid #e8e8e8;
-	width: 100%;
-	height: 300px;
+	min-width: 50px;
+	min-height: 50px;
 	margin-top: 10px;
 	border-radius: 10px;
+	overflow: hidden;
 }
 
 .bcontent {
@@ -77,9 +78,8 @@ li{ list-style-type: none; }
   }
 
   .preimg {
-    max-width: 100%;
-    height: auto;
-    margin-bottom: 10px;
+    width: 100%;
+    object-fit: cover;
   }
 
   .btitle,
