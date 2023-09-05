@@ -96,6 +96,7 @@ public class SnsController extends HttpServlet {
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//1. 요청
 		int bno = Integer.parseInt(request.getParameter("bno"));
+		System.out.println(bno);
 		//2. DAO
 		boolean result = SnsDao.getInstence().ondelete(bno);
 		//3. 응답
