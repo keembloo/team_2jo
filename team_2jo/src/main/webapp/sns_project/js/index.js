@@ -18,7 +18,7 @@ function onView(){
 			data : { },
 			success : r => { //console.log(r);
 				// 배열명.forEach
-				r.forEach( b => {
+				r.forEach( b => {console.log(b.bno)
 					html+= `<div class="contentbox">
 								<div class="img_area">
 									<img alt="이미지" src="img/${b.bfile}">
@@ -51,7 +51,7 @@ function update(bno){
 		data : {type : 'get', bno : bno, bpwd : bpwd},
 		success : r => { 
 			if(r){
-				location.href=`/team_2jo/sns_project/update.jsp?dno=${bno}`;
+				location.href=`/team_2jo/sns_project/update.jsp?bno=${bno}`;
 			}else{
 				alert('비밀번호가 일치하지 않습니다.')
 			}
