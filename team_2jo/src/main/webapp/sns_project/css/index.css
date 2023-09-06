@@ -141,3 +141,26 @@ li{ list-style-type: none; }
 
 
 /* 댓글 CSS */
+.reply{
+	width: 100%;
+	padding: 15px;
+	margin: 20px 0;
+	border-top: 1px solid #e8e8e8;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+}
+.reply_bccontent, .btn_cdelete , .reply_bcdate{
+	margin-bottom: 10px;
+}
+
+.btn_cdelete {
+	border: none;
+	background-color: #ffc9bd;
+	width: 20px;
+	height: 20px;
+	font-weight: bold;
+	border-radius: 3px;
+	text-align: center;
+}

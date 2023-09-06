@@ -32,10 +32,15 @@ public class CommentDao extends Dao {
 	
 	
 //댓글삭제[고연진]
-	public boolean cdelte(String cpwd) {
+	public boolean cdelte(int cno, String cpwd) {
 		try {
-			String sql="select cpwd from comment where cno=?";
-			con
+			String sql="delete from comment where cno=? and cpwd=?";
+			ps=conn.prepareStatement(sql);
+			ps.setInt(1, cno);
+			ps.setString(2, cpwd);
+			int row=ps.executeUpdate();
+			if(row==1) {return true;
+			}
 		} catch (Exception e) {System.out.println("Dao오류: "+e);}
 		return false;
 	}//f()

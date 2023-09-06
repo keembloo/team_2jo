@@ -141,19 +141,25 @@ function oncoment(bno){
 function cdelte(cno){
 	//1. 요청
 	let cpwd= prompt('비밀번호 입력'); 
-	
+	console.log(cpwd);
+	console.log(cno);
+
 	//2. ajax 통신
 	 $.ajax({
       	url : "/team_2jo/CommentController",     
-     	method : "get",   
+     	method : "delete",   
      	data : {cno:cno,cpwd:cpwd},      
-      	success : r=>{console.log('통신성공')
-      	
-      	
+      	success : r=>{
+      		if(r){alert('댓글삭제성공했습니다');
+      			onView();}
+      		else{alert('비밀번호를 일치하지 않습니다')}
       	
       	} ,       
-      	error : e=>{console.log(e)} ,         
+      	error : e=>{
+			  console.log(e);
+			  alert('댓글삭제에 실패했습니다')
+			 } ,         
    });
-
+	
 	
 }//f()
