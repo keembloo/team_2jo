@@ -82,7 +82,7 @@ li{ list-style-type: none; }
 	height: 80px;
 	font-weight: bold;
 }
-.btn_update , .btn_delete {
+.btn_update , .btn_delete ,.btn_coment {
 	border: none;
 	background-color: #FF8066;
 	width: 50px;

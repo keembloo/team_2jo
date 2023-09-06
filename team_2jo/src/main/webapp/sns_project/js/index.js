@@ -93,6 +93,37 @@ function ondelete(bno){
 	})
 }
 
+
+// 답글 등록 규리
+function oncoment(bno){
+	let ccontent = prompt("댓글내용을 입력하세요.최대 30글자");
+	let cpwd = prompt("비밀번호를 입력하세요. 8글자이상");
+	//console.log(cpwd.length);
+	if (ccontent.length<=30 && ccontent.length>0){
+		if(20>=cpwd.length && cpwd.length>=8){
+			$.ajax({
+			url : "/team_2jo/CommentController",
+			method : "post",
+			data : {ccontent : ccontent , cpwd : cpwd , bno : bno},
+			success : r => {console.log(r);
+				if(r){			
+					alert("댓글등록성공!");
+					onView();
+				}else{alert("경고) 댓글등록실패");}
+				onView();
+			},
+			error : e => { alert('삭제실패');}
+		})
+		}else { // 비번이 20글자이상 8글자이하이면
+			alert("경고) 비밀번호는 8글자 이상이어야합니다.");
+		}
+	}else { // 내용이 30글자이상이면
+		alert("경고) 댓글내용은 30글자 이하이어야합니다.");
+	}
+	
+	
+}
+
 // <button onclick="cdelte()" class="btn_cdelete" type="button">X</button>
 //댓글 삭제[고연진]---------------------------------------------------------------------
 function cdelte(cno){
