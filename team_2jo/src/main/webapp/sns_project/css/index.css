@@ -74,5 +74,45 @@ li{ list-style-type: none; }
 	margin-left: 15px;
 }
 
+/* -------------------------------------------------------- */
+/* 전체 헤더 스타일 */
+  .header {
+    background-color: #FF8066;
+    color: #fff;
+    padding: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    width: 350px;
+    margin: 0 auto;
+    border-radius: 10px;
+  }
+
+  /* "SNS" 링크 스타일 */
+  .header a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    font-size: 18px;
+  }
+
+  /* "글쓰기" 버튼 스타일 */
+  .header button {
+    background-color: #fff;
+    color: black;
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 10px;
+    border-radius: 10px;
+  }
+
+  /* "글쓰기" 버튼 호버(마우스 오버) 효과 */
+  .header button:hover {
+    background-color: #ffc9bd;
+    color: #fff;
+  }
 
 
