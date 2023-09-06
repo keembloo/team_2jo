@@ -51,6 +51,28 @@ public class SnsDao extends Dao{
 		}catch (Exception e) {System.out.println(e);}
 		return list;
 	}
+	// 댓글 추가 SQL
+	public ArrayList<SnsDto> onreply(){
+		try {
+			ArrayList<SnsDto> list = new ArrayList<>();
+			String spl="select * from comment";
+			
+			ps = conn.prepareStatement(spl);
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				SnsDto snsDto = new SnsDto();
+				snsDto.setCno(rs.getInt(1)); 
+				snsDto.setCcontent(rs.getString(2));
+				snsDto.setCdate(rs.getString(3));
+				snsDto.setCpwd(rs.getString(4));
+				snsDto.setBno(rs.getInt(5));
+				list.add(snsDto);
+			}
+			return list;
+		}catch (Exception e) {System.out.println(e);
+		return null;}
+		
+	}
 	
 	// 피드 카운트
 	public int onCount(String key) {

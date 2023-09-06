@@ -18,6 +18,9 @@ function onView(){
 			success : r => { //console.log(r);
 				// 배열명.forEach
 				r.list.forEach( b => {console.log(b.bno)
+					console.log("r.list : "+r.list)
+					
+					
 					html+= `<div class="contentbox">
 								<div class="img_area">
 									<img alt="이미지" src="img/${b.bfile}">
@@ -29,12 +32,21 @@ function onView(){
 								<button onclick="update(${b.bno})" class="btn_update" type="button">수정</button>
 								<button onclick="ondelete(${b.bno})" class="btn_delete" type="button">삭제</button>
 								<button onclick="oncoment(${b.bno})" class="btn_coment" type="button">답글</button>
-									<div class="reply">
-										<div class="reply_bccontent">${b.bccontent}</div>
-										<div class="reply_bcdate">${b.bcdate}</div>
-										<button onclick="cdelte()" class="btn_cdelete" type="button">X</button>
-									</div>
-							</div>`;
+									<div class="reply">`
+									
+									for(let i=0; i<r.clist.length; i++){
+										console.log("r.clist : "+r.clist[i].ccontent);
+										if(b.bno==r.clist[i].bno){
+											html +=`<div class="reply_bccontent">${r.clist[i].ccontent}</div>
+											<div class="reply_bcdate">${r.clist[i].cdate}</div>
+											<button onclick="cdelte(${r.clist[i].cno})" class="btn_cdelete" type="button">X</button>`
+											
+										}
+
+									}
+									
+								html+=	`</div></div>`
+							
 				});
 				document.querySelector('.feed').innerHTML = `<h4>총 피드 수 : ${r.feedCnt}</h4>`
 				// 3. 구성된 html내용 출력 

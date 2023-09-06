@@ -29,12 +29,16 @@ public class SnsController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String key = request.getParameter("key");
 		
+		ArrayList<SnsDto> clist = SnsDao.getInstence().onreply();
 		ArrayList<SnsDto> list = SnsDao.getInstence().onView(key);
 		int feedCnt = SnsDao.getInstence().onCount(key);
 		
 		SnsDto snsDto = new SnsDto();
 		snsDto.setList(list);
 		snsDto.setFeedCnt(feedCnt);
+		snsDto.setClist(clist);
+		System.out.println("clist : "+clist);
+		System.out.println("list : "+list);
 		
 		ObjectMapper objectMapper = new ObjectMapper();
 		String jsonArray = objectMapper.writeValueAsString(snsDto);

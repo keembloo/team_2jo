@@ -15,9 +15,18 @@ public class SnsDto {
 	private String cdate;
 	private String cpwd;
 	private ArrayList<SnsDto> list;
+	private ArrayList<SnsDto> clist;
 	private int feedCnt;
 	
 	
+	public ArrayList<SnsDto> getClist() {
+		return clist;
+	}
+
+	public void setClist(ArrayList<SnsDto> clist) {
+		this.clist = clist;
+	}
+
 	public ArrayList<SnsDto> getList() {
 		return list;
 	}
