@@ -1,5 +1,7 @@
 package team_2jo.sns.model.dto;
 
+import java.util.ArrayList;
+
 public class SnsDto {
 
 		// 필드
@@ -12,6 +14,26 @@ public class SnsDto {
 	private String ccontent;
 	private String cdate;
 	private String cpwd;
+	private ArrayList<SnsDto> list;
+	private int feedCnt;
+	
+	
+	public ArrayList<SnsDto> getList() {
+		return list;
+	}
+
+	public void setList(ArrayList<SnsDto> list) {
+		this.list = list;
+	}
+
+	public int getFeedCnt() {
+		return feedCnt;
+	}
+
+	public void setFeedCnt(int feedCnt) {
+		this.feedCnt = feedCnt;
+	}
+
 	public int getCno() {
 		return cno;
 	}

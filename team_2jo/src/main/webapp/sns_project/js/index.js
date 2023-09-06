@@ -1,10 +1,9 @@
 console.log('인덱스js시작');
 
-
+let keyobj = {key : ''};
 
 //최초실행
 onView();
-
 
 // 출력 함수 규리
 function onView(){
@@ -15,10 +14,10 @@ function onView(){
 	$.ajax({
 			url : "/team_2jo/SnsController" , 
 			method : "get" ,
-			data : { },
+			data : { key : keyobj.key },
 			success : r => { //console.log(r);
 				// 배열명.forEach
-				r.forEach( b => {console.log(b.bno)
+				r.list.forEach( b => {console.log(b.bno)
 					html+= `<div class="contentbox">
 								<div class="img_area">
 									<img alt="이미지" src="img/${b.bfile}">
@@ -31,6 +30,7 @@ function onView(){
 								<button onclick="ondelete(${b.bno})" class="btn_delete" type="button">삭제</button>
 							</div>`;
 				});
+				document.querySelector('.feed').innerHTML = `<h4>총 피드 수 : ${r.feedCnt}</h4>`
 				// 3. 구성된 html내용 출력 
 				wrap.innerHTML = html;
 				//console.log("html :"+html);
@@ -41,7 +41,12 @@ function onView(){
 } // onView end
 
 
-
+//검색 함수 
+function onSerch(){
+	let key = document.querySelector('.serchInput').value;
+	keyobj.key = key;
+	onView()
+}
 
 function update(bno){
 	let bpwd = prompt('비밀번호를 입력하세요.');

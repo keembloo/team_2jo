@@ -27,10 +27,17 @@ public class SnsDao extends Dao{
 	}//f()
 	
 	// 글출력 규리
-	public ArrayList<SnsDto> onView() {
+	public ArrayList<SnsDto> onView(String key) {
 		ArrayList<SnsDto> list = new ArrayList<>();
 		try {
-			String sql = "select * from board order by bdate desc";
+			String sql = "select * from board ";
+			
+			if(!key.equals("")) {
+				sql += "\nwhere bcontent like '%"+key+"%'";
+			}
+			
+			sql += "\norder by bdate desc";
+			
 			ps = conn.prepareStatement(sql);
 			rs = ps.executeQuery();
 			while(rs.next()) {
@@ -45,6 +52,27 @@ public class SnsDao extends Dao{
 		return list;
 	}
 	
+	// 피드 카운트
+	public int onCount(String key) {
+		try {
+			String sql = "select count(*) from board ";
+			
+			if(!key.equals("")) {
+				sql += "\nwhere bcontent like '%"+key+"%'";
+			}
+			
+			sql += "\norder by bdate desc";
+			
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+			
+			rs.next();
+			
+			return rs.getInt(1);
+					
+		}catch (Exception e) {System.out.println(e);}
+		return 0;
+	}
 	
 	
 	

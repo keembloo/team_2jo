@@ -11,10 +11,34 @@ li{ list-style-type: none; }
     font-style: normal;
 }
 
+.serchBox{
+	width: 350px;
+	margin: 0 auto;
+	margin-top: 15px;
+	margin-bottom: 15px;
+	align-items: center;
+    text-align: right;
+}
 
+.serchInput{
+	width: 100%;
+	border-radius: 5px;
+	padding: 0px 10px;
+	height: 40px;
+	font-size: 15px;
+	margin-top: 10px;
+	border: none;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+	outline: none;
+	font-weight: bold;
+}
 .wrap {
 	width: 350px;
 	margin: 0 auto;
+}
+.serchBox h4{
+	font-size: 15px;
+	
 }
 
 .contentbox {

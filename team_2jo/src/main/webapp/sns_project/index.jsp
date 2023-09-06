@@ -9,6 +9,16 @@
 </head>
 <body>
 	<%@include file ="header.jsp" %>
+	
+	<div class="serchBox"><!-- 검색 구역 -->
+		
+		<div class="feed">
+		</div>
+		<div>
+			<input onkeyup="onSerch()" type="text" class="serchInput" placeholder="serch">
+		</div>
+	</div>
+	
 	<div class="wrap"> <!-- 전체구역 -->
 		<!-- JS 에서 출력됨 -->
 	</div><!-- 전체구역 end -->

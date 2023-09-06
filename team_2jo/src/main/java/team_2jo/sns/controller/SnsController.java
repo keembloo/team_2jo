@@ -27,10 +27,17 @@ public class SnsController extends HttpServlet {
 
     // 게시물출력 규리
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ArrayList<SnsDto> result = SnsDao.getInstence().onView();
+		String key = request.getParameter("key");
+		
+		ArrayList<SnsDto> list = SnsDao.getInstence().onView(key);
+		int feedCnt = SnsDao.getInstence().onCount(key);
+		
+		SnsDto snsDto = new SnsDto();
+		snsDto.setList(list);
+		snsDto.setFeedCnt(feedCnt);
 		
 		ObjectMapper objectMapper = new ObjectMapper();
-		String jsonArray = objectMapper.writeValueAsString(result);
+		String jsonArray = objectMapper.writeValueAsString(snsDto);
 		
 	  	response.setContentType("application/json;charset=UTF-8");
     	response.getWriter().print(jsonArray);
