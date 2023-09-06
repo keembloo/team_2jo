@@ -6,7 +6,7 @@ console.log('인덱스js시작');
 onView();
 
 
-// 출력 함수 규리
+// 출력 함수 규리 + 답글 이성호
 function onView(){
 	//console.log('함수실행');
 	let wrap = document.querySelector('.wrap');
@@ -29,6 +29,12 @@ function onView(){
 								</div>
 								<button onclick="update(${b.bno})" class="btn_update" type="button">수정</button>
 								<button onclick="ondelete(${b.bno})" class="btn_delete" type="button">삭제</button>
+								<button onclick="oncoment(${b.bno})" class="btn_coment" type="button">답글</button>
+									<div class="reply">
+										<div class="reply_bccontent">${b.bccontent}</div>
+										<div class="reply_bcdate">${b.bcdate}</div>
+										<button onclick"">X</button>
+									</div>
 							</div>`;
 				});
 				// 3. 구성된 html내용 출력 
