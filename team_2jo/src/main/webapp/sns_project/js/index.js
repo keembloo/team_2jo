@@ -19,7 +19,9 @@ function onView(){
 			success : r => { //console.log(r);
 				// 배열명.forEach
 				r.forEach( b => {console.log(b.bno)
-					html+= `<div class="contentbox">
+					html+= `
+					
+					<div class="contentbox">
 								<div class="img_area">
 									<img alt="이미지" src="img/${b.bfile}">
 								</div>
@@ -29,6 +31,11 @@ function onView(){
 								</div>
 								<button onclick="update(${b.bno})" class="btn_update" type="button">수정</button>
 								<button onclick="ondelete(${b.bno})" class="btn_delete" type="button">삭제</button>
+								<button onclick="oncoment(${b.bno})" class="btn_coment" type="button">답글</button>
+							
+							
+								<button onclick="cdelte()" class="btn_cdelete" type="button">X</button>
+							
 							</div>`;
 				});
 				// 3. 구성된 html내용 출력 
@@ -81,3 +88,25 @@ function ondelete(bno){
 		error : e => { alert('삭제실패');}
 	})
 }
+
+// <button onclick="cdelte()" class="btn_cdelete" type="button">X</button>
+//댓글 삭제[고연진]---------------------------------------------------------------------
+function cdelte(cno){
+	//1. 요청
+	let cpwd= prompt('비밀번호 입력'); 
+	
+	//2. ajax 통신
+	 $.ajax({
+      	url : "/team_2jo/CommentController",     
+     	method : "get",   
+     	data : {cno:cno,cpwd:cpwd},      
+      	success : r=>{console.log('통신성공')
+      	
+      	
+      	
+      	} ,       
+      	error : e=>{console.log(e)} ,         
+   });
+
+	
+}//f()
