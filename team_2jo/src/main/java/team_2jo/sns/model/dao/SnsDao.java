@@ -77,6 +77,7 @@ public class SnsDao extends Dao{
 	
 	
 	
+	
 	// 개별 조회
 	public SnsDto uprint(int bno) {
 		try {

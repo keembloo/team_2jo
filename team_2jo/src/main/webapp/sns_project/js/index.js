@@ -28,6 +28,12 @@ function onView(){
 								</div>
 								<button onclick="update(${b.bno})" class="btn_update" type="button">수정</button>
 								<button onclick="ondelete(${b.bno})" class="btn_delete" type="button">삭제</button>
+								<button onclick="oncoment(${b.bno})" class="btn_coment" type="button">답글</button>
+									<div class="reply">
+										<div class="reply_bccontent">${b.bccontent}</div>
+										<div class="reply_bcdate">${b.bcdate}</div>
+										<button onclick"">X</button>
+									</div>
 							</div>`;
 				});
 				document.querySelector('.feed').innerHTML = `<h4>총 피드 수 : ${r.feedCnt}</h4>`
