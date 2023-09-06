@@ -37,10 +37,10 @@ function onView(){
 									for(let i=0; i<r.clist.length; i++){
 										console.log("r.clist : "+r.clist[i].ccontent);
 										if(b.bno==r.clist[i].bno){
-											html +=`<div class="reply_bccontent">${r.clist[i].ccontent}</div>
+											html +=`<div class="exid"><div class="reply_bccontent">${r.clist[i].ccontent}</div>
 											<div class="reply_bcdate">${r.clist[i].cdate}</div>
-											<button onclick="cdelte(${r.clist[i].cno})" class="btn_cdelete" type="button">X</button>`
-											
+											<button onclick="cdelte(${r.clist[i].cno})" class="btn_cdelete" type="button">X</button>
+											</div>`
 										}
 
 									}
