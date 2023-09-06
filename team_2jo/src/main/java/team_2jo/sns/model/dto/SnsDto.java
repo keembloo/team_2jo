@@ -81,12 +81,21 @@ public class SnsDto {
 	
 	// + 필요시 추가
 	
-	//글등록[고연진]
+	//글등록[고연진] 생성자
 	public SnsDto(String bfile, String bcontent, String bpwd) {
 		super();
 		this.bfile = bfile;
 		this.bcontent = bcontent;
 		this.bpwd = bpwd;
+	}
+	
+	//댓글삭제[고연진] 생성자
+
+	public SnsDto(int bno, int cno, String cpwd) {
+		super();
+		this.bno = bno;
+		this.cno = cno;
+		this.cpwd = cpwd;
 	}
 	
 	

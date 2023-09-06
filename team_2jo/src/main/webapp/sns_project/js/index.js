@@ -32,7 +32,7 @@ function onView(){
 									<div class="reply">
 										<div class="reply_bccontent">${b.bccontent}</div>
 										<div class="reply_bcdate">${b.bcdate}</div>
-										<button onclick"">X</button>
+										<button onclick="cdelte()" class="btn_cdelete" type="button">X</button>
 									</div>
 							</div>`;
 				});
@@ -92,3 +92,25 @@ function ondelete(bno){
 		error : e => { alert('삭제실패');}
 	})
 }
+
+// <button onclick="cdelte()" class="btn_cdelete" type="button">X</button>
+//댓글 삭제[고연진]---------------------------------------------------------------------
+function cdelte(cno){
+	//1. 요청
+	let cpwd= prompt('비밀번호 입력'); 
+	
+	//2. ajax 통신
+	 $.ajax({
+      	url : "/team_2jo/CommentController",     
+     	method : "get",   
+     	data : {cno:cno,cpwd:cpwd},      
+      	success : r=>{console.log('통신성공')
+      	
+      	
+      	
+      	} ,       
+      	error : e=>{console.log(e)} ,         
+   });
+
+	
+}//f()
