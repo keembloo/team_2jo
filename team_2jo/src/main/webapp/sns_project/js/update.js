@@ -36,16 +36,19 @@ function prechange(o){
 	
 
 
-function update(){
-
-	let submitForm = document.querySelectorAll('.updateform')[0];
+function update2(){
+	console.log("update2()")
+	let updateform = document.querySelectorAll('.updateform')[0];
 	
-	let boardData = new FormData(writeForm);
+	let boardData = new FormData(updateform);
 	
 	let urlParams = new URL(location.href).searchParams
 	let bno = urlParams.get('bno');
 	
-	boardData.append('type','update');
+	boardData.set('type1','update');
+	boardData.set('bno',bno);
+	
+	console.log( boardData );
 	
 	
 	$.ajax({

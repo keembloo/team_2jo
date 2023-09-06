@@ -5,7 +5,7 @@
 <head>
    <meta charset="UTF-8">
    <title>Insert title here</title>
-   <link href="/team_2jo/sns_project/css/submit.css" rel="stylesheet">
+   <link href="./css/submit.css" rel="stylesheet">
 </head>
 <body>
    <%@include file ="header.jsp" %>
@@ -22,8 +22,8 @@
       
       <p>내용</p>
       <textarea class="bcontent" name="bcontent"></textarea>
-      <button onclick="bwrite()" class="btn_update1" name="" type="button">수정</button>
-      <button class="btn_comback" type="button">뒤로가기</button>
+      <button onclick="update2()" class="btn_update1" name="" type="button">수정</button>
+      <button onclick="location.href='/team_2jo/sns_project/index.jsp'"class="btn_comback" type="button">뒤로가기</button>
    
    </form>
    

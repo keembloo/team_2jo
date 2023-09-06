@@ -30,7 +30,7 @@ public class SnsDao extends Dao{
 	public ArrayList<SnsDto> onView() {
 		ArrayList<SnsDto> list = new ArrayList<>();
 		try {
-			String sql = "select * from board order by bno desc";
+			String sql = "select * from board order by bdate desc";
 			ps = conn.prepareStatement(sql);
 			rs = ps.executeQuery();
 			while(rs.next()) {
@@ -79,13 +79,13 @@ public class SnsDao extends Dao{
 	// 글 수정
 	public boolean update(SnsDto dto) {
 		try {
-			String sql = "update board set bfile = ?, bdate = now(), bcontent = ? where bno = ? and bpwd ? ";
+			String sql = "update board set bfile = ?, bdate = now(), bcontent = ? where bno = ?";
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, dto.getBfile());
 			ps.setString(2, dto.getBcontent());
 			ps.setInt(3, dto.getBno());
-			ps.setString(4, dto.getBpwd());
 			
+			System.out.println("sqldto : "+dto);
 			if(ps.executeUpdate()==1) {
 				return true;
 			}else {

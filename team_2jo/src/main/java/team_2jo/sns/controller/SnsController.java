@@ -67,15 +67,11 @@ public class SnsController extends HttpServlet {
 
 
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String type = request.getParameter("type");
-		System.out.println("type : " +type);
 		response.setContentType("application/json;charset=UTF-8");
+		String filePath = request.getSession().getServletContext().getRealPath("/sns_project/img");
+		String type = request.getParameter("type");
 		
-		
-		if(type.equals("update")) { // 게시글 수정
-			String filePath = request.getSession().getServletContext().getRealPath("/sns_project/img");
-			
-			System.out.println(filePath);
+		if(type==null) { // 게시글 수정
 			MultipartRequest multi = new MultipartRequest(
 					request, 				//1. 요청 방식
 					filePath, 				// 첨부파일을 저장할 폴더 경로
@@ -83,17 +79,27 @@ public class SnsController extends HttpServlet {
 					"UTF-8",				// 인코딩 타입
 					new DefaultFileRenamePolicy()	// 첨부 파일 이름 중복 시 이름 끝에 숫자 붙여줌
 					);
-			SnsDto dto = new SnsDto();
+			System.out.println(filePath);
 			
-			dto.setBno(Integer.parseInt(multi.getParameter("bno")));
-			dto.setBfile(multi.getFilesystemName("bfile"));
+			SnsDto dto = new SnsDto();
+			String bfile = multi.getFilesystemName("bfile");
+			int bno = Integer.parseInt(multi.getParameter("bno"));
+			
+			if(bfile==null) {
+				bfile = SnsDao.getInstence().uprint(bno).getBfile();
+			}
+			
+			
+			dto.setBno(bno);
+			dto.setBfile(bfile);
 			dto.setBcontent(multi.getParameter("bcontent"));
 			dto.setBpwd(multi.getParameter("bpwd"));
 			
-			String bfile = multi.getFilesystemName("bfile");
-			
 			response.getWriter().print(SnsDao.getInstence().update(dto));
-		}else if(type.equals("get")) { // 비밀번호 일치여부 확인
+		} //게시글 수정 종료
+		
+		
+		else if(type.equals("get")) { // 비밀번호 일치여부 확인
 			System.out.println("get 실행");
 			String bpwd = request.getParameter("bpwd");
 			int bno = Integer.parseInt(request.getParameter("bno"));
