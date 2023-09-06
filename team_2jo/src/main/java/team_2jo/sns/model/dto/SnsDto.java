@@ -4,12 +4,46 @@ public class SnsDto {
 
 		// 필드
 	private int bno;
+	private int cno;
 	private String bfile;
 	private String bdate;
 	private String bcontent;
 	private String bpwd;
-	
-	
+	private String ccontent;
+	private String cdate;
+	private String cpwd;
+	public int getCno() {
+		return cno;
+	}
+
+	public void setCno(int cno) {
+		this.cno = cno;
+	}
+
+	public String getCcontent() {
+		return ccontent;
+	}
+
+	public void setCcontent(String ccontent) {
+		this.ccontent = ccontent;
+	}
+
+	public String getCdate() {
+		return cdate;
+	}
+
+	public void setCdate(String cdate) {
+		this.cdate = cdate;
+	}
+
+	public String getCpwd() {
+		return cpwd;
+	}
+
+	public void setCpwd(String cpwd) {
+		this.cpwd = cpwd;
+	}
+
 	// 생성자
 	public SnsDto() {	}
 	
@@ -79,11 +113,11 @@ public class SnsDto {
 
 	@Override
 	public String toString() {
-		return "SnsDto [bno=" + bno + ", bfile=" + bfile + ", bdate=" + bdate + ", bcontent=" + bcontent + ", bpwd="
-				+ bpwd + "]";
+		return "SnsDto [bno=" + bno + ", cno=" + cno + ", bfile=" + bfile + ", bdate=" + bdate + ", bcontent="
+				+ bcontent + ", bpwd=" + bpwd + ", ccontent=" + ccontent + ", cdate=" + cdate + ", cpwd=" + cpwd + "]";
 	}
-	
 
+	
 	
 	
 }
