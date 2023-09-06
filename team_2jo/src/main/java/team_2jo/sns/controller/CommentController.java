@@ -45,10 +45,15 @@ public class CommentController extends HttpServlet {
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
 		//1. 요청
+		int cno= Integer.parseInt(request.getParameter("cno"));
 		String cpwd= request.getParameter("cpwd");
+		System.out.println("cno : "+cno);
+		System.out.println("cpwd : "+cpwd);
 		//2. dao처리
-		boolean result=CommentDao.getInstence().cdelte(cpwd);
+		boolean result=CommentDao.getInstence().cdelte(cno, cpwd);
 		//3. 응답
+		response.setContentType("application/json;charset=UTF-8");
+		response.getWriter().print(result);
 	}
 
 }

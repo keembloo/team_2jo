@@ -17,7 +17,7 @@ function onView(){
 			data : { key : keyobj.key },
 			success : r => { //console.log(r);
 				// 배열명.forEach
-				r.list.forEach( b => {console.log(b.bno)
+				r.list.forEach( b => {console.log(b.bno);console.log(b.cno)
 					html+= `<div class="contentbox">
 								<div class="img_area">
 									<img alt="이미지" src="img/${b.bfile}">
@@ -32,7 +32,7 @@ function onView(){
 									<div class="reply">
 										<div class="reply_bccontent">${b.bccontent}</div>
 										<div class="reply_bcdate">${b.bcdate}</div>
-										<button onclick="cdelte()" class="btn_cdelete" type="button">X</button>
+										<button onclick="cdelte(cno)" class="btn_cdelete" type="button">X</button>
 									</div>
 							</div>`;
 				});
@@ -129,19 +129,24 @@ function oncoment(bno){
 function cdelte(cno){
 	//1. 요청
 	let cpwd= prompt('비밀번호 입력'); 
-	
+	console.log(cpwd);
+	console.log(cno);
+
 	//2. ajax 통신
 	 $.ajax({
       	url : "/team_2jo/CommentController",     
-     	method : "get",   
+     	method : "delete",   
      	data : {cno:cno,cpwd:cpwd},      
-      	success : r=>{console.log('통신성공')
-      	
-      	
+      	success : r=>{
+      		if(r){alert('댓글삭제성공했습니다')}
+      		else{alert('비밀번호를 일치하지 않습니다')}
       	
       	} ,       
-      	error : e=>{console.log(e)} ,         
+      	error : e=>{
+			  console.log(e);
+			  alert('댓글삭제에 실패했습니다')
+			 } ,         
    });
-
+	
 	
 }//f()
