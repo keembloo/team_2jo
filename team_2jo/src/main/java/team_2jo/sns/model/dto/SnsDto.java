@@ -67,12 +67,20 @@ public class SnsDto {
 		this.bpwd = bpwd;
 	}
 	
+	//댓글등록생성자 규리
+	public SnsDto(int bno, String ccontent, String cpwd) {
+		super();
+		this.bno = bno;
+		this.ccontent = ccontent;
+		this.cpwd = cpwd;
+	}
+	
+	
 	
 	// 메소드
 	public int getBno() {
 		return bno;
 	}
-
 
 
 	public void setBno(int bno) {
