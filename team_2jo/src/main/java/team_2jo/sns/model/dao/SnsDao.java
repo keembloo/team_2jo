@@ -192,10 +192,10 @@ public class SnsDao extends Dao{
 	// ip 체크
 	public boolean ipcheck(String rip, int bno) {
 		try {
-			String sql = "insert into recommend(rip, bno) values(?, ?) where bno = ? and rip != ?"; 
+			String sql = "insert into recommend (bno, rip) select ?, ? from dual where not exists (select 1 from recommend where bno = ? and rip = ?)"; 
 			ps = conn.prepareStatement(sql);
-			ps.setString(1, rip);
-			ps.setInt(2, bno);
+			ps.setInt(1, bno);
+			ps.setString(2, rip);
 			ps.setInt(3, bno);
 			ps.setString(4, rip);
 			
@@ -215,11 +215,10 @@ public class SnsDao extends Dao{
 	
 	//좋아요 수 증가
 	public boolean likeup(String rip, int bno) {
-		if(!ipcheck(rip, bno)) {
-			return false;
-		}
+		ipcheck(rip, bno);
+		
 		try {
-			String sql = "update board as b inner join recommend as r on b.bno = r.bno set b.blike = b.blike + 1, r.rliked = true where b.bno = ? and r.rip != ? and r.rliked != true";
+			String sql = "update board as b inner join recommend as r on b.bno = r.bno set b.blike = b.blike + 1, r.rliked = true where b.bno = ? and r.rip = ? and r.rliked = false";
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, bno);
 			ps.setString(2, rip);
@@ -238,11 +237,9 @@ public class SnsDao extends Dao{
 	
 	//싫어요 수 증가
 	public boolean dislikeup(String rip, int bno) {
-		if(!ipcheck(rip, bno)) {
-			return false;
-		}
+		ipcheck(rip, bno);
 		try {
-			String sql = "update board as b inner join recommend as r on b.bno = r.bno set b.bdislike = b.bdislike + 1, r.rdisliked = true where b.bno = ? and r.rip != ? and r.rdisliked != true";
+			String sql = "update board as b inner join recommend as r on b.bno = r.bno set b.bdislike = b.bdislike + 1, r.rdisliked = true where b.bno = ? and r.rip = ? and r.rdisliked = false";
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, bno);
 			ps.setString(2, rip);

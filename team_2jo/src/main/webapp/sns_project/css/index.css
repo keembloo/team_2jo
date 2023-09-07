@@ -110,6 +110,16 @@ li{ list-style-type: none; }
 	
 }
 
+.haters{
+    align-items: center;
+}
+
+.haters h4{
+	display: inline-block;
+	font-size : 20px;
+	
+}
+
 /* -------------------------------------------------------- */
 /* 전체 헤더 스타일 */
   .header {
@@ -180,3 +190,4 @@ li{ list-style-type: none; }
 	border-radius: 3px;
 	text-align: center;
 }
+

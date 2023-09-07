@@ -32,7 +32,7 @@ function onView(){
 								<button onclick="update(${b.bno})" class="btn_update" type="button">수정</button>
 								<button onclick="ondelete(${b.bno})" class="btn_delete" type="button">삭제</button>
 								<button onclick="oncoment(${b.bno})" class="btn_coment" type="button">답글</button>
-								<div class="haters"><img onclick="likeup(${b.bno})" src="/team_2jo/sns_project/img/like.png" width=20px> ${b.blike} <img onclick="dislikeup(${b.bno})" src="/team_2jo/sns_project/img/dislike.png" width=20px> ${b.bdislike} </div>
+								<div class="haters"><img onclick="likeup(${b.bno})" src="/team_2jo/sns_project/img/like.png" width=20px> <h4>${b.blike}</h4> <img onclick="dislikeup(${b.bno})" src="/team_2jo/sns_project/img/dislike.png" width=20px> <h4>${b.bdislike}</h4> </div>
 									<div class="reply">`
 									
 									for(let i=0; i<r.clist.length; i++){
@@ -94,7 +94,7 @@ function likeup(bno){
 		method : "put",
 		data : {type : 'likeup', bno : bno},
 		success : r =>{
-			console.log(r);
+			onView()
 		}
 		
 		
@@ -112,7 +112,7 @@ function dislikeup(bno){
 		method : "put",
 		data : {type : 'dislikeup', bno : bno},
 		success : r =>{
-			console.log(r);
+			onView()
 		}
 		
 		

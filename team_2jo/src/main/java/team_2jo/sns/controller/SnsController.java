@@ -37,8 +37,6 @@ public class SnsController extends HttpServlet {
 		snsDto.setList(list);
 		snsDto.setFeedCnt(feedCnt);
 		snsDto.setClist(clist);
-		System.out.println("clist : "+clist);
-		System.out.println("list : "+list);
 		
 		ObjectMapper objectMapper = new ObjectMapper();
 		String jsonArray = objectMapper.writeValueAsString(snsDto);
@@ -120,7 +118,6 @@ public class SnsController extends HttpServlet {
 			
 		}else if(type.equals("print")) {
 			int bno = Integer.parseInt(request.getParameter("bno"));
-			System.out.println("bno : "+bno);
 			
 			
 			ObjectMapper objectMapper = new ObjectMapper();
