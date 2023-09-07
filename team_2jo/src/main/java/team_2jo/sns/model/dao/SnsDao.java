@@ -43,7 +43,9 @@ public class SnsDao extends Dao{
 			while(rs.next()) {
 				SnsDto snsDto = new SnsDto(
 						rs.getInt(1), rs.getString(2), 
-						rs.getString(3), rs.getString(4), rs.getString(5));
+						rs.getString(3), rs.getString(4), 
+						rs.getString(5), rs.getInt(6),
+						rs.getInt(7));
 				list.add(snsDto);
 				//System.out.println(snsDto);
 			}
@@ -186,4 +188,75 @@ public class SnsDao extends Dao{
 		}catch (Exception e) {System.out.println(e);}
 		return false;
 	}
+	
+	// ip 체크
+	public boolean ipcheck(String rip, int bno) {
+		try {
+			String sql = "insert into recommend(rip, bno) values(?, ?) where bno = ? and rip != ?"; 
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, rip);
+			ps.setInt(2, bno);
+			ps.setInt(3, bno);
+			ps.setString(4, rip);
+			
+			if(ps.executeUpdate()==1) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}catch (Exception e) {
+			System.out.println("ip 체크 예외 : "+e);
+			return false;
+		}
+		
+		
+	}
+	
+	//좋아요 수 증가
+	public boolean likeup(String rip, int bno) {
+		if(!ipcheck(rip, bno)) {
+			return false;
+		}
+		try {
+			String sql = "update board as b inner join recommend as r on b.bno = r.bno set b.blike = b.blike + 1, r.rliked = true where b.bno = ? and r.rip != ? and r.rliked != true";
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, bno);
+			ps.setString(2, rip);
+			
+			if(ps.executeUpdate()==1) {
+				return true;
+			}else {
+				return false;
+			}
+			
+		}catch (Exception e) {
+			System.out.println("좋아요 수 증가 예외 : "+e);
+			return false;
+		}
+	}
+	
+	//싫어요 수 증가
+	public boolean dislikeup(String rip, int bno) {
+		if(!ipcheck(rip, bno)) {
+			return false;
+		}
+		try {
+			String sql = "update board as b inner join recommend as r on b.bno = r.bno set b.bdislike = b.bdislike + 1, r.rdisliked = true where b.bno = ? and r.rip != ? and r.rdisliked != true";
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, bno);
+			ps.setString(2, rip);
+			
+			if(ps.executeUpdate()==1) {
+				return true;
+			}else {
+				return false;
+			}
+			
+		}catch (Exception e) {
+			System.out.println("싫어요 수 증가 예외 : "+e);
+			return false;
+		}
+	}
+	
 }

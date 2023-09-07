@@ -16,9 +16,27 @@ public class SnsDto {
 	private String cpwd;
 	private ArrayList<SnsDto> list;
 	private ArrayList<SnsDto> clist;
+	private int blike;
+	private int bdislike;
 	private int feedCnt;
 	
 	
+	public int getBlike() {
+		return blike;
+	}
+
+	public void setBlike(int blike) {
+		this.blike = blike;
+	}
+
+	public int getBdislike() {
+		return bdislike;
+	}
+
+	public void setBdislike(int bdislike) {
+		this.bdislike = bdislike;
+	}
+
 	public ArrayList<SnsDto> getClist() {
 		return clist;
 	}
@@ -78,18 +96,21 @@ public class SnsDto {
 	// 생성자
 	public SnsDto() {	}
 	
-	public SnsDto(int bno, String bfile, String bdate, String bcontent, String bpwd) {
+	public SnsDto(int bno, String bfile, String bdate, String bcontent, String bpwd, int blike, int bdislike) {
 		super();
 		this.bno = bno;
 		this.bfile = bfile;
 		this.bdate = bdate;
 		this.bcontent = bcontent;
 		this.bpwd = bpwd;
+		this.blike = blike;
+		this.bdislike = bdislike;
 	}
 	
 	
 	// + 필요시 추가
 	
+
 	//글등록[고연진] 생성자
 	public SnsDto(String bfile, String bcontent, String bpwd) {
 		super();

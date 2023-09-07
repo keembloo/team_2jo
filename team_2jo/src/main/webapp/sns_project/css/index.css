@@ -98,6 +98,18 @@ li{ list-style-type: none; }
 	margin-left: 15px;
 }
 
+.haters{
+	display: inline-block;
+	margin-left: 80px;
+    display: inline-block;
+	
+}
+
+.haters img{
+	margin-top: 10px;
+	
+}
+
 /* -------------------------------------------------------- */
 /* 전체 헤더 스타일 */
   .header {
