@@ -21,9 +21,9 @@
 			<img  class="preimg" alt="" src="img/default.png"><!-- 이미지 미리보기 -->
 			
 		 
-			비밀번호: <input onkeyup="inputcheck()" class="bpwd" name="bpwd" type="password">
+			비밀번호: <input class="bpwd" name="bpwd" type="password">
 			
-			내용: <input onkeyup="inputcheck()" class="bcontent" name="bcontent">
+			내용: <textarea class="bcontent" name="bcontent"></textarea>
 		 	
 			
 			<button onclick="bwrite()" class="btn_update1" name="" type="button">등록</button>
