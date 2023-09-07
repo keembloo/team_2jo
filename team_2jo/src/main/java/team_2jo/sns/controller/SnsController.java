@@ -15,6 +15,7 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import team_2jo.sns.model.dao.SnsDao;
 import team_2jo.sns.model.dto.SnsDto;
+import team_2jo.sns.service.FileService;
 
 
 
@@ -135,10 +136,15 @@ public class SnsController extends HttpServlet {
 		//1. 요청
 		int bno = Integer.parseInt(request.getParameter("bno"));
 		String bpwd = request.getParameter("bpwd");
+		String filename = request.getParameter("filename");
 		
 		System.out.println(bno);
 		//2. DAO
 		boolean result = SnsDao.getInstence().ondelete(bno, bpwd);
+			if(result) {
+				filename = request.getServletContext().getRealPath("파일경로임 물어보고 하셈")+"/"+filename;
+				FileService.fileDelete(filename);
+			}
 		//3. 응답
 		response.setContentType("application/json; charset=UTF-8"); 
 		response.getWriter().print(result);
