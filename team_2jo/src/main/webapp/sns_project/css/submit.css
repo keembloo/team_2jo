@@ -55,6 +55,7 @@ li{ list-style-type: none; }
 	color: white;
 	font-weight: bold;
 	cursor: pointer;
+	width: 350px;
 }
 
   /* 컨테이너에 대한 스타일 */

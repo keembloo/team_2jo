@@ -37,7 +37,14 @@ function prechange(o){
 
 
 function update2(){
-	console.log("update2()")
+	let bcontent = document.querySelector('.bcontent').value;
+	
+	if(bcontent == ''){
+		alert('내용을 입력해주세요.')
+		return;
+	}
+	
+	
 	let updateform = document.querySelectorAll('.updateform')[0];
 	
 	let boardData = new FormData(updateform);
