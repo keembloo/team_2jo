@@ -32,6 +32,8 @@ function onView(){
 								<button onclick="update(${b.bno})" class="btn_update" type="button">수정</button>
 								<button onclick="ondelete(${b.bno})" class="btn_delete" type="button">삭제</button>
 								<button onclick="oncoment(${b.bno})" class="btn_coment" type="button">답글</button>
+								<a href="/team_2jo/FileController?filename=${b.bfile}"><button class="btn_download" type="button">다운로드</button></a>
+								
 									<div class="reply">`
 									
 									for(let i=0; i<r.clist.length; i++){
@@ -89,7 +91,7 @@ function update(bno){
 
 
 // 게시물 삭제 (이성호)
-function ondelete(bno){
+function ondelete(bno){ 
 	let bpwd = prompt("비밀번호를 입력하세요.");
 	$.ajax({
 		url : "/team_2jo/SnsController",
@@ -163,3 +165,20 @@ function cdelte(cno){
 	
 	
 }//f()
+
+// 다운로드[고연진]
+/*
+function ondownload(bno){ console.log('인수전달받음:'+bno)
+	$.ajax({
+      	url : "/team_2jo/FileController",     
+     	method : "get",   
+     	data : {bno:bno},      
+    	contentType:false,
+    	processData:false,
+      	success : r=>{console.log('통신성공')} ,       
+      	error : e=>{console.log(e)} ,         
+   });
+*/
+
+	
+
