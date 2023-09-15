@@ -38,6 +38,7 @@ public class MemberController extends HttpServlet {
 		//System.out.println("로그인 세션 상태 : "+dto);
 		MemberDto result = MemberDao.getInstence().mview( dto );
 		
+		
 		ObjectMapper objectMapper = new ObjectMapper();
 		String json = objectMapper.writeValueAsString(result);
 		response.setContentType("application/json;charset=UTF-8");
