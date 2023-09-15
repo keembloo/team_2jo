@@ -14,19 +14,19 @@
 	<div class="container-xl">
 	        <!-- 로고 -->
 	        <a class="navbar-brand" href="index.jsp">
-	        	<img src="img/MainLogo.png" class="logoImg"> 	
+	        	<img src="/nichanaecha/img/MainLogo.png" class="logoImg"> 	
 	        </a>
 			
 	        <!-- 헤더 네비게이션 메뉴 -->
 	            <ul class="navbar-nav ml-end">
 	                <li class="nav-item active">
-	                    <a class="nav-link" href="#">회원가입</a>
+	                    <a class="nav-link" href="/nichanaecha/member/membersignup.jsp">회원가입</a>
 	                </li>
 	                <li class="nav-item">
-	                    <a class="nav-link" href="#">로그인</a>
+	                    <a class="nav-link" href="/nichanaecha/member/memberlogin.jsp">로그인</a>
 	                </li>
 	                <li class="nav-item">
-	                    <a class="nav-link" href="#">마이페이지</a>
+	                    <a class="nav-link" href="/nichanaecha/member/memberinfo.jsp">마이페이지</a>
 	                </li>
 	                <li class="nav-item">
 	                    <a class="nav-link" href="#">로그아웃</a>
