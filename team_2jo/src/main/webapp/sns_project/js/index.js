@@ -18,9 +18,12 @@ function onView(){
 			success : r => { //console.log(r);
 				// 배열명.forEach
 				r.list.forEach( b => {console.log(b.bno)
-					console.log("r.list : "+r.list)
+					//console.log("r.list : "+r.list)
+					//console.log("객체"+b.bcontent); //내용텍스트잡채
+					let tt = b.bcontent.split('');
 					
-					
+					tt.add[keyCount] = '\n';
+					console.log("tt"+tt);
 					html+= `<div class="contentbox">
 								<div class="img_area">
 									<img alt="이미지" src="img/${b.bfile}">
@@ -166,6 +169,7 @@ function cdelte(cno){
 	
 }//f()
 
+<<<<<<< HEAD
 // 다운로드[고연진]
 /*
 function ondownload(bno){ console.log('인수전달받음:'+bno)
@@ -181,4 +185,7 @@ function ondownload(bno){ console.log('인수전달받음:'+bno)
 */
 
 	
+=======
+
+>>>>>>> branch '김규리' of https://github.com/keembloo/team_2jo
 
