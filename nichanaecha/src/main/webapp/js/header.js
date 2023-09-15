@@ -1,1 +1,1 @@
-let loginMid = 2; // 로그인된회원번호
+let loginMid = -1;
