@@ -5,8 +5,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+	<link href="/nichanaecha/css/footer.css" rel="stylesheet">
 </head>
 <body>
+	<h2>푸터</h2>
 
 </body>
 </html>
