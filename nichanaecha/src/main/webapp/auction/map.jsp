@@ -9,11 +9,11 @@
 </head>
 <body>
 	<!-- jsp  파일안에 다른 jsp파일 import -->
-	<%@include file ="/nichanaecha/header.jsp" %>
+	<%@include file ="../header.jsp" %>
 
 
 
 	<!-- jsp  파일안에 다른 jsp파일 import -->
-	<%@include file ="footer.jsp" %>
+	<%@include file ="../footer.jsp" %>
 </body>
 </html>
