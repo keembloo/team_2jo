@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+
 import model.dao.MemberDao;
 import model.dto.MemberDto;
 
@@ -30,9 +33,10 @@ public class MemberFindController extends HttpServlet {
 
 	// 로그인 ( 세션저장 )
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		//1. 매개변수 요청
-		String mid = request.getParameter("mid");
-		String mpwd = request.getParameter("mpwd");
+		String mid = request.getParameter("mid"); System.out.println(mid);
+		String mpwd = request.getParameter("mpwd");System.out.println(mpwd);
 		//2. (객체화/유효성검사)
 		//3. DAO에게 전달후 결과 받기
 		boolean result = MemberDao.getInstence().login(mid, mpwd);

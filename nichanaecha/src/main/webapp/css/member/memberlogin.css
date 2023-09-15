@@ -1,11 +1,5 @@
 @charset "UTF-8";
 
-/* 웹 컨테이너 스타일 */
-.webcontainer {
-width: 1200px; /* 폼을 감싸는 컨테이너의 너비 설정 */
-margin: 0 auto; /* 가운데 정렬 */
-text-align: center; /* 내용 가운데 정렬 */
-}
 
 /* 회원가입 폼 스타일 */
 .signupForm {

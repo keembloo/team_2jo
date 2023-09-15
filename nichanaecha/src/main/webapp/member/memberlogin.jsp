@@ -13,7 +13,7 @@
 	<!-- jsp  파일안에 다른 jsp파일 import -->
 	<%@include file ="../header.jsp" %>
 	
-	<div class="webcontainer"><!-- 회원가입 전체구역 시작 -->
+	<div class="container-xl"><!-- 회원가입 전체구역 시작 -->
 		<form class="signupForm"><!-- 폼 전송시 각 input에 name속성 -->
 			아이디 : <input name="mid" class="mid" type="text">
 			<br/>
