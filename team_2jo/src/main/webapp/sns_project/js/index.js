@@ -35,8 +35,12 @@ function onView(){
 								<button onclick="update(${b.bno})" class="btn_update" type="button">수정</button>
 								<button onclick="ondelete(${b.bno})" class="btn_delete" type="button">삭제</button>
 								<button onclick="oncoment(${b.bno})" class="btn_coment" type="button">답글</button>
+<<<<<<< HEAD
 								<a href="/team_2jo/FileController?filename=${b.bfile}"><button class="btn_download" type="button">다운로드</button></a>
 								
+=======
+								<div class="haters"><img onclick="likeup(${b.bno})" src="/team_2jo/sns_project/img/like.png" width=20px> <h4>${b.blike}</h4> <img onclick="dislikeup(${b.bno})" src="/team_2jo/sns_project/img/dislike.png" width=20px> <h4>${b.bdislike}</h4> </div>
+>>>>>>> branch '정용상' of https://github.com/keembloo/team_2jo
 									<div class="reply">`
 									
 									for(let i=0; i<r.clist.length; i++){
@@ -89,6 +93,42 @@ function update(bno){
 		})
 }
 
+
+//좋아요 수 상승
+function likeup(bno){
+	
+	$.ajax({
+		url : "/team_2jo/SerchController",
+		method : "put",
+		data : {type : 'likeup', bno : bno},
+		success : r =>{
+			onView()
+		}
+		
+		
+	})
+	
+	
+	
+}
+
+//싫어요 수 상승
+function dislikeup(bno){
+	
+	$.ajax({
+		url : "/team_2jo/SerchController",
+		method : "put",
+		data : {type : 'dislikeup', bno : bno},
+		success : r =>{
+			onView()
+		}
+		
+		
+	})
+	
+	
+	
+}
 
 
 

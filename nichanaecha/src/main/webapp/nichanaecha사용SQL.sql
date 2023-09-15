@@ -32,10 +32,10 @@ cc int not null,                  #배기량
 coil varchar(20) not null,            #연료
 cname varchar(20) not null,            #차량명
 cdate varchar(20) not null,            #제조년월
-ckm int not null,                     #주행거리
+ckm int not null,               	   #주행거리
 cads varchar(50) not null,            #차량 등록 주소 
-clat varchar(50) not null,            # 차량 위치 위도
-clng varchar(50) not null,            # 차량 위치 경도
+clat varchar(50) not null,				# 차량 위치 위도
+clng varchar(50) not null,				# 차량 위치 경도
 mno int,
 primary key(cno),
 foreign key(mno) references member(mno) on delete cascade
@@ -60,7 +60,7 @@ astartdate datetime default now(),   #경매 등록 날짜
 aenddate datetime not null,         #경매 종료 날짜 
 aprice bigint not null,            #경매 등록 가격 
 astate tinyint default 0,       #경매 상태 [ 0: 경매중, 1:거래중(낙찰 후 판매자와 거래중) 2:경매 종료
-cno int,                         #매물 정보
+cno int,                	 	  #매물 정보
 primary key(ano),
 foreign key(cno) references car(cno) on delete no action
 );
@@ -86,19 +86,5 @@ primary key(wno),
 foreign key(mno) references member(mno) on delete cascade, 
 foreign key(ano) references auctionInfo(ano) on delete cascade 
 );
-
-
-
-
-
-
-
-
-
-
- 
-
-
-
 
 
