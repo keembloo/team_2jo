@@ -12,7 +12,6 @@
 	<%@include file ="header.jsp" %>
 
 
-
 	<!-- jsp  파일안에 다른 jsp파일 import -->
 	<%@include file ="footer.jsp" %>
 </body>
