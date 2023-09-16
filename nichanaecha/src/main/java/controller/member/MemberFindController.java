@@ -1,6 +1,7 @@
 package controller.member;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,10 +22,15 @@ public class MemberFindController extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 
-	
+	//아이디 중복검사[9월16일 고연진]
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		String type=request.getParameter("type");
+		String data=request.getParameter("data");
+		
+		boolean result=MemberDao.getInstence().dataCheck(type,data);
+		
+		response.setContentType("application/json;charset=UTF-8");
+		response.getWriter().print(result);
 	}
 
 
