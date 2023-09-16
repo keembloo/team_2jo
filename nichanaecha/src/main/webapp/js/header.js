@@ -16,13 +16,11 @@ function getMemberInfo(){
 				loginMid = '';
 				html += 
 					`<li class="nav-item active"><a class="nav-link" href="/nichanaecha/member/membersignup.jsp">회원가입</a></li>
-	                 <li class="nav-item"><a class="nav-link" href="/nichanaecha/member/memberlogin.jsp">로그인</a></li>
-	                 <li class="nav-item"><a class="nav-link" href="/nichanaecha/member/memberinfo.jsp">마이페이지</a></li>`;
+	                 <li class="nav-item"><a class="nav-link" href="/nichanaecha/member/memberlogin.jsp">로그인</a></li>`;
 			}else{//로그인
 				loginMid = r.mid;
 				html +=
-					`<li class="nav-item active"><a class="nav-link" href="/nichanaecha/member/membersignup.jsp">회원가입</a></li>
-	                 <li class="nav-item"><a onclick="logout()" class="nav-link" href="#">로그아웃</a></li>
+					`<li class="nav-item"><a onclick="logout()" class="nav-link" href="#">로그아웃</a></li>
 	                 <li class="nav-item"><a class="nav-link" href="/nichanaecha/member/memberinfo.jsp">마이페이지</a></li>`;
 			}
 			// 구성된 html 대입
