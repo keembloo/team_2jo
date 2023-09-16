@@ -13,9 +13,23 @@ public class MemberDto {
 		super();
 	}
 
+	//회원가입 시 사용 [9월15일 고연진]
+	
+	public MemberDto(String mid, String mpw, String mphone, String mname, String mads) {
+		super();
+		this.mid = mid;
+		this.mpw = mpw;
+		this.mphone = mphone;
+		this.mname = mname;
+		this.mads = mads;
+	}
+	
+	
 	public int getMno() {
 		return mno;
 	}
+
+
 
 	public void setMno(int mno) {
 		this.mno = mno;

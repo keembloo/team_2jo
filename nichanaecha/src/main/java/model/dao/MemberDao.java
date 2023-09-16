@@ -13,7 +13,27 @@ public class MemberDao extends Dao {
 		return null;
 	}
 	
-	// 1. 회원가입
+	// 1. 회원가입 [9월15일 고연진]
+	public boolean signup(MemberDto dto) {
+		try {
+			String sql = "insert into member(mid,mpw,mphone,mname,mads) values(?,?,?,?,?)";
+			ps=conn.prepareStatement(sql);
+			ps.setString(1,dto.getMid());
+			ps.setString(2, dto.getMpw());
+			ps.setString(3, dto.getMphone());
+			ps.setString(4, dto.getMname());
+			ps.setString(5, dto.getMads());
+			int count= ps.executeUpdate();
+			if(count==1) {
+				return true;
+			}
+			
+		} catch (Exception e) {System.out.println("Dao오류: "+e);}
+		
+	
+		return false;
+	}//f()
+	
 	
 	
 	

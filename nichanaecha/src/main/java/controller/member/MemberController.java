@@ -8,9 +8,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import model.dao.MemberDao;
 import model.dto.MemberDto;
@@ -52,10 +52,17 @@ public class MemberController extends HttpServlet {
 				"UTF-8",//인코딩타입
 				new DefaultFileRenamePolicy()//제목 자동 변경
 				);
-		String signupId= multi.getParameter(".signupId");
-		String signupPw= multi.getParameter(".signupPw");
-		String signupPhone= multi.getParameter(".signupPhone");
+		String mid= multi.getParameter("mid"); System.out.println("아이디: "+mid);
+		String mpw= multi.getParameter("mpw"); System.out.println("비밀번호: "+mpw);
+		String mphone= multi.getParameter("mphone"); System.out.println("폰번호: "+mphone);
+		String mname= multi.getParameter("mname"); System.out.println("이름: "+mname);
+		String mads= multi.getParameter("mads"); System.out.println("주소: "+mads);
 		
+		MemberDto dto = new MemberDto(mid, mpw, mphone, mname, mads); System.out.println("회원가입정보: "+dto);
+		boolean result= MemberDao.getInstence().signup(dto);
+		
+		response.setContentType("application/json;charset=UTF-8");
+		response.getWriter().print(result);
 		
 		
 	}
