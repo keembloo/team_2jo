@@ -17,20 +17,9 @@
 	        	<img src="img/MainLogo.png" class="logoImg"> 	
 	        </a>
 			
-	        <!-- 헤더 네비게이션 메뉴 -->
-	            <ul class="navbar-nav ml-end">
-	                <li class="nav-item active">
-	                    <a class="nav-link" href="#">회원가입</a>
-	                </li>
-	                <li class="nav-item">
-	                    <a class="nav-link" href="#">로그인</a>
-	                </li>
-	                <li class="nav-item">
-	                    <a class="nav-link" href="#">마이페이지</a>
-	                </li>
-	                <li class="nav-item">
-	                    <a class="nav-link" href="#">로그아웃</a>
-	                </li>
+	        <!-- 헤더 네비게이션 메뉴 : JS에서 로그인 상태에 따라 html 구성 대입-->
+	            <ul class="submenu navbar-nav ml-end">
+	                
 	            </ul>
 	</div> 
 	</nav>
