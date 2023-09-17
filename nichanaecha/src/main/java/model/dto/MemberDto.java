@@ -12,6 +12,17 @@ public class MemberDto {
 	public MemberDto() {
 		super();
 	}
+	
+	public MemberDto(int mno, String mid, String mpw, String mphone, String mname, String mads, int mcash) {
+		super();
+		this.mno = mno;
+		this.mid = mid;
+		this.mpw = mpw;
+		this.mphone = mphone;
+		this.mname = mname;
+		this.mads = mads;
+		this.mcash = mcash;
+	}
 
 	public int getMno() {
 		return mno;

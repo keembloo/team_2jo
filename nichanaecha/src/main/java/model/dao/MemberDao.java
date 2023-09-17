@@ -1,5 +1,7 @@
 package model.dao;
 
+import java.time.LocalDateTime;
+
 import model.dto.MemberDto;
 
 public class MemberDao extends Dao {
@@ -8,10 +10,54 @@ public class MemberDao extends Dao {
 	private MemberDao() {}
 	
 	
-	//규리
+	//규리 정보호출
 	public MemberDto mview( int dto) {
+		/*
+		#마이페이지 출력을 위한 join
+		select * from member
+		inner join car on member.mno = car.mno
+		inner join auctionInfo on car.cno = auctionInfo.cno
+		where member.mno = 3;
+		*/
+		try {
+			String sql ="select * from member where mno = ?";
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, dto);
+			rs = ps.executeQuery();
+			if ( rs.next()) {
+				MemberDto memberDto = new MemberDto(
+						rs.getInt(1), rs.getString(2), 
+						rs.getString(3) , rs.getString(4) , 
+						rs.getString(5) , rs.getString(6) , 
+						rs.getInt(7));
+				
+				return memberDto;
+			}
+		} catch (Exception e) {System.out.println(e);}
 		return null;
 	}
+	
+	public boolean PointUpdate( int type ,  int mno , int gold ) {
+		try {
+			String sign = "";
+			if (type ==1) { // 입금
+				sign = "+";
+			} else if (type ==2){ // 출금
+				sign = "-";
+			}
+			//System.out.println("기호 :"+sign);
+			String sql ="update member set mcash = mcash "+sign+"? where mno = ?";
+			ps = conn.prepareStatement(sql);
+			ps.setInt(2, mno);
+			ps.setInt(1, gold);
+			int result = ps.executeUpdate();
+			if (result==1) {
+				return true;
+			}
+		} catch (Exception e) {System.out.println(e);}
+		return false;
+	}
+	
 	
 	// 1. 회원가입
 	
