@@ -22,12 +22,13 @@ public class MemberFindController extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 
-	//아이디 중복검사[9월16일 고연진]
+	//아이디/이메일 중복검사[9월16일 고연진]
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String type=request.getParameter("type");
-		String data=request.getParameter("data");
+		String type=request.getParameter("type"); System.out.println("중복체크타입"+type);
+		String data=request.getParameter("data");System.out.println("중복체크데이터"+data);
 		
 		boolean result=MemberDao.getInstence().dataCheck(type,data);
+		System.out.println("Dao결과: "+result);
 		
 		response.setContentType("application/json;charset=UTF-8");
 		response.getWriter().print(result);

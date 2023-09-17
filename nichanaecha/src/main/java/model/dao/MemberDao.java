@@ -63,12 +63,6 @@ public class MemberDao extends Dao {
 	
 	
 	
-	
-	
-	
-	
-	
-	
 	// 2. 로그인
 	public boolean login( String mid, String mpwd) {
 		try {
@@ -92,4 +86,18 @@ public class MemberDao extends Dao {
 	}
 	
 	
+	
+	// 중복성검사 [9월18일 고연진]
+	
+	public boolean dataCheck(String type, String data) {
+		try {
+			String sql="select * from member  where "+ type + " = ?";
+			ps=conn.prepareStatement(sql);
+			ps.setString(1, data);
+			rs=ps.executeQuery();
+			
+			if(rs.next()) {return true;}
+		} catch (Exception e) { System.out.println( "Dao오류: "+e);}
+		return false;
+	}
 }
