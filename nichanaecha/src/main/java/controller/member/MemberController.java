@@ -1,6 +1,7 @@
 package controller.member;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,6 +15,7 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import model.dao.MemberDao;
 import model.dto.MemberDto;
+import model.dto.MypageDto;
 
 /**
  * Servlet implementation class MemberController
@@ -37,7 +39,7 @@ public class MemberController extends HttpServlet {
 		MemberDto dto = (MemberDto) request.getSession().getAttribute("loginDto");
 		int mno = dto.getMno();
 		//System.out.println("로그인 세션 상태 : "+dto);
-		MemberDto result = MemberDao.getInstence().mview( mno );
+		ArrayList<MypageDto> result = MemberDao.getInstence().mview( mno );
 		
 		//System.out.println("컨트롤러 result : "+result);
 		ObjectMapper objectMapper = new ObjectMapper();
