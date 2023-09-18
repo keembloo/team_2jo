@@ -1,14 +1,14 @@
 
 // 1. 현재 로그인된 회원정보 요청
 let loginMid = '';	// 로그인 성공된 아이디를 가지고 있는 변수 
-console.log('회원번호'+loginMid);
 getMemberInfo();
+console.log('회원번호'+loginMid);
 function getMemberInfo(){
 	//ajax 이용한 서블릿세션 정보 가져오기
 	$.ajax({
 		url : "/nichanaecha/MemberFindController",
 		method : "get",
-		asyno : false,		// 비동기화(기본값=true), 동기화(false) 설정하는 속성 (우선적인 ajax실행 응답이 필요할때)
+		async : false,		// 비동기화(기본값=true), 동기화(false) 설정하는 속성 (우선적인 ajax실행 응답이 필요할때)
 		data : { type : "info" },
 		success : r => { console.log(r); 
 			let submenu = document.querySelector('.submenu')

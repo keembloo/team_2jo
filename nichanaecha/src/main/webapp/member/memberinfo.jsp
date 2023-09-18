@@ -11,7 +11,7 @@
 	<%@include file ="../header.jsp" %>
 	
 	<div class="container-xl"> <!-- 전체구역  -->
-		<!-- js출력 -->
+		
 	</div> <!-- 전체구역 end -->
 
 
