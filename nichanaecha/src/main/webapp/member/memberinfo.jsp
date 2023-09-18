@@ -11,7 +11,22 @@
 	<%@include file ="../header.jsp" %>
 	
 	<div class="container-xl"> <!-- 전체구역  -->
-		<!-- js출력 -->
+		<div class="lInfo"> <!-- 왼쪽정보 -->
+			<!-- js출력 -->
+		</div>
+		
+		<div class="rInfo"> <!-- 오른쪽정보 -->
+			<!-- js출력 -->
+		</div>
+		
+		<div class="bottomInfo"> <!-- 등록매물정보 -->
+			<!-- js출력 -->
+		</div>
+		
+		<div class="autionInfo"> <!-- 입찰매물정보 -->
+			<!-- js출력 -->
+		</div>
+		
 	</div> <!-- 전체구역 end -->
 
 

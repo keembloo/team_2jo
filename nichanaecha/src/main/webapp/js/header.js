@@ -8,7 +8,7 @@ function getMemberInfo(){
 	$.ajax({
 		url : "/nichanaecha/MemberFindController",
 		method : "get",
-		asyno : false,		// 비동기화(기본값=true), 동기화(false) 설정하는 속성 (우선적인 ajax실행 응답이 필요할때)
+		async : false,		// 비동기화(기본값=true), 동기화(false) 설정하는 속성 (우선적인 ajax실행 응답이 필요할때)
 		data : { type : "info" },
 		success : r => { console.log(r); 
 			let submenu = document.querySelector('.submenu')
