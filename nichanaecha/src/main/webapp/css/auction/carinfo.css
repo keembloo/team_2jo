@@ -1,1 +1,15 @@
 @charset "UTF-8";
+*div{border: 1px solid red;}
+.allBox{display: flex; flex-direction: column;}
+
+/*이미지, 경매상황*/
+.middle{display:flex; flex-direction: row; justify-content: space-around; }
+/*경매상황*/
+.rightBox{display: flex; flex-direction: column;}
+.rightBox p{display: inline;}
+/*경매가*/
+.auctionPayBox{display: flex; flex-direction: row; justify-content: space-around;}
+.auction li{display: inline;}
+/*스크랩,입찰 나누기*/
+.buttonBox{display: flex; flex-direction: row; justify-content: flex-end;}
+/*매물상세안내*/
