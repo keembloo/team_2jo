@@ -129,14 +129,17 @@ public class MemberDao extends Dao {
 	// 5. 내정보 호출 
 	public MemberDto info( String mid ) {
 		try {
-			String sql="select mno, mid from member where mid = ?";
+			String sql="select mno, mid ,mname , mads from member where mid = ?";
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, mid);
 			rs=ps.executeQuery();
-			if( rs.next() ) {
-				MemberDto memberDto = new MemberDto(
-						rs.getInt(1), rs.getString(2));
-						
+			if (rs.next()) {
+				MemberDto memberDto = new MemberDto();
+				memberDto.setMno(rs.getInt(1));
+				memberDto.setMid(rs.getString(2));
+				memberDto.setMname(rs.getString(3));
+				memberDto.setMads(rs.getString(4));
+
 				return memberDto;
 			}
 		}catch (Exception e) {System.out.println(e);}

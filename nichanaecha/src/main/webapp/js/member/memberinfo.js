@@ -1,10 +1,16 @@
 console.log('마이페이지');
+console.log(loginMid);
 mview();
-
 
 function mview(){
 	// 로그인된 회원번호 전달 하거나 컨트롤러에서 세션으로 불러와야함 ! 
-	if (loginMid > 0) { // 로그인된 상태면
+	console.log(loginMid);
+	if (loginMid == '') {
+		alert('로그인된 회원만 볼수 있습니다. 로그인페이지로 돌아갑니다.');
+		//location.href='/nichanaecha/member/memberlogin.jsp';
+		return;
+	 }// 로그인된 상태면} 
+		
 		$.ajax({
 			url : "/nichanaecha/MemberController" , 
 			method : "get" ,
@@ -41,12 +47,9 @@ function mview(){
 			} , 
 			error : e => {console.log("실패");}		
 		})
-	} else {
-		alert('로그인된 회원만 볼수 있습니다. 로그인페이지로 돌아갑니다.');
-		location.href='/nichanaecha/member/memberlogin.jsp';
-	}
 }
 
+// 규리 입금
 function inputPoint(mno){
 	//console.log('입금실행');
 	let gold = prompt('입금하실 금액을 입력해주세요');
@@ -67,7 +70,7 @@ function inputPoint(mno){
 }
 
 
-
+// 규리 출금
 function outputPoint(mno , mcash){
 	//console.log('출금실행');
 	let gold = prompt('출금하실 금액을 입력해주세요');

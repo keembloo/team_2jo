@@ -1,6 +1,7 @@
 
 // 1. 현재 로그인된 회원정보 요청
 let loginMid = '';	// 로그인 성공된 아이디를 가지고 있는 변수 
+console.log('회원번호'+loginMid);
 getMemberInfo();
 function getMemberInfo(){
 	//ajax 이용한 서블릿세션 정보 가져오기

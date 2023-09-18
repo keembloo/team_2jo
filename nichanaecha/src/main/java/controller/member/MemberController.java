@@ -31,12 +31,13 @@ public class MemberController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 규리 마이페이지 출력
 		// System.out.println("컨트롤러연결");
-		int loginDto = 3; //임시테스트
-		request.getSession().setAttribute("loginDto", loginDto ); //임시테스트 세션에 로그인회원번호넣어놓기
+		//int loginDto = 3; //임시테스트
+		//request.getSession().setAttribute("loginDto", loginDto ); //임시테스트 세션에 로그인회원번호넣어놓기
 		//System.out.println("loginDto : "+loginDto);
-		int dto = (int) request.getSession().getAttribute("loginDto");
+		MemberDto dto = (MemberDto) request.getSession().getAttribute("loginDto");
+		int mno = dto.getMno();
 		//System.out.println("로그인 세션 상태 : "+dto);
-		MemberDto result = MemberDao.getInstence().mview( dto );
+		MemberDto result = MemberDao.getInstence().mview( mno );
 		
 		//System.out.println("컨트롤러 result : "+result);
 		ObjectMapper objectMapper = new ObjectMapper();
