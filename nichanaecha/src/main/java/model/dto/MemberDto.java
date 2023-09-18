@@ -12,6 +12,17 @@ public class MemberDto {
 	public MemberDto() {
 		super();
 	}
+	
+	public MemberDto(int mno, String mid, String mpw, String mphone, String mname, String mads, int mcash) {
+		super();
+		this.mno = mno;
+		this.mid = mid;
+		this.mpw = mpw;
+		this.mphone = mphone;
+		this.mname = mname;
+		this.mads = mads;
+		this.mcash = mcash;
+	}
 
 	//회원가입 시 사용 [9월15일 고연진]
 	

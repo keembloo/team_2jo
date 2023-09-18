@@ -9,13 +9,9 @@
 <body>
 	<!-- jsp  파일안에 다른 jsp파일 import -->
 	<%@include file ="../header.jsp" %>
-	<div> <!-- 전체구역  -->
-		<div></div> <!-- 회원정보 구역 -->
-		<div>
-			<div></div> <!-- 포인트구역 -->
-			<div></div> <!-- 등록매물정보구역 -->
-			<div></div> <!-- 입찰매물정보구역 -->
-		</div> <!-- 컨텐츠구역 -->
+	
+	<div class="container-xl"> <!-- 전체구역  -->
+		<!-- js출력 -->
 	</div> <!-- 전체구역 end -->
 
 
@@ -24,3 +20,28 @@
 	<script src="/nichanaecha/js/member/memberinfo.js" type="text/javascript"></script>
 </body>
 </html>
+
+<!-- 		<div class="mInfo"> 
+			<div>id : admin3333</div>
+			<div>전화번호 : 010-111-4444</div>
+			<div>등록 차량 대수 : 2대</div>
+			<div>입찰 차량 대수 : 2대</div>
+		</div> 
+		
+		<div>	
+			<div> 
+				<div>이성호님</div>
+				<div>보유 포인트 : 43,000,000원</div>
+				<button onclick="inputPoint()" type=button>입금</button>
+				<button onclick="outputPoint()" type=button>출금</button>
+			</div> 
+			<div> 
+				<div> 
+					<div>차량이미지</div>
+					<div>등록번호 : 12321</div>
+				</div>
+			</div> 
+			<div> 
+			</div> 
+		</div> 
+		 -->
