@@ -108,11 +108,13 @@ public class MemberDao extends Dao {
 	
 	
 	// 2. 로그인
-	public boolean login( String mid, String mpwd) {
+	public boolean login( String mid, String mpw) {
 		try {
-			String sql = "";
-		
-			
+			String sql = "select * from member where mid = ? and mpw = ?";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, mid); 	ps.setString(2, mpw);
+			rs = ps.executeQuery();
+			if(rs.next()) return true;		
 		}catch (Exception e) {System.out.println(e);}
 		return false;
 	}
@@ -126,6 +128,18 @@ public class MemberDao extends Dao {
 	
 	// 5. 내정보 호출 
 	public MemberDto info( String mid ) {
+		try {
+			String sql="select mno, mid from member where mid = ?";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, mid);
+			rs=ps.executeQuery();
+			if( rs.next() ) {
+				MemberDto memberDto = new MemberDto(
+						rs.getInt(1), rs.getString(2));
+						
+				return memberDto;
+			}
+		}catch (Exception e) {System.out.println(e);}
 		return null;
 	}
 	

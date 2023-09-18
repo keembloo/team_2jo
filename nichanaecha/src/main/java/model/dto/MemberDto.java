@@ -9,6 +9,17 @@ public class MemberDto {
 	private String mads;	//회원 주소 
 	private int mcash;		//회원 보유 금액 
 	
+	//내정보 호출 생성자
+	public MemberDto(int mno, String mid) {
+		super();
+		this.mno = mno;
+		this.mid = mid;
+	}
+
+	
+	
+	
+	
 	public MemberDto() {
 		super();
 	}

@@ -20,7 +20,7 @@ let idcheck=/^(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z0-9]{4,20}$/
 		$.ajax({
 		      	url : "/nichanaecha/MemberFindController",     
 		     	method : "get",   
-		     	data : {data:mid , type:"mid"},      
+		     	data : {data:mid , type:"check" , option:"mid" },      
 		      	success : r=>{console.log('아이디유효성검사 true면 불통'+r)
 		      		if(r){
 						  html.innerHTML=`이미 있는 아이디입니다`;
@@ -46,7 +46,7 @@ function phonecheck(){
 		$.ajax({
       		url : "/nichanaecha/MemberFindController",     
      		method : "get",   
-     		data : {data:mphone , type:"mphone"},      
+     		data : {data:mphone , type:"check" , option:"mphone"},      
       		success : r=>{console.log('통신성공'+r)
       		if(r){
 				  valphone.innerHTML=`다른 번호를 이용해주세요`;
