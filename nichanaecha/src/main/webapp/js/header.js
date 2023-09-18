@@ -21,7 +21,8 @@ function getMemberInfo(){
 			}else{//로그인
 				loginMid = r.mid;
 				html +=
-					`<li class="nav-item"><a onclick="logout()" class="nav-link" href="#">로그아웃</a></li>
+					`<li class="nav-item nav-link"> ${ r.mid } 님 </li>
+					 <li class="nav-item"><a onclick="logout()" class="nav-link" href="#">로그아웃</a></li>
 	                 <li class="nav-item"><a class="nav-link" href="/nichanaecha/member/memberinfo.jsp">마이페이지</a></li>`;
 			}
 			// 구성된 html 대입
