@@ -1,6 +1,7 @@
 package controller.auction;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,7 +13,6 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import model.dao.AuctionDao;
 import model.dto.AuctionDto;
-import model.dto.MemberDto;
 
 
 @WebServlet("/AuctionController")
@@ -25,9 +25,14 @@ public class AuctionController extends HttpServlet {
     }
 
 	
+    
+    
+    
+    //상세페이지조회 [9월19일 고연진]   
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		int ano= Integer.parseInt(request.getParameter("ano"));
+		boolean result= AuctionDao.getInstence().auctionPrint(ano);
+	
 	}
 
 	

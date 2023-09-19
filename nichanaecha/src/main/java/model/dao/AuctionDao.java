@@ -18,4 +18,22 @@ public class AuctionDao extends Dao {
 		}catch (Exception e) {System.out.println(e);}
 		return false;
 	}
-}
+	
+	
+	//2. 게시물 상세조회 [9월19일 고연진]
+	public boolean auctionPrint(int ano) {
+		try {
+			String sql="";
+			ps=conn.prepareStatement(sql);
+			ps.executeQuery();
+			
+		} catch (Exception e) {System.out.println("Dao- auctionPrint()오류"+e);}
+		
+		
+		
+		return false;
+	}
+	
+	
+	
+}//c

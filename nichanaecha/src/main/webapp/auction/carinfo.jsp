@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 	<link href="/nichanaecha/css/auction/carinfo.css" rel="stylesheet">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 </head>
 <body>
 	<!-- jsp  파일안에 다른 jsp파일 import -->
@@ -29,9 +30,7 @@
 					</div>
 
 				</div>
-				<div>
-					<p>종료</p>
-					<p>13시간전</p>
+				<div><p>종료</p><p>13시간전</p>
 				</div>
 				<div class="buttonBox">
 					<button type="button">스크랩</button>
@@ -45,23 +44,7 @@
 		
 		<div class="bottom"><!-- 매물상세안내 -->
 			<p>매물상세안내</p>
-			<table>
-				<tr>
-					<th>제조사</th>
-					<th>제조년월</th>
-					<th>주행거리</th>
-					<th>차량명</th>
-					<th>차종</th>
-				</tr>
-				
-				<tr>
-					<td>부가티</td>
-					<td>22년03월</td>
-					<td>26,000KM</td>
-					<td>부가티시론</td>
-					<td>슈퍼카</td>
-				</tr>
-			</table>
+		
 		</div>
 		
 		
