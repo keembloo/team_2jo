@@ -1,2 +1,28 @@
 @charset "UTF-8";
 
+.card {
+	width: 200px !important; 
+	height: 200px !important;
+}
+
+
+.carousel-inner {
+    position: relative;
+    padding: 0 20px;
+
+  }
+
+
+.cbtnCss{
+  position: relative !important;
+  top: 50%;
+  left: -45px !important;
+  transform: translateY(-50%);
+  z-index: 1; /* 이미지 위에 나타나도록 설정 */
+  width: 0 !important;
+}
+
+/* 버튼의 색상을 블랙으로 지정 */
+.carousel-control-prev-icon, .carousel-control-next-icon {
+  background-color: black;
+}

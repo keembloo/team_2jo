@@ -49,8 +49,11 @@ public class MypageController extends HttpServlet {
 	    	
 		}else if (type.equals("myAuctionView")) {	// myAuctionView() 등록매물정보 출력
 			ArrayList<AuctionDto> result = MypageDao.getInstence().myAuctionView( mno );
+			ObjectMapper objectMapper = new ObjectMapper();
+			String json = objectMapper.writeValueAsString(result);
+			response.setContentType("application/json;charset=UTF-8");
+	    	response.getWriter().print(json);
 			
-			// 다오에서 받아서 리턴해야함
 			
 		}
 		

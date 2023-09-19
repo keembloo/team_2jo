@@ -68,14 +68,16 @@ function mview(){
 // 규리 등록매물정보 출력
 function myAuctionView(){
 	let autionInfo = document.querySelector('.autionInfo');
-	
+	let html ='';
 	$.ajax({
 			url : "/nichanaecha/MypageController" , 
 			method : "get" ,
 			data : { type : "myAuctionView" } ,
 			success : r => { //console.log("js연결성공");
-				
-				
+				//console.log(r);
+				r.forEach({ a => {
+					html += 
+				});
 			} , 
 			error : e => {console.log("실패"+e);}
 		})
