@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
@@ -32,9 +33,16 @@ public class AuctionController extends HttpServlet {
     //상세페이지조회 [9월19일 고연진]   
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int ano= Integer.parseInt(request.getParameter("ano"));
+		System.out.println("controller 들어옴 > ano:  "+ano);
 		List<AuctionDto> result= AuctionDao.getInstence().auctionPrint(ano);
+		System.out.println("출력 관련 dto 리스트: "+result);
+		System.out.println("imglist가져옴? ");
+		ObjectMapper mapper=new ObjectMapper(); 
+		String jsonArray= mapper.writeValueAsString(result);
+		System.out.println("jackson사용: "+jsonArray);
+		
 		response.setContentType("application/json;charset=UTF-8");
-		response.getWriter().print(result);
+		response.getWriter().print(jsonArray);
 	}
 
 	

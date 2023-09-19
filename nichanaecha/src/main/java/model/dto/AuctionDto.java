@@ -11,17 +11,20 @@ public class AuctionDto {
 	
 	
 	//출력시 사용할 필드 [9월19일 고연진]
-	private String ccompany;
-	private String csize;
-	private int cc;	
-	private String coil;
-	private String cname;
-	private String cdate;
-	private int ckm;
-	private String cads;
+	private int cno; //차고유번호
+	private String ccompany; // 제조사
+	private String csize; //차량종류(차종)
+	private int cc;	//배기량
+	private String coil; //연료
+	private String cname;//차량명
+	private String cdate;//제조연도(연식)
+	private int ckm;//주행거리
+	private String cads;//차량등록주소
 	
 	
 	//추가 getter/setter [9월19일 고연진]
+	public int getCno() {return cno;}
+	public void setCno(int cno) {this.cno = cno;}
 	public String getCcompany() {return ccompany;}
 	public void setCcompany(String ccompany) {this.ccompany = ccompany;}
 	public String getCsize() {return csize;}

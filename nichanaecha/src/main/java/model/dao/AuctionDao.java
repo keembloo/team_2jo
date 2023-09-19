@@ -30,7 +30,7 @@ public class AuctionDao extends Dao {
 	public List<AuctionDto> auctionPrint(int ano) {
 		List<AuctionDto> list= new ArrayList<>();
 		try {
-			String sql="select ccompany,csize,cc,coil,cname,cdate,ckm,cads,atitle,acontent,astartdate,aenddate,aprice from car c natural join auctioninfo  where ano=?";
+			String sql="select cno, ccompany,csize,cc,coil,cname,cdate,ckm,cads,atitle,acontent,astartdate,aenddate,aprice from car c natural join auctioninfo  where ano=?";
 			ps=conn.prepareStatement(sql);
 			ps.setInt(1, ano);
 			rs= ps.executeQuery();
@@ -44,6 +44,8 @@ public class AuctionDao extends Dao {
 						}//w
 				
 				AuctionDto dto= new AuctionDto();
+				dto.setAno(ano);
+				dto.setCno(rs.getInt("cno"));
 				dto.setCcompany(rs.getString("ccompany"));
 				dto.setCsize(rs.getString("csize"));
 				dto.setCc(rs.getInt("cc"));

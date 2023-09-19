@@ -14,10 +14,23 @@
 
 	<div class="container-xl allBox"><!-- 전체 구역 -->
 	
-		<div class="top">22년식 부가티 시론</div>
+		<div class="top atitle">22년식 부가티 시론</div>
 		
 		<div class="middle"><!-- 이미지, 경매상황 -->
-			<div>이미지</div>
+			<!-- 이미지( 캐러셀 시작) -->
+			<div id="carouselExample" class="carousel slide">
+				<div class="imgbox carousel-inner">
+					<!-- carousel-inner : 캐러셀 안에 넣을 이미지 목록 구역   -->
+					<!-- carousel-item : 이미지1개당 / active : 현재 보고있는 이미지를 표현해주는 css클래스명  -->
+				</div>
+				
+			
+			</div>
+			<!-- 이미지 캐러셀 끝 -->
+			
+			
+			
+			
 			<div class="rightBox"><!-- 경매상황 -->
 				<div><p>현재입찰가</p><p>177,000,000</p><p>만원</p></div>
 				<div class="auctionPayBox">
@@ -44,7 +57,74 @@
 		
 		<div class="bottom"><!-- 매물상세안내 -->
 			<p>매물상세안내</p>
-		
+			
+			<div class="detailBox">
+				<div class="box1">
+					<div class="ccompanyBox">
+						<ul>
+							<li>제조사</li>
+							<li class="ccompany"></li>
+						</ul>
+					</div>
+					<div class="csizeBox">
+						<ul>
+							<li>차종</li>
+							<li class="csize"></li>
+						</ul>
+					</div>
+					<div class="cnameBox">
+						<ul>
+							<li>차량명</li>
+							<li class="cname"></li>
+						</ul>
+					</div>
+				</div>
+				
+				<div class="box2">
+					<div class="coilBox">
+						<ul>
+							<li>연료</li>
+							<li class="coil"></li>
+						</ul>
+					</div>
+					<div class="ccBox">
+						<ul>
+							<li>배기량</li>
+							<li class="cc"></li>
+						</ul>
+					</div>
+					<div class="cdateBox">
+						<ul>
+							<li>연식</li>
+							<li class="cdate"></li>
+						</ul>
+					</div>
+				</div>
+				
+				<div class="box3">
+					<div class="ckmBox">
+						<ul>
+							<li>주행거리</li>
+							<li class="ckm"></li>
+						</ul>
+					</div>
+					<div class="cadsBox">
+						<ul>
+							<li>차량등록주소</li>
+							<li class="cads"></li>
+						</ul>
+					</div>
+					<div class="#">
+						<ul>
+							<li></li>
+							<li></li>
+						</ul>
+					</div>
+				</div>
+				
+			</div><!-- detailBox -->
+			
+			<div class="acontent">경매내용</div>
 		</div>
 		
 		
@@ -58,5 +138,6 @@
 
 	<!-- jsp  파일안에 다른 jsp파일 import -->
 	<%@include file ="../footer.jsp" %>
+	<script src="../js/auction/carinfo.js" type="text/javascript"></script>
 </body>
 </html>
