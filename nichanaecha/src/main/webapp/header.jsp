@@ -14,7 +14,7 @@
 	<div class="container-xl">
 	        <!-- 로고 -->
 	        <a class="navbar-brand" href="index.jsp">
-	        	<img src="img/MainLogo.png" class="logoImg"> 	
+	        	<img src="/nichanaecha/img/MainLogo.png" class="logoImg"> 	
 	        </a>
 			
 	        <!-- 헤더 네비게이션 메뉴 : JS에서 로그인 상태에 따라 html 구성 대입-->
