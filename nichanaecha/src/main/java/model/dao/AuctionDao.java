@@ -10,7 +10,8 @@ public class AuctionDao extends Dao {
 	// 1.차 등록 성호
 	public boolean bcarsubmit(AuctionDto auctionDto) {
 		try {
-			String sql= "";
+			String sql= "insert into member(cno,ccompany,cnum,csize,cc,coil,cname,cdate,ckm,cads) "
+					+ " values(?,?,?,?,?,?,?,?,?)";
 			ps = conn.prepareStatement(sql);
 			
 			

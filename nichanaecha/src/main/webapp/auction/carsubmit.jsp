@@ -24,7 +24,7 @@
 					제조년월 : 		<input type="text" class="cdate">		<br/>
 					KM : 			<input type="text" class="ckm">			<br/>
 					차량 등록 주소 : 	<div id="map" style="width:300px;height:350px;"></div>
-					<p><em>지도를 클릭해주세요!</em></p> 
+									<p><em>지도를 클릭해주세요!</em></p> 
 									<div id="clickLatlng"></div>
 					차량 사진 : 		<div class="fileDropBox" style="width: 300px; height: 100px; border: 1px solid red;" >
 										여기에 드래그 해서 파일을 올려주세요.
