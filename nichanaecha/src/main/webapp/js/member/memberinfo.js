@@ -18,32 +18,34 @@ function mview(){
 			async : false,
 			data : {} ,
 			success : r => { //console.log("js연결성공");
-				console.log('r.mno : '+r.mno);
+				//console.log('r.mno : '+r.mno);
+				console.log('r: '+r);
+				console.log('r[0].mno : '+r[0].mno);
 				let rInfo = document.querySelector('.rInfo');
 				let lInfo = document.querySelector('.lInfo');
 				let bottomInfo = document.querySelector('.bottomInfo');
 				let autionInfo = document.querySelector('.autionInfo');
 				
-				lInfo.innerHTML = `<div>id : ${r.mid}</div>
-								   <div>전화번호 : ${r.mphone}</div>
+				lInfo.innerHTML = `<div>id : ${r[0].mid}</div>
+								   <div>전화번호 : ${r[0].mphone}</div>
 								   <div>등록 차량 대수 : 2대(추후해야함)</div>
 								   <div>입찰 차량 대수 : 2대(추후해야함)</div>`;
 						
-				rInfo.innerHTML = `<div>${r.mname}님</div>
-							<div>보유 포인트 : ${r.mcash}원</div>
-							<button onclick="inputPoint(${r.mno})" type=button>입금</button>
-							<button onclick="outputPoint(${r.mno},${r.mcash})" type=button>출금</button>`;
+				rInfo.innerHTML = `<div>${r[0].mname}님</div>
+							<div>보유 포인트 : ${r[0].mcash}원</div>
+							<button onclick="inputPoint(${r[0].mno})" type=button>입금</button>
+							<button onclick="outputPoint(${r[0].mno},${r[0].mcash})" type=button>출금</button>`;
 							
 				bottomInfo.innerHTML = `<div>
 											<div>등록 매물 정보</div>
 											<div>차량이미지</div>
-											<div>등록번호 : 12321</div>
+											<div>차량 등록번호 : ${r[0].cno}</div>
 										</div>`;			
 							
 				autionInfo.innerHTML = `<div>
 											<div>입찰 매물 정보</div>
 											<div>차량이미지</div>
-											<div>등록번호 : 12321</div>
+											<div>등록번호 : </div>
 										</div>`;			
 
 				
