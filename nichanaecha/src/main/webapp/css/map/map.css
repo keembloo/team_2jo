@@ -1,0 +1,23 @@
+@charset "EUC-KR";
+
+
+.carType{
+	background: white;
+	color: black;
+	
+	
+}
+
+
+.dropmenu{ /* 드랍메뉴 크기 */
+	width: 300px;
+	height: 200px;
+	
+	
+}
+
+.dropbutton{
+	width: 150px;
+	
+	
+}
