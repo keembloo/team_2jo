@@ -13,7 +13,7 @@
 	<nav class="navbar navbar-expand-lg navbar-light">
 	<div class="container-xl">
 	        <!-- 로고 -->
-	        <a class="navbar-brand" href="index.jsp">
+	        <a class="navbar-brand" href="/nichanaecha/index.jsp">
 	        	<img src="/nichanaecha/img/MainLogo.png" class="logoImg"> 	
 	        </a>
 			
