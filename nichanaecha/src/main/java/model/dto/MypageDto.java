@@ -1,7 +1,7 @@
 package model.dto;
 //마이페이지 호출을 위한 DTO
 public class MypageDto {
-	/*
+	
     private MemberDto memberDto;
     private AuctionDto auctionDto;
     private CarDto carDto;
@@ -53,9 +53,9 @@ public class MypageDto {
 		return "MypageDto [memberDto=" + memberDto + ", auctionDto=" + auctionDto + ", carDto=" + carDto + "]";
 	}
 	
-	*/
 	
 	
+	/*
 	// 멤버
 	private int mno;			//회원번호
 	private String mid;			//회원 아이디
@@ -395,4 +395,5 @@ public class MypageDto {
 				+ atitle + ", acontent=" + acontent + ", astartdate=" + astartdate + ", aenddate=" + aenddate
 				+ ", aprice=" + aprice + ", astate=" + astate + "]";
 	}
+	*/
 }

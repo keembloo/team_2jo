@@ -26,11 +26,12 @@ public class MemberDao extends Dao {
 			rs = ps.executeQuery();
 			System.out.println("sql"+sql);
 			while ( rs.next()) {
-				MypageDto mypageDto = new MypageDto(
-				/*
+				MypageDto mypageDto = new MypageDto();
+				
 					    // 회원 정보 설정
-					    mypageDto.setMemberDto(null); setMno(rs.getInt("mno"));
-					    mypageDto.setMid(rs.getString("mid"));
+						mypageDto.setMno(rs.getInt("mno"));
+					   /*
+						mypageDto.setMid(rs.getString("mid"));
 					    mypageDto.setMpw(rs.getString("mpw"));
 					    mypageDto.setMphone(rs.getString("mphone"));
 					    mypageDto.setMname(rs.getString("mname"));
@@ -60,7 +61,7 @@ public class MemberDao extends Dao {
 					    mypageDto.setAprice(rs.getInt("aprice"));
 					    mypageDto.setAstate(rs.getInt("astate"));
 					    */
-						
+						/*
 						//회원
 						rs.getInt("mno"), rs.getString("mid"), rs.getString("mpw"),
 						rs.getString("mphone"), rs.getString("mname"), rs.getString("mads"), 
@@ -75,7 +76,7 @@ public class MemberDao extends Dao {
 						rs.getString("astartdate") , rs.getString("aenddate") ,
 						rs.getInt("aprice") , rs.getInt("astate"));
 						
-						
+						*/
 
 				list.add(mypageDto);
 			}
