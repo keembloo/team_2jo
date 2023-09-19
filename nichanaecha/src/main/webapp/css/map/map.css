@@ -17,7 +17,26 @@
 }
 
 .dropbutton{
-	width: 150px;
+	width: 100%;
+	
+	
+}
+
+.optionArea{
+	border: 1px solid #e8e8e8;
+	
+	
+}
+
+.carSearch {
+    font-size: 15px;
+    font-family: "¸¼Àº °íµñ";
+    font-weight: bold;
+    padding: 5px 10px;
+}
+
+.carSearch:focus{
+	outline: none;
 	
 	
 }
