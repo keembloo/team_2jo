@@ -11,22 +11,33 @@
 	<%@include file ="../header.jsp" %>
 	
 	<div class="container-xl"> <!-- 전체구역  -->
-		<div class="lInfo"> <!-- 왼쪽정보 -->
-			<!-- js출력 -->
+		<div class="row">
+			<div class="lInfo nav flex-column col-3"> <!-- 사이드바 -->
+			  <a class="nav-link active" aria-current="page" href="#">내정보</a>
+			  <a class="nav-link" href="#">포인트입출금내역</a>
+			  <a class="nav-link" href="#">등록차량정보</a>
+			  <a class="nav-link disabled" aria-disabled="true">입찰매물정보</a>
+			  <a class="nav-link disabled" aria-disabled="true">찜목록</a>
+			</div>
+			
+			<div class="infoContent col-9"> <!-- 메인페이지정보내용 -->
+				<div class="cashInfo"> <!-- 회원정보,보유포인트 -->
+					<!-- js출력 -->
+				</div>
+				
+				<div class="autionInfo"> <!-- 등록 매물 갯수와 매물 정보 -->
+					<!-- js출력 -->
+				</div>
+				
+				<div class="handInfo"> <!-- 입찰 매물 갯수와 매물 정보 -->
+					<!-- js출력 -->
+				</div>
+				
+				<div class="wishInfo"> <!-- 찜 갯수와 찜경매 정보 -->
+					<!-- js출력 -->
+				</div>
+			</div> <!-- row end -->
 		</div>
-		
-		<div class="rInfo"> <!-- 오른쪽정보 -->
-			<!-- js출력 -->
-		</div>
-		
-		<div class="bottomInfo"> <!-- 등록매물정보 -->
-			<!-- js출력 -->
-		</div>
-		
-		<div class="autionInfo"> <!-- 입찰매물정보 -->
-			<!-- js출력 -->
-		</div>
-		
 	</div> <!-- 전체구역 end -->
 
 
