@@ -13,7 +13,8 @@
 	<div class="container-xl"> <!-- 전체구역  -->
 		<div class="row">
 			<div class="lInfo nav flex-column col-3"> <!-- 사이드바 -->
-			  <a class="nav-link active" aria-current="page" href="#">내정보</a>
+			  <a class="nav-link active" aria-current="page" href="#">마이페이지</a>
+			  <a class="nav-link" href="#">내정보</a>
 			  <a class="nav-link" href="#">포인트입출금내역</a>
 			  <a class="nav-link" href="#">등록차량정보</a>
 			  <a class="nav-link disabled" aria-disabled="true">입찰매물정보</a>
@@ -47,27 +48,3 @@
 </body>
 </html>
 
-<!-- 		<div class="mInfo"> 
-			<div>id : admin3333</div>
-			<div>전화번호 : 010-111-4444</div>
-			<div>등록 차량 대수 : 2대</div>
-			<div>입찰 차량 대수 : 2대</div>
-		</div> 
-		
-		<div>	
-			<div> 
-				<div>이성호님</div>
-				<div>보유 포인트 : 43,000,000원</div>
-				<button onclick="inputPoint()" type=button>입금</button>
-				<button onclick="outputPoint()" type=button>출금</button>
-			</div> 
-			<div> 
-				<div> 
-					<div>차량이미지</div>
-					<div>등록번호 : 12321</div>
-				</div>
-			</div> 
-			<div> 
-			</div> 
-		</div> 
-		 -->

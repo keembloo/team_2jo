@@ -21,7 +21,7 @@ function mview(){
 			async : false ,
 			method : "get" ,
 			async : false,
-			data : {} ,
+			data : {type : "mview"} ,
 			success : r => { //console.log("js연결성공");
 				//console.log('r.mno : '+r.mno);
 				//console.log('r: '+r);
@@ -63,6 +63,24 @@ function mview(){
 			error : e => {console.log("실패");}		
 		})
 }
+
+
+// 규리 등록매물정보 출력
+function myAuctionView(){
+	let autionInfo = document.querySelector('.autionInfo');
+	
+	$.ajax({
+			url : "/nichanaecha/MypageController" , 
+			method : "get" ,
+			data : { type : "myAuctionView" } ,
+			success : r => { //console.log("js연결성공");
+				
+				
+			} , 
+			error : e => {console.log("실패"+e);}
+		})
+}
+
 
 // 규리 입금
 function inputPoint(mno){
@@ -107,19 +125,5 @@ function outputPoint(mno , mcash){
 	}
 }
 
-// 규리 등록매물정보 출력
-function myAuctionView(){
-	let autionInfo = document.querySelector('.autionInfo');
-	
-	$.ajax({
-			url : "/nichanaecha/MypageController" , 
-			method : "get" ,
-			data : { type : "myAuctionView" } ,
-			success : r => { //console.log("js연결성공");
-				
-				
-			} , 
-			error : e => {console.log("실패"+e);}
-		})
-}
+
 

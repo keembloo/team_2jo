@@ -1,5 +1,8 @@
 package model.dao;
 
+import java.util.ArrayList;
+
+import model.dto.AuctionDto;
 import model.dto.MemberDto;
 
 public class MypageDao extends Dao {
@@ -86,11 +89,11 @@ public class MypageDao extends Dao {
 	*/
 	// ----------------- 기존코드  -----------------
 	//규리 정보호출
-	public MemberDto mview( int dto) {
+	public MemberDto mview( int mno) {
 		try {
 			String sql ="select * from member where mno = ?";
 			ps = conn.prepareStatement(sql);
-			ps.setInt(1, dto);
+			ps.setInt(1, mno);
 			rs = ps.executeQuery();
 			if ( rs.next()) {
 				MemberDto memberDto = new MemberDto(
@@ -103,6 +106,23 @@ public class MypageDao extends Dao {
 			}
 		} catch (Exception e) {System.out.println(e);}
 		return null;
+	}
+	
+	// 규리 등록매물정보 출력
+	public ArrayList<AuctionDto> myAuctionView(int mno) {
+		ArrayList<AuctionDto> list = new ArrayList<>();
+		try {
+			String sql = "";
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, mno);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				//등록된 경매정보 dto에 차례대로 넣고 list로 출력해야함! 
+			}
+			
+			return list;
+		} catch (Exception e) { System.out.println(e);	}
+		return list;
 	}
 	
 	
