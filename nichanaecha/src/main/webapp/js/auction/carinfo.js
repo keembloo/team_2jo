@@ -10,7 +10,10 @@ function auctionPrint(ano){
       	url : "/nichanaecha/AuctionController",     
      	method : "get",   
      	data : {ano:ano},      
-      	success : r=>{console.log('통신성공'+r)} ,       
+      	success : r=>{console.log('통신성공'+r)
+      	
+      	
+      	} ,       
       	error : e=>{console.log('통신실패'+e)} ,         
    });
 

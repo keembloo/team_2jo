@@ -10,6 +10,36 @@ public class AuctionDto {
 	private int astate;			//  #경매 상태 [ 0: 경매중, 1:거래중(낙찰 후 판매자와 거래중) 2:경매 종료
 	
 	
+	//출력시 사용할 필드 [9월19일 고연진]
+	private String ccompany;
+	private String csize;
+	private int cc;	
+	private String coil;
+	private String cname;
+	private String cdate;
+	private int ckm;
+	private String cads;
+	
+	
+	//추가 getter/setter [9월19일 고연진]
+	public String getCcompany() {return ccompany;}
+	public void setCcompany(String ccompany) {this.ccompany = ccompany;}
+	public String getCsize() {return csize;}
+	public void setCsize(String csize) {this.csize = csize;}
+	public int getCc() {return cc;}
+	public void setCc(int cc) {this.cc = cc;}
+	public String getCoil() {return coil;}
+	public void setCoil(String coil) {this.coil = coil;}
+	public String getCname() {return cname;}
+	public void setCname(String cname) {this.cname = cname;}
+	public String getCdate() {return cdate;}
+	public void setCdate(String cdate) {this.cdate = cdate;}
+	public int getCkm() {return ckm;}
+	public void setCkm(int ckm) {this.ckm = ckm;}
+	public String getCads() {return cads;}
+	public void setCads(String cads) {this.cads = cads;}
+
+
 	public AuctionDto() {}
 
 

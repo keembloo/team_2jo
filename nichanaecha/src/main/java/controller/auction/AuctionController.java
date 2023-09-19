@@ -1,6 +1,7 @@
 package controller.auction;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -31,8 +32,9 @@ public class AuctionController extends HttpServlet {
     //상세페이지조회 [9월19일 고연진]   
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int ano= Integer.parseInt(request.getParameter("ano"));
-		boolean result= AuctionDao.getInstence().auctionPrint(ano);
-	
+		List<AuctionDto> result= AuctionDao.getInstence().auctionPrint(ano);
+		response.setContentType("application/json;charset=UTF-8");
+		response.getWriter().print(result);
 	}
 
 	
