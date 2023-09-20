@@ -22,6 +22,7 @@ insert into member(mid,mpw,mphone,mname,mads) values('admin3333','1234','010-111
 insert into member(mid,mpw,mphone,mname,mads) values('admin4444','1234','010-1111-5555','정용상','안산시 초지동');
 
 
+
 drop table if exists car; 
 create table car(
 cno int auto_increment,               #매물 번호 
@@ -40,7 +41,7 @@ mno int,
 primary key(cno),
 foreign key(mno) references member(mno) on delete cascade
 );
-select * from car;
+
 
 drop table if exists carimg; 
 create table carimg(
@@ -86,5 +87,22 @@ primary key(wno),
 foreign key(mno) references member(mno) on delete cascade, 
 foreign key(ano) references auctionInfo(ano) on delete cascade 
 );
+
+
+select * from car;
+select * from carimg;
+select * from auctioninfo;
+
+
+
+
+
+
+
+ 
+
+
+
+
 
 
