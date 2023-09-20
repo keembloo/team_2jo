@@ -14,6 +14,7 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import model.dao.AuctionDao;
 import model.dto.AuctionDto;
+import model.dto.CarDto;
 
 
 @WebServlet("/AuctionController")
@@ -59,21 +60,28 @@ public class AuctionController extends HttpServlet {
 				System.out.println( request.getServletContext().getRealPath("/auction/img") );
 				
 				//1. (입력받은 매개변수)요청
-				String btitle = multi.getParameter("btitle");
-				String bprice = multi.getParameter("bprice");
-				String bfile = multi.getFilesystemName("bfile");
-				int mno = ( (AuctionDto)request.getSession().getAttribute("loginDto") ).getMno();
-				int bcno = Integer.parseInt( multi.getParameter("bcno") );
+				String ccompany = multi.getParameter("ccompany");	//제조사(1)
+				String cnum = multi.getParameter("cnum");			//차량번호(2)
+				String csize = multi.getParameter("csize");			//차량종류(3)
+				String coil = multi.getParameter("coil");			//연료(5)
+				String cname = multi.getParameter("cname");			//차량명(6)
+				String cdate = multi.getParameter("cdate");			//제조년월(7)
+				String cads = multi.getParameter("cads");			//차량 등록 주소(9)
+				
+			
+				int cc = Integer.parseInt( multi.getParameter("cc") );		//배기량(4)
+				int ckm = Integer.parseInt( multi.getParameter("ckm") );	//주행거리(8)
 	
 				//2. 유효성 검사/객체화
-				AuctionDto auctionDto = new AuctionDto(btitle,bprice,bfile,mno,bcno);
+				CarDto carDto = new CarDto();
+				
 				//3. Dao 처리
-				boolean result = AuctionDao.getInstence().bcarsubmit(auctionDto);
+				boolean result = AuctionDao.getInstence().bcarsubmit(CarDto);
 				//4. (Dao 결과) 응답
 				response.setContentType("application/json; charset=UTF-8"); 
 				response.getWriter().print(result);
 	}
-
+ 
 	
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
