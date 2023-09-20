@@ -13,11 +13,11 @@
 
 	<div class="container-xl"> <!-- 메인 구역 -->
 			
-			<div class="row optionArea p-1"> <!-- 옵션 구역 -->
+			<div class="row optionArea py-2 m-0 mb-2 justify-content-between"> <!-- 옵션 구역 -->
 				<div class="col-8 row"> <!-- 옵션 선택 박스 -->
 					
 					<div class="dropdown carType col-2"> <!-- 제조사 -->
-						  <button class="btn dropdown-toggle dropbutton" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+						  <button class="dropdown-toggle dropbutton" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
 						    제조사
 						  </button>
 						  <div class="dropdown-menu dropmenu p-3">
@@ -39,7 +39,7 @@
 					</div>
 					
 					<div class="dropdown carType col-2"> <!-- 차종 -->
-						  <button class="btn dropdown-toggle dropbutton" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+						  <button class="dropdown-toggle dropbutton" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
 						    차종
 						  </button>
 						  <div class="dropdown-menu dropmenu p-3">
@@ -61,7 +61,7 @@
 					</div>
 					
 					<div class="dropdown carType col-2"> <!-- 연식 -->
-						  <button class="btn dropdown-toggle dropbutton" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+						  <button class="dropdown-toggle dropbutton" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
 						    연식
 						  </button>
 						  <div class="dropdown-menu dropmenu p-3">
@@ -73,7 +73,7 @@
 					</div>
 					
 					<div class="dropdown carType col-2"> <!-- 주행거리 -->
-						  <button class="btn dropdown-toggle dropbutton" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+						  <button class="dropdown-toggle dropbutton" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
 						    주행거리
 						  </button>
 						  <div class="dropdown-menu dropmenu p-3">
@@ -85,7 +85,7 @@
 					</div>
 					
 					<div class="dropdown carType col-2"> <!-- 연료 -->
-						  <button class="btn dropdown-toggle dropbutton" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+						  <button class="dropdown-toggle dropbutton" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
 						    연료
 						  </button>
 						  <div class="dropdown-menu dropmenu p-3">
@@ -107,7 +107,7 @@
 					</div>
 					
 					<div class="dropdown carType col-2"> <!-- 가격 -->
-						  <button class="btn dropdown-toggle dropbutton" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+						  <button class="dropdown-toggle dropbutton" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
 						    가격
 						  </button>
 						  <div class="dropdown-menu dropmenu p-3">
@@ -128,9 +128,9 @@
 				</div> <!-- 옵션 선택 종료 -->
 				
 			
-				<div class="col-4"> <!-- 검색 구역 -->
-					<input class="carSearch" type="text" placeholder="주소, 차량명">
-				
+				<div class="col-4 text-end"> <!-- 검색 구역 -->
+					<span><img src="/nichanaecha/img/searchIcon.png" width="7%">
+					<input class="carSearch" type="text" placeholder="주소, 차량명"></span>
 				
 				</div> <!-- 검색 구역 종료 -->
 			
@@ -139,7 +139,7 @@
 			
 			<div> <!-- 지도 구역 -->
 			
-			
+				<div id="map" style="width:100%;height:800px;"></div>
 			
 			</div> <!-- 지도 구역 종료 -->
 			
@@ -158,6 +158,8 @@
 	
 	<%@include file ="../footer.jsp" %>
 	
+	<!-- 카카오 지도 api -->
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=4b3eb62505233f4a4ab13fff2d0ea438&libraries=clusterer"></script>
 	
 	<script src="../js/map/map.js"></script>
 	
