@@ -98,7 +98,7 @@ function myAuctionView(){
 					if (count%2==0) {
 						//console.log(html);
 						document.querySelector('.carousel-inner').innerHTML += 
-						`<div class="carousel-item active">
+						`<div class="carousel-item">
 							<div class="abox2 row row-cols-md-2 g-4 px-5">
 							</div>
 						</div>`;
