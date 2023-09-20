@@ -1,5 +1,7 @@
 package model.dto;
 
+import java.util.Map;
+
 public class CarDto {
 	private int cno;			//#매물 번호 
 	private String ccompany;	//#제조사 
@@ -15,7 +17,14 @@ public class CarDto {
 	private String clng;		//# 차량 위치 경도
 	
 	
+	//9월20일 고연진: 경매출력페이지
+	Map<Integer, String> imglist;
 	
+	//9월20일 고연진: gettet/setter 경매출력 페이지 
+	public Map<Integer, String> getImglist() {return imglist;}
+	public void setImglist(Map<Integer, String> imglist) {this.imglist = imglist;}
+
+
 	public CarDto() {}
 
 

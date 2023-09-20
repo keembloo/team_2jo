@@ -10,17 +10,20 @@ function auctionPrint(ano){
       	url : "/nichanaecha/AuctionController",     
      	method : "get",   
      	data : {ano:ano},      
-      	success : r=>{console.log('통신성공'+r)
+      	success : r=>{
+			  console.log('통신성공')
+			  console.log(r)
+					
 			// 제목
-      		document.querySelector('.atitle').innerHTML=`${r.atitle}`
+      		document.querySelector('.atitle').innerHTML=`${r[0].atitle}`
 
       		//캐러셀(여러개이미지)
       		let imgbox=document.querySelector('.imgbox');
       		let html=``;
-      		Object.values(r.imglist).forEach((img,i)=>{
+      		Object.values(r[0].imglist).forEach((img,i)=>{
 				  //첫번째 이미지만 active
 				  html+=`<div class="carousel-item ${ i==0 ? 'active' : '' }">
-					     	 <img src="/jspweb/auction/img/${img}" class="d-block w-100" alt="...">
+					     	 <img src="/nichanaecha/auction/img/${img}" class="d-block w-100" alt="...">
 					      </div>`
 			  })
       		imgbox.innerHTML=html;
@@ -29,15 +32,15 @@ function auctionPrint(ano){
       		
       		
       		//차량정보
-      		document.querySelector('.ccompany').innerHTML=`${r.ccompany}`
-      		document.querySelector('.csize').innerHTML=`${r.csize}`
-      		document.querySelector('.cname').innerHTML=`${r.cname}`
-      		document.querySelector('.coil').innerHTML=`${r.coil}`
-      		document.querySelector('.cc').innerHTML=`${r.cc}`
-      		document.querySelector('.cdate').innerHTML=`${r.cdate}`
-      		document.querySelector('.ckm').innerHTML=`${r.ckm}`
-      		document.querySelector('.cads').innerHTML=`${r.cads}`
-      		document.querySelector('.acontent').innerHTML=`${r.acontent}`
+      		document.querySelector('.ccompany').innerHTML=`${r[0].ccompany}`
+      		document.querySelector('.csize').innerHTML=`${r[0].csize}`
+      		document.querySelector('.cname').innerHTML=`${r[0].cname}`
+      		document.querySelector('.coil').innerHTML=`${r[0].coil}`
+      		document.querySelector('.cc').innerHTML=`${r[0].cc}`
+      		document.querySelector('.cdate').innerHTML=`${r[0].cdate}`
+      		document.querySelector('.ckm').innerHTML=`${r[0].ckm}`
+      		document.querySelector('.cads').innerHTML=`${r[0].cads}`
+      		document.querySelector('.acontent').innerHTML=`${r[1].acontent}`
       		
       		
       	} ,       

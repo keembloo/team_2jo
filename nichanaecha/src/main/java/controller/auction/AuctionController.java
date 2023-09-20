@@ -1,6 +1,7 @@
 package controller.auction;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,7 +14,6 @@ import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import model.dao.AuctionDao;
-import model.dto.AuctionDto;
 import model.dto.CarDto;
 
 
@@ -34,9 +34,9 @@ public class AuctionController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int ano= Integer.parseInt(request.getParameter("ano"));
 		System.out.println("controller 들어옴 > ano:  "+ano);
-		AuctionDto result= AuctionDao.getInstence().auctionPrint(ano);
-		System.out.println("출력 관련 dto 리스트: "+result);
-		System.out.println("사진리스트만 출력: "+ result.getImglist());
+		ArrayList<Object> result= AuctionDao.getInstence().auctionPrint(ano);
+		System.out.println("출력 관련 필요한 모든 정보: 객체임? 배열임? "+result);
+		
 		ObjectMapper mapper=new ObjectMapper(); 
 		String jsonObject= mapper.writeValueAsString(result);
 		System.out.println("jackson사용: "+jsonObject);
@@ -74,12 +74,13 @@ public class AuctionController extends HttpServlet {
 	
 				//2. 유효성 검사/객체화
 				CarDto carDto = new CarDto();
-				
+				/*
 				//3. Dao 처리
-				boolean result = AuctionDao.getInstence().bcarsubmit(CarDto);
+				boolean result = AuctionDao.getInstence().bcarsubmit();
 				//4. (Dao 결과) 응답
 				response.setContentType("application/json; charset=UTF-8"); 
 				response.getWriter().print(result);
+				*/
 	}
  
 	
