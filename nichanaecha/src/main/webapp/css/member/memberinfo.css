@@ -1,7 +1,41 @@
 @charset "UTF-8";
+.cashInfo{
+	text-align: center;
+	margin-top: 50px;
+}
+.textId{
+	font-size: 20px;
+}
+.textPoint{
+	font-size: 20px;
+	margin-top: 10px;
+}
+
+.textPoint span {
+	color: blue;
+}
+
+.cashInfo button {
+	width: 100px;
+	margin-top: 30px;	
+}
+
+.lineBar{
+	margin : 50px 0;
+	border-bottom: 1px solid #337CCF;
+}
+
+.menuText {
+	width: 100%;
+	margin: 0 auto;
+}
+
+.
+
+
 
 .card {
-	width: 200px !important; 
+	width: 350px !important; 
 	height: 200px !important;
 }
 
@@ -11,15 +45,8 @@
     padding: 0 20px;
 
   }
-
-
-.cbtnCss{
-  position: relative !important;
-  top: 50%;
-  left: -45px !important;
-  transform: translateY(-50%);
-  z-index: 1; /* 이미지 위에 나타나도록 설정 */
-  width: 0 !important;
+.carousel-control-next , .carousel-control-prev{
+	width: 5% !important;
 }
 
 /* 버튼의 색상을 블랙으로 지정 */

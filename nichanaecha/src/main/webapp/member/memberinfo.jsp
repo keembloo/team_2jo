@@ -3,8 +3,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<link href="/nichanaecha/css/member/memberinfo.css" rel="stylesheet">
 </head>
 <body>
 	<!-- jsp  파일안에 다른 jsp파일 import -->
@@ -28,28 +29,22 @@
 					<!-- 회원정보,보유포인트 -->
 					<!-- js출력 -->
 				</div>
-
+				<div class="lineBar">
+				</div>
 				<div class="autionInfo">
 					<!-- 등록 매물 갯수와 매물 정보 -->
 					<div class="menuText">
-						<div>등록 매물 정보</div>
-						<div>등록 차량수 : 총 2대</div>
+						<!-- js출력 -->
 					</div>
 
 
 					<div id="imageCarousel" class="carousel carousel-dark slide">
-
-
-
 						<div class="carousel-inner">
-
-
-
-							<div class="carousel-item active">
-
-								<div class="row row-cols-1 row-cols-md-2 g-4 px-5">
-
-									<div class="col">
+							
+							<div class="carousel-item active"> <!-- 2개세트 -->
+								<div class="abox2 row row-cols-md-2 g-4 px-5"> <!-- rows -->
+								
+									<div class="col"> <!-- 제품1개 -->
 										<div class="card">
 											<img src="image1.jpg" class="card-img-top" alt="Image 1">
 											<div class="card-body">
@@ -58,9 +53,9 @@
 													supporting text.</p>
 											</div>
 										</div>
-									</div>
+									</div> <!-- 제품1개end -->
 
-									<div class="col">
+									<div class="col">  <!-- 제품1개 -->
 										<div class="card">
 											<img src="image2.jpg" class="card-img-top" alt="Image 2">
 											<div class="card-body">
@@ -69,49 +64,55 @@
 													supporting text.</p>
 											</div>
 										</div>
-									</div>
-
-								</div>
-							</div>
-
-							<div class="carousel-item">
-								<div class="row row-cols-1 row-cols-md-2 g-4">
-									<div class="col">
+									</div> <!-- 제품1개end -->
+									
+								</div>	<!-- row end -->
+							</div>  <!-- carousel-item 2개세트 end -->
+							<div class="carousel-item"> <!-- 2개세트 -->
+							
+								<div class="row row-cols-md-2 g-4 px-5">
+									<div class="col">  <!-- 제품1개 -->
 										<div class="card">
-											<img src="image3.jpg" class="card-img-top" alt="Image 3">
+											<img src="image2.jpg" class="card-img-top" alt="Image 2">
 											<div class="card-body">
-												<h5 class="card-title">Card title 3</h5>
+												<h5 class="card-title">Card title 2</h5>
 												<p class="card-text">This is a longer card with
 													supporting text.</p>
 											</div>
 										</div>
-									</div>
-									<div class="col">
+									</div> <!-- 제품1개end -->
+									
+									<div class="col">  <!-- 제품1개 -->
 										<div class="card">
-											<img src="image4.jpg" class="card-img-top" alt="Image 4">
+											<img src="image2.jpg" class="card-img-top" alt="Image 2">
 											<div class="card-body">
-												<h5 class="card-title">Card title 4</h5>
+												<h5 class="card-title">Card title 2</h5>
 												<p class="card-text">This is a longer card with
 													supporting text.</p>
 											</div>
 										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<button class="carousel-control-prev cbtnCss" type="button"
-							data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+									</div> <!-- 제품1개end -->
+								</div> <!-- row end -->
+							</div> <!-- carousel-item 2개세트 end -->
+							
+							
+							
+						</div> <!-- carousel-inner end -->
+						
+						<button class="carousel-control-prev" type="button"
+							data-bs-target="#imageCarousel" data-bs-slide="prev">
 							<span class="carousel-control-prev-icon" aria-hidden="true"></span>
 							<span class="visually-hidden">Previous</span>
 						</button>
-						<button class="carousel-control-next cbtnCss" type="button"
-							data-bs-target="#carouselExampleControls" data-bs-slide="next">
+						
+						<button class="carousel-control-next" type="button"
+							data-bs-target="#imageCarousel" data-bs-slide="next">
 							<span class="carousel-control-next-icon" aria-hidden="true"></span>
 							<span class="visually-hidden">Next</span>
 						</button>
 
-					</div>
-				</div>
+					</div> <!-- imageCarousel end -->
+				</div> <!-- autionInfo end -->
 
 				<div class="handInfo">
 					<!-- 입찰 매물 갯수와 매물 정보 -->
