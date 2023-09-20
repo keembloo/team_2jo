@@ -1,5 +1,8 @@
 package model.dao;
 
+import java.util.ArrayList;
+
+import model.dto.AuctionDto;
 import model.dto.MemberDto;
 
 public class MypageDao extends Dao {
@@ -86,11 +89,11 @@ public class MypageDao extends Dao {
 	*/
 	// ----------------- 기존코드  -----------------
 	//규리 정보호출
-	public MemberDto mview( int dto) {
+	public MemberDto mview( int mno) {
 		try {
 			String sql ="select * from member where mno = ?";
 			ps = conn.prepareStatement(sql);
-			ps.setInt(1, dto);
+			ps.setInt(1, mno);
 			rs = ps.executeQuery();
 			if ( rs.next()) {
 				MemberDto memberDto = new MemberDto(
@@ -103,6 +106,31 @@ public class MypageDao extends Dao {
 			}
 		} catch (Exception e) {System.out.println(e);}
 		return null;
+	}
+	
+	// 규리 등록매물정보 출력
+	public ArrayList<AuctionDto> myAuctionView(int mno) {
+		mno = 3; // 테스트
+		ArrayList<AuctionDto> list = new ArrayList<>();
+		try {
+			String sql = "select * from car as c inner join auctionInfo as a on c.cno = a.cno where c.mno = ?";
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, mno);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				//등록된 경매정보 dto에 차례대로 넣고 list로 출력해야함! 
+				// 등록번호 , 경매 제목 , 경매 종료 날짜 , 경매 등록 가격 , 경매 종료 시간 , 경매 상태 
+				AuctionDto auctionDto = new AuctionDto(
+						rs.getInt("ano"), rs.getString("atitle"), 
+						rs.getString("aenddate"), rs.getInt("aprice"), 
+						rs.getInt("astate"));
+			
+				list.add(auctionDto); // 리스트에 추가
+			}
+			System.out.println("다오에서 list 출력 : "+list);
+			return list;
+		} catch (Exception e) { System.out.println(e);	}
+		return list;
 	}
 	
 	

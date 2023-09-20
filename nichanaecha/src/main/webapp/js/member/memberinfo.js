@@ -21,7 +21,7 @@ function mview(){
 			async : false ,
 			method : "get" ,
 			async : false,
-			data : {} ,
+			data : {type : "mview"} ,
 			success : r => { //console.log("js연결성공");
 				//console.log('r.mno : '+r.mno);
 				//console.log('r: '+r);
@@ -40,10 +40,10 @@ function mview(){
 								   <div>입찰 차량 대수 : 2대(추후해야함)</div>`;
 				*/		
 				
-				cashInfo.innerHTML = `<div>${r.mname}님</div>
-							<div>보유 포인트 : ${r.mcash}원</div>
-							<button onclick="inputPoint(${r.mno})" type=button>입금</button>
-							<button onclick="outputPoint(${r.mno},${r.mcash})" type=button>출금</button>`;
+				cashInfo.innerHTML = `<div class="textId">'${r.mname}' 님</div>
+									<div class="textPoint">보유 포인트 : <span>${r.mcash.toLocaleString()}원</span></div>
+									<button class="btn btn-primary" onclick="inputPoint(${r.mno})" type=button>입금</button>
+									<button class="btn btn-danger" onclick="outputPoint(${r.mno},${r.mcash})" type=button>출금</button>`;
 				/*			
 				bottomInfo.innerHTML = `<div>
 											<div>등록 매물 정보</div>
@@ -63,6 +63,56 @@ function mview(){
 			error : e => {console.log("실패");}		
 		})
 }
+
+
+// 규리 등록매물정보 출력
+function myAuctionView(){
+
+	$.ajax({
+			url : "/nichanaecha/MypageController" , 
+			method : "get" ,
+			data : { type : "myAuctionView" } ,
+			success : jsonArray => { 
+				console.log(jsonArray);
+					let autionInfo = document.querySelector('.autionInfo');
+					let count = 0;
+					let html ='';
+					document.querySelector('.menuText').innerHTML = 
+												`<div>등록 매물 정보</div>
+												<div>등록 차량수 : 총 ${jsonArray.length}대</div>`;
+						
+				jsonArray.forEach( (p)=>{
+					count++;
+					html += `<div class="col">
+								<div class="card">
+									<img src="image1.jpg" class="card-img-top" alt="Image 1">
+									<div class="card-body">
+										<h5 class="card-title">${p.atitle}</h5>
+										<div class="card-text">경매 등록번호 : ${p.ano}</div>
+										<div class="card-text">최소 입찰 금액 : ${p.aprice}</div>
+										<div class="card-text">경매 종료 : ${p.aenddate}</div>
+									</div>
+								</div>
+							</div>`;
+
+					if (count%2==0) {
+						//console.log(html);
+						document.querySelector('.carousel-inner').innerHTML += 
+						`<div class="carousel-item active">
+							<div class="abox2 row row-cols-md-2 g-4 px-5">
+							</div>
+						</div>`;
+						
+						
+					} // if end
+				}); // forEach end 
+				
+				
+			} , 
+			error : e => {console.log("실패"+e);}
+		})
+}
+
 
 // 규리 입금
 function inputPoint(mno){
@@ -107,19 +157,5 @@ function outputPoint(mno , mcash){
 	}
 }
 
-// 규리 등록매물정보 출력
-function myAuctionView(){
-	let autionInfo = document.querySelector('.autionInfo');
-	
-	$.ajax({
-			url : "/nichanaecha/MypageController" , 
-			method : "get" ,
-			data : { type : "myAuctionView" } ,
-			success : r => { //console.log("js연결성공");
-				
-				
-			} , 
-			error : e => {console.log("실패"+e);}
-		})
-}
+
 

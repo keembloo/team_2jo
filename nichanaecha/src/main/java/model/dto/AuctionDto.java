@@ -12,8 +12,8 @@ public class AuctionDto {
 
 
 	public AuctionDto() {}
-
-
+	
+	
 	public AuctionDto(int ano, String atitle, String acontent, String astartdate, String aenddate, int aprice,
 			int astate) {
 		super();
@@ -21,6 +21,18 @@ public class AuctionDto {
 		this.atitle = atitle;
 		this.acontent = acontent;
 		this.astartdate = astartdate;
+		this.aenddate = aenddate;
+		this.aprice = aprice;
+		this.astate = astate;
+	}
+	
+	
+	// 규리 마이페이지에서 등록매물정보 출력을 위한 생성자
+	// 풀생성자에서 경매 내용, 경매 등록날짜만 빠짐 
+	public AuctionDto(int ano, String atitle, String aenddate, int aprice, int astate) {
+		super();
+		this.ano = ano;
+		this.atitle = atitle;
 		this.aenddate = aenddate;
 		this.aprice = aprice;
 		this.astate = astate;

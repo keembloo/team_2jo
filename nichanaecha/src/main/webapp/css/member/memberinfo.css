@@ -1,2 +1,55 @@
 @charset "UTF-8";
+.cashInfo{
+	text-align: center;
+	margin-top: 50px;
+}
+.textId{
+	font-size: 20px;
+}
+.textPoint{
+	font-size: 20px;
+	margin-top: 10px;
+}
 
+.textPoint span {
+	color: blue;
+}
+
+.cashInfo button {
+	width: 100px;
+	margin-top: 30px;	
+}
+
+.lineBar{
+	margin : 50px 0;
+	border-bottom: 1px solid #337CCF;
+}
+
+.menuText {
+	width: 100%;
+	margin: 0 auto;
+}
+
+.
+
+
+
+.card {
+	width: 350px !important; 
+	height: 200px !important;
+}
+
+
+.carousel-inner {
+    position: relative;
+    padding: 0 20px;
+
+  }
+.carousel-control-next , .carousel-control-prev{
+	width: 5% !important;
+}
+
+/* 버튼의 색상을 블랙으로 지정 */
+.carousel-control-prev-icon, .carousel-control-next-icon {
+  background-color: black;
+}
