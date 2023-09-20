@@ -1,6 +1,7 @@
 package model.dao;
 
-import model.dto.AuctionDto;
+
+import model.dto.CarDto;
 
 public class AuctionDao extends Dao {
 	private static AuctionDao auctionDao = new AuctionDao();
@@ -8,11 +9,12 @@ public class AuctionDao extends Dao {
 	private AuctionDao() {}
 	
 	// 1.차 등록 성호
-	public boolean bcarsubmit(AuctionDto auctionDto) {
+	public boolean bcarsubmit(CarDto carDto) {
 		try {
 			String sql= "insert into member(cno,ccompany,cnum,csize,cc,coil,cname,cdate,ckm,cads) "
 					+ " values(?,?,?,?,?,?,?,?,?)";
 			ps = conn.prepareStatement(sql);
+			
 			
 			
 			return true;

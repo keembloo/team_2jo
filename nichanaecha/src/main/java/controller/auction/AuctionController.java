@@ -59,12 +59,13 @@ public class AuctionController extends HttpServlet {
 				String cdate = multi.getParameter("cdate");			//제조년월(7)
 				String cads = multi.getParameter("cads");			//차량 등록 주소(9)
 				
-				int cno = ( (CarDto)request.getSession().getAttribute("loginDto") );
+			
 				int cc = Integer.parseInt( multi.getParameter("cc") );		//배기량(4)
 				int ckm = Integer.parseInt( multi.getParameter("ckm") );	//주행거리(8)
 	
 				//2. 유효성 검사/객체화
 				CarDto carDto = new CarDto();
+				
 				//3. Dao 처리
 				boolean result = AuctionDao.getInstence().bcarsubmit(CarDto);
 				//4. (Dao 결과) 응답

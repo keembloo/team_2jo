@@ -91,8 +91,8 @@ function bcarsubmit(){
 		success : r => {
 			
 			if( r ){
-				alert('차량등록 성공');
-				location.href="/nichanaecha/src/main/webapp/index.jsp";
+				alert('차량등록 성공 경매등록 갑시다');
+				location.href="/nichanaecha/src/main/webapp/auction/auction.jsp";
 			}else{
 				alert('차량등록 실패 ');
 			}
@@ -101,6 +101,56 @@ function bcarsubmit(){
 		error : e => { } 
 	})
 }
+
+// 2. 드래그 앤 드랍 
+	// 1. 드래그 앤 드랍 할 구역 dom객체 호출 
+let fileDropBox = document.querySelector('.fileDropBox');
+
+	// 2. 해당 dom객체에 구역내 드래그가 들어왔을때.
+fileDropBox.addEventListener( "dragenter" , (e)=>{
+	e.preventDefault(); // 상위 이벤트 무시하고 현 이벤트 우선 점유
+	console.log( '드래그가 들어왔어.' );
+});
+	// 3. 해당 dom객체에 구역내 드래그가 올라왔을때.
+fileDropBox.addEventListener( "dragover" , (e) => {
+	e.preventDefault(); // 상위 이벤트 무시하고 현 이벤트 우선 점유
+	console.log( '현재구역에 드래그가 위치중.');
+	fileDropBox.style.backgroundColor = '#e8e8e8';
+});
+	// 4. 해당 dom객체에 구역내 드래그가 나갔을때
+fileDropBox.addEventListener( "dragleave" , (e)=>{ 
+	e.preventDefault(); // 상위 이벤트 무시하고 현 이벤트 우선 점유
+	console.log( '드래그가 나갔을때.')
+	fileDropBox.style.backgroundColor = '#ffffff';
+});
+	// 5.해당 dom객체에 구역내 드래그가 드랍(마우스를 놓았을때)했을때.
+fileDropBox.addEventListener( 'drop' , (e)=>{
+	console.log( '해당 드래그가 드랍했어.' );
+	console.log( e );
+	
+	// * 브라우저 자체적으로 'drop' 이벤트 우선적으로 실행되므로 해당 이벤트실행 불가능 
+	// - 해결방안 : 기존 상위(브라우저) 이벤트 무시 
+	e.preventDefault(); // 상위 이벤트 무시하고 현 이벤트 우선 점유
+	
+	// -------- 드랍된 파일의 정보??? ------------- //
+		// 1. 드랍된 데이터 정보를 이벤트 결과에서 찾기 
+		console.log( e.dataTransfer ) 
+		console.log( e.dataTransfer.files )
+		console.log( e.dataTransfer.files[0] )
+		console.log( e.dataTransfer.files[0].name )
+		// 2. 드랍된 파일들을 특정 리스트에 저장 
+		let files = e.dataTransfer.files;
+		for( let i = 0 ; i<files.length ; i++ ){
+			if( files[i] != null && files[i] != undefined ){
+				// 드랍된 파일의 정보가 존재하면 [ null 그리고 undefined 아닌 상태 ] 
+				fileList.push( files[i] ); 
+			}
+		}
+		// 3. 배경색 초기화 
+		fileDropBox.style.backgroundColor = '#ffffff';
+		// 4. 현재 드랍된 파일의 정보를 드래그앤드랍 구역에 표시 
+		fileListPrint()
+}); // f end
 
 let fileList = [] ; // 현재 드래그앤드랍으로 등록된 파일들 
 

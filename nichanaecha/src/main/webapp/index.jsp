@@ -11,7 +11,7 @@
 	<!-- jsp  파일안에 다른 jsp파일 import -->
 	<%@include file ="header.jsp" %>
 	<div class="container-xl">
-		<a href="./auction/carsubmit.jsp"> <button>내차등록하기 </button></a>
+		<a href="./auction/carsubmit.jsp"> <button>내차경매 등록하기 </button></a>
 	</div>
 	<!-- jsp  파일안에 다른 jsp파일 import -->
 	<%@include file ="footer.jsp" %>
