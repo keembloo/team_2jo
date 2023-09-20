@@ -15,6 +15,7 @@ public class CarDto {
 	private String clng;		//# 차량 위치 경도
 	
 	
+	
 	public CarDto() {}
 
 

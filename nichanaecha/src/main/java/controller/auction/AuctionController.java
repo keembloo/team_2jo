@@ -1,7 +1,6 @@
 package controller.auction;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -34,15 +33,15 @@ public class AuctionController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int ano= Integer.parseInt(request.getParameter("ano"));
 		System.out.println("controller 들어옴 > ano:  "+ano);
-		List<AuctionDto> result= AuctionDao.getInstence().auctionPrint(ano);
+		AuctionDto result= AuctionDao.getInstence().auctionPrint(ano);
 		System.out.println("출력 관련 dto 리스트: "+result);
-		System.out.println("imglist가져옴? ");
+		System.out.println("사진리스트만 출력: "+ result.getImglist());
 		ObjectMapper mapper=new ObjectMapper(); 
-		String jsonArray= mapper.writeValueAsString(result);
-		System.out.println("jackson사용: "+jsonArray);
+		String jsonObject= mapper.writeValueAsString(result);
+		System.out.println("jackson사용: "+jsonObject);
 		
 		response.setContentType("application/json;charset=UTF-8");
-		response.getWriter().print(jsonArray);
+		response.getWriter().print(jsonObject);
 	}
 
 	

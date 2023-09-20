@@ -3,7 +3,7 @@ console.log('상세페이지출력')
 let ano=new URL(location.href).searchParams.get("ano"); //경매게시글번호
 
 //(개별)상세페이지 출력 [9월19일 고연진]
-auctionPrint(1);
+auctionPrint(2);
 function auctionPrint(ano){
 	
 	$.ajax({
@@ -17,10 +17,10 @@ function auctionPrint(ano){
       		//캐러셀(여러개이미지)
       		let imgbox=document.querySelector('.imgbox');
       		let html=``;
-      		Object.values(r.imglist).forEach((ciimg,i)=>{
+      		Object.values(r.imglist).forEach((img,i)=>{
 				  //첫번째 이미지만 active
 				  html+=`<div class="carousel-item ${ i==0 ? 'active' : '' }">
-					     	 <img src="/jspweb/auction/img/${ciimg}" class="d-block w-100" alt="...">
+					     	 <img src="/jspweb/auction/img/${img}" class="d-block w-100" alt="...">
 					      </div>`
 			  })
       		imgbox.innerHTML=html;
@@ -37,6 +37,7 @@ function auctionPrint(ano){
       		document.querySelector('.cdate').innerHTML=`${r.cdate}`
       		document.querySelector('.ckm').innerHTML=`${r.ckm}`
       		document.querySelector('.cads').innerHTML=`${r.cads}`
+      		document.querySelector('.acontent').innerHTML=`${r.acontent}`
       		
       		
       	} ,       

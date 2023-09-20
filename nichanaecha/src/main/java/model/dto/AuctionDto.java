@@ -9,38 +9,6 @@ public class AuctionDto {
 	private int aprice;			// #경매 등록 가격 
 	private int astate;			//  #경매 상태 [ 0: 경매중, 1:거래중(낙찰 후 판매자와 거래중) 2:경매 종료
 	
-	
-	//출력시 사용할 필드 [9월19일 고연진]
-	private int cno; //차고유번호
-	private String ccompany; // 제조사
-	private String csize; //차량종류(차종)
-	private int cc;	//배기량
-	private String coil; //연료
-	private String cname;//차량명
-	private String cdate;//제조연도(연식)
-	private int ckm;//주행거리
-	private String cads;//차량등록주소
-	
-	
-	//추가 getter/setter [9월19일 고연진]
-	public int getCno() {return cno;}
-	public void setCno(int cno) {this.cno = cno;}
-	public String getCcompany() {return ccompany;}
-	public void setCcompany(String ccompany) {this.ccompany = ccompany;}
-	public String getCsize() {return csize;}
-	public void setCsize(String csize) {this.csize = csize;}
-	public int getCc() {return cc;}
-	public void setCc(int cc) {this.cc = cc;}
-	public String getCoil() {return coil;}
-	public void setCoil(String coil) {this.coil = coil;}
-	public String getCname() {return cname;}
-	public void setCname(String cname) {this.cname = cname;}
-	public String getCdate() {return cdate;}
-	public void setCdate(String cdate) {this.cdate = cdate;}
-	public int getCkm() {return ckm;}
-	public void setCkm(int ckm) {this.ckm = ckm;}
-	public String getCads() {return cads;}
-	public void setCads(String cads) {this.cads = cads;}
 
 
 	public AuctionDto() {}
