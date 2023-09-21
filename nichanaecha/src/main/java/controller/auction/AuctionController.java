@@ -2,14 +2,10 @@ package controller.auction;
 
 import java.io.File;
 import java.io.IOException;
-<<<<<<< HEAD
-import java.util.ArrayList;
-=======
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
->>>>>>> branch '이성호' of https://github.com/keembloo/team_2jo
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -26,6 +22,7 @@ import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import model.dao.AuctionDao;
+import model.dto.AuctionDto;
 import model.dto.CarDto;
 import model.dto.MemberDto;
 
@@ -47,9 +44,9 @@ public class AuctionController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int ano= Integer.parseInt(request.getParameter("ano"));
 		System.out.println("controller 들어옴 > ano:  "+ano);
-		ArrayList<Object> result= AuctionDao.getInstence().auctionPrint(ano);
-		System.out.println("출력 관련 필요한 모든 정보: 객체임? 배열임? "+result);
-		
+		AuctionDto result= AuctionDao.getInstence().auctionPrint(ano);
+		System.out.println("출력 관련 dto 리스트: "+result);
+		System.out.println("사진리스트만 출력: "+ result.getImglist());
 		ObjectMapper mapper=new ObjectMapper(); 
 		String jsonObject= mapper.writeValueAsString(result);
 		System.out.println("jackson사용: "+jsonObject);
@@ -75,7 +72,7 @@ public class AuctionController extends HttpServlet {
 	      
 	      // 4. 파일 업로드 요청 [ 요청방식 : request ]
 	      try {
-	         List<  String > imgList = new ArrayList<>(); // 업로드된 파일명 들을 저장하기 위한 map컬렉션
+	    	  Map<  String > imgList = new HashMap<>(); // 업로드된 파일명 들을 저장하기 위한 map컬렉션
 	         
 	         // form전송시 input/select/textarea 등 태그의 모든 데이터 한번에 요청해서 결과를 List 반환 
 	      List< FileItem > fileList = fileUpload.parseRequest( request );
@@ -111,30 +108,79 @@ public class AuctionController extends HttpServlet {
 	      }
 	      // ------------------------------------- 업로드 끝 --> DB처리 --------------------- //
 
-	      CarDto carDto = new CarDto(
-	            0 ,                                       //cno 호출(x) : 차 등록시에는 매물 번호 는 자동부여 되므로 가지고 있을 필요가 없음
-	            fileList.get(0).getString(),                  //제조사(0)
-	            fileList.get(1).getString(),                  //차량번호(1)
-	            fileList.get(2).getString(),                  //차량종류(2)
-	            Integer.parseInt(fileList.get(3).getString()),      //배기량(3)
-	            fileList.get(4).getString(),                  //연료(4)
-	            fileList.get(5).getString(),                  //차량명(5)
-	            fileList.get(6).getString(),                  //제조년월(6)
-	            Integer.parseInt(fileList.get(7).getString()),      //주행거리(7)
-	            null,                                       // 주소
-	            fileList.get(8).getString(),                  //위도(8)
-	            fileList.get(9).getString(),                        //경도(9)
-	            imgList );                                 // 업로드 된 이미지들
-	      
-	      System.out.println( carDto );
-	      
-	      //3. Dao 처리
-	      boolean result = AuctionDao.getInstence().bcarsubmit(carDto);
-	      //4. (Dao 결과) 응답
-	      response.setContentType("application/json; charset=UTF-8"); 
-	      response.getWriter().print(result);
-	      
-	      }catch (Exception e) {}
+		// ------------------------------------- 업로드 끝 --> DB처리 --------------------- //
+		
+		// FileItem 으로 가져온 데이터들을 각 필드에 맞춰서 제품Dto 에 저장하기 
+		
+		// 제품 등록한 회원번호 [ 서블릿 세션 ] 
+		Object object = request.getSession().getAttribute("loginDto");
+		CarDto carDto = (CarDto)object;
+		int cmo = carDto.getCno();
+		  CarDto caDto = new CarDto(
+		            0 ,                                       //cno 호출(x) : 차 등록시에는 매물 번호 는 자동부여 되므로 가지고 있을 필요가 없음
+		            fileList.get(0).getString(),                  //제조사(0)
+		            fileList.get(1).getString(),                  //차량번호(1)
+		            fileList.get(2).getString(),                  //차량종류(2)
+		            Integer.parseInt(fileList.get(3).getString()),      //배기량(3)
+		            fileList.get(4).getString(),                  //연료(4)
+		            fileList.get(5).getString(),                  //차량명(5)
+		            fileList.get(6).getString(),                  //제조년월(6)
+		            Integer.parseInt(fileList.get(7).getString()),      //주행거리(7)
+		            null,                                       // 주소
+		            fileList.get(8).getString(),                  //위도(8)
+		            fileList.get(9).getString(),                        //경도(9)
+		            imgList );                                 // 업로드 된 이미지들
+		      
+		      System.out.println( carDto );
+
+
+		
+	
+		
+		      //3. Dao 처리
+		      boolean result = AuctionDao.getInstence().bcarsubmit(carDto);
+		      //4. (Dao 결과) 응답
+		      response.setContentType("application/json; charset=UTF-8"); 
+		      response.getWriter().print(result);
+		      
+		      }catch (Exception e) {}	
+		/*
+				//1. (입력받은 매개변수)요청
+				String ccompany = multi.getParameter("ccompany");			//제조사(1)
+					System.out.println(ccompany);
+				String cnum = multi.getParameter("cnum");					//차량번호(2)
+					System.out.println(cnum);
+				String csize = multi.getParameter("csize");					//차량종류(3)
+					System.out.println(csize);
+				int cc = Integer.parseInt( multi.getParameter("cc") );		//배기량(4)
+					System.out.println(cc);
+				String coil = multi.getParameter("coil");					//연료(5)
+					System.out.println(coil);
+				String cname = multi.getParameter("cname");					//차량명(6)
+					System.out.println(cname);
+				String cdate = multi.getParameter("cdate");					//제조년월(7)
+					System.out.println(cdate);
+				int ckm = Integer.parseInt( multi.getParameter("ckm") );	//주행거리(8)
+					System.out.println(ckm);
+				//차량 등록 주소(9)
+				String clat = multi.getParameter("clat");
+					System.out.println(clat);
+				String clng = multi.getParameter("clng");
+					System.out.println(clng);
+				
+	*/		
+				
+				
+	
+				//2. 유효성 검사/객체화
+				//CarDto carDto = new CarDto();
+				
+				//3. Dao 처리
+				//boolean result = AuctionDao.getInstence().bcarsubmit(CarDto);
+				//4. (Dao 결과) 응답
+				//response.setContentType("application/json; charset=UTF-8"); 
+				//response.getWriter().print(result);
+	}
  
 	
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
