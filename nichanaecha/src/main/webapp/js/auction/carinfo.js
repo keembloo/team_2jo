@@ -13,16 +13,16 @@ function auctionPrint(ano){
      	data : {ano:ano},      
       	success : r=>{
 			  console.log('통신성공')
-			  console.log(r)
+			  console.log(r);
 					
 			// 제목
-      		document.querySelector('.atitle').innerHTML=`${r[1].atitle}`
+      		document.querySelector('.atitle').innerHTML=`${r.atitle}`
 
       		//캐러셀(여러개이미지)
       		let imgbox=document.querySelector('.imgbox');
       		let html=``;
       		//객체를 배열로 바꾸기
-      		Object.values(r[0].imglist).forEach((img,i)=>{
+      		Object.values(r.car.imglist).forEach((img,i)=>{
 				  //첫번째 이미지만 active
 				  html+=`<div class="carousel-item ${ i==0 ? 'active' : '' }">
 					     	 <img src="/nichanaecha/auction/img/${img}" class="d-block w-100" alt="...">
@@ -34,15 +34,15 @@ function auctionPrint(ano){
       		
       		
       		//차량정보
-      		document.querySelector('.ccompany').innerHTML=`${r[0].ccompany}`
-      		document.querySelector('.csize').innerHTML=`${r[0].csize}`
-      		document.querySelector('.cname').innerHTML=`${r[0].cname}`
-      		document.querySelector('.coil').innerHTML=`${r[0].coil}`
-      		document.querySelector('.cc').innerHTML=`${r[0].cc}`
-      		document.querySelector('.cdate').innerHTML=`${r[0].cdate}`
-      		document.querySelector('.ckm').innerHTML=`${r[0].ckm}`
-      		document.querySelector('.cads').innerHTML=`${r[0].cads}`
-      		document.querySelector('.acontent').innerHTML=`${r[1].acontent}`
+      		document.querySelector('.ccompany').innerHTML=`${r.car.ccompany}`
+      		document.querySelector('.csize').innerHTML=`${r.car.csize}`
+      		document.querySelector('.cname').innerHTML=`${r.car.cname}`
+      		document.querySelector('.coil').innerHTML=`${r.car.coil}`
+      		document.querySelector('.cc').innerHTML=`${r.car.cc}`
+      		document.querySelector('.cdate').innerHTML=`${r.car.cdate}`
+      		document.querySelector('.ckm').innerHTML=`${r.car.ckm}`
+      		document.querySelector('.cads').innerHTML=`${r.car.cads}`
+      		document.querySelector('.acontent').innerHTML=`${r.acontent}`
       		
       		
       	} ,       

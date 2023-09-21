@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import model.dto.AuctionDto;
@@ -18,9 +19,9 @@ public class AuctionDao extends Dao {
 	public CarDto carDto(int cno) {
 		try {
 			String sql = "select * from car where cno = ?";
-			ps = conn.prepareStatement(sql);
+			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, cno);
-			rs = ps.executeQuery();
+			ResultSet rs = ps.executeQuery();
 			
 			rs.next();
 			
@@ -54,9 +55,9 @@ public class AuctionDao extends Dao {
 		try {
 			String sql = "select * from auctionInfo where ano = ?";
 			
-			ps = conn.prepareStatement(sql);
+			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, ano);
-			rs = ps.executeQuery();
+			ResultSet rs = ps.executeQuery();
 			
 			rs.next();
 			
@@ -81,7 +82,7 @@ public class AuctionDao extends Dao {
 	}
 	
 	// 자동차 이미지 Map 반환 함수
-	public Map<Integer,String> ciimg(int cno){
+	public Map<Integer,String> imglist(int cno){
 		try {
 			String sql = "select * from carimg where cno = ?";
 			
@@ -89,13 +90,13 @@ public class AuctionDao extends Dao {
 			ps.setInt(1, cno);
 			rs = ps.executeQuery();
 			
-			Map<Integer,String> ciimg = new HashMap<>();
+			Map<Integer,String> imglist = new HashMap<>();
 			
 			while(rs.next()) {
-				ciimg.put(rs.getInt("cino"), rs.getString("ciimg"));
+				imglist.put(rs.getInt("cino"), rs.getString("ciimg"));
 			}
 			
-			return ciimg;
+			return imglist;
 			
 		} catch (Exception e) {
 			System.out.println("자동차 img Map 반환 함수 sql 예외");
@@ -126,62 +127,31 @@ public class AuctionDao extends Dao {
 	
 	
 //게시물 상세조회 [9월19일 고연진]------------------------------------------------------------
-	public ArrayList<Object> auctionPrint(int ano) {
+	public AuctionDto auctionPrint(int ano) {
 		
-		ArrayList<Object> list = new ArrayList<>(); //List는 []형식으로 들어옴
+		AuctionDto auctionDto = new AuctionDto();
 		
 		try {
-			String sql="select cno, ccompany,csize,cc,coil,cname,cdate,ckm,cads,atitle,acontent,astartdate,aenddate,aprice,astate from car c natural join auctioninfo  where ano=?";
+			String sql="select cno from auctioninfo where ano = ?";
 			ps=conn.prepareStatement(sql);
 			ps.setInt(1, ano);
 			rs = ps.executeQuery();
 			
 			if(rs.next()) {
-			
-				Map<Integer, String> imglist = new HashMap<>(); //Map은 {} 형식으로 들어옴.
-				
-				sql="select*from carimg where cno= "+ rs.getInt("cno");
-				PreparedStatement ps1=conn.prepareStatement(sql);
-				ResultSet rs1=ps1.executeQuery();
-				int count = 0;	
-				
-				while(rs1.next()) {
-						imglist.put(rs1.getInt("cino"), rs1.getString("ciimg"));
-						}//w
-				
 
-				System.out.println( "imglist.size()"+imglist.size() );
-				//Car 정보
-				CarDto carDto = new CarDto();
-				carDto.setCno(rs.getInt("cno"));
-				carDto.setCcompany(rs.getString("ccompany"));
-				carDto.setCsize(rs.getString("csize"));
-				carDto.setCc(rs.getInt("cc"));
-				carDto.setCoil(rs.getString("coil"));
-				carDto.setCname(rs.getString("cname"));
-				carDto.setCdate(rs.getString("cdate"));
-				carDto.setCkm(rs.getInt("ckm"));
-				carDto.setCads(rs.getString("cads"));
-				carDto.setImglist(imglist);
-				list.add(carDto);
-				System.out.println("List안에 포함된 CarDto: "+list);
-				//경매정보
-				AuctionDto auctionDto=new AuctionDto();
-				auctionDto.setAtitle(rs.getString("atitle"));
-				auctionDto.setAcontent(rs.getString("acontent"));
-				auctionDto.setAstartdate(rs.getString("astartdate"));
-				auctionDto.setAenddate(rs.getString("aenddate"));
-				auctionDto.setAprice(rs.getInt("aprice"));
-				auctionDto.setAstate(rs.getInt("astate"));//경매상태
-				list.add(auctionDto);
-				System.out.println("List안에 포함된 것들: "+list);
-					
+				CarDto carDto = carDto(rs.getInt("cno"));
+				Map<Integer,String> imglist = imglist(rs.getInt("cno"));
+				carDto.setimglist(imglist);
+				
+				auctionDto = auctionDto(ano);
+				auctionDto.setCar(carDto);
+				
 			}
-				return list;
+				return auctionDto;
 
-		} catch (Exception e) {System.out.println("Dao- auctionPrint()오류"+e);}
+		} catch (Exception e) { System.out.println("Dao- auctionPrint()오류"+e); return null; }
 		
-		return null;
+		
 	}
 	
 //스크랩(찜) 테이블 추가[9월21일 고연진]----------------------------------------------------------------	

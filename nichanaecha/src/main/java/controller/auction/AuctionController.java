@@ -2,14 +2,11 @@ package controller.auction;
 
 import java.io.File;
 import java.io.IOException;
-<<<<<<< HEAD
 import java.util.ArrayList;
-=======
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
->>>>>>> branch '이성호' of https://github.com/keembloo/team_2jo
+
+//github.com/keembloo/team_2jo
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,12 +19,10 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.oreilly.servlet.MultipartRequest;
-import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import model.dao.AuctionDao;
+import model.dto.AuctionDto;
 import model.dto.CarDto;
-import model.dto.MemberDto;
 
 
 @WebServlet("/AuctionController")
@@ -45,15 +40,15 @@ public class AuctionController extends HttpServlet {
     
     //상세페이지조회 [9월19일 고연진]   
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int ano= Integer.parseInt(request.getParameter("ano"));
+		int ano = Integer.parseInt(request.getParameter("ano"));
 		System.out.println("controller 들어옴 > ano:  "+ano);
-		ArrayList<Object> result= AuctionDao.getInstence().auctionPrint(ano);
-		System.out.println("출력 관련 필요한 모든 정보: 객체임? 배열임? "+result);
-		
-		ObjectMapper mapper=new ObjectMapper(); 
-		String jsonObject= mapper.writeValueAsString(result);
-		System.out.println("jackson사용: "+jsonObject);
-		
+		AuctionDto result = AuctionDao.getInstence().auctionPrint(ano);
+		//System.out.println("출력 관련 필요한 모든 정보: 객체임? 배열임? " + result);
+		System.out.println(result.getCar().getimglist());
+		ObjectMapper mapper = new ObjectMapper();
+		String jsonObject = mapper.writeValueAsString(result);
+		//System.out.println("jackson사용: " + jsonObject);
+
 		response.setContentType("application/json;charset=UTF-8");
 		response.getWriter().print(jsonObject);
 	}
