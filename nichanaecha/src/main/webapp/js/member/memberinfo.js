@@ -55,9 +55,10 @@ function myAuctionView(){
 												<div>등록 차량수 : 총 ${jsonArray.length}대</div>`;
 						
 				jsonArray.forEach( (p,i)=>{
-					//console.log('카이미지리스트 : '+Object.values(p.carimglist)[0]);
+					//console.log(p);
+					//console.log('카이미지리스트 : '+Object.values(p.car.imglist)[0]);
 					//Object.values() : 주어진 객체의 속성 값들을 배열로 반환
-					
+	
 					count++;
 					// 제품1개 html 마크업
 					html += `<div class="col"> <!-- 제품1개 -->

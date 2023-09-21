@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import model.dto.AuctionDto;
+import model.dto.CarDto;
 import model.dto.MemberDto;
 
 public class MypageDao extends Dao {
@@ -48,12 +49,23 @@ public class MypageDao extends Dao {
 			while (rs.next()) {
 				//등록된 경매정보 dto에 차례대로 넣고 list로 출력해야함! 
 				// 등록번호 , 경매 제목 , 경매 종료 날짜 , 경매 등록 가격 , 경매 종료 시간 , 경매 상태  + 차량이미지
-				AuctionDto auctionDto = new AuctionDto(
+				/*AuctionDto auctionDto = new AuctionDto(
 						rs.getInt("ano"), rs.getString("atitle"), 
 						rs.getString("aenddate"), rs.getInt("aprice"),
 						rs.getInt("astate"), getMycarImg(rs.getInt("cno")) // 차량이미지를 넣어줘야하는데 밑에 getMycarImg()함수로 따로 만들어둠
 						);
-
+						*/
+				
+				// 1. 이미지 생성하고 // 2. 카객체생성  // 3.생성한 이미지 카에 담고 // 4. 옥션에 카 추가 
+				Map<Integer, String> carimglist = AuctionDao.getInstence().ciimg(rs.getInt("cno"));
+				CarDto carDto = AuctionDao.getInstence().carDto(rs.getInt("cno"));
+				carDto.setimglist(carimglist);
+				AuctionDto auctionDto = AuctionDao.getInstence().auctionDto(rs.getInt("ano"));
+				auctionDto.setCar(carDto);
+				//System.out.println("carimglist"+carimglist);
+				//System.out.println("carDto"+carDto);
+				//System.out.println("auctionDto"+auctionDto);
+				
 				list.add(auctionDto); // 리스트에 추가
 			}
 			//System.out.println("다오에서 list 출력 : "+list);

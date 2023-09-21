@@ -31,13 +31,15 @@
 				</div>
 				<div class="lineBar">
 				</div>
+				
+				<!-- ---- 등록매물정보구역 ---- -->
 				<div class="autionInfo">
 					<!-- 등록 매물 갯수와 매물 정보 -->
 					<div class="menuText">
 						<!-- js출력 -->
 					</div>
 
-
+				
 					<div id="imageCarousel" class="carousel carousel-dark slide">
 						<div class="carousel-inner">
 							<!--  js 등록매물 제품 출력 -->
@@ -61,7 +63,8 @@
 				</div> <!-- autionInfo end -->
 
 
-
+				<div class="lineBar">
+				</div>
 
 
 				<div class="handInfo">
