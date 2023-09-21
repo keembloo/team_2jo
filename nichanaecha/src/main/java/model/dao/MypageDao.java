@@ -1,6 +1,10 @@
 package model.dao;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import model.dto.AuctionDto;
 import model.dto.MemberDto;
@@ -11,84 +15,8 @@ public class MypageDao extends Dao {
 	private MypageDao() {}
 	
 	
-	/*
-	// ----------------- 새로운 출력 코드 -----------------
-	public ArrayList<MypageDto> mview( int mno) {		
-		// 경매, 차량정보, 회원 정보 레코드 dto 여러개를 저장하는 리스트
-		System.out.println("다오 mno : "+mno);
-		ArrayList<MypageDto> list = new ArrayList<>();
-		try {
-			String sql ="select * from member"
-					+ " inner join car as c on member.mno = c.mno"
-					+ " inner join auctionInfo as a on c.cno = a.cno"
-					+ " where member.mno = ?";
-			ps = conn.prepareStatement(sql);
-			ps.setInt(1, mno);
-			rs = ps.executeQuery();
-			System.out.println("sql"+sql);
-			while ( rs.next()) {
-				MypageDto mypageDto = new MypageDto();
-				
-					    // 회원 정보 설정
-						mypageDto.setMno(rs.getInt("mno"));
-					   
-						mypageDto.setMid(rs.getString("mid"));
-					    mypageDto.setMpw(rs.getString("mpw"));
-					    mypageDto.setMphone(rs.getString("mphone"));
-					    mypageDto.setMname(rs.getString("mname"));
-					    mypageDto.setMads(rs.getString("mads"));
-					    mypageDto.setMcash(rs.getInt("mcash"));
-		
-					    // 차량 정보 설정
-					    mypageDto.setCno(rs.getInt("cno"));
-					    mypageDto.setCcompany(rs.getString("ccompany"));
-					    mypageDto.setCnum(rs.getString("cnum"));
-					    mypageDto.setCsize(rs.getString("csize"));
-					    mypageDto.setCc(rs.getInt("cc"));
-					    mypageDto.setCoil(rs.getString("coil"));
-					    mypageDto.setCname(rs.getString("cname"));
-					    mypageDto.setCdate(rs.getString("cdate"));
-					    mypageDto.setCkm(rs.getInt("ckm"));
-					    mypageDto.setCads(rs.getString("cads"));
-					    mypageDto.setClat(rs.getString("clat"));
-					    mypageDto.setClng(rs.getString("clng"));
-		
-					    // 경매글 정보 설정
-					    mypageDto.setAno(rs.getInt("ano"));
-					    mypageDto.setAtitle(rs.getString("atitle"));
-					    mypageDto.setAcontent(rs.getString("acontent"));
-					    mypageDto.setAstartdate(rs.getString("astartdate"));
-					    mypageDto.setAenddate(rs.getString("aenddate"));
-					    mypageDto.setAprice(rs.getInt("aprice"));
-					    mypageDto.setAstate(rs.getInt("astate"));
-					    
-						
-						//회원
-						rs.getInt("mno"), rs.getString("mid"), rs.getString("mpw"),
-						rs.getString("mphone"), rs.getString("mname"), rs.getString("mads"), 
-						rs.getInt("mcash") ,
-						//차량
-						rs.getInt("cno"), rs.getString("ccompany") , rs.getString("cnum") ,
-						rs.getString("csize"), rs.getInt("cc"), rs.getString("coil") ,
-						rs.getString("cname") , rs.getString("cdate") ,rs.getInt("ckm"),
-						rs.getString("cads") , rs.getString("clat") ,rs.getString("clng"),
-						//경매글
-						rs.getInt("ano"), rs.getString("atitle") , rs.getString("acontent") ,
-						rs.getString("astartdate") , rs.getString("aenddate") ,
-						rs.getInt("aprice") , rs.getInt("astate"));
-						
-						
-
-				list.add(mypageDto);
-			}
-			System.out.println("list : "+list);
-			return list;
-		} catch (Exception e) {System.out.println(e);}
-		return null;
-	}
-	*/
 	// ----------------- 기존코드  -----------------
-	//규리 정보호출
+	//규리 회원 정보호출
 	public MemberDto mview( int mno) {
 		try {
 			String sql ="select * from member where mno = ?";
@@ -108,7 +36,7 @@ public class MypageDao extends Dao {
 		return null;
 	}
 	
-	// 규리 등록매물정보 출력
+	// 규리 등록매물 정보 출력
 	public ArrayList<AuctionDto> myAuctionView(int mno) {
 		mno = 3; // 테스트
 		ArrayList<AuctionDto> list = new ArrayList<>();
@@ -119,18 +47,36 @@ public class MypageDao extends Dao {
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				//등록된 경매정보 dto에 차례대로 넣고 list로 출력해야함! 
-				// 등록번호 , 경매 제목 , 경매 종료 날짜 , 경매 등록 가격 , 경매 종료 시간 , 경매 상태 
+				// 등록번호 , 경매 제목 , 경매 종료 날짜 , 경매 등록 가격 , 경매 종료 시간 , 경매 상태  + 차량이미지
 				AuctionDto auctionDto = new AuctionDto(
 						rs.getInt("ano"), rs.getString("atitle"), 
-						rs.getString("aenddate"), rs.getInt("aprice"), 
-						rs.getInt("astate"));
-			
+						rs.getString("aenddate"), rs.getInt("aprice"),
+						rs.getInt("astate"), getMycarImg(rs.getInt("cno")) // 차량이미지를 넣어줘야하는데 밑에 getMycarImg()함수로 따로 만들어둠
+						);
+
 				list.add(auctionDto); // 리스트에 추가
 			}
-			System.out.println("다오에서 list 출력 : "+list);
+			//System.out.println("다오에서 list 출력 : "+list);
 			return list;
 		} catch (Exception e) { System.out.println(e);	}
 		return list;
+	}
+	
+	//규리 제품에 해당하는 이미지만 출력
+	public Map<Integer, String> getMycarImg(int cno){ // 차량 번호를 받아서 이미지파일명을 반환해줌 {1 : 셀토스.jpg} 형태로
+		try {
+			Map<Integer, String> carimglist = new HashMap<>(); // 같은 차번호의 다른이미지 여러개담을거
+			String sql = "select * from carimg where cno = "+cno;	// 같은 차번호로 차이미지 테이블 조회
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				carimglist.put(rs.getInt("cino") , rs.getString("ciimg"));
+			}
+			return carimglist;
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return null;
 	}
 	
 	

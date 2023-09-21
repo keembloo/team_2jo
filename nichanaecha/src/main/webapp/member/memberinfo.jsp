@@ -40,64 +40,10 @@
 
 					<div id="imageCarousel" class="carousel carousel-dark slide">
 						<div class="carousel-inner">
-							
-							<div class="carousel-item active"> <!-- 2개세트 -->
-								<div class="abox2 row row-cols-md-2 g-4 px-5"> <!-- rows -->
-								
-									<div class="col"> <!-- 제품1개 -->
-										<div class="card">
-											<img src="image1.jpg" class="card-img-top" alt="Image 1">
-											<div class="card-body">
-												<h5 class="card-title">Card title 1</h5>
-												<p class="card-text">This is a longer card with
-													supporting text.</p>
-											</div>
-										</div>
-									</div> <!-- 제품1개end -->
-
-									<div class="col">  <!-- 제품1개 -->
-										<div class="card">
-											<img src="image2.jpg" class="card-img-top" alt="Image 2">
-											<div class="card-body">
-												<h5 class="card-title">Card title 2</h5>
-												<p class="card-text">This is a longer card with
-													supporting text.</p>
-											</div>
-										</div>
-									</div> <!-- 제품1개end -->
-									
-								</div>	<!-- row end -->
-							</div>  <!-- carousel-item 2개세트 end -->
-							<div class="carousel-item"> <!-- 2개세트 -->
-							
-								<div class="row row-cols-md-2 g-4 px-5">
-									<div class="col">  <!-- 제품1개 -->
-										<div class="card">
-											<img src="image2.jpg" class="card-img-top" alt="Image 2">
-											<div class="card-body">
-												<h5 class="card-title">Card title 2</h5>
-												<p class="card-text">This is a longer card with
-													supporting text.</p>
-											</div>
-										</div>
-									</div> <!-- 제품1개end -->
-									
-									<div class="col">  <!-- 제품1개 -->
-										<div class="card">
-											<img src="image2.jpg" class="card-img-top" alt="Image 2">
-											<div class="card-body">
-												<h5 class="card-title">Card title 2</h5>
-												<p class="card-text">This is a longer card with
-													supporting text.</p>
-											</div>
-										</div>
-									</div> <!-- 제품1개end -->
-								</div> <!-- row end -->
-							</div> <!-- carousel-item 2개세트 end -->
-							
-							
+							<!--  js 등록매물 제품 출력 -->
 							
 						</div> <!-- carousel-inner end -->
+						
 						
 						<button class="carousel-control-prev" type="button"
 							data-bs-target="#imageCarousel" data-bs-slide="prev">
@@ -113,6 +59,10 @@
 
 					</div> <!-- imageCarousel end -->
 				</div> <!-- autionInfo end -->
+
+
+
+
 
 				<div class="handInfo">
 					<!-- 입찰 매물 갯수와 매물 정보 -->
