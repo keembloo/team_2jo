@@ -3,22 +3,22 @@ package model.dto;
 public class CarDto {
 	private int cno;			//#매물 번호 
 	private String ccompany;	//#제조사 
-	private String cnum;		//  #차량 번호
-	private String csize;		// #차량 종류
-	private int cc;				// #배기량
+	private String cnum;		//#차량 번호
+	private String csize;		//#차량 종류
+	private int cc;				//#배기량
 	private String coil;		//#연료
 	private String cname;		//#차량명
-	private String cdate;		// #제조년월
-	private int ckm;			// #주행거리
-	private String cads;		// #차량 등록 주소 
-	private String clat;		//# 차량 위치 위도
-	private String clng;		//# 차량 위치 경도
+	private String cdate;		//#제조년월
+	private int ckm;			//#주행거리
+	private String cads;		//#차량 등록 주소 
+	private String clat;		//#차량 위치 위도
+	private String clng;		//#차량 위치 경도
 	
 	
 	
 	public CarDto() {}
 
-
+	
 	public CarDto(int cno, String ccompany, String cnum, String csize, int cc, String coil, String cname, String cdate,
 			int ckm, String cads, String clat, String clng) {
 		super();
