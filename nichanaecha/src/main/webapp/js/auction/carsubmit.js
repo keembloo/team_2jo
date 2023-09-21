@@ -50,6 +50,8 @@ navigator.geolocation.getCurrentPosition( e => {
 let plat = 0;		// 현재 카카오지도에서 선택한 좌표.. 초기값은 0 / 
 let plng = 0;
 
+
+
 // -------------------------------------------------------------- //
 
 function bcarsubmit(){

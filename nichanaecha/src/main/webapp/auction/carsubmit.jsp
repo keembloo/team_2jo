@@ -15,14 +15,14 @@
 		<form class="carsubmitForm">
 			<div>
 				<div>
-					제조사 : 			<input type="text" class="ccompany">	<br/>
-					차량번호 : 		<input type="text" class="cnum">		<br/>
-					차량종류 : 		<input type="text" class="csize">		<br/>
-					배기량 : 			<input type="text" class="cc">			<br/>
-					연료 : 			<input type="text" class="coil">		<br/>
-					차량명 : 			<input type="text" class="cname">		<br/>
-					제조년월 : 		<input type="text" class="cdate">		<br/>
-					KM : 			<input type="text" class="ckm">			<br/>
+					제조사 : 			<input type="text" name="ccompany" class="ccompany">	<br/>
+					차량번호 : 		<input type="text" name="cnum" class="cnum">		<br/>
+					차량종류 : 		<input type="text" name="csize" class="csize">		<br/>
+					배기량 : 			<input type="text" name="cc" class="cc">			<br/>
+					연료 : 			<input type="text" name="coil" class="coil">		<br/>
+					차량명 : 			<input type="text" name="cname" class="cname">		<br/>
+					제조년월 : 		<input type="text" name="cdate" class="cdate">		<br/>
+					KM : 			<input type="text" name="ckm" class="ckm">			<br/>
 					차량 등록 주소 : 	<div id="map" style="width:300px;height:350px;"></div>
 									<p><em>지도를 클릭해주세요!</em></p> 
 									<div id="clickLatlng"></div>
@@ -35,7 +35,7 @@
 				</div>
 			</div>
 			<div>
-				<button onclick="bcarsubmit()">등록</button>
+				<button onclick="bcarsubmit()" type="button" >등록</button>
 				<button>취소</button>
 			</div>
 		</form>
