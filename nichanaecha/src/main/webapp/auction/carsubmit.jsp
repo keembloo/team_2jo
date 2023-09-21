@@ -35,7 +35,7 @@
 				</div>
 			</div>
 			<div>
-				<button onclick="bcarsubmit()">등록</button>
+				<button onclick="bcarsubmit()" type="button" >등록</button>
 				<button>취소</button>
 			</div>
 		</form>
