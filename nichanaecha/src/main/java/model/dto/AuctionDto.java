@@ -1,5 +1,8 @@
 package model.dto;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class AuctionDto {
 	private int ano;			//#경매 번호
 	private String atitle;		//#경매 제목 
@@ -9,13 +12,17 @@ public class AuctionDto {
 	private int aprice;			// #경매 등록 가격 
 	private int astate;			//  #경매 상태 [ 0: 경매중, 1:거래중(낙찰 후 판매자와 거래중) 2:경매 종료
 	
+	// 규리 마이페이지 출력을 위한 제품 이미지 추가
+	Map< Integer , String > carimglist = new HashMap<>();
 
-
+	
+	
 	public AuctionDto() {}
 	
-	
+
+	// 차량 대표 이미지 포함된 풀생성자
 	public AuctionDto(int ano, String atitle, String acontent, String astartdate, String aenddate, int aprice,
-			int astate) {
+			int astate, Map<Integer, String> carimglist) {
 		super();
 		this.ano = ano;
 		this.atitle = atitle;
@@ -24,15 +31,31 @@ public class AuctionDto {
 		this.aenddate = aenddate;
 		this.aprice = aprice;
 		this.astate = astate;
+		this.carimglist = carimglist;
 	}
-	
-	
+
+
+
 	// 규리 마이페이지에서 등록매물정보 출력을 위한 생성자
 	// 풀생성자에서 경매 내용, 경매 등록날짜만 빠짐 
-	public AuctionDto(int ano, String atitle, String aenddate, int aprice, int astate) {
+	public AuctionDto(int ano, String atitle, String aenddate, int aprice, int astate, Map<Integer, String> carimglist) {
 		super();
 		this.ano = ano;
 		this.atitle = atitle;
+		this.aenddate = aenddate;
+		this.aprice = aprice;
+		this.astate = astate;
+		this.carimglist = carimglist;
+	}
+
+	// 경매정보만 담고있는 생성자 , 차량번호X, 매물이미지X
+	public AuctionDto(int ano, String atitle, String acontent, String astartdate, String aenddate, int aprice,
+			int astate) {
+		super();
+		this.ano = ano;
+		this.atitle = atitle;
+		this.acontent = acontent;
+		this.astartdate = astartdate;
 		this.aenddate = aenddate;
 		this.aprice = aprice;
 		this.astate = astate;
@@ -109,11 +132,26 @@ public class AuctionDto {
 	}
 
 
+	public Map<Integer, String> getCarimglist() {
+		return carimglist;
+	}
+
+
+	public void setCarimglist(Map<Integer, String> carimglist) {
+		this.carimglist = carimglist;
+	}
+
+
 	@Override
 	public String toString() {
 		return "AuctionDto [ano=" + ano + ", atitle=" + atitle + ", acontent=" + acontent + ", astartdate=" + astartdate
-				+ ", aenddate=" + aenddate + ", aprice=" + aprice + ", astate=" + astate + "]";
+				+ ", aenddate=" + aenddate + ", aprice=" + aprice + ", astate=" + astate + ", carimglist=" + carimglist
+				+ "]";
 	}
-	
+
+
+
+
+
 	
 }

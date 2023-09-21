@@ -28,44 +28,18 @@ function mview(){
 				//console.log('r[0].mno : '+r[0].mno);
 				
 				let cashInfo = document.querySelector('.cashInfo');
-				
-				/*
-				let lInfo = document.querySelector('.lInfo');
-				let bottomInfo = document.querySelector('.bottomInfo');
-				let autionInfo = document.querySelector('.autionInfo');
-				
-				lInfo.innerHTML = `<div>id : ${r[0].mid}</div>
-								   <div>전화번호 : ${r[0].mphone}</div>
-								   <div>등록 차량 대수 : 2대(추후해야함)</div>
-								   <div>입찰 차량 대수 : 2대(추후해야함)</div>`;
-				*/		
-				
+
 				cashInfo.innerHTML = `<div class="textId">'${r.mname}' 님</div>
 									<div class="textPoint">보유 포인트 : <span>${r.mcash.toLocaleString()}원</span></div>
 									<button class="btn btn-primary" onclick="inputPoint(${r.mno})" type=button>입금</button>
 									<button class="btn btn-danger" onclick="outputPoint(${r.mno},${r.mcash})" type=button>출금</button>`;
-				/*			
-				bottomInfo.innerHTML = `<div>
-											<div>등록 매물 정보</div>
-											<div>차량이미지</div>
-											<div>차량 등록번호 : ${r[0].cno}</div>
-										</div>`;			
-							
-				autionInfo.innerHTML = `<div>
-											<div>입찰 매물 정보</div>
-											<div>차량이미지</div>
-											<div>등록번호 : </div>
-										</div>`;			
-
-				*/
-	
 			} , 
 			error : e => {console.log("실패");}		
 		})
 }
 
 
-// 규리 등록매물정보 출력
+// 규리 등록매물정보(캐러셀) 출력
 function myAuctionView(){
 
 	$.ajax({
@@ -74,18 +48,21 @@ function myAuctionView(){
 			data : { type : "myAuctionView" } ,
 			success : jsonArray => { 
 				console.log(jsonArray);
-					let autionInfo = document.querySelector('.autionInfo');
 					let count = 0;
 					let html ='';
 					document.querySelector('.menuText').innerHTML = 
 												`<div>등록 매물 정보</div>
 												<div>등록 차량수 : 총 ${jsonArray.length}대</div>`;
 						
-				jsonArray.forEach( (p)=>{
+				jsonArray.forEach( (p,i)=>{
+					//console.log('카이미지리스트 : '+Object.values(p.carimglist)[0]);
+					//Object.values() : 주어진 객체의 속성 값들을 배열로 반환
+					
 					count++;
-					html += `<div class="col">
+					// 제품1개 html 마크업
+					html += `<div class="col"> <!-- 제품1개 -->
 								<div class="card">
-									<img src="image1.jpg" class="card-img-top" alt="Image 1">
+									<img src="/nichanaecha/img/seltosImgSample.jpg" class="card-img-top" alt="Image 1">
 									<div class="card-body">
 										<h5 class="card-title">${p.atitle}</h5>
 										<div class="card-text">경매 등록번호 : ${p.ano}</div>
@@ -95,19 +72,20 @@ function myAuctionView(){
 								</div>
 							</div>`;
 
-					if (count%2==0) {
+					if (count%2==0) { // 매물 2개씩 담기위해 나눔
 						//console.log(html);
 						document.querySelector('.carousel-inner').innerHTML += 
-						`<div class="carousel-item">
+						`<div class="carousel-item"> <!-- 제품 2개세트 -->
 							<div class="abox2 row row-cols-md-2 g-4 px-5">
 							</div>
 						</div>`;
-						
-						
+						// html 추가해주기 제품1개씩 
+						document.querySelectorAll('.abox2')[Math.floor(i/2)].innerHTML = html; // Math.floor(i/2) 인덱스를 2로 나누고 소수점을 버림
+						html=''; // 제품 2개씩 넣어줘야하기 때문에 넣고나면 초기화
 					} // if end
 				}); // forEach end 
-				
-				
+				// 첫번째 carousel-item 에 active 클래스를 넣어줘야 실행됨
+				document.querySelectorAll('.carousel-item')[0].className += ' active'; // 띄어쓰기 안하면 실행X
 			} , 
 			error : e => {console.log("실패"+e);}
 		})
@@ -157,5 +135,63 @@ function outputPoint(mno , mcash){
 	}
 }
 
+/*
+<div class="carousel-item active"> <!-- 2개세트 -->
+								<div class="abox2 row row-cols-md-2 g-4 px-5"> <!-- rows -->
+								
+									<div class="col"> <!-- 제품1개 -->
+										<div class="card">
+											<img src="image1.jpg" class="card-img-top" alt="Image 1">
+											<div class="card-body">
+												<h5 class="card-title">Card title 1</h5>
+												<p class="card-text">This is a longer card with
+													supporting text.</p>
+											</div>
+										</div>
+									</div> <!-- 제품1개end -->
 
+									<div class="col">  <!-- 제품1개 -->
+										<div class="card">
+											<img src="image2.jpg" class="card-img-top" alt="Image 2">
+											<div class="card-body">
+												<h5 class="card-title">Card title 2</h5>
+												<p class="card-text">This is a longer card with
+													supporting text.</p>
+											</div>
+										</div>
+									</div> <!-- 제품1개end -->
+									
+								</div>	<!-- row end -->
+							</div>  <!-- carousel-item 2개세트 end -->
+							
+							
+							<div class="carousel-item"> <!-- 2개세트 -->
+							
+								<div class="row row-cols-md-2 g-4 px-5">
+									<div class="col">  <!-- 제품1개 -->
+										<div class="card">
+											<img src="image2.jpg" class="card-img-top" alt="Image 2">
+											<div class="card-body">
+												<h5 class="card-title">Card title 2</h5>
+												<p class="card-text">This is a longer card with
+													supporting text.</p>
+											</div>
+										</div>
+									</div> <!-- 제품1개end -->
+									
+									<div class="col">  <!-- 제품1개 -->
+										<div class="card">
+											<img src="image2.jpg" class="card-img-top" alt="Image 2">
+											<div class="card-body">
+												<h5 class="card-title">Card title 2</h5>
+												<p class="card-text">This is a longer card with
+													supporting text.</p>
+											</div>
+										</div>
+									</div> <!-- 제품1개end -->
+								</div> <!-- row end -->
+							</div> <!-- carousel-item 2개세트 end -->
+
+
+ */
 
