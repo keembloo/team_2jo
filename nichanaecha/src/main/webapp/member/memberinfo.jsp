@@ -66,10 +66,12 @@
 				<div class="lineBar">
 				</div>
 
-
+				<!-- ---- 입찰한 매물정보구역 ---- -->
 				<div class="handInfo">
+					<div class="menuText2">
 					<!-- 입찰 매물 갯수와 매물 정보 -->
 					<!-- js출력 -->
+					</div>
 				</div>
 
 				<div class="wishInfo">
