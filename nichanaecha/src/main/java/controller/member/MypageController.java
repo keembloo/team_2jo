@@ -41,7 +41,7 @@ public class MypageController extends HttpServlet {
 		if ( type.equals("mview")) { // mview() 멤버 회원정보출력
 			
 			MemberDto result = MypageDao.getInstence().mview( mno );
-			System.out.println("컨트롤러 result : "+result);
+			//System.out.println("컨트롤러 result : "+result);
 			ObjectMapper objectMapper = new ObjectMapper();
 			String json = objectMapper.writeValueAsString(result);
 			response.setContentType("application/json;charset=UTF-8");

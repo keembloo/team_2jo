@@ -51,7 +51,7 @@ public class MypageDao extends Dao {
 				AuctionDto auctionDto = new AuctionDto(
 						rs.getInt("ano"), rs.getString("atitle"), 
 						rs.getString("aenddate"), rs.getInt("aprice"),
-						rs.getInt("astate"), getMycarImg(rs.getInt("cno"))
+						rs.getInt("astate"), getMycarImg(rs.getInt("cno")) // 차량이미지를 넣어줘야하는데 밑에 getMycarImg()함수로 따로 만들어둠
 						);
 
 				list.add(auctionDto); // 리스트에 추가
@@ -63,7 +63,7 @@ public class MypageDao extends Dao {
 	}
 	
 	//규리 제품에 해당하는 이미지만 출력
-	public Map<Integer, String> getMycarImg(int cno){
+	public Map<Integer, String> getMycarImg(int cno){ // 차량 번호를 받아서 이미지파일명을 반환해줌 {1 : 셀토스.jpg} 형태로
 		try {
 			Map<Integer, String> carimglist = new HashMap<>(); // 같은 차번호의 다른이미지 여러개담을거
 			String sql = "select * from carimg where cno = "+cno;	// 같은 차번호로 차이미지 테이블 조회

@@ -2,9 +2,9 @@
 //console.log(loginMid);
 allView();
 // 규리 , 마이페이지 전체 출력 함수
-function allView(){
-	mview();
-	myAuctionView();
+function allView(){ 
+	mview(); 
+	myAuctionView(); 
 }
 
 // 규리, 멤버 회원정보 출력
@@ -66,7 +66,7 @@ function myAuctionView(){
 									<div class="card-body">
 										<h5 class="card-title">${p.atitle}</h5>
 										<div class="card-text">경매 등록번호 : ${p.ano}</div>
-										<div class="card-text">최소 입찰 금액 : ${p.aprice}</div>
+										<div class="card-text">최소 입찰 금액 : ${p.aprice.toLocaleString()}원</div>
 										<div class="card-text">경매 종료 : ${p.aenddate}</div>
 									</div>
 								</div>
@@ -135,63 +135,5 @@ function outputPoint(mno , mcash){
 	}
 }
 
-/*
-<div class="carousel-item active"> <!-- 2개세트 -->
-								<div class="abox2 row row-cols-md-2 g-4 px-5"> <!-- rows -->
-								
-									<div class="col"> <!-- 제품1개 -->
-										<div class="card">
-											<img src="image1.jpg" class="card-img-top" alt="Image 1">
-											<div class="card-body">
-												<h5 class="card-title">Card title 1</h5>
-												<p class="card-text">This is a longer card with
-													supporting text.</p>
-											</div>
-										</div>
-									</div> <!-- 제품1개end -->
 
-									<div class="col">  <!-- 제품1개 -->
-										<div class="card">
-											<img src="image2.jpg" class="card-img-top" alt="Image 2">
-											<div class="card-body">
-												<h5 class="card-title">Card title 2</h5>
-												<p class="card-text">This is a longer card with
-													supporting text.</p>
-											</div>
-										</div>
-									</div> <!-- 제품1개end -->
-									
-								</div>	<!-- row end -->
-							</div>  <!-- carousel-item 2개세트 end -->
-							
-							
-							<div class="carousel-item"> <!-- 2개세트 -->
-							
-								<div class="row row-cols-md-2 g-4 px-5">
-									<div class="col">  <!-- 제품1개 -->
-										<div class="card">
-											<img src="image2.jpg" class="card-img-top" alt="Image 2">
-											<div class="card-body">
-												<h5 class="card-title">Card title 2</h5>
-												<p class="card-text">This is a longer card with
-													supporting text.</p>
-											</div>
-										</div>
-									</div> <!-- 제품1개end -->
-									
-									<div class="col">  <!-- 제품1개 -->
-										<div class="card">
-											<img src="image2.jpg" class="card-img-top" alt="Image 2">
-											<div class="card-body">
-												<h5 class="card-title">Card title 2</h5>
-												<p class="card-text">This is a longer card with
-													supporting text.</p>
-											</div>
-										</div>
-									</div> <!-- 제품1개end -->
-								</div> <!-- row end -->
-							</div> <!-- carousel-item 2개세트 end -->
-
-
- */
 
