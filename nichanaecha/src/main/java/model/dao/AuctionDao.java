@@ -1,8 +1,5 @@
 package model.dao;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -51,6 +48,8 @@ public class AuctionDao extends Dao {
 	
 	// 경매 정보 dto 반환 함수
 	public AuctionDto auctionDto(int ano) {
+	
+		
 		try {
 			String sql = "select * from auctionInfo where ano = ?";
 			
@@ -81,7 +80,7 @@ public class AuctionDao extends Dao {
 	}
 	
 	// 자동차 이미지 Map 반환 함수
-	public Map<Integer,String> ciimg(int cno){
+	public Map<Integer,String> imglist(int cno){
 		try {
 			String sql = "select * from carimg where cno = ?";
 			
@@ -89,13 +88,13 @@ public class AuctionDao extends Dao {
 			ps.setInt(1, cno);
 			rs = ps.executeQuery();
 			
-			Map<Integer,String> ciimg = new HashMap<>();
+			Map<Integer,String> imglist = new HashMap<>();
 			
 			while(rs.next()) {
-				ciimg.put(rs.getInt("cino"), rs.getString("ciimg"));
+				imglist.put(rs.getInt("cino"), rs.getString("ciimg"));
 			}
 			
-			return ciimg;
+			return imglist;
 			
 		} catch (Exception e) {
 			System.out.println("자동차 img Map 반환 함수 sql 예외");
@@ -104,9 +103,6 @@ public class AuctionDao extends Dao {
 		
 		
 	}
-	
-	
-	
 	
 	
 	
@@ -126,63 +122,33 @@ public class AuctionDao extends Dao {
 	
 	
 //게시물 상세조회 [9월19일 고연진]------------------------------------------------------------
-	public ArrayList<Object> auctionPrint(int ano) {
+	public AuctionDto auctionPrint(int ano) {
 		
-		ArrayList<Object> list = new ArrayList<>(); //List는 []형식으로 들어옴
+		AuctionDto auctionDto = new AuctionDto();
 		
 		try {
-			String sql="select cno, ccompany,csize,cc,coil,cname,cdate,ckm,cads,atitle,acontent,astartdate,aenddate,aprice,astate from car c natural join auctioninfo  where ano=?";
+			String sql = "select cno from auctioninfo where ano=?";
 			ps=conn.prepareStatement(sql);
 			ps.setInt(1, ano);
-			rs = ps.executeQuery();
-			
+			rs=ps.executeQuery(); 
+			//경매 번호에 맞는 차량 번호 찾기
 			if(rs.next()) {
-			
-				Map<Integer, String> imglist = new HashMap<>(); //Map은 {} 형식으로 들어옴.
+				CarDto carDto = carDto(rs.getInt("cno"));//차량번호에 맞는 CarDto 객체 가져옴.
+				Map<Integer, String> imglist= imglist(rs.getInt("cno"));//cno에 맞는 차량이미지 저장한거 가져옴
+				carDto.setimglist(imglist);
 				
-				sql="select*from carimg where cno= "+ rs.getInt("cno");
-				PreparedStatement ps1=conn.prepareStatement(sql);
-				ResultSet rs1=ps1.executeQuery();
-				int count = 0;	
-				
-				while(rs1.next()) {
-						imglist.put(rs1.getInt("cino"), rs1.getString("ciimg"));
-						}//w
-				
-
-				System.out.println( "imglist.size()"+imglist.size() );
-				//Car 정보
-				CarDto carDto = new CarDto();
-				carDto.setCno(rs.getInt("cno"));
-				carDto.setCcompany(rs.getString("ccompany"));
-				carDto.setCsize(rs.getString("csize"));
-				carDto.setCc(rs.getInt("cc"));
-				carDto.setCoil(rs.getString("coil"));
-				carDto.setCname(rs.getString("cname"));
-				carDto.setCdate(rs.getString("cdate"));
-				carDto.setCkm(rs.getInt("ckm"));
-				carDto.setCads(rs.getString("cads"));
-				carDto.setImglist(imglist);
-				list.add(carDto);
-				System.out.println("List안에 포함된 CarDto: "+list);
-				//경매정보
-				AuctionDto auctionDto=new AuctionDto();
-				auctionDto.setAtitle(rs.getString("atitle"));
-				auctionDto.setAcontent(rs.getString("acontent"));
-				auctionDto.setAstartdate(rs.getString("astartdate"));
-				auctionDto.setAenddate(rs.getString("aenddate"));
-				auctionDto.setAprice(rs.getInt("aprice"));
-				auctionDto.setAstate(rs.getInt("astate"));//경매상태
-				list.add(auctionDto);
-				System.out.println("List안에 포함된 것들: "+list);
-					
+				auctionDto =auctionDto(ano);
+				auctionDto.setCar(carDto);
 			}
-				return list;
-
-		} catch (Exception e) {System.out.println("Dao- auctionPrint()오류"+e);}
+			return auctionDto;
+			
+		} catch (Exception e) {System.out.println("auctionPrint() 오류: "+e);}
+		
+		
 		
 		return null;
-	}
+	
+	}//f()
 	
 //스크랩(찜) 테이블 추가[9월21일 고연진]----------------------------------------------------------------	
 	public boolean clipping(int mno, int ano) {
@@ -227,14 +193,15 @@ public class AuctionDao extends Dao {
 	
 	
 	// 좌표 영역 내 옥션,자동차 정보 반환
-	public AuctionDto mapAreaPrint(int east, int west, int south, int north) {
-		
-		
-		
-		
-		
-	}
-	
+	/*
+	 * public AuctionDto mapAreaPrint(int east, int west, int south, int north) {
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * }
+	 */
 	
 	
 	
