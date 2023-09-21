@@ -47,11 +47,11 @@ function myAuctionView(){
 			method : "get" ,
 			data : { type : "myAuctionView" } ,
 			success : jsonArray => { 
-				console.log(jsonArray);
+				//console.log(jsonArray);
 					let count = 0;
 					let html ='';
 					document.querySelector('.menuText').innerHTML = 
-												`<div>등록 매물 정보</div>
+												`<div>나의 등록 매물 정보</div>
 												<div>등록 차량수 : 총 ${jsonArray.length}대</div>`;
 						
 				jsonArray.forEach( (p,i)=>{
@@ -62,16 +62,18 @@ function myAuctionView(){
 					// 제품1개 html 마크업
 					html += `<div class="col"> <!-- 제품1개 -->
 								<div class="card">
-									<img src="/nichanaecha/img/seltosImgSample.jpg" class="card-img-top" alt="Image 1">
-									<div class="card-body">
-										<h5 class="card-title">${p.atitle}</h5>
-										<div class="card-text">경매 등록번호 : ${p.ano}</div>
-										<div class="card-text">최소 입찰 금액 : ${p.aprice.toLocaleString()}원</div>
-										<div class="card-text">경매 종료 : ${p.aenddate}</div>
-									</div>
+									<a href="/nichanaecha/auction/carinfo.jsp?ano=${p.ano}">
+										<img src="/nichanaecha/img/seltosImgSample.jpg" class="card-img-top" alt="Image 1">
+										<div class="card-body">
+											<h5 class="card-title">${p.atitle}</h5>
+											<div class="card-text">경매 등록번호 : ${p.ano}</div>
+											<div class="card-text">최소 입찰 금액 : ${p.aprice.toLocaleString()}원</div>
+											<div class="card-text">경매 종료 : ${p.aenddate}</div>
+										</div>
+									</a>
 								</div>
 							</div>`;
-
+					// <a href="/nichanaecha/auction/carinfo.jsp?ano=${p.ano}"> 클릭시 carinfo 의 url로 ano 보냄
 					if (count%2==0) { // 매물 2개씩 담기위해 나눔
 						//console.log(html);
 						document.querySelector('.carousel-inner').innerHTML += 
