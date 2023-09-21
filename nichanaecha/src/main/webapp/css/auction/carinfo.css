@@ -13,3 +13,8 @@
 /*스크랩,입찰 나누기*/
 .buttonBox{display: flex; flex-direction: row; justify-content: flex-end;}
 /*매물상세안내*/
+
+/*스크랩,입찰버튼구역*/
+.buttonBox{display: flex; flex-direction: row; justify-content: space-between;
+}
+.buttonBox button{border: none; width:100%; height: 50px}

@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 	<link href="/nichanaecha/css/auction/carinfo.css" rel="stylesheet">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css">
 </head>
 <body>
 	<!-- jsp  파일안에 다른 jsp파일 import -->
@@ -46,8 +47,8 @@
 				<div><p>종료</p><p>13시간전</p>
 				</div>
 				<div class="buttonBox">
-					<button type="button">스크랩</button>
-					<button type="button">입찰</button>
+					<button onclick="clipping()" type="button">스크랩<i class="fa-solid fa-bookmark"></i></button>
+					<button type="button">입찰<i class="fa-regular fa-bookmark"></i></button>
 				</div>
 			</div>
 		
