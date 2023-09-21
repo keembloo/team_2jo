@@ -1,6 +1,5 @@
 package model.dto;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class AuctionDto {
@@ -9,44 +8,14 @@ public class AuctionDto {
 	private String acontent;	// #경매 내용 
 	private String astartdate;	// #경매 등록 날짜 
 	private String aenddate;	// #경매 종료 날짜 
-	private int aprice;			// #경매 등록 가격 
+	private long aprice;			// #경매 등록 가격 
 	private int astate;			//  #경매 상태 [ 0: 경매중, 1:거래중(낙찰 후 판매자와 거래중) 2:경매 종료
-	
-	// 규리 마이페이지 출력을 위한 제품 이미지 추가
-	Map< Integer , String > carimglist = new HashMap<>();
+	private int cno;
+	private CarDto car;
 
 	public AuctionDto() {}
 	
-
-	// 차량 대표 이미지 포함된 풀생성자
-	public AuctionDto(int ano, String atitle, String acontent, String astartdate, String aenddate, int aprice,
-			int astate, Map<Integer, String> carimglist) {
-		super();
-		this.ano = ano;
-		this.atitle = atitle;
-		this.acontent = acontent;
-		this.astartdate = astartdate;
-		this.aenddate = aenddate;
-		this.aprice = aprice;
-		this.astate = astate;
-		this.carimglist = carimglist;
-	}
-
-
-
-	// 규리 마이페이지에서 등록매물정보 출력을 위한 생성자
-	// 풀생성자에서 경매 내용, 경매 등록날짜만 빠짐 
-	public AuctionDto(int ano, String atitle, String aenddate, int aprice, int astate, Map<Integer, String> carimglist) {
-		super();
-		this.ano = ano;
-		this.atitle = atitle;
-		this.aenddate = aenddate;
-		this.aprice = aprice;
-		this.astate = astate;
-		this.carimglist = carimglist;
-	}
-
-	// 경매정보만 담고있는 생성자 , 차량번호X, 매물이미지X
+	
 	public AuctionDto(int ano, String atitle, String acontent, String astartdate, String aenddate, int aprice,
 			int astate) {
 		super();
@@ -57,6 +26,63 @@ public class AuctionDto {
 		this.aenddate = aenddate;
 		this.aprice = aprice;
 		this.astate = astate;
+	}
+	
+	
+	// 규리 마이페이지에서 등록매물정보 출력을 위한 생성자
+	// 풀생성자에서 경매 내용, 경매 등록날짜만 빠짐 
+	public AuctionDto(int ano, String atitle, String aenddate, int aprice, int astate) {
+		super();
+		this.ano = ano;
+		this.atitle = atitle;
+		this.aenddate = aenddate;
+		this.aprice = aprice;
+		this.astate = astate;
+	}
+
+
+	public AuctionDto(int ano, String atitle, String acontent, String astartdate, String aenddate, long aprice,
+			int astate, int cno) {
+		super();
+		this.ano = ano;
+		this.atitle = atitle;
+		this.acontent = acontent;
+		this.astartdate = astartdate;
+		this.aenddate = aenddate;
+		this.aprice = aprice;
+		this.astate = astate;
+		this.cno = cno;
+	}
+
+	
+	public CarDto getCar() {
+		return car;
+	}
+
+
+	public void setCar(CarDto car) {
+		this.car = car;
+	}
+
+
+	public long getAprice() {
+		return aprice;
+	}
+
+
+	public int getCno() {
+		return cno;
+	}
+
+
+	public void setCno(int cno) {
+		this.cno = cno;
+	}
+
+
+
+	public void setAprice(long aprice) {
+		this.aprice = aprice;
 	}
 
 
@@ -110,16 +136,6 @@ public class AuctionDto {
 	}
 
 
-	public int getAprice() {
-		return aprice;
-	}
-
-
-	public void setAprice(int aprice) {
-		this.aprice = aprice;
-	}
-
-
 	public int getAstate() {
 		return astate;
 	}
@@ -130,26 +146,11 @@ public class AuctionDto {
 	}
 
 
-	public Map<Integer, String> getCarimglist() {
-		return carimglist;
-	}
-
-
-	public void setCarimglist(Map<Integer, String> carimglist) {
-		this.carimglist = carimglist;
-	}
-
-
 	@Override
 	public String toString() {
 		return "AuctionDto [ano=" + ano + ", atitle=" + atitle + ", acontent=" + acontent + ", astartdate=" + astartdate
-				+ ", aenddate=" + aenddate + ", aprice=" + aprice + ", astate=" + astate + ", carimglist=" + carimglist
-				+ "]";
+				+ ", aenddate=" + aenddate + ", aprice=" + aprice + ", astate=" + astate + "]";
 	}
-
-
-
-
-
+	
 	
 }

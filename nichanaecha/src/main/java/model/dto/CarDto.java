@@ -5,29 +5,25 @@ import java.util.Map;
 public class CarDto {
 	private int cno;			//#매물 번호 
 	private String ccompany;	//#제조사 
-	private String cnum;		//#차량 번호
-	private String csize;		//#차량 종류
-	private int cc;				//#배기량
+	private String cnum;		//  #차량 번호
+	private String csize;		// #차량 종류
+	private int cc;				// #배기량
 	private String coil;		//#연료
 	private String cname;		//#차량명
-	private String cdate;		//#제조년월
-	private int ckm;			//#주행거리
-	private String cads;		//#차량 등록 주소 
-	private String clat;		//#차량 위치 위도
-	private String clng;		//#차량 위치 경도
+	private String cdate;		// #제조년월
+	private int ckm;			// #주행거리
+	private int mno;			// #회원번호
+	private String cads;		// #차량 등록 주소 
+	private String clat;		//# 차량 위치 위도
+	private String clng;		//# 차량 위치 경도
+	private Map<Integer,String> imglist;
 	
 	
-	//9월20일 고연진: 경매출력페이지
-	Map<Integer, String> imglist;
 	
-	//9월20일 고연진: gettet/setter 경매출력 페이지 
-	public Map<Integer, String> getImglist() {return imglist;}
-	public void setImglist(Map<Integer, String> imglist) {this.imglist = imglist;}
-
-
 	public CarDto() {}
-
 	
+	
+
 	public CarDto(int cno, String ccompany, String cnum, String csize, int cc, String coil, String cname, String cdate,
 			int ckm, String cads, String clat, String clng) {
 		super();
@@ -44,6 +40,52 @@ public class CarDto {
 		this.clat = clat;
 		this.clng = clng;
 	}
+	
+	public CarDto(int cno, String ccompany, String cnum, String csize, int cc, String coil, String cname, String cdate,
+			int ckm, String cads, String clat, String clng, int mno) {
+		super();
+		this.cno = cno;
+		this.ccompany = ccompany;
+		this.cnum = cnum;
+		this.csize = csize;
+		this.cc = cc;
+		this.coil = coil;
+		this.cname = cname;
+		this.cdate = cdate;
+		this.ckm = ckm;
+		this.cads = cads;
+		this.clat = clat;
+		this.clng = clng;
+		this.mno = mno;
+	}
+	
+	
+	
+
+
+
+	public int getMno() {
+		return mno;
+	}
+
+
+
+	public void setMno(int mno) {
+		this.mno = mno;
+	}
+
+
+
+	public Map<Integer, String> getimglist() {
+		return imglist;
+	}
+
+
+
+	public void setimglist(Map<Integer, String> imglist) {
+		this.imglist = imglist;
+	}
+
 
 
 	public int getCno() {
