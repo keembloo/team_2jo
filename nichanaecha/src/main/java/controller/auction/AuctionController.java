@@ -46,7 +46,7 @@ public class AuctionController extends HttpServlet {
 		System.out.println("controller 들어옴 > ano:  "+ano);
 		AuctionDto result= AuctionDao.getInstence().auctionPrint(ano);
 		System.out.println("출력 관련 dto 리스트: "+result);
-		//System.out.println("사진리스트만 출력: "+ result.getImglist());
+		System.out.println("사진리스트만 출력: "+ result.getImglist());
 		ObjectMapper mapper=new ObjectMapper(); 
 		String jsonObject= mapper.writeValueAsString(result);
 		System.out.println("jackson사용: "+jsonObject);
