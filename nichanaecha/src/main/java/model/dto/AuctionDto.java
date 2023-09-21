@@ -1,15 +1,17 @@
 package model.dto;
 
+import java.util.Map;
+
 public class AuctionDto {
 	private int ano;			//#경매 번호
 	private String atitle;		//#경매 제목 
 	private String acontent;	// #경매 내용 
 	private String astartdate;	// #경매 등록 날짜 
 	private String aenddate;	// #경매 종료 날짜 
-	private int aprice;			// #경매 등록 가격 
+	private long aprice;			// #경매 등록 가격 
 	private int astate;			//  #경매 상태 [ 0: 경매중, 1:거래중(낙찰 후 판매자와 거래중) 2:경매 종료
-	
-
+	private int cno;
+	private CarDto car;
 
 	public AuctionDto() {}
 	
@@ -36,6 +38,51 @@ public class AuctionDto {
 		this.aenddate = aenddate;
 		this.aprice = aprice;
 		this.astate = astate;
+	}
+
+
+	public AuctionDto(int ano, String atitle, String acontent, String astartdate, String aenddate, long aprice,
+			int astate, int cno) {
+		super();
+		this.ano = ano;
+		this.atitle = atitle;
+		this.acontent = acontent;
+		this.astartdate = astartdate;
+		this.aenddate = aenddate;
+		this.aprice = aprice;
+		this.astate = astate;
+		this.cno = cno;
+	}
+
+	
+	public CarDto getCar() {
+		return car;
+	}
+
+
+	public void setCar(CarDto car) {
+		this.car = car;
+	}
+
+
+	public long getAprice() {
+		return aprice;
+	}
+
+
+	public int getCno() {
+		return cno;
+	}
+
+
+	public void setCno(int cno) {
+		this.cno = cno;
+	}
+
+
+
+	public void setAprice(long aprice) {
+		this.aprice = aprice;
 	}
 
 
@@ -86,16 +133,6 @@ public class AuctionDto {
 
 	public void setAenddate(String aenddate) {
 		this.aenddate = aenddate;
-	}
-
-
-	public int getAprice() {
-		return aprice;
-	}
-
-
-	public void setAprice(int aprice) {
-		this.aprice = aprice;
 	}
 
 

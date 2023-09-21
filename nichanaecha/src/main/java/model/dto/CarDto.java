@@ -1,5 +1,7 @@
 package model.dto;
 
+import java.util.Map;
+
 public class CarDto {
 	private int cno;			//#매물 번호 
 	private String ccompany;	//#제조사 
@@ -10,14 +12,17 @@ public class CarDto {
 	private String cname;		//#차량명
 	private String cdate;		// #제조년월
 	private int ckm;			// #주행거리
+	private int mno;			// #회원번호
 	private String cads;		// #차량 등록 주소 
 	private String clat;		//# 차량 위치 위도
 	private String clng;		//# 차량 위치 경도
+	private Map<Integer,String> ciimg;
 	
 	
 	
 	public CarDto() {}
-
+	
+	
 
 	public CarDto(int cno, String ccompany, String cnum, String csize, int cc, String coil, String cname, String cdate,
 			int ckm, String cads, String clat, String clng) {
@@ -35,6 +40,52 @@ public class CarDto {
 		this.clat = clat;
 		this.clng = clng;
 	}
+	
+	public CarDto(int cno, String ccompany, String cnum, String csize, int cc, String coil, String cname, String cdate,
+			int ckm, String cads, String clat, String clng, int mno) {
+		super();
+		this.cno = cno;
+		this.ccompany = ccompany;
+		this.cnum = cnum;
+		this.csize = csize;
+		this.cc = cc;
+		this.coil = coil;
+		this.cname = cname;
+		this.cdate = cdate;
+		this.ckm = ckm;
+		this.cads = cads;
+		this.clat = clat;
+		this.clng = clng;
+		this.mno = mno;
+	}
+	
+	
+	
+
+
+
+	public int getMno() {
+		return mno;
+	}
+
+
+
+	public void setMno(int mno) {
+		this.mno = mno;
+	}
+
+
+
+	public Map<Integer, String> getCiimg() {
+		return ciimg;
+	}
+
+
+
+	public void setCiimg(Map<Integer, String> ciimg) {
+		this.ciimg = ciimg;
+	}
+
 
 
 	public int getCno() {
