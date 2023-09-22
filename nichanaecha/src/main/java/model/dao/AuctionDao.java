@@ -1,5 +1,7 @@
 package model.dao;
 
+import java.sql.Statement;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -111,7 +113,7 @@ public class AuctionDao extends Dao {
 		try {
 			String sql= "insert into member(cno,ccompany,cnum,csize,cc,coil,cname,cdate,ckm,cads) "
 					+ " values(?,?,?,?,?,?,?,?,?)";
-			ps = conn.prepareStatement(sql);
+			ps = conn.prepareStatement( sql , Statement.RETURN_GENERATED_KEYS ); 
 			
 			
 			
