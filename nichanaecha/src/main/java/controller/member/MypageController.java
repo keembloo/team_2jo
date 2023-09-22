@@ -47,19 +47,21 @@ public class MypageController extends HttpServlet {
 			response.setContentType("application/json;charset=UTF-8");
 	    	response.getWriter().print(json);
 	    	
-		}else if (type.equals("myAuctionView")) {	// myAuctionView() 등록매물정보 출력
-			ArrayList<AuctionDto> result = MypageDao.getInstence().myAuctionView( mno );
+		}else if (type.equals("mySubmitcarView")) {	// mySubmitcarView() 등록매물정보 출력
+			ArrayList<AuctionDto> result = MypageDao.getInstence().mySubmitcarView( mno , type);
 			ObjectMapper objectMapper = new ObjectMapper();
 			String json = objectMapper.writeValueAsString(result);
 			response.setContentType("application/json;charset=UTF-8");
 	    	response.getWriter().print(json);
 			
-			
+		}else if (type.equals("myAuctionView")) {	// myAuctionView() 입찰한 매물정보 출력
+			ArrayList<AuctionDto> result = MypageDao.getInstence().myAuctionView( mno ,type);
+			ObjectMapper objectMapper = new ObjectMapper();
+			String json = objectMapper.writeValueAsString(result);
+			response.setContentType("application/json;charset=UTF-8");
+	    	response.getWriter().print(json);
 		}
-		
-		
-		
-    	
+
     	
 	}
 

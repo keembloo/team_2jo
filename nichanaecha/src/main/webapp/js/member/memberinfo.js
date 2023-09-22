@@ -4,6 +4,7 @@ allView();
 // 규리 , 마이페이지 전체 출력 함수
 function allView(){ 
 	mview(); 
+	mySubmitcarView();
 	myAuctionView(); 
 }
 
@@ -40,12 +41,12 @@ function mview(){
 
 
 // 규리 등록매물정보(캐러셀) 출력
-function myAuctionView(){
+function mySubmitcarView(){
 
 	$.ajax({
 			url : "/nichanaecha/MypageController" , 
 			method : "get" ,
-			data : { type : "myAuctionView" } ,
+			data : { type : "mySubmitcarView" } ,
 			success : jsonArray => { 
 				//console.log(jsonArray);
 					let count = 0;
@@ -94,6 +95,25 @@ function myAuctionView(){
 		})
 }
 
+
+// 규리 입찰한 매물정보(캐러셀) 출력
+function myAuctionView(){
+	$.ajax({
+			url : "/nichanaecha/MypageController" , 
+			method : "get" ,
+			data : { type : "myAuctionView" } ,
+			success : jsonArray => { //console.log(jsonArray);
+				productCarousel(jsonArray); // 매물 캐러셀 출력 함수 
+			
+			}
+	});
+}
+
+//규리 매물 캐러셀 출력 함수 
+function productCarousel(jsonarray){
+	console.log('캐러셀출력함수실행');
+	
+}
 
 // 규리 입금
 function inputPoint(mno){
