@@ -13,7 +13,7 @@ function auctionPrint(ano){
      	data : {ano:ano},      
       	success : r=>{
 			  console.log('통신성공')
-			  console.log(r)
+			  console.log(r);
 					
 			// 제목
       		document.querySelector('.atitle').innerHTML=`${r.atitle}`

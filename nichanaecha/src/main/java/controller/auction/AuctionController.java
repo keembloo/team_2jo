@@ -4,8 +4,9 @@ import java.io.IOException;
 import java.io.File;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
+import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,13 +19,10 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.oreilly.servlet.MultipartRequest;
-import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import model.dao.AuctionDao;
 import model.dto.AuctionDto;
 import model.dto.CarDto;
-import model.dto.MemberDto;
 
 @WebServlet("/AuctionController")
 public class AuctionController extends HttpServlet {
@@ -41,7 +39,7 @@ public class AuctionController extends HttpServlet {
     
     //상세페이지조회 [9월19일 고연진]   
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int ano= Integer.parseInt(request.getParameter("ano"));
+		int ano = Integer.parseInt(request.getParameter("ano"));
 		System.out.println("controller 들어옴 > ano:  "+ano);
 		
 		AuctionDto result= AuctionDao.getInstence().auctionPrint(ano);

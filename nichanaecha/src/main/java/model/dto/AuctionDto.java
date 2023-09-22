@@ -1,6 +1,5 @@
 package model.dto;
 
-import java.util.Map;
 
 public class AuctionDto {
 	private int ano;			//#경매 번호
