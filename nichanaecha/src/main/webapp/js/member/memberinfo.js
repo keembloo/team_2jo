@@ -81,7 +81,7 @@ function mySubmitcarView(){
 							</div>`;
 					// <a href="/nichanaecha/auction/carinfo.jsp?ano=${p.ano}"> 클릭시 carinfo 의 url로 ano 보냄
 					if(jsonArray.length <3) {count==2;} // jsonArray길이가 3미만일경우 2개로인식해서 출력될수있게
-					if (count%2==0) { // 매물 2개씩 담기위해 나눔
+					if (jsonArray.length == 1 || count%2==0) { // 매물 2개씩 담기위해 나눔 /1개일때도 일단출력은되어야함
 						//console.log(html);
 						document.querySelector('.carousel-inner').innerHTML += 
 						`<div class="carousel-item"> <!-- 제품 2개세트 -->
@@ -137,8 +137,7 @@ function myAuctionView(){
 								</div>
 							</div>`;
 					// <a href="/nichanaecha/auction/carinfo.jsp?ano=${p.ano}"> 클릭시 carinfo 의 url로 ano 보냄
-					if(jsonArray.length <3) {count==2; // jsonArray길이가 3미만일경우 2개로인식해서 출력될수있게
-						if (count%2==0) { // 매물 2개씩 담기위해 나눔
+						if (jsonArray.length == 1 || count%2==0) { // 매물 2개씩 담기위해 나눔 /1개일때도 일단출력은되어야함
 							//console.log('이프문도나');
 							document.querySelector('.carouselMyauction').innerHTML += 
 							`<div class="carousel-item carouselth2"> <!-- 제품 2개세트 -->
@@ -149,7 +148,6 @@ function myAuctionView(){
 							document.querySelectorAll('.abox2')[Math.floor(i/2)].innerHTML = html; // Math.floor(i/2) 인덱스를 2로 나누고 소수점을 버림
 							html=''; // 제품 2개씩 넣어줘야하기 때문에 넣고나면 초기화
 						} // if end
-					} // if2 end
 				}); // forEach end 
 				// 첫번째 carousel-item 에 active 클래스를 넣어줘야 실행됨
 				document.querySelectorAll('.carouselth2')[0].className += ' active'; // 띄어쓰기 안하면 실행X
