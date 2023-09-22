@@ -1,8 +1,10 @@
 //console.log('마이페이지');
 //console.log(loginMid);
 allView();
+
 // 규리 , 마이페이지 전체 출력 함수
 function allView(){ 
+	
 	mview(); 
 	mySubmitcarView();
 	myAuctionView(); 
@@ -46,15 +48,17 @@ function mySubmitcarView(){
 	$.ajax({
 			url : "/nichanaecha/MypageController" , 
 			method : "get" ,
+			async : false,
 			data : { type : "mySubmitcarView" } ,
 			success : jsonArray => { 
 				//console.log(jsonArray);
-					let count = 0;
-					let html ='';
+					//let count = 0;
+					//let html ='';
 					document.querySelector('.menuText').innerHTML = 
 												`<div>나의 등록 매물 정보</div>
 												<div>등록 차량수 : 총 ${jsonArray.length}대</div>`;
-						
+				let count = 0;
+				let html ='';		
 				jsonArray.forEach( (p,i)=>{
 					//console.log(p);
 					//console.log('카이미지리스트 : '+Object.values(p.car.imglist)[0]);
@@ -98,21 +102,57 @@ function mySubmitcarView(){
 
 // 규리 입찰한 매물정보(캐러셀) 출력
 function myAuctionView(){
+	count = 0;
+	html ='';
+
 	$.ajax({
 			url : "/nichanaecha/MypageController" , 
 			method : "get" ,
 			data : { type : "myAuctionView" } ,
 			success : jsonArray => { //console.log(jsonArray);
+				document.querySelector('.menuText2').innerHTML = 
+											`<div>나의 입찰 매물 정보</div>
+											<div>입찰한 경매수 : 총 ${jsonArray.length}개</div>`;
 				productCarousel(jsonArray); // 매물 캐러셀 출력 함수 
-			
+				
+			document.querySelectorAll('.carousel-item')[0].className += ' active';
 			}
 	});
 }
 
 //규리 매물 캐러셀 출력 함수 
-function productCarousel(jsonarray){
-	console.log('캐러셀출력함수실행');
-	
+function productCarousel(jsonArray){
+	jsonArray.forEach( (p,i)=>{
+		//console.log('캐러셀출력함수실행');
+			count++;
+			console.log(jsonArray);
+			// 제품1개 html 마크업
+			html += `<div class="col"> <!-- 제품1개 -->
+						<div class="card">
+							<a href="/nichanaecha/auction/carinfo.jsp?ano=${p.ano}">
+								<img src="/nichanaecha/img/seltosImgSample.jpg" class="card-img-top" alt="Image 1">
+								<div class="card-body">
+									<h5 class="card-title">${p.atitle}</h5>
+									<div class="card-text">경매 등록번호 : ${p.ano}</div>
+									<div class="card-text">내 입찰 금액 : ${p.aprice.toLocaleString()}원</div>
+									<div class="card-text">경매 종료 : ${p.aenddate}</div>
+								</div>
+							</a>
+						</div>
+					</div>`;
+			// <a href="/nichanaecha/auction/carinfo.jsp?ano=${p.ano}"> 클릭시 carinfo 의 url로 ano 보냄
+			if (count%2==0) { // 매물 2개씩 담기위해 나눔
+				//console.log(html);
+				document.querySelector('.carousel-inner').innerHTML += 
+				`<div class="carousel-item"> <!-- 제품 2개세트 -->
+					<div class="abox3 row row-cols-md-2 g-4 px-5">
+					</div>
+				</div>`;
+				// html 추가해주기 제품1개씩 
+				document.querySelectorAll('.abox3')[Math.floor(i/2)].innerHTML = html; // Math.floor(i/2) 인덱스를 2로 나누고 소수점을 버림
+				html=''; // 제품 2개씩 넣어줘야하기 때문에 넣고나면 초기화
+			} // if end
+	});
 }
 
 // 규리 입금

@@ -37,8 +37,8 @@ public class MypageDao extends Dao {
 		return null;
 	}
 	
-	// 규리 등록매물 정보 출력
-	public ArrayList<AuctionDto> mySubmitcarView(int mno , String type) {
+	// 규리 등록매물, 입찰한 매물 출력
+	public ArrayList<AuctionDto> myPageAuctionView(int mno , String type) {
 		//mno = 3; // 테스트
 		ArrayList<AuctionDto> list = new ArrayList<>();
 		
@@ -49,7 +49,7 @@ public class MypageDao extends Dao {
 			ps.setInt(1, mno);
 			rs = ps.executeQuery();
 			} else if  (type.equals("myAuctionView")) { // 타입이 myAuctionView면 입찰한 매물출력
-				String sql = "select * from car as c inner join auctionInfo as a on c.cno = a.cno where c.mno = ?";
+				String sql = "select * from buymember as b inner join auctionInfo as a on b.ano =  a.ano where b.mno = ?";
 				ps = conn.prepareStatement(sql);
 				ps.setInt(1, mno);
 				rs = ps.executeQuery();
@@ -81,25 +81,6 @@ public class MypageDao extends Dao {
 		} catch (Exception e) { System.out.println(e);	}
 		return null;
 	}
-	
-	/*
-	// 규리 입찰한 매물정보(캐러셀) 출력
-	public ArrayList<AuctionDto> myAuctionView(int mno , String type){
-		ArrayList<AuctionDto> list = new ArrayList<>();
-		try {
-			String sql = "";
-			ps = conn.prepareStatement(sql);
-			ps.setInt(1, mno);
-			rs = ps.executeQuery();
-			
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-		return null;
-	}
-	
-	*/
-	
 	
 	
 	//규리 제품에 해당하는 이미지만 출력
