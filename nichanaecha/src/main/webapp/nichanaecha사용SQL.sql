@@ -93,8 +93,28 @@ select * from car;
 select * from carimg;
 select * from auctioninfo;
 
+# 9월22일 고연진 sql 수정 [경매출력때메 추가했음. ]
 
+insert into member(mid,mpw,mphone,mname,mads) values('duswls3000','Gg123','010-1111-2321','고연진','안산');
+insert into member(mid,mpw,mphone,mname,mads) values('audtjq','Gg123','010-1333-2321','고명섭','안산');
 
+#5회원이 등록한 차량의 사진리스트 
+insert into carimg (ciimg,cno) values ('main1.jpg',1111);
+insert into carimg (ciimg,cno) values ('main2.jpg',1111);
+insert into carimg (ciimg,cno) values ('main3.jpg',1111);
+insert into carimg (ciimg,cno) values ('main4.jpg',1111);
+
+#5번회원이 등록한 차량
+insert into car values (1111,'기아','100로','소형',12345,'휘발유','모닝','19년 9월',32333,'시흥','어ㅣ','ㅇㅇㅁㄹ',5);
+# 경매 401번글(5번회원이등록)
+insert into auctioninfo (atitle,acontent,aenddate,aprice,cno) values ('경매제목입니다','경매상세내용인데뭐로할지모르겠네잘팔리면그만','2024-12-12','12341234',1111);
+
+# 경매401번글(5번회원) ,1번회원과 2번회원이 입찰 중
+insert into buymember (bprice,mno,ano) values (3333333,1,201);
+insert into buymember (bprice,mno,ano) values (4444444,2,201);
+insert into buymember (bprice,mno,ano) values (5555555,1,201);
+insert into buymember (bprice,mno,ano) values (6666666,2,201);
+insert into buymember (bprice,mno,ano) values (7777777,2,201);
 
 
 
