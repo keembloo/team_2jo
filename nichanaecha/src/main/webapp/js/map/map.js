@@ -16,7 +16,7 @@
     var clusterer = new kakao.maps.MarkerClusterer({
         map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체
         averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
-        minLevel: 10, // 클러스터 할 최소 지도 레벨
+        minLevel: 4, // 클러스터 할 최소 지도 레벨
         disableClickZoom: true // 클러스터 마커를 클릭했을 때 지도가 확대되지 않도록 설정한다
     });
 
@@ -47,7 +47,7 @@
         map.setLevel(level, {anchor: cluster.getCenter()});
     });
 
-kakao.maps.event.addListener(map, 'dragstart', function() {
+kakao.maps.event.addListener(map, 'dragend', function() {
     getInfo();
 });
 
@@ -73,29 +73,31 @@ function getInfo() {
     // 영역정보를 문자열로 얻어옵니다. ((남,서), (북,동)) 형식입니다
     var boundsStr = bounds.toString();
     
-    let east = neLatLng.getLng();
-	let west = swLatLng.getLng();
-	let south = swLatLng.getLat();
-	let north = neLatLng.getLat();
+    let east = neLatLng.getLat();
+	let west = swLatLng.getLat();
+	let south = swLatLng.getLng();
+	let north = neLatLng.getLng();
 	
-	mapAreaPrint(east, west, south, north);
+	var level = map.getLevel();
+	
+	mapAreaPrint(east, west, south, north, level);
     
 }   
 
 
-function mapAreaPrint(east, west, south, north){
+function mapAreaPrint(east, west, south, north, level){
 	clusterer.clear();
 	
 	$.ajax({
 		url : "/nichanaecha/MapController",
 		method : "get",
 		async : false,
-		data : {east : east, west : west, south : south, north : north},
+		data : {east : east, west : west, south : south, north : north, level : level},
 		success : r => {
-			
+			console.log(r);
 			var markers = r.map( p => {
 				return new kakao.maps.Marker({
-					position: new kakao.maps.LatLng(p.plat, p.plng)
+					position: new kakao.maps.LatLng(p.clat, p.clng)
 				});
 			});
 

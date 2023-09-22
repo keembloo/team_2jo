@@ -86,9 +86,9 @@ public class AuctionDao extends Dao {
 		try {
 			String sql = "select * from carimg where cno = ?";
 			
-			ps = conn.prepareStatement(sql);
+			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, cno);
-			rs = ps.executeQuery();
+			ResultSet rs = ps.executeQuery();
 			
 			Map<Integer,String> imglist = new HashMap<>();
 			
@@ -196,13 +196,45 @@ public class AuctionDao extends Dao {
 	
 	
 	
-	// 좌표 영역 내 옥션,자동차 정보 반환
-	public AuctionDto mapAreaPrint(int east, int west, int south, int north) {
+	// 좌표 영역 내 옥션,자동차 정보 반환 [ 정용상 ]
+	public List<CarDto> mapAreaPrint(String east, String west, String south, String north) {
+		List<CarDto> list = new ArrayList<>();
 		
-		
-		
-		
-		
+		try {
+			
+			String sql = "select * from car as c inner join auctioninfo as a on c.cno = a.cno where clat between ? and ? and clng between ? and ?";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, west);
+			ps.setString(2, east);
+			ps.setString(3, south);
+			ps.setString(4, north);
+			rs = ps.executeQuery();
+			
+			System.out.println("sql : " +east);
+			System.out.println("sql : " +west);
+			System.out.println("sql : " +south);
+			System.out.println("sql : " +north);
+			
+			while(rs.next()) {
+				int cno = rs.getInt("cno");
+			
+				
+				CarDto carDto = new CarDto();
+				
+				carDto.setClat(rs.getString("clat"));
+				carDto.setClng(rs.getString("clng"));
+				carDto.setCno(rs.getInt("cno"));
+				
+				list.add(carDto);
+				
+			}
+			
+			return list;
+			
+		} catch (Exception e) {
+			System.out.println("좌표 내 제품 검색 sql문 예외 : "+e);
+			return null;
+		}
 	}
 	
 	
