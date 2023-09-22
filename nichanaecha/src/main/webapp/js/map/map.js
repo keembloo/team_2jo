@@ -97,7 +97,7 @@ function mapAreaPrint(east, west, south, north, level){
 			console.log(r);
 			var markers = r.map( p => {
 				return new kakao.maps.Marker({
-					position: new kakao.maps.LatLng(p.clat, p.clng)
+					position: new kakao.maps.LatLng(p.calat, p.calng)
 				});
 			});
 

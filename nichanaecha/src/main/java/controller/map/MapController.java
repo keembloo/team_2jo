@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import model.dao.AuctionDao;
-import model.dto.CarDto;
+import model.dto.CarAddressDto;
 
 @WebServlet("/MapController")
 public class MapController extends HttpServlet {
@@ -25,19 +25,14 @@ public class MapController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 동,서,남,북 좌표로 결과 반환해주는 함수
-		List<CarDto> list = new ArrayList<>();
 		
 		String east = request.getParameter("east");
 		String west = request.getParameter("west");
 		String south = request.getParameter("south");
 		String north = request.getParameter("north");
-		int level = Integer.parseInt(request.getParameter("level"));
+		//int level = Integer.parseInt(request.getParameter("level"));
 		
-		if(level < 4) {
-		
-		list = AuctionDao.getInstence().mapAreaPrint(east, west, south, north); 
-		
-		}
+		List<CarAddressDto> list = AuctionDao.getInstence().mapAreaPrint(east, west, south, north); 
 		
 		
 		ObjectMapper mapper = new ObjectMapper();

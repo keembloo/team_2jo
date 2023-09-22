@@ -1,14 +1,15 @@
 package model.dao;
 
-import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import model.dto.AuctionDto;
+import model.dto.CarAddressDto;
 import model.dto.CarDto;
 
 public class AuctionDao extends Dao {
@@ -195,12 +196,16 @@ public class AuctionDao extends Dao {
 	
 	
 	// 좌표 영역 내 옥션,자동차 정보 반환 [ 정용상 ]
-	public List<CarDto> mapAreaPrint(String east, String west, String south, String north) {
-		List<CarDto> list = new ArrayList<>();
+	public List<CarAddressDto> mapAreaPrint(String east, String west, String south, String north) {
+		List<CarAddressDto> list = new ArrayList<>();
 		
 		try {
+			String sql = "select cacodename, count(cacodename) as count, avg(calat) as calat, avg(calng) as calng from caraddress where calat between ? and ? and calng between ? and ?\n"
+					+ "group by cacodename;";
+
 			
-			String sql = "select * from car as c inner join auctioninfo as a on c.cno = a.cno where clat between ? and ? and clng between ? and ?";
+			//String sql = "select * from caraddress where calat between ? and ? and calng between ? and ?";
+			
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, west);
 			ps.setString(2, east);
@@ -214,16 +219,22 @@ public class AuctionDao extends Dao {
 			System.out.println("sql : " +north);
 			
 			while(rs.next()) {
-				int cno = rs.getInt("cno");
-			
 				
-				CarDto carDto = new CarDto();
-				// 주소 변경
-				//carDto.setClat(rs.getString("clat"));
-				//carDto.setClng(rs.getString("clng"));
-				carDto.setCno(rs.getInt("cno"));
+				/*
+				CarAddressDto carAddressDto = new CarAddressDto(
+						rs.getString("cads"),
+						rs.getString("calat"),
+						rs.getString("calng"),
+						rs.getString("cacode"),
+						rs.getString("cacodename"),
+						rs.getInt("cno")
+						);
+				*/
+				CarAddressDto carAddressDto = new CarAddressDto();
+				carAddressDto.setCalat(rs.getString("calat"));
+				carAddressDto.setCalng(rs.getString("calng"));
 				
-				list.add(carDto);
+				list.add(carAddressDto);
 				
 			}
 			
