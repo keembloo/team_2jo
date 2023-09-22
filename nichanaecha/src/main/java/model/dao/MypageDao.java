@@ -63,7 +63,7 @@ public class MypageDao extends Dao {
 						rs.getInt("astate"), getMycarImg(rs.getInt("cno")) // 차량이미지를 넣어줘야하는데 밑에 getMycarImg()함수로 따로 만들어둠
 						);
 						*/
-				
+				 
 				// 1. 이미지 생성하고 // 2. 카객체생성  // 3.생성한 이미지 카에 담고 // 4. 옥션에 카 추가 
 				Map<Integer, String> carimglist = AuctionDao.getInstence().ciimg(rs.getInt("cno"));
 				CarDto carDto = AuctionDao.getInstence().carDto(rs.getInt("cno"));
