@@ -36,9 +36,6 @@ public class AuctionDao extends Dao {
 					rs.getString("cname"),
 					rs.getString("cdate"),
 					rs.getInt("ckm"),
-					rs.getString("cads"),
-					rs.getString("clat"),
-					rs.getString("clng"),
 					rs.getInt("mno")
 			);
 			
@@ -221,9 +218,9 @@ public class AuctionDao extends Dao {
 			
 				
 				CarDto carDto = new CarDto();
-				
-				carDto.setClat(rs.getString("clat"));
-				carDto.setClng(rs.getString("clng"));
+				// 주소 변경
+				//carDto.setClat(rs.getString("clat"));
+				//carDto.setClng(rs.getString("clng"));
 				carDto.setCno(rs.getInt("cno"));
 				
 				list.add(carDto);

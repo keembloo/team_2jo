@@ -13,15 +13,11 @@ public class CarDto {
 	private String cdate;		// #제조년월
 	private int ckm;			// #주행거리
 	private int mno;			// #회원번호
-	private String cads;		// #차량 등록 주소 
-	private String clat;		//# 차량 위치 위도
-	private String clng;		//# 차량 위치 경도
+	private CarAddressDto carAddress;
 	private Map<Integer,String> imglist;
 	
 	
-	
 	public CarDto() {}
-	
 	
 
 	public CarDto(int cno, String ccompany, String cnum, String csize, int cc, String coil, String cname, String cdate,
@@ -36,13 +32,10 @@ public class CarDto {
 		this.cname = cname;
 		this.cdate = cdate;
 		this.ckm = ckm;
-		this.cads = cads;
-		this.clat = clat;
-		this.clng = clng;
 	}
 	
 	public CarDto(int cno, String ccompany, String cnum, String csize, int cc, String coil, String cname, String cdate,
-			int ckm, String cads, String clat, String clng, int mno) {
+			int ckm, int mno) {
 		super();
 		this.cno = cno;
 		this.ccompany = ccompany;
@@ -53,14 +46,35 @@ public class CarDto {
 		this.cname = cname;
 		this.cdate = cdate;
 		this.ckm = ckm;
-		this.cads = cads;
-		this.clat = clat;
-		this.clng = clng;
 		this.mno = mno;
 	}
 	
 	
 	
+	
+
+
+	public CarAddressDto getCarAddress() {
+		return carAddress;
+	}
+
+
+
+	public void setCarAddress(CarAddressDto carAddress) {
+		this.carAddress = carAddress;
+	}
+
+
+
+	public Map<Integer, String> getImglist() {
+		return imglist;
+	}
+
+
+
+	public void setImglist(Map<Integer, String> imglist) {
+		this.imglist = imglist;
+	}
 
 
 
@@ -178,41 +192,13 @@ public class CarDto {
 	}
 
 
-	public String getCads() {
-		return cads;
-	}
-
-
-	public void setCads(String cads) {
-		this.cads = cads;
-	}
-
-
-	public String getClat() {
-		return clat;
-	}
-
-
-	public void setClat(String clat) {
-		this.clat = clat;
-	}
-
-
-	public String getClng() {
-		return clng;
-	}
-
-
-	public void setClng(String clng) {
-		this.clng = clng;
-	}
 
 
 	@Override
 	public String toString() {
 		return "CarDto [cno=" + cno + ", ccompany=" + ccompany + ", cnum=" + cnum + ", csize=" + csize + ", cc=" + cc
-				+ ", coil=" + coil + ", cname=" + cname + ", cdate=" + cdate + ", ckm=" + ckm + ", cads=" + cads
-				+ ", clat=" + clat + ", clng=" + clng + "]";
+				+ ", coil=" + coil + ", cname=" + cname + ", cdate=" + cdate + ", ckm=" + ckm + ", mno=" + mno
+				+ ", imglist=" + imglist + "]";
 	}
 	
 	
