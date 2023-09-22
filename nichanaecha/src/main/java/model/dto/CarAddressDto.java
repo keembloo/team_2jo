@@ -7,6 +7,9 @@ public class CarAddressDto {
 	private String calng;		//# 차량 위치 경도
 	private String cacode;		// 법정동 코드
 	private String cacodename;	// 법정동명
+	private String areaName;	// 대표 지역명
+	private String cname;	// 차량명
+	private int count; //	지역 내 집계 숫자
 	private int cno;
 	
 	
@@ -23,6 +26,38 @@ public class CarAddressDto {
 		this.cacode = cacode;
 		this.cacodename = cacodename;
 		this.cno = cno;
+	}
+
+
+
+
+	public String getCname() {
+		return cname;
+	}
+
+
+	public void setCname(String cname) {
+		this.cname = cname;
+	}
+
+
+	public String getAreaName() {
+		return areaName;
+	}
+
+
+	public void setAreaName(String areaName) {
+		this.areaName = areaName;
+	}
+
+
+	public int getCount() {
+		return count;
+	}
+
+
+	public void setCount(int count) {
+		this.count = count;
 	}
 
 

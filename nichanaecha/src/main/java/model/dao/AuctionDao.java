@@ -196,15 +196,12 @@ public class AuctionDao extends Dao {
 	
 	
 	// 좌표 영역 내 옥션,자동차 정보 반환 [ 정용상 ]
-	public List<CarAddressDto> mapAreaPrint(String east, String west, String south, String north) {
+	public List<CarAddressDto> mapAreaPrint1(String east, String west, String south, String north) {
 		List<CarAddressDto> list = new ArrayList<>();
 		
 		try {
-			String sql = "select cacodename, count(cacodename) as count, avg(calat) as calat, avg(calng) as calng from caraddress where calat between ? and ? and calng between ? and ?\n"
-					+ "group by cacodename;";
-
 			
-			//String sql = "select * from caraddress where calat between ? and ? and calng between ? and ?";
+			String sql = "select calat, calng, cads, cname, car.cno from caraddress as cads inner join car on cads.cno = car.cno where calat between ? and ? and calng between ? and ?";
 			
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, west);
@@ -213,38 +210,95 @@ public class AuctionDao extends Dao {
 			ps.setString(4, north);
 			rs = ps.executeQuery();
 			
-			System.out.println("sql : " +east);
-			System.out.println("sql : " +west);
-			System.out.println("sql : " +south);
-			System.out.println("sql : " +north);
-			
 			while(rs.next()) {
 				
-				/*
-				CarAddressDto carAddressDto = new CarAddressDto(
-						rs.getString("cads"),
-						rs.getString("calat"),
-						rs.getString("calng"),
-						rs.getString("cacode"),
-						rs.getString("cacodename"),
-						rs.getInt("cno")
-						);
-				*/
 				CarAddressDto carAddressDto = new CarAddressDto();
+				
 				carAddressDto.setCalat(rs.getString("calat"));
 				carAddressDto.setCalng(rs.getString("calng"));
+				carAddressDto.setCads(rs.getString("cads"));
+				carAddressDto.setCname(rs.getString("cname"));
+				carAddressDto.setCno(rs.getInt("cno"));
 				
 				list.add(carAddressDto);
-				
 			}
 			
 			return list;
 			
 		} catch (Exception e) {
-			System.out.println("좌표 내 제품 검색 sql문 예외 : "+e);
+			System.out.println("좌표 내 제품 검색 sql문 예외1 : "+e);
 			return null;
 		}
 	}
+	
+	// 행정동 기준 클러스터 반환
+	public List<CarAddressDto> mapAreaPrint2(String east, String west, String south, String north) {
+		List<CarAddressDto> list = new ArrayList<>();
+		
+		try {
+			String sql = "select cacodename as areaName, count(cacodename) as count, avg(calat) as calat, avg(calng) as calng from caraddress\n"
+						+ "where calat between ? and ? and calng between ? and ?\n"
+						+ "group by cacodename;";
+			
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, west);
+			ps.setString(2, east);
+			ps.setString(3, south);
+			ps.setString(4, north);
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				
+				CarAddressDto carAddressDto = new CarAddressDto();
+				carAddressDto.setCalat(rs.getString("calat"));
+				carAddressDto.setCalng(rs.getString("calng"));
+				carAddressDto.setAreaName(rs.getString("areaName"));
+				carAddressDto.setCount(rs.getInt("count"));
+				
+				list.add(carAddressDto);
+			}
+			
+			return list;
+			
+		} catch (Exception e) {
+			System.out.println("좌표 내 제품 검색 sql문 예외2 : "+e);
+			return null;
+		}
+	}
+	
+	// 광역시 또는 자치구 기준 클러스터 반환
+	public List<CarAddressDto> mapAreaPrint3(String east, String west, String south, String north, int level) {
+		List<CarAddressDto> list = new ArrayList<>();
+		
+		try { // 확대 레벨 8 초과 시 광역 자치, 8 이하시 지방 자치 클러스터 반환
+			System.out.println(level);
+			String condition = level > 8 ? condition = "substring_index(cads,' ',1)" 
+					: "substring_index(substring_index(cads,' ',2),' ',-1)"; 
+			
+			String sql = "select "+condition+" as areaName, count(cads) as count, avg(calat) as calat, avg(calng) as calng from caraddress\n"
+						+ "group by "+condition;
+				
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+				
+			while(rs.next()) {
+					
+				CarAddressDto carAddressDto = new CarAddressDto();
+				carAddressDto.setCalat(rs.getString("calat"));
+				carAddressDto.setCalng(rs.getString("calng"));
+				carAddressDto.setAreaName(rs.getString("areaName"));
+				carAddressDto.setCount(rs.getInt("count"));
+					
+				list.add(carAddressDto);
+			}
+			return list;
+			
+		} catch (Exception e) {
+			System.out.println("좌표 내 제품 검색 sql문 예외3 : "+e);
+			return null;
+		}
+	}
+
 
 	
 } // 클래스 종료
