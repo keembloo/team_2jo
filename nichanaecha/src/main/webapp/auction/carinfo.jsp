@@ -48,11 +48,39 @@
 				</div>
 				<div class="buttonBox">
 					<button onclick="clipping()" type="button">스크랩<i class="fa-solid fa-bookmark"></i></button>
-					<button type="button">입찰<i class="fa-regular fa-bookmark"></i></button>
+					<button onclick="batting()" type="button">입찰<i class="fa-regular fa-bookmark"></i></button>
 				</div>
 			</div>
 		
+<!-- -------------------------- 모달창 써보기 -------------------------------------------------->
+		<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  입찰
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">입찰 참여하기</h5>
+
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+           
+        	입찰금액 : <input class="batPay" type="text" >
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button onclick="batting()" type="button" class="btn btn-primary">입찰</button>
+      </div>
+    </div>
+  </div>
+</div>
 		
+<!------------------------- 모달창 써보기 -------------------------->		
 		</div>
 		
 		
