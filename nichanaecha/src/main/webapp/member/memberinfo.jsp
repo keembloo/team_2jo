@@ -32,7 +32,7 @@
 				<div class="lineBar">
 				</div>
 				
-				<!-- ---- 등록매물정보구역 ---- -->
+				<!-- ---------- 등록매물정보구역 ---------- -->
 				<div class="autionInfo">
 					<!-- 등록 매물 갯수와 매물 정보 -->
 					<div class="menuText">
@@ -66,12 +66,35 @@
 				<div class="lineBar">
 				</div>
 
-				<!-- ---- 입찰한 매물정보구역 ---- -->
+				<!-- ---------- 입찰한 매물정보구역 ---------- -->
 				<div class="handInfo">
 					<div class="menuText2">
 					<!-- 입찰 매물 갯수와 매물 정보 -->
 					<!-- js출력 -->
 					</div>
+					
+					
+					<div id="imageCarousel2" class="carousel carousel-dark slide">
+						<div class="carousel-inner carouselMyauction">
+							<!--  js 등록매물 제품 출력 -->
+	
+						</div> <!-- carousel-inner end -->
+						
+						
+						<button class="carousel-control-prev" type="button"
+							data-bs-target="#imageCarousel2" data-bs-slide="prev">
+							<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+							<span class="visually-hidden">Previous</span>
+						</button>
+						
+						<button class="carousel-control-next" type="button"
+							data-bs-target="#imageCarousel2" data-bs-slide="next">
+							<span class="carousel-control-next-icon" aria-hidden="true"></span>
+							<span class="visually-hidden">Next</span>
+						</button>
+
+					</div> <!-- imageCarousel end -->
+					
 				</div>
 
 				<div class="wishInfo">
