@@ -28,10 +28,10 @@ public class MemberFindController extends HttpServlet {
 
 	//아이디/이메일 중복검사[9월16일 고연진]
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String type=request.getParameter("type"); System.out.println("중복체크타입"+type);
+		String type=request.getParameter("type"); //System.out.println("중복체크타입"+type);
 		if (type.equals("check")) {
 			String option=request.getParameter("option");
-			String data=request.getParameter("data");System.out.println("중복체크데이터"+data);
+			String data=request.getParameter("data");//System.out.println("중복체크데이터"+data);
 			boolean result=MemberDao.getInstence().dataCheck(option,data);
 			System.out.println("Dao결과: "+result);
 			
@@ -66,8 +66,8 @@ public class MemberFindController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		//1. 매개변수 요청
-		String mid = request.getParameter("mid"); System.out.println(mid);
-		String mpw = request.getParameter("mpw");System.out.println(mpw);
+		String mid = request.getParameter("mid"); //System.out.println(mid);
+		String mpw = request.getParameter("mpw"); //System.out.println(mpw);
 		//2. (객체화/유효성검사)
 		//3. DAO에게 전달후 결과 받기
 		boolean result = MemberDao.getInstence().login(mid, mpw);
@@ -79,7 +79,7 @@ public class MemberFindController extends HttpServlet {
 			request.getSession().setAttribute("loginDto", loginDto);
 			// [테스트] 세션 상태 확인
 				MemberDto dto = (MemberDto)request.getSession().getAttribute("loginDto");
-				System.out.println("세션 상태 : "+dto);
+				//System.out.println("세션 상태 : "+dto);
 		}
 		// 4. 결과를 응답한다.
 		response.setContentType("application/json;charset=utf-8");

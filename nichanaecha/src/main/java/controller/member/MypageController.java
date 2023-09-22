@@ -33,10 +33,10 @@ public class MypageController extends HttpServlet {
 		// System.out.println("컨트롤러연결");
 		//int loginDto = 3; //임시테스트
 		//request.getSession().setAttribute("loginDto", loginDto ); //임시테스트 세션에 로그인회원번호넣어놓기
-		//System.out.println("loginDto : "+loginDto);
-		MemberDto dto = (MemberDto) request.getSession().getAttribute("loginDto");
-		int mno = dto.getMno();
-		//System.out.println("로그인 세션 상태 : "+dto);
+		//System.out.println("loginDto : "+request.getSession().getAttribute("loginDto"));
+		int mno = ((MemberDto)request.getSession().getAttribute("loginDto")).getMno();
+		
+		//System.out.println("로그인 세션 상태 : "+mno);
 		
 		if ( type.equals("mview")) { // mview() 멤버 회원정보출력
 			
@@ -47,19 +47,22 @@ public class MypageController extends HttpServlet {
 			response.setContentType("application/json;charset=UTF-8");
 	    	response.getWriter().print(json);
 	    	
-		}else if (type.equals("myAuctionView")) {	// myAuctionView() 등록매물정보 출력
-			ArrayList<AuctionDto> result = MypageDao.getInstence().myAuctionView( mno );
+		}else if (type.equals("mySubmitcarView")) {	// mySubmitcarView() 등록매물정보 출력
+			ArrayList<AuctionDto> result = MypageDao.getInstence().myPageAuctionView( mno , type);
 			ObjectMapper objectMapper = new ObjectMapper();
 			String json = objectMapper.writeValueAsString(result);
 			response.setContentType("application/json;charset=UTF-8");
 	    	response.getWriter().print(json);
 			
-			
+		}else if (type.equals("myAuctionView")) {	// myAuctionView() 입찰한 매물정보 출력
+			ArrayList<AuctionDto> result = MypageDao.getInstence().myPageAuctionView( mno ,type);
+			ObjectMapper objectMapper = new ObjectMapper();
+			String json = objectMapper.writeValueAsString(result);
+			//System.out.println("result : "+result);
+			response.setContentType("application/json;charset=UTF-8");
+	    	response.getWriter().print(json);
 		}
-		
-		
-		
-    	
+
     	
 	}
 
