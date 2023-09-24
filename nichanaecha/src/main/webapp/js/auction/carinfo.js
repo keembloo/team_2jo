@@ -3,100 +3,185 @@ console.log('상세페이지출력')
 let ano=new URL(location.href).searchParams.get("ano"); //경매게시글번호
 
 
-//(개별)상세페이지 출력 [9월19일 고연진]--------------------------------------------------------
-auctionPrint(401);
+
+
+//(개별)상세페이지 출력 [9월24일 고연진]--------------------------------------------------------
+auctionPrint(29530);
 function auctionPrint(ano){
-	
-	$.ajax({
-      	url : "/nichanaecha/AuctionController",     
-     	method : "get",   
-     	data : {ano:ano},      
-      	success : r=>{
-			  console.log('통신성공')
-			  console.log(r);
-					
-			// 제목
-      		document.querySelector('.atitle').innerHTML=`${r.atitle}`
-
-      		//캐러셀(여러개이미지)
-      		let imgbox=document.querySelector('.imgbox');
-      		let html=``;
-      		//객체를 배열로 바꾸기
-      		Object.values(r.car.imglist).forEach((img,i)=>{
-				  //첫번째 이미지만 active
-				  html+=`<div class="carousel-item ${ i==0 ? 'active' : '' }">
-					     	 <img src="/nichanaecha/auction/img/${img}" class="d-block w-100" alt="...">
-					      </div>`
-			  })
-      		imgbox.innerHTML=html;
-      		
-      		// 경매정보
-      		
-      		
-      		//차량정보
-      		document.querySelector('.ccompany').innerHTML=`${r.car.ccompany}`
-      		document.querySelector('.csize').innerHTML=`${r.car.csize}`
-      		document.querySelector('.cname').innerHTML=`${r.car.cname}`
-      		document.querySelector('.coil').innerHTML=`${r.car.coil}`
-      		document.querySelector('.cc').innerHTML=`${r.car.cc}`
-      		document.querySelector('.cdate').innerHTML=`${r.car.cdate}`
-      		document.querySelector('.ckm').innerHTML=`${r.car.ckm}`
-      		document.querySelector('.cads').innerHTML=`${r.car.cads}`
-      		document.querySelector('.acontent').innerHTML=`${r.acontent}`
-      		
-      		
-      	} ,       
-      	error : e=>{console.log('통신실패'+e)} ,         
-   });
-
-	
-	
-}//f()
-
-
-//스크랩 기능 [9월21일 고연진] -onclick()--------------------------------------------------------
-/* 
-	기능: 버튼 누를 시 wishlist 테이블에 추가되고 스크립트 모양 변경
-	필요한거: 회원번호, 게시물번호
-*/
-function clipping(){
-	console.log('onclick함수 실행')
-	//회원에 한해 사용 가능하도록
-	if(loginMid==''){location.href='../member/memberlogin.jsp'}
-	$.ajax({
-      	url : "/nichanaecha/WishListController",     
-     	method : "post",  
-     	async: false, 
-     	data : {ano:ano}, //회원번호는 세션에 저장(전달x)      
-      	success : r=>{console.log('통신성공');console.log(r)
-      		if(r){console.log('스크랩성공')
-      		
-      		}
-      	} ,       
-      	error : e=>{console.log(e)} ,         
-   });
-
-
-}//f()
-
-// 스크랩 성공 시 출력되는 함수 [9월21일 고연진]-------------------------------------------------------
+   //if(loginMid==''){location.href='../member/memberlogin.jsp'}
+   //경매글 출력(차량정보,게시물정보)
 /*
-	clipping() 함수 성공 시 실행 . 스크랩 성공 시 아이콘 변경.
-	비로그인시, 로그인 시 
+   $.ajax({
+         url : "/nichanaecha/AuctionController",     
+        method : "get",   
+        data : {ano:ano},      
+         success : r=>{
+           console.log('경매내용,차정보출력 성공')
+           console.log(r);
+               
+         // 제목
+            document.querySelector('.atitle').innerHTML=`${r.atitle}`
+
+            //캐러셀(여러개이미지)
+            let imgbox=document.querySelector('.imgbox');
+            let html=``;
+            //객체를 배열로 바꾸기
+            Object.values(r.car.imglist).forEach((img,i)=>{
+              //첫번째 이미지만 active
+              html+=`<div class="carousel-item ${ i==0 ? 'active' : '' }">
+                        <img src="/nichanaecha/auction/img/${img}" class="d-block w-100" alt="...">
+                     </div>`
+           })
+            imgbox.innerHTML=html;
+            
+            //차량정보
+            document.querySelector('.batPay').innerHTML=`${r.car.ccompany}`
+            document.querySelector('.csize').innerHTML=`${r.car.csize}`
+            document.querySelector('.cname').innerHTML=`${r.car.cname}`
+            document.querySelector('.coil').innerHTML=`${r.car.coil}`
+            document.querySelector('.cc').innerHTML=`${r.car.cc}`
+            document.querySelector('.cdate').innerHTML=`${r.car.cdate}`
+            document.querySelector('.ckm').innerHTML=`${r.car.ckm}`
+            document.querySelector('.cads').innerHTML=`${r.car.cads}`
+            document.querySelector('.acontent').innerHTML=`${r.acontent}`
+            
+            
+            //경매상태
+            
+            
+            //남은시간
+            
+         } ,       
+         error : e=>{console.log('통신실패');console.log(e)} ,         
+   });
+
+*/
+//--------입찰상황정보-------------------------------------------------------
+   
+      
+      $.ajax({
+         url : "/nichanaecha/BattingController",     
+        method : "get",   
+        async : false ,
+        data : {type:'topByBatting',ano:ano },// 최근 추가된 3개의 입찰
+         success : r=>{
+           console.log('경매상황내용출력성공');console.log(r);
+         
+         //1.현재가격 (class="batPay")
+         document.querySelector('.batPay').innerHTML=`${r[0].bprice}`
+                  
+         //2.경매진행상황(class="auctionBox")출력박스/ 출력물 class="auction"
+         let html=``;
+         let auctionBox=document.querySelector('.auctionBox');
+         r.forEach((b)=>{
+            html+=`
+                  <div class="auction">
+                     <li>${b.bprice}만원</li>
+                     <li>${b.bdate}</li>
+                  </div>
+            
+            `
+         })
+         auctionBox.innerHTML=html;
+            
+         } ,       
+         error : e=>{console.log('경매상황내용출력실패');+e;} ,         
+   });
+
+document.querySelector('.state').innerHTML=`♡`
+
+   
+   
+}//f()
+
+
+//스크랩 기능 [9월24일 고연진] -onclick()--------------------------------------------------------
+/* 
+   기능: 버튼 누를 시 wishlist 테이블에 추가되고 스크립트 모양 변경
+   필요한거: 회원번호, 게시물번호
+*/
+
+function clipping(){
+   console.log('스크랩onclick함수 실행')
+   //회원에 한해 사용 가능하도록
+   if(loginMid==''){location.href='../member/memberlogin.jsp'}
+   $.ajax({
+         url : "/nichanaecha/WishListController",     
+        method : "post",  
+        async: false, 
+        data : {ano:ano}, //회원번호는 세션에 저장(전달x)      
+         success : r=>{console.log('통신성공');console.log(r)
+            if(r){
+              console.log('스크랩성공');
+              clipState();
+            
+            }
+         } ,       
+         error : e=>{console.log(e)} ,         
+   });
+
+
+}//f()
+
+// 스크랩 성공 시 출력되는 함수 [9월24일 고연진]-------------------------------------------------------
+/*
+   clipping() 함수 성공 시 실행 . 스크랩 성공 시 아이콘 변경.
+   유효성검사:비로그인시, 로그인 시 
  */
+clipState()
 function clipState(){
-	
+   let state= document.querySelector('.state');
+   //비회원
+   if(localStorage==false){state.innerHTML=`♡`}
+   //회원
+     $.ajax({
+         url : "/nichanaecha/WishListController",     
+          method : "get",
+          async : false ,   
+         data : {type:'findByWish',ano:ano},      
+         success : r=>{console.log('통신성공'+r)
+            if(r){state.innerHTML='♥'}//찜하기성공
+            else{state.innerHTML='♡'}//찜취소
+         } ,       
+         error : e=>{console.log(e)} ,         
+   });
+
 }//f()
 
 // 입찰 버튼 클릭 시 [9월22일 고연진]--------------------------------------------------------------
 /*
-	새창띄움.
-	유효성검사(회원에 한해 진행, 기본 금액보다 높은 금액, 보유 금액보다 적은 금액)
-	form전송 전에 입찰 수정 불가임을 보여 줄 알림창. 
-	등록 성공하면 보유 금액에서 차감. 
+   새창띄움.
+   유효성검사(회원에 한해 진행, 기본 금액보다 높은 금액, 보유 금액보다 적은 금액)
+   form전송 전에 입찰 수정 불가임을 보여 줄 알림창. 
+   등록 성공하면 보유 금액에서 차감. 
+   보낼데이터: mno, ano , 입력금액
  */
 
+/*
  function batting(){console.log('batting()함수 실행')
-	 let batPay = document.querySelector('.batPay').value;
-	 
+    let batPay = document.querySelector('.batPay').value;
+    
  }//f()
+ */
+ // 입찰-------------------------------------------------------------------------
+let batVal=[false,false]; //보유금액 , 현재가격
+
+function batting(){console.log('batting() 실행')
+   if(loginMid==''){location.href='../member/memberlogin.jsp'}
+   let bprice = document.querySelector('.bprice').value;
+   console.log(bprice);
+    
+    $.ajax({
+        url : "/nichanaecha/BattingController",     
+        method : "get",   
+        data : {type:'mcashVal',ano:ano, bprice:bprice},       
+         success : r=>{console.log('입찰통신성공');
+         if(r){alert('')}
+         
+         
+         } ,       
+         error : e=>{console.log(e)} ,         
+   });
+
+   
+}
