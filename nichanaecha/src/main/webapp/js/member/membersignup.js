@@ -97,7 +97,10 @@ function signup(){ console.log('가입충족여부확인'+checkList)
 	    	contentType:false,
 	    	processData:false,
 	      	success : r=>{console.log('통신성공'+r)
-	      		if(r){console.log('회원가입성공'); alert('가입성공')}
+	      		if(r){
+					  console.log('회원가입성공'); 
+					  alert('가입성공') ;
+					  location.href="/nichanaecha/index.jsp"}
 	      		else{console.log('회원가입실패')}
 	      	
 	      	} ,       

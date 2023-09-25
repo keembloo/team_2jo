@@ -10,10 +10,11 @@ auctionPrint(29530);
 function auctionPrint(ano){
    //if(loginMid==''){location.href='../member/memberlogin.jsp'}
    //경매글 출력(차량정보,게시물정보)
-/*
+
    $.ajax({
-         url : "/nichanaecha/AuctionController",     
-        method : "get",   
+        url : "/nichanaecha/AuctionController",     
+        method : "get", 
+        async: false,  
         data : {ano:ano},      
          success : r=>{
            console.log('경매내용,차정보출력 성공')
@@ -55,9 +56,9 @@ function auctionPrint(ano){
          error : e=>{console.log('통신실패');console.log(e)} ,         
    });
 
-*/
+
 //--------입찰상황정보-------------------------------------------------------
-   
+ /*  
       
       $.ajax({
          url : "/nichanaecha/BattingController",     
@@ -87,6 +88,8 @@ function auctionPrint(ano){
          } ,       
          error : e=>{console.log('경매상황내용출력실패');+e;} ,         
    });
+   
+ */  
 
 document.querySelector('.state').innerHTML=`♡`
 

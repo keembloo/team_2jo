@@ -1,12 +1,11 @@
 package controller.auction;
 
-import java.io.IOException;
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
-import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.fileupload.FileItem;
-
 import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
@@ -46,7 +44,7 @@ public class AuctionController extends HttpServlet {
 		AuctionDto result= AuctionDao.getInstence().auctionPrint(ano);
 		System.out.println("경매Dto: "+result);
 		System.out.println("경매Dto 안에 CarDto: "+result.getCar());
-		System.out.println("CarDto 안에 imglist: "+result.getCar().getimglist());
+		System.out.println("CarDto 안에 imglist: "+result.getCar().getImglist());
 		
 		ObjectMapper mapper=new ObjectMapper(); 
 		String jsonObject= mapper.writeValueAsString(result);

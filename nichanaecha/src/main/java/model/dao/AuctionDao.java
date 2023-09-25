@@ -2,7 +2,6 @@ package model.dao;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -150,7 +149,7 @@ public class AuctionDao extends Dao {
 		AuctionDto auctionDto = new AuctionDto();
 		
 		try {
-			String sql = "select cno from auctioninfo where ano=?";
+			String sql = "select * from auctioninfo where ano= ? ";
 			ps=conn.prepareStatement(sql);
 			ps.setInt(1, ano);
 			rs=ps.executeQuery(); 
@@ -158,7 +157,7 @@ public class AuctionDao extends Dao {
 			if(rs.next()) {
 				CarDto carDto = carDto(rs.getInt("cno"));//차량번호에 맞는 CarDto 객체 가져옴.
 				Map<Integer, String> imglist= imglist(rs.getInt("cno"));//cno에 맞는 차량이미지 저장한거 가져옴
-				carDto.setimglist(imglist);
+				carDto.setImglist(imglist);
 				
 				auctionDto =auctionDto(ano);
 				auctionDto.setCar(carDto);
@@ -180,7 +179,7 @@ public class AuctionDao extends Dao {
 			System.out.println("Dao에 전달된 값 : "+ mno+ano);
 			String sql=	clipState(mno,ano)?
 						"delete from wishlist where mno=? and ano=?":
-						"insert into wishlist value (?,?)" ;
+						"insert into wishlist values (?,?)" ;
 			
 			ps=conn.prepareStatement(sql); 
 			ps.setInt(1, mno);
