@@ -107,7 +107,7 @@ public class AuctionDao extends Dao {
 	}
 	
 	
-	
+	/*
 	// 1.차 등록 성호
 	public boolean bcarsubmit(CarDto carDto) {
 		try {
@@ -141,7 +141,7 @@ public class AuctionDao extends Dao {
 		}catch (Exception e) {System.out.println(e);}
 		return false;
 	}
-	
+	*/
 	
 //게시물 상세조회 [9월19일 고연진]------------------------------------------------------------
 	public AuctionDto auctionPrint(int ano) {
