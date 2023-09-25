@@ -11,6 +11,14 @@ public class AuctionDto {
 	private int astate;			//  #경매 상태 [ 0: 경매중, 1:거래중(낙찰 후 판매자와 거래중) 2:경매 종료
 	private int cno;
 	private CarDto car;
+	
+//입찰내역 담기 [고연진]--------------------------------------------------------//
+	private BattingDto batting; // 필드 추가
+	
+	//getter/setter
+	public BattingDto getBatting() {return batting;}
+	public void setBatting(BattingDto batting) {this.batting = batting;}
+//--------------------------------------------------------------------------//
 
 	public AuctionDto() {}
 	

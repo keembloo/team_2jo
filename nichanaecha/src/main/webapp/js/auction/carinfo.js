@@ -7,7 +7,9 @@ let ano=new URL(location.href).searchParams.get("ano"); //경매게시글번호
 
 //(개별)상세페이지 출력 [9월24일 고연진]--------------------------------------------------------
 auctionPrint(29530);
+
 function auctionPrint(ano){
+   clipState();
    //if(loginMid==''){location.href='../member/memberlogin.jsp'}
    //경매글 출력(차량정보,게시물정보)
 
@@ -52,6 +54,10 @@ function auctionPrint(ano){
             
             //남은시간
             
+            
+            // 보유금액 class="mcash"
+            console.log(r.batting.mno)
+            document.querySelector('.mcash').innerHTML=`${r.batting.mcash}`
          } ,       
          error : e=>{console.log('통신실패');console.log(e)} ,         
    });
@@ -131,16 +137,16 @@ function clipping(){
    clipping() 함수 성공 시 실행 . 스크랩 성공 시 아이콘 변경.
    유효성검사:비로그인시, 로그인 시 
  */
-clipState()
+
 function clipState(){
    let state= document.querySelector('.state');
    //비회원
-   if(localStorage==false){state.innerHTML=`♡`}
+   if(localStorage==false){state.innerHTML='♡'}
    //회원
      $.ajax({
          url : "/nichanaecha/WishListController",     
           method : "get",
-          async : false ,   
+         async : false ,   
          data : {type:'findByWish',ano:ano},      
          success : r=>{console.log('통신성공'+r)
             if(r){state.innerHTML='♥'}//찜하기성공

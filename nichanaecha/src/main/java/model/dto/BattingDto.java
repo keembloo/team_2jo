@@ -9,8 +9,18 @@ public class BattingDto {
 	int ano; //경매글번호
 	long bPrice; // 경매참여금액
 	String bDate;  //참여날짜
-
+	long mcash; // 회원 보유 포인트
 	
+	public long getMcash() {
+		return mcash;
+	}
+
+
+	public void setMcash(long mcash) {
+		this.mcash = mcash;
+	}
+
+
 	public BattingDto() {}
 
 
