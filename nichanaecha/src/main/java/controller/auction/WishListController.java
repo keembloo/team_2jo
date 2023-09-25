@@ -22,8 +22,20 @@ public class WishListController extends HttpServlet {
         super();
     }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	}
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	   String type=request.getParameter("type");
+    	   if(type.equals("findByWish")) {//스크랩 추가,삭제
+    	      int mno= ((MemberDto)(request.getSession().getAttribute("loginDto"))).getMno();
+    	      int ano=Integer.parseInt(request.getParameter("ano"));
+    	      boolean result=AuctionDao.getInstence().clipState(mno, ano);
+    	      response.setContentType("application/json;charset=UTF-8");
+    	      response.getWriter().print(result);
+    	   }
+    	   
+    	   
+    	   
+    	   
+    	   }
 
 	
 //스크랩 게시물 추가 [9월21일 고연진]	

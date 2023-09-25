@@ -65,7 +65,7 @@ public class MypageDao extends Dao {
 						*/
 				 
 				// 1. 이미지 생성하고 // 2. 카객체생성  // 3.생성한 이미지 카에 담고 // 4. 옥션에 카 추가 
-				Map<Integer, String> carimglist = AuctionDao.getInstence().ciimg(rs.getInt("cno"));
+				Map<Integer, String> carimglist = AuctionDao.getInstence().imglist(rs.getInt("cno"));
 				CarDto carDto = AuctionDao.getInstence().carDto(rs.getInt("cno"));
 				carDto.setimglist(carimglist);
 				AuctionDto auctionDto = AuctionDao.getInstence().auctionDto(rs.getInt("ano"));
