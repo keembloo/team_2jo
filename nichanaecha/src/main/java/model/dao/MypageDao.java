@@ -73,7 +73,7 @@ public class MypageDao extends Dao {
 				//System.out.println("carimglist"+carimglist);
 				//System.out.println("carDto"+carDto);
 				//System.out.println("auctionDto"+auctionDto);
-				
+				System.out.println(carimglist);
 				list.add(auctionDto); // 리스트에 추가
 			}
 			//System.out.println("다오에서 list 출력 : "+list);
