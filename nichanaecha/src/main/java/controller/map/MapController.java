@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import model.dao.AuctionDao;
-import model.dto.CarDto;
+import model.dto.CarAddressDto;
 
 @WebServlet("/MapController")
 public class MapController extends HttpServlet {
@@ -25,20 +25,24 @@ public class MapController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 동,서,남,북 좌표로 결과 반환해주는 함수
-		List<CarDto> list = new ArrayList<>();
 		
 		String east = request.getParameter("east");
 		String west = request.getParameter("west");
 		String south = request.getParameter("south");
 		String north = request.getParameter("north");
 		int level = Integer.parseInt(request.getParameter("level"));
+		List<CarAddressDto> list = new ArrayList<>();
 		
-		if(level < 4) {
-		
-		list = AuctionDao.getInstence().mapAreaPrint(east, west, south, north); 
-		
+		//level(확대 레벨) 4이하 좌표 내 모든 매물 반환, level 5 행정동 기준 클러스터, level 5 초과시 광역시 또는 지방 자치구 별로 반환
+		if( level <= 3 ) {
+			list = AuctionDao.getInstence().mapAreaPrint1(east, west, south, north); 
 		}
-		
+		else if( level <= 5 ) {
+			list = AuctionDao.getInstence().mapAreaPrint2(east, west, south, north); 
+		}
+		else if( level > 5 ) {
+			list = AuctionDao.getInstence().mapAreaPrint3(east, west, south, north, level); 
+		}
 		
 		ObjectMapper mapper = new ObjectMapper();
 		String jsonObject = mapper.writeValueAsString(list);
