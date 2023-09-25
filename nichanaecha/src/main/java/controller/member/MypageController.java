@@ -30,7 +30,7 @@ public class MypageController extends HttpServlet {
     // 규리 마이페이지 출력
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String type = request.getParameter("type");
-		// System.out.println("컨트롤러연결");
+		// System.out.println("`연결");
 		//int loginDto = 3; //임시테스트
 		//request.getSession().setAttribute("loginDto", loginDto ); //임시테스트 세션에 로그인회원번호넣어놓기
 		//System.out.println("loginDto : "+request.getSession().getAttribute("loginDto"));
@@ -48,6 +48,7 @@ public class MypageController extends HttpServlet {
 	    	response.getWriter().print(json);
 	    	
 		}else if (type.equals("mySubmitcarView")) {	// mySubmitcarView() 등록매물정보 출력
+			//System.out.println("컨트롤러연결");
 			ArrayList<AuctionDto> result = MypageDao.getInstence().myPageAuctionView( mno , type);
 			ObjectMapper objectMapper = new ObjectMapper();
 			String json = objectMapper.writeValueAsString(result);
@@ -61,8 +62,15 @@ public class MypageController extends HttpServlet {
 			//System.out.println("result : "+result);
 			response.setContentType("application/json;charset=UTF-8");
 	    	response.getWriter().print(json);
+	    	
+		} else if (type.equals("myWishlistView")) {	// myWishlistView() 찜한 매물정보(캐러셀) 출력
+			ArrayList<AuctionDto> result = MypageDao.getInstence().myPageAuctionView( mno ,type);
+			ObjectMapper objectMapper = new ObjectMapper();
+			String json = objectMapper.writeValueAsString(result);
+			//System.out.println("result : "+result);
+			response.setContentType("application/json;charset=UTF-8");
+	    	response.getWriter().print(json);
 		}
-
     	
 	}
 

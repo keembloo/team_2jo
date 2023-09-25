@@ -41,19 +41,33 @@ public class MypageDao extends Dao {
 	public ArrayList<AuctionDto> myPageAuctionView(int mno , String type) {
 		//mno = 3; // 테스트
 		ArrayList<AuctionDto> list = new ArrayList<>();
-		
 		try {
 			if(type.equals("mySubmitcarView")) { // 타입이 mySubmitcarView면 등록한 매물출력
-			String sql = "select * from car as c inner join auctionInfo as a on c.cno = a.cno where c.mno = ?";
-			ps = conn.prepareStatement(sql);
-			ps.setInt(1, mno);
-			rs = ps.executeQuery();
+				String sql = "select * from car as c"
+						+ " inner join auctionInfo as a on c.cno = a.cno"
+						+ " inner join carimg as i on c.cno = i.cno"
+						+ " where c.mno = ? limit 100";
+				ps = conn.prepareStatement(sql);
+				ps.setInt(1, mno);
+				rs = ps.executeQuery();
+				//System.out.println("aaaa");
 			} else if  (type.equals("myAuctionView")) { // 타입이 myAuctionView면 입찰한 매물출력
-				String sql = "select * from buymember as b inner join auctionInfo as a on b.ano =  a.ano where b.mno = ?";
+				String sql = "select * from buymember as b inner join auctionInfo as a on b.ano =  a.ano where b.mno = ? limit 100";
+				ps = conn.prepareStatement(sql);
+				ps.setInt(1, mno);
+				rs = ps.executeQuery();
+			} else if (type.equals("myWishlistView")) {  // 타입이 myWishlistView면 찜한 매물출력
+				//System.out.println("실행");
+				String sql = "select * from wishlist as w"
+						+ " inner join auctionInfo as a on w.ano = a.ano"
+						+ " inner join car as c on c.cno = a.cno"
+						+ " inner join carimg as i on c.cno = i.cno"
+						+ " where w.mno = ? limit 100";
 				ps = conn.prepareStatement(sql);
 				ps.setInt(1, mno);
 				rs = ps.executeQuery();
 			}
+			
 			while (rs.next()) {
 				//등록된 경매정보 dto에 차례대로 넣고 list로 출력해야함! 
 				// 등록번호 , 경매 제목 , 경매 종료 날짜 , 경매 등록 가격 , 경매 종료 시간 , 경매 상태  + 차량이미지
@@ -67,7 +81,7 @@ public class MypageDao extends Dao {
 				// 1. 이미지 생성하고 // 2. 카객체생성  // 3.생성한 이미지 카에 담고 // 4. 옥션에 카 추가 
 				Map<Integer, String> carimglist = AuctionDao.getInstence().imglist(rs.getInt("cno"));
 				CarDto carDto = AuctionDao.getInstence().carDto(rs.getInt("cno"));
-				carDto.setimglist(carimglist);
+				carDto.setImglist(carimglist);
 				AuctionDto auctionDto = AuctionDao.getInstence().auctionDto(rs.getInt("ano"));
 				auctionDto.setCar(carDto);
 				//System.out.println("carimglist"+carimglist);

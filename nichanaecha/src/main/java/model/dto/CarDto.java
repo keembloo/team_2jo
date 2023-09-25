@@ -1,5 +1,6 @@
 package model.dto;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class CarDto {
@@ -66,16 +67,16 @@ public class CarDto {
 
 
 
+
+
 	public Map<Integer, String> getImglist() {
 		return imglist;
 	}
 
 
-
 	public void setImglist(Map<Integer, String> imglist) {
 		this.imglist = imglist;
 	}
-
 
 
 	public int getMno() {
@@ -87,19 +88,6 @@ public class CarDto {
 	public void setMno(int mno) {
 		this.mno = mno;
 	}
-
-
-
-	public Map<Integer, String> getimglist() {
-		return imglist;
-	}
-
-
-
-	public void setimglist(Map<Integer, String> imglist) {
-		this.imglist = imglist;
-	}
-
 
 
 	public int getCno() {
