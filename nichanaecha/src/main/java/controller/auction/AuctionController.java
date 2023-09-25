@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import model.dao.AuctionDao;
 import model.dto.AuctionDto;
 import model.dto.CarDto;
+import model.dto.MemberDto;
 
 @WebServlet("/AuctionController")
 public class AuctionController extends HttpServlet {
@@ -40,7 +41,6 @@ public class AuctionController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int ano = Integer.parseInt(request.getParameter("ano"));
 		System.out.println("controller 들어옴 > ano:  "+ano);
-		
 		AuctionDto result= AuctionDao.getInstence().auctionPrint(ano);
 		System.out.println("경매Dto: "+result);
 		System.out.println("경매Dto 안에 CarDto: "+result.getCar());

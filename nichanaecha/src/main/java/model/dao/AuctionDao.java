@@ -53,7 +53,7 @@ public class AuctionDao extends Dao {
 	
 		
 		try {
-			String sql = "select * from auctionInfo where ano = ?";
+			String sql = "select * from auctionInfo where ano = ? ";
 			
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, ano);
@@ -70,6 +70,7 @@ public class AuctionDao extends Dao {
 					rs.getLong("aprice"),
 					rs.getInt("astate"),
 					rs.getInt("cno")
+					
 			);
 			
 			return auctionDto;

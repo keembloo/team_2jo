@@ -18,6 +18,9 @@ public class AuctionDto {
 	//getter/setter
 	public BattingDto getBatting() {return batting;}
 	public void setBatting(BattingDto batting) {this.batting = batting;}
+	
+	
+	
 //--------------------------------------------------------------------------//
 
 	public AuctionDto() {}

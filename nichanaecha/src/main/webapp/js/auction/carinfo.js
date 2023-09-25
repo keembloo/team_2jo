@@ -53,55 +53,58 @@ function auctionPrint(ano){
             
             
             //남은시간
-            
-            
-            // 보유금액 class="mcash"
-            console.log(r.batting.mno)
-            document.querySelector('.mcash').innerHTML=`${r.batting.mcash}`
+            let 
          } ,       
          error : e=>{console.log('통신실패');console.log(e)} ,         
    });
 
 
-//--------입찰상황정보-------------------------------------------------------
- /*  
-      
-      $.ajax({
-         url : "/nichanaecha/BattingController",     
-        method : "get",   
-        async : false ,
-        data : {type:'topByBatting',ano:ano },// 최근 추가된 3개의 입찰
-         success : r=>{
-           console.log('경매상황내용출력성공');console.log(r);
-         
-         //1.현재가격 (class="batPay")
-         document.querySelector('.batPay').innerHTML=`${r[0].bprice}`
-                  
-         //2.경매진행상황(class="auctionBox")출력박스/ 출력물 class="auction"
-         let html=``;
-         let auctionBox=document.querySelector('.auctionBox');
-         r.forEach((b)=>{
-            html+=`
-                  <div class="auction">
-                     <li>${b.bprice}만원</li>
-                     <li>${b.bdate}</li>
-                  </div>
-            
-            `
-         })
-         auctionBox.innerHTML=html;
-            
-         } ,       
-         error : e=>{console.log('경매상황내용출력실패');+e;} ,         
-   });
-   
- */  
 
-document.querySelector('.state').innerHTML=`♡`
+/* 남은 시간 구하는 방법-----------------------------------------------------------
 
-   
-   
-}//f()
+
+// 기준 날짜 설정 (예: 2023년 9월 30일 12:00:00)
+var 기준날짜 = new Date('2023-09-30T12:00:00Z').getTime();
+
+// 타이머 업데이트 함수
+function 업데이트타이머() {
+    // 현재 시간 구하기
+    var 현재시간 = new Date().getTime();
+
+    // 기준 날짜와 현재 시간 사이의 차이 계산
+    var 차이 = 기준날짜 - 현재시간;
+
+    if (차이 <= 0) {
+        // 기준 날짜가 지남
+        document.getElementById('타이머').innerHTML = '시간 종료';
+    } else {
+        // 시간, 분, 초 계산
+        var 시간 = Math.floor(차이 / (1000 * 60 * 60));
+        var 분 = Math.floor((차이 % (1000 * 60 * 60)) / (1000 * 60));
+        var 초 = Math.floor((차이 % (1000 * 60)) / 1000);
+
+        // 결과를 화면에 표시
+        document.getElementById('타이머').innerHTML = 시간 + '시간 ' + 분 + '분 ' + 초 + '초';
+    }
+}
+
+// 1초마다 타이머 업데이트 호출
+setInterval(업데이트타이머, 1000);
+
+// 페이지 열었을 때 초기 타이머 설정
+업데이트타이머();
+
+
+
+
+ */
+
+
+
+
+
+
+
 
 
 //스크랩 기능 [9월24일 고연진] -onclick()--------------------------------------------------------
