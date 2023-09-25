@@ -1,11 +1,12 @@
 package controller.auction;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
+import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,14 +20,10 @@ import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.oreilly.servlet.MultipartRequest;
-import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import model.dao.AuctionDao;
 import model.dto.AuctionDto;
 import model.dto.CarDto;
-import model.dto.MemberDto;
-
 
 @WebServlet("/AuctionController")
 public class AuctionController extends HttpServlet {
@@ -43,11 +40,14 @@ public class AuctionController extends HttpServlet {
     
     //상세페이지조회 [9월19일 고연진]   
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int ano= Integer.parseInt(request.getParameter("ano"));
+		int ano = Integer.parseInt(request.getParameter("ano"));
 		System.out.println("controller 들어옴 > ano:  "+ano);
+		
 		AuctionDto result= AuctionDao.getInstence().auctionPrint(ano);
-		System.out.println("출력 관련 dto 리스트: "+result);
-		System.out.println("사진리스트만 출력: "+ result.getImglist());
+		System.out.println("경매Dto: "+result);
+		System.out.println("경매Dto 안에 CarDto: "+result.getCar());
+		System.out.println("CarDto 안에 imglist: "+result.getCar().getimglist());
+		
 		ObjectMapper mapper=new ObjectMapper(); 
 		String jsonObject= mapper.writeValueAsString(result);
 		System.out.println("jackson사용: "+jsonObject);
@@ -57,6 +57,7 @@ public class AuctionController extends HttpServlet {
 	}
 
 	
+
 	//등록페이지 성호
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	      //1. 저장경로 [ 첨부파일이 저장될 폴더 위치]

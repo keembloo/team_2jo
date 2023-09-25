@@ -29,7 +29,7 @@ public class WishListController extends HttpServlet {
 //스크랩 게시물 추가 [9월21일 고연진]	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int mno= ((MemberDto)(request.getSession().getAttribute("loginDto"))).getMno();System.out.println("스크랩누른사람: "+mno);
-		int ano=Integer.parseInt(request.getParameter("ano")); 
+		int ano = Integer.parseInt(request.getParameter("ano")); 
 		System.out.println("게시물번호전달됨? " +ano);
 		String mid=((MemberDto)(request.getSession().getAttribute("loginDto"))).getMid(); System.out.println("회원아이디: "+mid);
 		boolean result= AuctionDao.getInstence().clipping(mno,ano);
