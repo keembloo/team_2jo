@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.File;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -74,7 +75,8 @@ public class AuctionController extends HttpServlet {
 	      
 	      // 4. 파일 업로드 요청 [ 요청방식 : request ]
 	      try {
-	    	  Map<  String > imgList = new HashMap<>(); // 업로드된 파일명 들을 저장하기 위한 map컬렉션
+	    	  // ?????? array 대신에 map 사용하기 된 이유 : 
+	    	  Map< String, String > map = new HashMap<>(); // 업로드된 파일명 들을 저장하기 위한 map컬렉션
 	         
 	         // form전송시 input/select/textarea 등 태그의 모든 데이터 한번에 요청해서 결과를 List 반환 
 	      List< FileItem > fileList = fileUpload.parseRequest( request );
