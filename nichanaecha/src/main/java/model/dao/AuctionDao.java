@@ -108,27 +108,27 @@ public class AuctionDao extends Dao {
 	}
 	
 	
-	/*
+	
 	// 1.차 등록 성호
-	public boolean bcarsubmit(CarDto carDto) {
+	public boolean bcarsubmit(CarDto dto) {
 		try {
 			String sql= "insert into car(cno,ccompany,cnum,csize,cc,coil,cname,cdate,ckm,clat,clng) "
 					+ " values(?,?,?,?,?,?,?,?,?,?,?)";
 			ps = conn.prepareStatement( sql , Statement.RETURN_GENERATED_KEYS ); 
 			
-			ps.setInt(1, dto.getcno()); 				ps.setString(2, dto.getccompany());
-			ps.setString(3, dto.getcnum());				ps.setString(4, dto.getcsize());
-			ps.setInt(5, dto.getcc()); 					ps.setString(6, dto.getcoil());
-			ps.setString(7, dto.getcname());			ps.setString(8, dto.getcdate());
-			ps.setInt(9, dto.getckm());					ps.setString(10, dto.getclat());
-			ps.setString(11, dto.getclng());
+			ps.setInt(1, dto.getCno()); 				ps.setString(2, dto.getCcompany());
+			ps.setString(3, dto.getCnum());				ps.setString(4, dto.getCsize());
+			ps.setInt(5, dto.getCc()); 					ps.setString(6, dto.getCoil());
+			ps.setString(7, dto.getCname());			ps.setString(8, dto.getCdate());
+			ps.setInt(9, dto.getCkm());					ps.setString(10, dto.getClat());
+			ps.setString(11, dto.getClng());
 			
 			int count = ps.executeUpdate();
 			
 			rs = ps.getGeneratedKeys();
 			if( rs.next() ) {
 				if( count == 1 ) {
-					for( String img : dto.getImgList().values() ) {
+					for( String img : dto.getImglist().values() ) {
 						sql = "insert into carimg( cino, ciimg) value ( ? ,? )";
 						ps = conn.prepareStatement(sql);
 						ps.setString(1, img);
@@ -142,7 +142,7 @@ public class AuctionDao extends Dao {
 		}catch (Exception e) {System.out.println(e);}
 		return false;
 	}
-	*/
+	
 	
 //게시물 상세조회 [9월19일 고연진]------------------------------------------------------------
 	public AuctionDto auctionPrint(int ano) {
