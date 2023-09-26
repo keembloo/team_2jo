@@ -1,7 +1,7 @@
 package controller.auction;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,15 +14,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.fileupload.FileItem;
-import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
-import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import model.dao.AuctionDao;
 import model.dto.AuctionDto;
 import model.dto.CarDto;
-import model.dto.MemberDto;
 
 @WebServlet("/AuctionController")
 public class AuctionController extends HttpServlet {
@@ -72,10 +71,11 @@ public class AuctionController extends HttpServlet {
 	      
 	      // 4. 파일 업로드 요청 [ 요청방식 : request ]
 	      try {
-	    	  Map<  String > imgList = new HashMap<>(); // 업로드된 파일명 들을 저장하기 위한 map컬렉션
+	    	  // ?????? array 대신에 map 사용하기 된 이유 : 차량 이미지가 여러개라서 하나의 키의 값를 불러오기위해
+	    	  Map< Integer, String > imgList = new HashMap<>(); // 업로드된 파일명 들을 저장하기 위한 map컬렉션
 	         
 	         // form전송시 input/select/textarea 등 태그의 모든 데이터 한번에 요청해서 결과를 List 반환 
-	      List< FileItem > fileList = fileUpload.parseRequest( request );
+	      List< FileItem > fileList = fileUpload.parseRequest(request);
 	         
 	      // 5. 업로드 실행 
 	      int i = 0;
@@ -102,47 +102,42 @@ public class AuctionController extends HttpServlet {
 	            item.write( fileUploadPath ); // .write("저장할경로[파일명포함]") 파일 업로드할 경로를 file타입으로 제공 
 	            // 7. 업로드 된 파일명을 Map에 저장 [ -DB에 저장할려고  ]
 	            i++;   // i는 임의의 값 
-	            imgList.add( filename  ); // 저장시 에는 이미지번호가 필요 없음
+	            imgList.put(i, filename); // 저장시 에는 이미지번호가 필요 없음
 	            // MAP 컬렉션은 키 와 값으로 구성된 엔트리 [ * 키는 중복 불가능 ]
 	         }
 	      }
 	      // ------------------------------------- 업로드 끝 --> DB처리 --------------------- //
 
-		// ------------------------------------- 업로드 끝 --> DB처리 --------------------- //
-		
-		// FileItem 으로 가져온 데이터들을 각 필드에 맞춰서 제품Dto 에 저장하기 
-		
-		// 제품 등록한 회원번호 [ 서블릿 세션 ] 
-		Object object = request.getSession().getAttribute("loginDto");
-		CarDto carDto = (CarDto)object;
-		int cmo = carDto.getCno();
-		  CarDto caDto = new CarDto(
-		            0 ,                                       //cno 호출(x) : 차 등록시에는 매물 번호 는 자동부여 되므로 가지고 있을 필요가 없음
-		            fileList.get(0).getString(),                  //제조사(0)
-		            fileList.get(1).getString(),                  //차량번호(1)
-		            fileList.get(2).getString(),                  //차량종류(2)
-		            Integer.parseInt(fileList.get(3).getString()),      //배기량(3)
-		            fileList.get(4).getString(),                  //연료(4)
-		            fileList.get(5).getString(),                  //차량명(5)
-		            fileList.get(6).getString(),                  //제조년월(6)
-		            Integer.parseInt(fileList.get(7).getString()),      //주행거리(7)
-		            null,                                       // 주소
-		            fileList.get(8).getString(),                  //위도(8)
-		            fileList.get(9).getString(),                        //경도(9)
-		            imgList );                                 // 업로드 된 이미지들
-		      
-		      System.out.println( carDto );
+			// FileItem 으로 가져온 데이터들을 각 필드에 맞춰서 제품Dto 에 저장하기 
+			
+			// 제품 등록한 회원번호 [ 서블릿 세션 ] 
+			Object object = request.getSession().getAttribute("loginDto");
+			CarDto carDto = (CarDto)object;
+			int cmo = carDto.getCno();
+			  CarDto caDto = new CarDto(
+			            0 ,                                       		//cno 호출(x) : 차 등록시에는 매물 번호 는 자동부여 되므로 가지고 있을 필요가 없음
+			            fileList.get(0).getString(),                  	//제조사(0)
+			            fileList.get(1).getString(),                  	//차량번호(1)
+			            fileList.get(2).getString(),                  	//차량종류(2)
+			            Integer.parseInt(fileList.get(3).getString()),  //배기량(3)
+			            fileList.get(4).getString(),                  	//연료(4)
+			            fileList.get(5).getString(),                  	//차량명(5)
+			            fileList.get(6).getString(),                  	//제조년월(6)
+			            Integer.parseInt(fileList.get(7).getString()),  //주행거리(7)
+			            null,                                       	// 주소
+			            fileList.get(8).getString(),                  	//위도(8)
+			            fileList.get(9).getString()                     //경도(9)
+			             );                                 
+			      
+			      System.out.println( carDto );
 
-
+			      //3. Dao 처리
+			      boolean result = AuctionDao.getInstence().bcarsubmit(carDto);
+			      //4. (Dao 결과) 응답
+			      response.setContentType("application/json; charset=UTF-8"); 
+			      response.getWriter().print(result);
+			      
 		
-	
-		
-		      //3. Dao 처리
-		      boolean result = AuctionDao.getInstence().bcarsubmit(carDto);
-		      //4. (Dao 결과) 응답
-		      response.setContentType("application/json; charset=UTF-8"); 
-		      response.getWriter().print(result);
-		      
 		      }catch (Exception e) {}	
 		/*
 				//1. (입력받은 매개변수)요청
