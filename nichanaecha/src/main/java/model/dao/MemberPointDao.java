@@ -1,5 +1,8 @@
 package model.dao;
 
+import java.util.ArrayList;
+
+import model.dto.MemberPointDto;
 
 public class MemberPointDao extends Dao {
 	private static MemberPointDao memberpointDao = new MemberPointDao();
@@ -7,15 +10,30 @@ public class MemberPointDao extends Dao {
 	private MemberPointDao() {}
 	
 	
-	public void mpointView(){
-		System.out.println("다오 실행 ");
+	// 규리 전체 포인트입출금내역 출력
+	public ArrayList<MemberPointDto> PointAllView(int mno){ 
+		//System.out.println("다오 실행 ");
+		ArrayList<MemberPointDto> list = new ArrayList<>();
 		
 		try {
-			String sql ="";
+			String sql ="select * from pointrecord where mno = ? order by pointdate desc";
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, mno);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				MemberPointDto memberPointDto = new MemberPointDto(
+						rs.getString("pointno"), 
+						rs.getInt("mno"), 
+						rs.getInt("mpoint"), 
+						rs.getString("pointdate"), 
+						rs.getString("pointhistory"));
+				list.add(memberPointDto);
+			}
+			return list;
 		} catch (Exception e) {
 			System.out.println(e);
 		}
-		
+		return null;
 	}
 	
 	
@@ -35,30 +53,22 @@ public class MemberPointDao extends Dao {
 			ps.setInt(1, gold);
 			int result = ps.executeUpdate();
 			
-			if (result==1) {
-				sql = "insert into pointrecord(pointno , mno , mpoint , pointhistory ) values(?, ? , ? , ? )";
-				ps = conn.prepareStatement(sql);
-				ps.setString(1, mpno);
-				ps.setInt(2, mno);
-				ps.setInt(3, gold);
-				ps.setString(4, type);
-				result = ps.executeUpdate();
-				if (result == 1)
-					return true;
-			}else {
-				return false;
-			}
-
+			if (result==1) return true;
+	
 		} catch (Exception e) {System.out.println(e);}
 		return false;
 	}
-	/*
+	
 	// 규리 포인트 내역 관련 저장함수
 	public boolean setPoint( String type ,  int mno , int gold , String mpno ) {
 		try {
-			System.out.println("다오 mpno : "+mpno);
-			String sql = "insert into pointrecord(pointno , mno , pointdate , pointhistory ) values(?, ? , ? , ?)";
+			//System.out.println("다오 mpno : "+mpno);
+			String sql = "insert into pointrecord(pointno , mno , mpoint , pointhistory ) values(?, ? , ? , ?)";
 			ps = conn.prepareStatement(sql);
+			ps.setString(1, mpno);
+			ps.setInt(2, mno);
+			ps.setInt(3, gold);
+			ps.setString(4, type);
 			int result = ps.executeUpdate();
 				if (result == 1) {
 					return true;
@@ -71,7 +81,7 @@ public class MemberPointDao extends Dao {
 		}
 		return false;
 	}
-	*/
+	
 	
 	
 }

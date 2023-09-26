@@ -6,7 +6,7 @@ let ano=new URL(location.href).searchParams.get("ano"); //경매게시글번호
 
 
 //(개별)상세페이지 출력 [9월24일 고연진]--------------------------------------------------------
-auctionPrint(29530);
+auctionPrint(ano);
 
 function auctionPrint(ano){
    clipState();

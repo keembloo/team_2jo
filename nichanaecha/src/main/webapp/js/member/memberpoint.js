@@ -16,6 +16,7 @@ function mpointView(){
 			data : {type : "mpointView"} ,
 			success : r => { //console.log("js연결성공");
 				//console.log('r.mno : '+r.mno);
+				//console.log('r.mcash : '+r.mcash); 보유포인트확인
 				//console.log('r: '+r);
 				//console.log('r[0].mno : '+r[0].mno);
 				
@@ -23,9 +24,9 @@ function mpointView(){
 
 				cashInfo.innerHTML = `<div class="textId">'${r.mname}' 님</div>
 									<div class="textPoint">보유 포인트 : <span>${r.mcash.toLocaleString()}원</span></div>
-									<button class="btn btn-primary" onclick="inputPoint(${r.mno})" type=button>입금</button>
-									<button class="btn btn-danger" onclick="outputPoint(${r.mno},${r.mcash})" type=button>출금</button>`;
-				PointAllView();
+									<button class="btn btn-primary" onclick="inputPoint()" type=button>입금</button>
+									<button class="btn btn-danger" onclick="outputPoint(${r.mcash})" type=button>출금</button>`;
+				PointAllView(); // 포인트내역 전체출력 함수 호출
 			} , 
 			error : e => {console.log("실패");}		
 		})
@@ -48,7 +49,7 @@ function inputPoint(){
 				data : { type : 1 , gold : gold } , // type 1이면 입금
 				success : r => { //console.log("js연결성공");
 					alert('입금 성공');
-					mpointView();
+					mpointView(); // 포인트출력함수 호출
 				} , 
 				error : e => {console.log("실패"+e);}
 		})
@@ -70,7 +71,7 @@ function outputPoint(mcash){
 				data : { type : 2 , gold : gold } ,  // type 2이면 출금
 				success : r => { //console.log("js연결성공");
 					alert('출금 성공');
-					mpointView();
+					mpointView(); // 포인트출력함수 호출
 				} , 
 				error : e => {console.log("실패"+e);}
 		})
@@ -85,7 +86,7 @@ function PointAllView(){
 			method : "get" ,
 			data : { type : "PointAllView" } ,  
 			success : r => { //console.log("js연결성공");
-				
+				console.log(r);
 				
 			} , 
 			error : e => {console.log("실패"+e);}
