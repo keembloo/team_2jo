@@ -1,5 +1,7 @@
 @charset "EUC-KR";
 
+/* 브라우저에서 제공하는 스크롤바 숨기기  */
+::-webkit-scrollbar{ display: none; }
 
 .carType{
 	background: white;
@@ -70,4 +72,48 @@
 .marker-count {
     font-size: 14px;
     color: #00ff22;
+}
+
+/* 지도 영역 */
+#map{
+	border: 1px solid #e8e8e8;	
+	
+}
+
+/* 클릭시 경매 리스트 */
+.auctionList {
+    position: absolute;
+    width: 400px;
+    height: 100%;
+    right: 0;
+    top: 0;
+    border-left: 1px solid #e8e8e8;
+    background-color: white;
+    z-index: 2;
+   
+}
+
+.listHeader{
+	font-size: 20px;
+	 
+}
+
+.list-group-item{
+	font-size: 17px;
+}
+
+.card-text{
+	font-size: 15px;
+}
+
+.card{
+	border-top: none !important;
+	border-bottom: 1px solid #e8e8e8 !important;
+	border-left: none !important;
+	border-right: none !important;
+}
+
+.cardList {
+    max-height: 800px; /* 원하는 높이로 설정 */
+    overflow-y: scroll; /* 스크롤 가능하도록 추가 */
 }
