@@ -91,7 +91,7 @@ function getInfo() {
 
 function mapAreaPrint(east, west, south, north, level){
 	clusterer.clear();
-	if(level>3){
+	if(level>4){
 		clusterer.setMinLevel(20);
 	}else{
 		clusterer.setMinLevel(0);
@@ -100,14 +100,14 @@ function mapAreaPrint(east, west, south, north, level){
 		url : "/nichanaecha/MapController",
 		method : "get",
 		async : false,
-		data : {east : east, west : west, south : south, north : north, level : level},
+		data : {type : "mapAreaPrint", east : east, west : west, south : south, north : north, level : level},
 		success : r => {
 			console.log("level : "+level);
-			if(level > 3){
-				var customOverlay = r.map( p => {
+			if(level > 4){ // 확대 레벨 4 초과시 지역별로 묶어서 출력
+				var customOverlay = r.map( p => { 
 					
 					var content = `
-									<div class="customoverlay">
+									<div onclick="listPrint()" class="customoverlay">
 									    <span class="marker-title">${p.areaName}</span>
 									    <span class="marker-count">${p.count}</span>
 									</div>`
@@ -120,7 +120,7 @@ function mapAreaPrint(east, west, south, north, level){
 						yAnchor: 1 
 					});
 				});
-			}else{
+			}else{	// 확대 레벨 3 이하시 개별 출력, 근접 위치는 클러스터 기능 사용
 				var customOverlay = r.map( p => {
 					
 					var content = `
@@ -148,4 +148,35 @@ function mapAreaPrint(east, west, south, north, level){
 		}
 	})
 }
+
+
+function listPrint(){
+	
+	$.ajax({
+		url : "/nichanaecha/MapController",
+		method: "get",
+		data: {type : "listPrint"},
+		success: r =>{
+			console.log(r);
+			
+		},
+		error: e =>{
+			console.log('에러 발생 : '+e)
+			
+			
+		}
+	
+		
+		
+		
+		
+		
+		
+		
+	})
+	
+	
+	
+}
+
  
