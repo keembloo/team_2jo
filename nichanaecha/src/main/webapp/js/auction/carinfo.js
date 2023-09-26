@@ -6,7 +6,7 @@ let ano=new URL(location.href).searchParams.get("ano"); //경매게시글번호
 
 
 //(개별)상세페이지 출력 [9월24일 고연진]--------------------------------------------------------
-auctionPrint(29530);
+auctionPrint(ano);
 
 function auctionPrint(ano){
    clipState();
@@ -53,7 +53,7 @@ function auctionPrint(ano){
             
             
             //남은시간
-            let 
+            //let 
          } ,       
          error : e=>{console.log('통신실패');console.log(e)} ,         
    });
@@ -151,7 +151,7 @@ function clipState(){
           method : "get",
          async : false ,   
          data : {type:'findByWish',ano:ano},      
-         success : r=>{console.log('통신성공'+r)
+         success : r=>{console.log('찜상태통신성공'+r)
             if(r){state.innerHTML='♥'}//찜하기성공
             else{state.innerHTML='♡'}//찜취소
          } ,       
@@ -190,3 +190,14 @@ function batting(){console.log('batting() 실행')
 
 
 //입찰내역출력[9월26일]------------------------------------------------
+let clientSocket= new WebSocket('ws://localhost:80/nichanaecha/BattingSocket')
+clientSocket.onopen=e=>{console.log('소켓열림')
+	}//socket(e)
+
+
+//소켓 호출 함수
+function battingView(){
+	
+	
+}//f()
+	
