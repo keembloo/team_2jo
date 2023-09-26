@@ -1,7 +1,7 @@
 package controller.member;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.UUID;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,63 +11,61 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import model.dao.MemberPointDao;
 import model.dao.MypageDao;
-import model.dto.AuctionDto;
 import model.dto.MemberDto;
 
 /**
- * Servlet implementation class MypageController
+ * Servlet implementation class MemberPointController
  */
-@WebServlet("/MypageController")
-public class MypageController extends HttpServlet {
+@WebServlet("/MemberPointController")
+public class MemberPointController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 
-    public MypageController() {
+    public MemberPointController() {
         super();
     }
 
-    // 규리 마이페이지 출력
+    // 규리 회원포인트 출력
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String type = request.getParameter("type");
-		// System.out.println("`연결");
-		//int loginDto = 3; //임시테스트
-		//request.getSession().setAttribute("loginDto", loginDto ); //임시테스트 세션에 로그인회원번호넣어놓기
-		//System.out.println("loginDto : "+request.getSession().getAttribute("loginDto"));
 		int mno = ((MemberDto)request.getSession().getAttribute("loginDto")).getMno();
-		
-		if ( type.equals("mview")) { // mview() 멤버 회원정보출력
-			MemberDto result = MypageDao.getInstence().mview( mno );
-			//System.out.println("컨트롤러 result : "+result);
+		//System.out.println("실행됨 mno : "+mno);
+		// MypageDao 에 있는 mview()함수로 중복 호출
+		if (type.equals("mpointView")) {
+			MemberDto result = MypageDao.getInstence().mview(mno);
 			ObjectMapper objectMapper = new ObjectMapper();
 			String json = objectMapper.writeValueAsString(result);
 			response.setContentType("application/json;charset=UTF-8");
-	    	response.getWriter().print(json);
-	    	
-		}else {	// 마이페이지 매물관련 출력
-			//System.out.println("컨트롤러연결");
-			ArrayList<AuctionDto> result = MypageDao.getInstence().myPageAuctionView( mno , type);
+			response.getWriter().print(json);
+		} else if (type.equals("PointAllView")) {
+			MemberDto result = MypageDao.getInstence().mview(mno);
 			ObjectMapper objectMapper = new ObjectMapper();
 			String json = objectMapper.writeValueAsString(result);
 			response.setContentType("application/json;charset=UTF-8");
-	    	response.getWriter().print(json);
-		}
-
+			response.getWriter().print(json);
 	}
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		
 	}
 
 	// 규리 마이페이지 입금,출금
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int type = Integer.parseInt(request.getParameter("type"));
-		int mno = Integer.parseInt(request.getParameter("mno"));
+		//System.out.println(" 컨트롤러실행");
+		String type = request.getParameter("type");
+		int mno = ((MemberDto)request.getSession().getAttribute("loginDto")).getMno();
 		int gold = Integer.parseInt(request.getParameter("gold"));
-			
-		boolean result = MypageDao.getInstence().PointUpdate( type , mno , gold);
+		String mpno = (UUID.randomUUID().toString())+"_"+mno; 
+		//System.out.println("컨트롤ㄹ러 uuid : "+mpno);
+		if(type.equals("1")) {
+			type="입금";
+		} else {
+			type="출금";
+		}	
+		boolean result = MemberPointDao.getInstence().PointUpdate( type , mno , gold , mpno);
 			
 		response.setContentType("application/json;charset=UTF-8");
     	response.getWriter().print(result);

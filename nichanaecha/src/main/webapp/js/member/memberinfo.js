@@ -28,9 +28,7 @@ function mview(){
 				let cashInfo = document.querySelector('.cashInfo');
 
 				cashInfo.innerHTML = `<div class="textId">'${r.mname}' 님</div>
-									<div class="textPoint">보유 포인트 : <span>${r.mcash.toLocaleString()}원</span></div>
-									<button class="btn btn-primary" onclick="inputPoint(${r.mno})" type=button>입금</button>
-									<button class="btn btn-danger" onclick="outputPoint(${r.mno},${r.mcash})" type=button>출금</button>`;
+									<div class="textPoint">보유 포인트 : <span>${r.mcash.toLocaleString()}원</span></div>`;
 				mySubmitcarView();
 			} , 
 			error : e => {console.log("실패");}		
@@ -72,7 +70,7 @@ function mySubmitcarView(){
 					html += `<div class="col"> <!-- 제품1개 -->
 								<div class="card">
 									<a href="/nichanaecha/auction/carinfo.jsp?ano=${p.ano}">
-										<img src="/nichanaecha/img/seltosImgSample.jpg" class="card-img-top" alt="Image 1">
+										<img src="/nichanaecha/auction/img/seltosImgSample.jpg" class="card-img-top" alt="Image 1">
 										<div class="card-body">
 											<h5 class="card-title">${p.atitle}</h5>
 											<div class="card-text">경매 등록번호 : ${p.ano}</div>
@@ -137,7 +135,7 @@ function myAuctionView(){
 					html += `<div class="col"> <!-- 제품1개 -->
 								<div class="card">
 									<a href="/nichanaecha/auction/carinfo.jsp?ano=${p.ano}">
-										<img src="/nichanaecha/img/seltosImgSample.jpg" class="card-img-top" alt="Image 1">
+										<img src="/nichanaecha/auction/img/seltosImgSample.jpg" class="card-img-top" alt="Image 1">
 										<div class="card-body">
 											<h5 class="card-title">${p.atitle}</h5>
 											<div class="card-text">경매 등록번호 : ${p.ano}</div>
@@ -200,7 +198,7 @@ function myWishlistView(){
 					html += `<div class="col"> <!-- 제품1개 -->
 								<div class="card">
 									<a href="/nichanaecha/auction/carinfo.jsp?ano=${p.ano}">
-										<img src="/nichanaecha/img/seltosImgSample.jpg" class="card-img-top" alt="Image 1">
+										<img src="/nichanaecha/auction/img/seltosImgSample.jpg" class="card-img-top" alt="Image 1">
 										<div class="card-body">
 											<h5 class="card-title">${p.atitle}</h5>
 											<div class="card-text">경매 등록번호 : ${p.ano}</div>
@@ -230,49 +228,6 @@ function myWishlistView(){
 		});
 }
 
-
-// 규리 입금
-function inputPoint(mno){
-	//console.log('입금실행');
-	let gold = prompt('입금하실 금액을 입력해주세요');
-	if (gold < 10000 ){
-		alert('입금 금액은 10000원 이상이어야합니다');
-	} else {
-		console.log("mno"+mno);
-		console.log("gold"+gold);
-		$.ajax({
-				url : "/nichanaecha/MypageController" ,
-				method : "put" ,
-				data : { type : 1 , mno : mno , gold : gold } , // type 1이면 입금
-				success : r => { //console.log("js연결성공");
-					alert('입금 성공');
-					mview();
-				} , 
-				error : e => {console.log("실패"+e);}
-		})
-	}
-}
-
-
-// 규리 출금
-function outputPoint(mno , mcash){
-	//console.log('출금실행');
-	let gold = prompt('출금하실 금액을 입력해주세요');
-	if ( gold > mcash) {
-		alert('출금금액은 보유 포인트를 초과할 수 없습니다');
-	} else {
-		$.ajax({
-				url : "/nichanaecha/MypageController" , 
-				method : "put" ,
-				data : { type : 2 , mno : mno , gold : gold } ,  // type 2이면 출금
-				success : r => { //console.log("js연결성공");
-					alert('출금 성공');
-					mview();
-				} , 
-				error : e => {console.log("실패"+e);}
-		})
-	}
-}
 
 
 

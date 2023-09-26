@@ -5,7 +5,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Insert title here</title>
-	<link href="/nichanaecha/css/member/memberinfo.css" rel="stylesheet">
+	<link href="/nichanaecha/css/member/memberpoint.css" rel="stylesheet">
 </head>
 <body>
 	<!-- jsp  파일안에 다른 jsp파일 import -->
@@ -31,6 +31,9 @@
 				<div class="lineBar">
 				</div>
 				
+				<!-- 포인트 입출금내역 -->
+				<table> </table>
+				
 			</div> <!-- infoContent end -->
 			
 		</div> <!-- row end -->
@@ -40,7 +43,7 @@
 	
 	<!-- jsp  파일안에 다른 jsp파일 import -->
 	<%@include file="../footer.jsp"%>
-	<script src="/nichanaecha/js/member/memberinfo.js"
+	<script src="/nichanaecha/js/member/memberpoint.js"
 		type="text/javascript"></script>
 </body>
 </html>

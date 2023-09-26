@@ -115,26 +115,5 @@ public class MypageDao extends Dao {
 	}
 	
 	
-	//규리 회원 포인트 입금, 출금
-	public boolean PointUpdate( int type ,  int mno , int gold ) {
-		try {
-			String sign = "";
-			if (type ==1) { // 입금
-				sign = "+";
-			} else if (type ==2){ // 출금
-				sign = "-";
-			}
-			//System.out.println("기호 :"+sign);
-			String sql ="update member set mcash = mcash "+sign+"? where mno = ?";
-			ps = conn.prepareStatement(sql);
-			ps.setInt(2, mno);
-			ps.setInt(1, gold);
-			int result = ps.executeUpdate();
-			if (result==1) {
-				return true;
-			}
-		} catch (Exception e) {System.out.println(e);}
-		return false;
-	}
 	
 }
