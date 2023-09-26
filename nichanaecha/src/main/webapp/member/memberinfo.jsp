@@ -16,11 +16,10 @@
 		<div class="row">
 			<div class="lInfo nav flex-column col-3">
 				<!-- 사이드바 -->
-				<a class="nav-link active" aria-current="page" href="#">마이페이지</a> <a
-					class="nav-link" href="#">내정보</a> <a class="nav-link" href="#">포인트입출금내역</a>
-				<a class="nav-link" href="#">등록차량정보</a> <a class="nav-link disabled"
-					aria-disabled="true">입찰매물정보</a> <a class="nav-link disabled"
-					aria-disabled="true">찜목록</a>
+				<a class="nav-link active" aria-current="page" href="/nichanaecha/member/memberinfo.jsp">마이페이지</a> 
+				<a class="nav-link" href="#">내정보 수정</a> 
+				<a class="nav-link" href="/nichanaecha/member/memberpoint.jsp">포인트 입출금 내역확인</a>
+				
 			</div>
 
 			<div class="infoContent col-9">
@@ -77,7 +76,7 @@
 					<div id="imageCarousel2" class="carousel carousel-dark slide">
 						<div class="carousel-inner carouselMyauction">
 							<!--  js 등록매물 제품 출력 -->
-	
+							
 						</div> <!-- carousel-inner end -->
 						
 						
@@ -95,11 +94,41 @@
 
 					</div> <!-- imageCarousel end -->
 					
+				</div> 
+				
+				<div class="lineBar">
 				</div>
-
+				
+				<!-- ------------- 찜 정보 구역 ---------------- -->
+				
+				<!-- 찜 갯수와 찜경매 정보 -->
 				<div class="wishInfo">
-					<!-- 찜 갯수와 찜경매 정보 -->
+					<div class="menuText3">
+					
 					<!-- js출력 -->
+					</div>
+					
+					
+					<div id="imageCarousel3" class="carousel carousel-dark slide">
+						<div class="carousel-inner carouselMywishlist">
+							<!--  js 등록매물 제품 출력 -->
+							
+						</div> <!-- carousel-inner end -->
+						
+						
+						<button class="carousel-control-prev" type="button"
+							data-bs-target="#imageCarousel3" data-bs-slide="prev">
+							<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+							<span class="visually-hidden">Previous</span>
+						</button>
+						
+						<button class="carousel-control-next" type="button"
+							data-bs-target="#imageCarousel3" data-bs-slide="next">
+							<span class="carousel-control-next-icon" aria-hidden="true"></span>
+							<span class="visually-hidden">Next</span>
+						</button>
+
+					</div> <!-- imageCarousel end -->
 				</div>
 			</div>
 			<!-- row end -->

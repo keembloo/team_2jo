@@ -21,11 +21,11 @@
 }
 
 .lineBar{
-	margin : 50px 0;
+	margin : 80px 0;
 	border-bottom: 1px solid #337CCF;
 }
 
-.menuText ,.menuText2{
+.menuText ,.menuText2 , .menuText3, .notext{
 	width: 100%;
 	margin: 0 auto;
 	margin-bottom: 40px;
@@ -34,6 +34,13 @@
 }
 
 
+.carousel {
+	margin-top: 80px;
+}
+
+#imageCarousel3{
+	margin-bottom: 150px;
+}
 
 .carousel-inner {
     position: relative;
