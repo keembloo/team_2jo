@@ -58,7 +58,7 @@ function auctionPrint(ano){
          error : e=>{console.log('통신실패');console.log(e)} ,         
    });
 
-
+}
 
 /* 남은 시간 구하는 방법-----------------------------------------------------------
 
@@ -160,40 +160,33 @@ function clipState(){
 
 }//f()
 
-// 입찰 버튼 클릭 시 [9월22일 고연진]--------------------------------------------------------------
-/*
-   새창띄움.
-   유효성검사(회원에 한해 진행, 기본 금액보다 높은 금액, 보유 금액보다 적은 금액)
-   form전송 전에 입찰 수정 불가임을 보여 줄 알림창. 
-   등록 성공하면 보유 금액에서 차감. 
-   보낼데이터: mno, ano , 입력금액
- */
 
-/*
- function batting(){console.log('batting()함수 실행')
-    let batPay = document.querySelector('.batPay').value;
-    
- }//f()
- */
- // 입찰-------------------------------------------------------------------------
-let batVal=[false,false]; //보유금액 , 현재가격
+
+// 입찰 등록 [9월26일 고연진]-------------------------------------------------------------------------
 
 function batting(){console.log('batting() 실행')
-   if(loginMid==''){location.href='../member/memberlogin.jsp'}
+   if(loginMid==''){location.href=location.href='/nichanaecha/member/memberlogin.jsp'}
    let bprice = document.querySelector('.bprice').value;
-   console.log(bprice);
-    
-    $.ajax({
-        url : "/nichanaecha/BattingController",     
-        method : "get",   
-        data : {type:'mcashVal',ano:ano, bprice:bprice},       
-         success : r=>{console.log('입찰통신성공');
-         if(r){alert('')}
-         
-         
-         } ,       
-         error : e=>{console.log(e)} ,         
+   $.ajax({
+      	url : "/nichanaecha/BattingController",     
+     	method : "post",   
+     	data : {ano:ano,bprice:bprice},      
+      	success : r=>{console.log('통신성공');console.log(r)
+      		if(r){
+				alert('입찰등록 성공');
+				console.log('입찰버튼눌림');
+				document.getElementById('submitBtn').addEventListener('click', function() {
+ 				 $('#myModal').modal('hide');
+					});
+
+      		}
+      		else{alert('입찰등록 실패')}
+      	} ,       
+      	error : e=>{console.log('통신실패')} ,         
    });
 
-   
-}
+
+}//f()
+
+
+//입찰내역출력[9월26일]------------------------------------------------
