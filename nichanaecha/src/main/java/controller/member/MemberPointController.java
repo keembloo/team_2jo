@@ -42,8 +42,14 @@ public class MemberPointController extends HttpServlet {
 			response.setContentType("application/json;charset=UTF-8");
 			response.getWriter().print(json);
 			
-		} else if (type.equals("PointAllView")) { // 전체 포인트입출금내역 출력
-			ArrayList<MemberPointDto> result = MemberPointDao.getInstence().PointAllView(mno);
+		} else if (type.equals("PointAllView") || type.equals("PointOutput") || type.equals("PointInput")) { // 전체 포인트입출금내역 출력
+			int listsize = Integer.parseInt(request.getParameter("listsize"));
+			int page = Integer.parseInt(request.getParameter("page"));
+			int startrow = (page-1) * listsize; // 페이지번호*최대 내역수
+			int totalsize = MemberPointDao.getInstence().totalSize(mno, type); // 최대 내역 수 
+					
+			ArrayList<MemberPointDto> result = MemberPointDao.getInstence().PointAllView(mno , type);
+			
 			ObjectMapper objectMapper = new ObjectMapper();
 			String json = objectMapper.writeValueAsString(result);
 			response.setContentType("application/json;charset=UTF-8");

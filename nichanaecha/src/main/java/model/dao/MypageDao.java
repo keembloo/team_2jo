@@ -82,7 +82,7 @@ public class MypageDao extends Dao {
 				Map<Integer, String> carimglist = AuctionDao.getInstence().imglist(rs.getInt("cno"));
 				CarDto carDto = AuctionDao.getInstence().carDto(rs.getInt("cno"));
 				carDto.setImglist(carimglist);
-				AuctionDto auctionDto = AuctionDao.getInstence().auctionDto(rs.getInt("ano"));
+				AuctionDto auctionDto = AuctionDao.getInstence().auctionDto(rs.getInt("cno"));
 				auctionDto.setCar(carDto);
 				//System.out.println("carimglist"+carimglist);
 				//System.out.println("carDto"+carDto);

@@ -9,14 +9,43 @@ public class MemberPointDao extends Dao {
 	public static MemberPointDao getInstence() {return memberpointDao;}
 	private MemberPointDao() {}
 	
+	// 규리 페이징 처리를 위한 포인트입출금내역 수 출력
+	public int totalSize (int mno , String type) {
+		try {
+			String sql = "select count(*) from pointrecord where mno =?";
+			// 만약에 전체보기가 아니면 
+			
+			if (type.equals("PointInput")) {
+				sql += " and pointhistory = '입금'";
+			} else if (type.equals("PointOutput")) {
+				sql += " and pointhistory = '출금'";
+			}
+			System.out.println(sql);
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+			if (rs.next())return rs.getInt(1);
+		}catch (Exception e) {System.out.println(e);}
+		return 0;
+	}
+	
+	
+	
 	
 	// 규리 전체 포인트입출금내역 출력
-	public ArrayList<MemberPointDto> PointAllView(int mno){ 
+	public ArrayList<MemberPointDto> PointAllView(int mno , String type){ 
 		//System.out.println("다오 실행 ");
 		ArrayList<MemberPointDto> list = new ArrayList<>();
 		
 		try {
-			String sql ="select * from pointrecord where mno = ? order by pointdate desc";
+			String sql ="select * from pointrecord where mno =?";
+			
+			if (type.equals("PointInput")) {
+				sql += " and pointhistory = '입금'";
+			} else if (type.equals("PointOutput")) {
+				sql += " and pointhistory = '출금'";
+			}
+			sql += " order by pointdate desc";
+			
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, mno);
 			rs = ps.executeQuery();
