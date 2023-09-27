@@ -1,5 +1,6 @@
 package model.dao;
 
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,17 +16,22 @@ public class BattingDao extends Dao {
 	public boolean batting(BattingDto dto) {
 		try {
 			String sql="insert into buymember (bprice,mno,ano) values(?,?,?)";
-			ps=conn.prepareStatement(sql);
+			ps=conn.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
 			ps.setLong(1, dto.getBprice());
 			ps.setInt(2, dto.getMno());
 			ps.setInt(3, dto.getAno());
 			int count=ps.executeUpdate();
+			
+			rs=ps.getGeneratedKeys();
+			rs.next();
+			int addPk=rs.getInt(1);
+			
 			if(count==1) {return true;}
 		} catch (Exception e) {System.out.println("batting()오류"+e);}
 		return false;
 	}//f()
 
-//입찰출력------------------------------------------------------------------
+//기존입찰출력------------------------------------------------------------------
 	public List<BattingDto> batView(int ano){
 		List<BattingDto> battingList= new ArrayList<>();
 		try {
@@ -44,6 +50,19 @@ public class BattingDao extends Dao {
 	}//f()
 
 
+//소켓입찰출력---------------------------------------------------------
+	public boolean socketView() {
+		try {
+			String sql = "select*from buymember where ano=?";
+			ps= conn.prepareStatement(sql);
+			ps.setInt(1, 0);
+			
+		
+		} catch (Exception e) {}
+		
+		
+		return false;
+	}
 
 
 

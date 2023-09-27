@@ -6,20 +6,21 @@ let ano=new URL(location.href).searchParams.get("ano"); //경매게시글번호
 
 
 //(개별)상세페이지 출력 [9월24일 고연진]--------------------------------------------------------
+
 auctionPrint(ano);
 
 function auctionPrint(ano){
-   clipState();
    //if(loginMid==''){location.href='../member/memberlogin.jsp'}
    //경매글 출력(차량정보,게시물정보)
-
+	clipState();
+	
    $.ajax({
         url : "/nichanaecha/AuctionController",     
         method : "get", 
         async: false,  
         data : {ano:ano},      
          success : r=>{
-           console.log('경매내용,차정보출력 성공')
+           console.log('전체페이지출력성공')
            console.log(r);
                
          // 제목
@@ -38,7 +39,7 @@ function auctionPrint(ano){
             imgbox.innerHTML=html;
             
             //차량정보
-            document.querySelector('.batPay').innerHTML=`${r.car.ccompany}`
+            document.querySelector('.ccompany').innerHTML=`${r.car.ccompany}`
             document.querySelector('.csize').innerHTML=`${r.car.csize}`
             document.querySelector('.cname').innerHTML=`${r.car.cname}`
             document.querySelector('.coil').innerHTML=`${r.car.coil}`
@@ -55,8 +56,41 @@ function auctionPrint(ano){
             //남은시간
             //let 
          } ,       
-         error : e=>{console.log('통신실패');console.log(e)} ,         
+         error : e=>{console.log('전체페이지출력통신실패');console.log(e)} ,         
    });
+
+		console.log('입찰내역출력함수실행됨?')
+	    $.ajax({
+        url : "/nichanaecha/BattingController",     
+        method : "get",   
+        async : false ,
+        data : {type:'topByBatting',ano:ano },// 최근 추가된 3개의 입찰
+         success : r=>{
+           console.log('경매상황내용출력성공');console.log(r);
+
+         //1.현재가격 (class="batPay")
+         //document.querySelector('.batPay').innerHTML=`${r[0].bprice}`
+
+         //2.경매진행상황(class="auctionBox")출력박스/ 출력물 class="auction"
+         let html=``;
+         let auctionBox=document.querySelector('.auctionBox');
+         r.forEach((b)=>{
+            html+=`
+                  <div class="auction">
+                     <li>${b.bprice}만원</li>
+                     <li>${b.bDate}</li>
+                  </div>
+            
+            `
+         })
+         auctionBox.innerHTML=html;
+
+         } ,       
+         error : e=>{console.log('경매상황내용출력실패');+e;} ,         
+   });
+	
+
+
 
 }
 
@@ -122,14 +156,14 @@ function clipping(){
         method : "post",  
         async: false, 
         data : {ano:ano}, //회원번호는 세션에 저장(전달x)      
-         success : r=>{console.log('통신성공');console.log(r)
+         success : r=>{console.log('찜하기통신성공');console.log(r)
             if(r){
               console.log('스크랩성공');
               clipState();
             
             }
          } ,       
-         error : e=>{console.log(e)} ,         
+         error : e=>{console.log(e); console.log('찜하기통신실패')} ,         
    });
 
 
@@ -140,11 +174,11 @@ function clipping(){
    clipping() 함수 성공 시 실행 . 스크랩 성공 시 아이콘 변경.
    유효성검사:비로그인시, 로그인 시 
  */
-
-function clipState(){
+clipState()
+function clipState(){ console.log('찜하기상태변화함수실행')
    let state= document.querySelector('.state');
    //비회원
-   if(localStorage==false){state.innerHTML='♡'}
+   if(localStorage ==false){state.innerHTML='♡';}
    //회원
      $.ajax({
          url : "/nichanaecha/WishListController",     
@@ -190,8 +224,46 @@ function batting(){console.log('batting() 실행')
 
 
 //입찰내역출력[9월26일]------------------------------------------------
+function batPrint(ano){
+		console.log('입찰내역출력함수실행됨?')
+	    $.ajax({
+        url : "/nichanaecha/BattingController",     
+        method : "get",   
+        async : false ,
+        data : {type:'topByBatting',ano:ano },// 최근 추가된 3개의 입찰
+         success : r=>{
+           console.log('경매상황내용출력성공');console.log(r);
+
+         //1.현재가격 (class="batPay")
+         //document.querySelector('.batPay').innerHTML=`${r[0].bprice}`
+
+         //2.경매진행상황(class="auctionBox")출력박스/ 출력물 class="auction"
+         let html=``;
+         let auctionBox=document.querySelector('.auctionBox');
+         r.forEach((b)=>{
+            html+=`
+                  <div class="auction">
+                     <li>${b.bprice}만원</li>
+                     <li>${b.bdate}</li>
+                  </div>
+            
+            `
+         })
+         auctionBox.innerHTML=html;
+
+         } ,       
+         error : e=>{console.log('경매상황내용출력실패');+e;} ,         
+   });
+	
+	
+	
+}
+
+//소켓 통신---------------------------------------------------------
+
 let clientSocket= new WebSocket('ws://localhost:80/nichanaecha/BattingSocket')
-clientSocket.onopen=e=>{console.log('소켓열림')
+console.log('클라이언트소켓생성')
+clientSocket.onopen=e=>{console.log('클라이언트소켓열림')
 	}//socket(e)
 
 
