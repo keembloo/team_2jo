@@ -40,25 +40,34 @@ let getTexts = '';
     // 마커 클러스터러에 클릭이벤트를 등록합니다
     // 마커 클러스터러를 생성할 때 disableClickZoom을 true로 설정하지 않은 경우
     // 이벤트 헨들러로 cluster 객체가 넘어오지 않을 수도 있습니다
-    kakao.maps.event.addListener(clusterer, 'clusterclick', function(cluster) {
-		let markerList = [];
-		
-	   	cluster.getMarkers().forEach( p => { // 클러스터안의 마커 정보 배열로 반환 후 markerList에 cno 저장 후 배열로 반환
-			
-			markerList.push(p.cno)
-				
-		})
-		
-		clusterPrint(markerList)
-    });
+ 
 
+/* --------------------------- 이벤트 영역 --------------------------- */
+
+// 드래그 이벤트
 kakao.maps.event.addListener(map, 'dragend', function() {
     getInfo();
 });
 
+//확대, 축소 이벤트
 kakao.maps.event.addListener(map, 'zoom_changed', function() {        
 	getInfo();    
 });
+
+// 클러스터 클릭 이벤트
+kakao.maps.event.addListener(clusterer, 'clusterclick', function(cluster) {
+	let markerList = [];
+		
+	cluster.getMarkers().forEach( p => { // 클러스터안의 마커 정보 배열로 반환 후 markerList에 cno 저장 후 배열로 반환
+			
+		markerList.push(p.cno)
+				
+	})
+		
+	clusterPrint(markerList)
+});
+
+
 
 function getInfo() {
     // 지도의 현재 중심좌표를 얻어옵니다 
@@ -127,8 +136,10 @@ function mapAreaPrint(east, west, south, north, level){
 			}else{	// 확대 레벨 3 이하시 개별 출력, 근접 위치는 클러스터 기능 사용
 				var customOverlay = r.map( p => {
 					
+					let cno = [p.cno];
+					
 					var content = `
-									<div class="customoverlay">
+									<div onclick="${clusterPrint(cno)}" class="customoverlay">
 									    <span class="marker-title">${p.cname}</span>
 									</div>`	
 					
@@ -137,7 +148,8 @@ function mapAreaPrint(east, west, south, north, level){
 						position: new kakao.maps.LatLng(p.calat, p.calng),
 						content: content,
 						xAnchor: 1,
-						yAnchor: 1 
+						yAnchor: 1,
+						
 					});
 					kamap.cno = p.cno;
 					
@@ -221,8 +233,6 @@ function clusterPrint( cnoList ){
 			let cardList = document.querySelector('.cardList');
 			
 			let html = ``;
-			console.log("r[0].AuctionDto : "+r[0].AuctionDto)
-			console.log("r[0].car.carAddress : "+r[0].car.carAddress)
 			
 			document.querySelector('.listTitle').innerHTML = r[0].car.carAddress.cacodename;
 			
@@ -258,7 +268,6 @@ function clusterPrint( cnoList ){
 	
 		
 	})
-	
 	
 	
 	

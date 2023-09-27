@@ -50,7 +50,6 @@ public class AuctionDao extends Dao {
 	
 	// 경매 정보 dto 반환 함수
 	public AuctionDto auctionDto(int cno) {
-	
 		
 		try {
 			String sql = "select * from auctionInfo where cno = ? ";
@@ -107,6 +106,35 @@ public class AuctionDao extends Dao {
 		
 	}
 	
+	// 자동차 주소 테이블 반환 공통 함수
+	public CarAddressDto carAddressDto(int cno) {
+		try {
+			String sql = "select * from caraddress where cno = ?";
+			
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, cno);
+			ResultSet rs = ps.executeQuery();
+			
+			rs.next();
+			
+			CarAddressDto dto = new CarAddressDto(
+					rs.getString("cads"),
+					rs.getString("calat"),
+					rs.getString("calng"),
+					rs.getString("cacode"),
+					rs.getString("cacodename"),
+					rs.getInt("cno")
+			);
+			
+			return dto;
+			
+		} catch (Exception e) {
+			System.out.println("자동차 주소 테이블 반환 공통 함수 예외 : "+e);
+			return null;
+		}
+		
+		
+	}
 	
 	
 	// 1.차 등록 성호
@@ -393,6 +421,7 @@ public class AuctionDao extends Dao {
 				
 				CarDto carDto = carDto(cno);
 				carDto.setImglist(imglist(cno));
+				carDto.setCarAddress(carAddressDto(cno));
 				
 				AuctionDto auctionDto = auctionDto(cno);
 				auctionDto.setCar(carDto);
