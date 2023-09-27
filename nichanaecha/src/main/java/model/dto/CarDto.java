@@ -19,6 +19,23 @@ public class CarDto {
 	
 	public CarDto() {}
 	
+	
+	// 차량 등록 생성자 이성호
+	public CarDto(String ccompany, String cnum, String csize, int cc, String coil, String cname, String cdate, int ckm,
+			int mno) {
+		super();
+		this.ccompany = ccompany;
+		this.cnum = cnum;
+		this.csize = csize;
+		this.cc = cc;
+		this.coil = coil;
+		this.cname = cname;
+		this.cdate = cdate;
+		this.ckm = ckm;
+		this.mno = mno;
+	}
+
+
 
 	public CarDto(int cno, String ccompany, String cnum, String csize, int cc, String coil, String cname, String cdate,
 			int ckm, String cads, String clat, String clng) {

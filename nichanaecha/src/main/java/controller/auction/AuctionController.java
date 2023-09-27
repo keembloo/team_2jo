@@ -58,7 +58,7 @@ public class AuctionController extends HttpServlet {
 
 	
 
-	//등록페이지 성호
+	//차량등록페이지 성호
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	      //1. 저장경로 [ 첨부파일이 저장될 폴더 위치]
 	      String uploadPath = request.getServletContext().getRealPath("/auction/img");
@@ -117,7 +117,7 @@ public class AuctionController extends HttpServlet {
 			Object object = request.getSession().getAttribute("loginDto");
 			CarDto carDto = (CarDto)object;
 			int cmo = carDto.getCno();
-			  CarDto caDto = new CarDto(
+			  CarDto car = new CarDto(
 			            0 ,                                       		//cno 호출(x) : 차 등록시에는 매물 번호 는 자동부여 되므로 가지고 있을 필요가 없음
 			            fileList.get(0).getString(),                  	//제조사(0)
 			            fileList.get(1).getString(),                  	//차량번호(1)
