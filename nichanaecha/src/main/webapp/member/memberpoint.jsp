@@ -25,15 +25,36 @@
 				<!-- 메인페이지정보내용 -->
 				<div class="cashInfo">
 					<!-- 회원정보,보유포인트 -->
-					<!-- js출력 -->
+					<!-- js 출력 -->
 				</div>
 				
 				<div class="lineBar">
 				</div>
-				
-				<!-- 포인트 입출금내역 -->
-				<table> </table>
-				
+				<div class="btnbox">
+					<button type="button" onclick="PointAllView()" class="btn btn-primary">전체내역 보기</button>
+					<button type="button" onclick="PointInputView()" class="btn btn-primary">입금 내역만 보기</button>
+					<button type="button" onclick="PointOutputView()" class="btn btn-primary">출금 내역만 보기</button>
+				</div>
+				<!-- 포인트 입출금내역 구역-->
+				<table class="table table-hover"> 
+			
+					<thead class="table-light">
+						<tr>
+					   		<th scope="col" class="text-center">포인트 금액</th>
+					   		<th scope="col" class="text-center">날짜 시간</th>
+					   		<th scope="col" class="text-center">내역</th>
+						</tr>
+				 	</thead>
+				 	
+					<tbody class="pointbox">
+						<!-- js에서 출력 -->
+					</tbody>
+					
+				</table>
+				<!-- 페이징처리구역 -->
+				<div class="pagebox">
+					<!-- js에서 출력 -->
+				</div>
 			</div> <!-- infoContent end -->
 			
 		</div> <!-- row end -->

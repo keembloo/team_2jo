@@ -16,6 +16,7 @@ function mpointView(){
 			data : {type : "mpointView"} ,
 			success : r => { //console.log("js연결성공");
 				//console.log('r.mno : '+r.mno);
+				//console.log('r.mcash : '+r.mcash); 보유포인트확인
 				//console.log('r: '+r);
 				//console.log('r[0].mno : '+r[0].mno);
 				
@@ -23,9 +24,9 @@ function mpointView(){
 
 				cashInfo.innerHTML = `<div class="textId">'${r.mname}' 님</div>
 									<div class="textPoint">보유 포인트 : <span>${r.mcash.toLocaleString()}원</span></div>
-									<button class="btn btn-primary" onclick="inputPoint(${r.mno})" type=button>입금</button>
-									<button class="btn btn-danger" onclick="outputPoint(${r.mno},${r.mcash})" type=button>출금</button>`;
-				PointAllView();
+									<button class="btn btn-primary" onclick="inputPoint()" type=button>입금</button>
+									<button class="btn btn-danger" onclick="outputPoint(${r.mcash})" type=button>출금</button>`;
+				PointAllView(); // 포인트내역 전체출력 함수 호출
 			} , 
 			error : e => {console.log("실패");}		
 		})
@@ -48,7 +49,7 @@ function inputPoint(){
 				data : { type : 1 , gold : gold } , // type 1이면 입금
 				success : r => { //console.log("js연결성공");
 					alert('입금 성공');
-					mpointView();
+					mpointView(); // 포인트출력함수 호출
 				} , 
 				error : e => {console.log("실패"+e);}
 		})
@@ -70,26 +71,119 @@ function outputPoint(mcash){
 				data : { type : 2 , gold : gold } ,  // type 2이면 출금
 				success : r => { //console.log("js연결성공");
 					alert('출금 성공');
-					mpointView();
+					mpointView(); // 포인트출력함수 호출
 				} , 
 				error : e => {console.log("실패"+e);}
 		})
 	}
 }
 
+
+let listsize = 10;
+let page = 1; 
+	
 // 규리 포인트내역 전체 출력 
-function PointAllView(){
+function PointAllView(listsize , page){
 		$.ajax({
 			url : "/nichanaecha/MemberPointController" , 
 			async : false ,
 			method : "get" ,
-			data : { type : "PointAllView" } ,  
-			success : r => { //console.log("js연결성공");
+			data : { type : "PointAllView" , listsize : listsize , page : page } ,  
+			success : jasonArray => { //console.log("js연결성공");
+				//console.log(jasonArray);
+				let pointbox = document.querySelector('.pointbox');
+				let html = ``;
 				
-				
+				jasonArray.forEach(p =>{
+					//console.log(p.pointhistory);
+					html += `<tr>
+						   		<td class="text-center">${p.mpoint.toLocaleString()}원</td>
+						   		<td class="text-center">${p.pointdate}</td>
+						   		<td class="text-center">${p.pointhistory}</td>
+							</tr>`;
+				});
+				pointbox.innerHTML = html;
+				pageboxView(page , jasonArray);
 			} , 
 			error : e => {console.log("실패"+e);}
 		})
 }
 
+// 규리 입금내역만보기
+function PointInputView(listsize, page){
+		$.ajax({
+			url : "/nichanaecha/MemberPointController" , 
+			async : false ,
+			method : "get" ,
+			data : { type : "PointInput" , listsize : listsize , page : page } ,  
+			success : jasonArray => { //console.log("js연결성공");
+				//console.log(jasonArray);
+				let pointbox = document.querySelector('.pointbox');
+				let html = ``;
+				
+				jasonArray.forEach(p =>{
+					if(p.pointhistory=='입금'){
+						html += `<tr>
+							   		<td class="text-center">${p.mpoint.toLocaleString()}원</td>
+							   		<td class="text-center">${p.pointdate}</td>
+							   		<td class="text-center">${p.pointhistory}</td>
+								</tr>`;
+					}
+				});
+				pointbox.innerHTML = html;
+				pageboxView(page , jasonArray);
+			} , 
+			error : e => {console.log("실패"+e);}
+		})
+}
+
+// 규리 출금내역만보기
+function PointOutputView(listsize, page){
+		$.ajax({
+			url : "/nichanaecha/MemberPointController" , 
+			async : false ,
+			method : "get" ,
+			data : { type : "PointOutput" , listsize : listsize , page : page } ,  
+			success : jasonArray => { //console.log("js연결성공");
+				//console.log(jasonArray);
+				let pointbox = document.querySelector('.pointbox');
+				let html = ``;
+				
+				jasonArray.forEach(p =>{
+					if(p.pointhistory=='출금'){
+						html += `<tr>
+							   		<td class="text-center">${p.mpoint.toLocaleString()}원</td>
+							   		<td class="text-center">${p.pointdate}</td>
+							   		<td class="text-center">${p.pointhistory}</td>
+								</tr>`;
+					}
+				});
+				pointbox.innerHTML = html;
+				pageboxView(page , jasonArray);
+			} , 
+			error : e => {console.log("실패"+e);}
+		})
+}
+
+
+// 규리 페이지 번호 출력 함수 
+function pageboxView(page , jasonArray){
+	//console.log('실행된다');
+	//page : 조회한 페이지 번호 [ 현재 보고 잇는 페이지 번호 ]
+	// 이전버튼 [page<=1? page: page-1] 만약에 1페이지에서 이전버튼 클릭시 1페이지로 고정하고 아니면 1차감
+	let pagebox = document.querySelector('.pagebox');
+	let html = ``;
+	let before = `<button onclick="onView(${page<=1? page: page-1})" type="button"> < </button>`;
+	// 페이지 번호 버튼 [ * 페이지 개수만큼 반복 ]
+	for (let i= jasonArray.startbtn; i <= jasonArray.endbtn ; i++){
+		// 만약에 현재페이지와 i번째 페이지가 일치하면 버튼태그에 class="selectpage" 추가
+		html += `<button class="${page==i ? 'selectpage' : '' }" onclick="onView(${i})" type="button"> ${i} </button>`;
+	}
+	// 다음버튼 [ page >= r.totalpage ? page : page+1 ] 만약에 현재페이지가 마지막페이지면 고정 아니면 1증가
+	let after = `<button onclick="onView(${page >= r.totalpage ? page : page+1})" type="button"> > </button>`;
+	
+	//console.log("html + "+html);
+	pagebox.innerHTML = before + html + after;
+
+}
 

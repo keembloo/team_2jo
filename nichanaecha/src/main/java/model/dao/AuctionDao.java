@@ -49,14 +49,14 @@ public class AuctionDao extends Dao {
 	}
 	
 	// 경매 정보 dto 반환 함수
-	public AuctionDto auctionDto(int ano) {
+	public AuctionDto auctionDto(int cno) {
 	
 		
 		try {
-			String sql = "select * from auctionInfo where ano = ? ";
+			String sql = "select * from auctionInfo where cno = ? ";
 			
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setInt(1, ano);
+			ps.setInt(1, cno);
 			ResultSet rs = ps.executeQuery();
 			
 			rs.next();

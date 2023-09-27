@@ -2,7 +2,7 @@
 //console.log(loginMid);
 
 // 규리 , 마이페이지 전체 출력 함수	
-	mview(); 
+mview(); 
 	
 	
 
@@ -122,6 +122,7 @@ function myAuctionView(){
 				
 				if (jsonArray.length==0) {
 					document.querySelector('.carouselMyauction').innerHTML += `<div class="notext">등록된 매물이 없습니다.</div>`;
+					myWishlistView();
 					return;
 				}
 				
@@ -184,7 +185,7 @@ function myWishlistView(){
 				let html ='';
 				
 				if (jsonArray.length==0) {
-					document.querySelector('.carouselMyauction').innerHTML += `<div class="notext">찜한 매물이 없습니다.</div>`;
+					document.querySelector('.carouselMywishlist').innerHTML += `<div class="notext">찜한 매물이 없습니다.</div>`;
 					return;
 				}
 				

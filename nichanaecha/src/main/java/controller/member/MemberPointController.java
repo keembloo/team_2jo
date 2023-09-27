@@ -1,6 +1,7 @@
 package controller.member;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.UUID;
 
 import javax.servlet.ServletException;
@@ -14,6 +15,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import model.dao.MemberPointDao;
 import model.dao.MypageDao;
 import model.dto.MemberDto;
+import model.dto.MemberPointDto;
 
 /**
  * Servlet implementation class MemberPointController
@@ -33,18 +35,26 @@ public class MemberPointController extends HttpServlet {
 		int mno = ((MemberDto)request.getSession().getAttribute("loginDto")).getMno();
 		//System.out.println("실행됨 mno : "+mno);
 		// MypageDao 에 있는 mview()함수로 중복 호출
-		if (type.equals("mpointView")) {
-			MemberDto result = MypageDao.getInstence().mview(mno);
+		if (type.equals("mpointView")) { // 현재포인트상태 출력
+			MemberDto result = MypageDao.getInstence().mview(mno); // 마이페이지Dao에서 가져옵니다...
 			ObjectMapper objectMapper = new ObjectMapper();
 			String json = objectMapper.writeValueAsString(result);
 			response.setContentType("application/json;charset=UTF-8");
 			response.getWriter().print(json);
-		} else if (type.equals("PointAllView")) {
-			MemberDto result = MypageDao.getInstence().mview(mno);
+			
+		} else if (type.equals("PointAllView") || type.equals("PointOutput") || type.equals("PointInput")) { // 전체 포인트입출금내역 출력
+			int listsize = Integer.parseInt(request.getParameter("listsize"));
+			int page = Integer.parseInt(request.getParameter("page"));
+			int startrow = (page-1) * listsize; // 페이지번호*최대 내역수
+			int totalsize = MemberPointDao.getInstence().totalSize(mno, type); // 최대 내역 수 
+					
+			ArrayList<MemberPointDto> result = MemberPointDao.getInstence().PointAllView(mno , type);
+			
 			ObjectMapper objectMapper = new ObjectMapper();
 			String json = objectMapper.writeValueAsString(result);
 			response.setContentType("application/json;charset=UTF-8");
 			response.getWriter().print(json);
+		}
 	}
 
 
@@ -65,10 +75,16 @@ public class MemberPointController extends HttpServlet {
 		} else {
 			type="출금";
 		}	
-		boolean result = MemberPointDao.getInstence().PointUpdate( type , mno , gold , mpno);
-			
+		
+		boolean result1 = MemberPointDao.getInstence().PointUpdate( type , mno , gold , mpno);
+		boolean result2 = MemberPointDao.getInstence().setPoint( type , mno , gold , mpno);
+		boolean allrs = false;
+		
+		if (result1 == true && result2 == true) { // 포인트업데이트, 포인트저장 둘다 성공이면
+			allrs =true;
+		}
 		response.setContentType("application/json;charset=UTF-8");
-    	response.getWriter().print(result);
+    	response.getWriter().print(allrs);
 	}
 
 
