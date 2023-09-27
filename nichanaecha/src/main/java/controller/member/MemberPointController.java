@@ -16,6 +16,7 @@ import model.dao.MemberPointDao;
 import model.dao.MypageDao;
 import model.dto.MemberDto;
 import model.dto.MemberPointDto;
+import model.dto.PageDto;
 
 /**
  * Servlet implementation class MemberPointController
@@ -43,15 +44,24 @@ public class MemberPointController extends HttpServlet {
 			response.getWriter().print(json);
 			
 		} else if (type.equals("PointAllView") || type.equals("PointOutput") || type.equals("PointInput")) { // 전체 포인트입출금내역 출력
-			int listsize = Integer.parseInt(request.getParameter("listsize"));
-			int page = Integer.parseInt(request.getParameter("page"));
+			int listsize = Integer.parseInt(request.getParameter("listsize"));  // 최대게시물수
+			int page = Integer.parseInt(request.getParameter("page")); 	//페이징처리
 			int startrow = (page-1) * listsize; // 페이지번호*최대 내역수
 			int totalsize = MemberPointDao.getInstence().totalSize(mno, type); // 최대 내역 수 
-					
-			ArrayList<MemberPointDto> result = MemberPointDao.getInstence().PointAllView(mno , type);
+			int totalpage = totalsize%listsize == 0 ? 	// 만약에 나머지가 없으면
+							totalsize/listsize : 		// 몫
+							totalsize/listsize+1;
+			int btnsize = 5; // 페이지버튼 번호의 최대개수
+			int startbtn = ((page-1)/btnsize) * btnsize +1; //System.out.println(startbtn);
+			int endbtn = startbtn+(btnsize-1); // 페이지버튼의 마지막번호
+			// 만약에 마지막번호가 총 페이지수보다 크면 총페이지수로 제한두기
+			if (endbtn >= totalpage) endbtn = totalpage;
+						
+			ArrayList<MemberPointDto> result = MemberPointDao.getInstence().PointAllView(mno , type , startrow, listsize);
+			PageDto pageDto = new PageDto(page, listsize, startrow, totalsize, totalpage, startbtn , endbtn , result);
 			
 			ObjectMapper objectMapper = new ObjectMapper();
-			String json = objectMapper.writeValueAsString(result);
+			String json = objectMapper.writeValueAsString(pageDto);
 			response.setContentType("application/json;charset=UTF-8");
 			response.getWriter().print(json);
 		}

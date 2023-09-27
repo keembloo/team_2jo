@@ -32,7 +32,7 @@ public class MemberPointDao extends Dao {
 	
 	
 	// 규리 전체 포인트입출금내역 출력
-	public ArrayList<MemberPointDto> PointAllView(int mno , String type){ 
+	public ArrayList<MemberPointDto> PointAllView(int mno , String type , int startrow , int listsize ){ 
 		//System.out.println("다오 실행 ");
 		ArrayList<MemberPointDto> list = new ArrayList<>();
 		
@@ -44,11 +44,14 @@ public class MemberPointDao extends Dao {
 			} else if (type.equals("PointOutput")) {
 				sql += " and pointhistory = '출금'";
 			}
-			sql += " order by pointdate desc";
+			sql += " order by pointdate desc limit ? , ?";
 			
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, mno);
+			ps.setInt(2, startrow);
+			ps.setInt(3, listsize);
 			rs = ps.executeQuery();
+			System.out.println("sql : "+sql);
 			while (rs.next()) {
 				MemberPointDto memberPointDto = new MemberPointDto(
 						rs.getString("pointno"), 
