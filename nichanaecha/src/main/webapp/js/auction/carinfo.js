@@ -218,7 +218,7 @@ function batting(){console.log('batting() 실행')
       	} ,       
       	error : e=>{console.log('통신실패')} ,         
    });
-
+ 
 
 }//f()
 
