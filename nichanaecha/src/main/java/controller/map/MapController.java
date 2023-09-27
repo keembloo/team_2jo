@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import model.dao.AuctionDao;
+import model.dto.AuctionDto;
 import model.dto.CarAddressDto;
 
 @WebServlet("/MapController")
@@ -27,15 +28,16 @@ public class MapController extends HttpServlet {
 		String type = request.getParameter("type");
 		ObjectMapper mapper = new ObjectMapper();
 		
+		System.out.println("type : "+type);
 		
 		response.setContentType("application/json;charset=UTF-8");
 		// 동,서,남,북 좌표로 결과 반환해주는 함수
 		if(type.equals("mapAreaPrint")) {
+			int level = Integer.parseInt(request.getParameter("level"));
 			String east = request.getParameter("east");
 			String west = request.getParameter("west");
 			String south = request.getParameter("south");
 			String north = request.getParameter("north");
-			int level = Integer.parseInt(request.getParameter("level"));
 			List<CarAddressDto> list = new ArrayList<>();
 			
 			//level(확대 레벨) 4이하 좌표 내 모든 매물 반환, level 5 행정동 기준 클러스터, level 5 초과시 광역시 또는 지방 자치구 별로 반환
@@ -53,11 +55,30 @@ public class MapController extends HttpServlet {
 			
 			response.getWriter().print(jsonObject);
 		}else if(type.equals("listPrint")) {
+			int level = Integer.parseInt(request.getParameter("level"));
+			String areaName = request.getParameter("areaName");
 			
+			List<AuctionDto> list = AuctionDao.getInstence().listPrint(areaName, level);
+			String jsonObject = mapper.writeValueAsString(list);
 			
+			response.getWriter().print(jsonObject);
+		}else if(type.equals("clusterPrint")) { // 클러스터 또는 개별 매물 클릭시 출력
+			String cnoList = request.getParameter("cnoList");
 			
+			// json 객체를 정수 list로 반환
+			List<Integer> list = mapper.readValue(cnoList,mapper.getTypeFactory().constructCollectionType(List.class, Integer.class));
+			
+			List<AuctionDto> AuctionDtolist = AuctionDao.getInstence().clusterPrint(list);
+			System.out.println(AuctionDtolist);
+			String jsonObject = mapper.writeValueAsString(AuctionDtolist);
+			
+		
+			response.getWriter().print(jsonObject);
+		
 		}
 		
+	
+	
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
