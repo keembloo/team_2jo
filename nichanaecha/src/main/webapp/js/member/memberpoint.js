@@ -85,9 +85,19 @@ function PointAllView(){
 			async : false ,
 			method : "get" ,
 			data : { type : "PointAllView" } ,  
-			success : r => { //console.log("js연결성공");
-				console.log(r);
+			success : jasonArray => { //console.log("js연결성공");
+				console.log(jasonArray);
+				let pointbox = document.querySelector('.pointbox');
+				let html = ``;
 				
+				jasonArray.forEach(p =>{
+					html += `<tr>
+						   		<td class="text-center">${p.mpoint}</td>
+						   		<td class="text-center">${p.pointdate}</td>
+						   		<td class="text-center">${p.pointhistory}</td>
+							</tr>`;
+				});
+				pointbox.innerHTML = html;
 			} , 
 			error : e => {console.log("실패"+e);}
 		})

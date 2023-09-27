@@ -2,7 +2,7 @@
 //console.log(loginMid);
 
 // 규리 , 마이페이지 전체 출력 함수	
-	mview(); 
+mview(); 
 	
 	
 

@@ -25,14 +25,34 @@
 				<!-- 메인페이지정보내용 -->
 				<div class="cashInfo">
 					<!-- 회원정보,보유포인트 -->
-					<!-- js출력 -->
+					<!-- js 출력 -->
 				</div>
 				
 				<div class="lineBar">
 				</div>
 				
 				<!-- 포인트 입출금내역 -->
-				<table> </table>
+				<table class="table table-hover table-striped"> 
+			
+					<thead class="table-light">
+						<tr>
+					   		<th scope="col" class="text-center">포인트 금액</th>
+					   		<th scope="col" class="text-center">날짜 시간</th>
+					   		<th scope="col" class="text-center">내역</th>
+						</tr>
+				 	</thead>
+				 	
+					<tbody class="pointbox">
+						<tr>
+					   		<td>1000</td>
+					   		<td>2023-08-01</td>
+					   		<td>입금</td>
+						</tr>
+						<tr>
+						</tr>
+					</tbody>
+					
+				</table>
 				
 			</div> <!-- infoContent end -->
 			
