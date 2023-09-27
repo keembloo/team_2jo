@@ -45,6 +45,7 @@
                   </div>
                    -->
                </div>
+               <div class="socket"><!-- js --></div>
 
             </div>
             <div><p class="auctionState"><!-- js --></p><p class="remain"><!-- js --></p>

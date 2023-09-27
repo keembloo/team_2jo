@@ -39,15 +39,15 @@ public class AuctionController extends HttpServlet {
     //상세페이지조회 [9월19일 고연진]   
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int ano = Integer.parseInt(request.getParameter("ano"));
-		System.out.println("controller 들어옴 > ano:  "+ano);
+		//System.out.println("controller 들어옴 > ano:  "+ano);
 		AuctionDto result= AuctionDao.getInstence().auctionPrint(ano);
-		System.out.println("경매Dto: "+result);
-		System.out.println("경매Dto 안에 CarDto: "+result.getCar());
+		//System.out.println("경매Dto: "+result);
+		//System.out.println("경매Dto 안에 CarDto: "+result.getCar());
 		System.out.println("CarDto 안에 imglist: "+result.getCar().getImglist());
 		
 		ObjectMapper mapper=new ObjectMapper(); 
 		String jsonObject= mapper.writeValueAsString(result);
-		System.out.println("jackson사용: "+jsonObject);
+		//System.out.println("jackson사용: "+jsonObject);
 		
 		response.setContentType("application/json;charset=UTF-8");
 		response.getWriter().print(jsonObject);

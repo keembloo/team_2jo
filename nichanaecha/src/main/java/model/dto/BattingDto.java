@@ -21,9 +21,17 @@ public class BattingDto {
 		this.bprice = bprice;
 	}
 	
+//상위5개 경매내역출력 생성자
+	
+	
+	public BattingDto(long bprice, String bDate) {
+		super();
+		this.bprice = bprice;
+		this.bDate = bDate;
+	}
+	
 	
 public BattingDto() {}
-
 
 
 public BattingDto(Session session, int mno, int ano, long bprice, String bDate, long mcash) {

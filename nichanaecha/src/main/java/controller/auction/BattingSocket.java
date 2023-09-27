@@ -2,23 +2,28 @@ package controller.auction;
 
 import java.util.ArrayList;
 
+import javax.websocket.OnClose;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
-import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
-@ServerEndpoint("/BattingSocket/{mno}") //서버소켓 
+@ServerEndpoint("/BattingSocket") //서버소켓 
 public class BattingSocket {
 
-   public static ArrayList<Session> batMember = new ArrayList<>();
+   public static ArrayList<Session> clientList = new ArrayList<>();
+  
    @OnOpen
-   public void onOpen(Session session, @PathParam("mno") String mno) {
+   public void onOpen(Session session) {
       System.out.println("접속한 클라이언트 소켓> "+session);
-      System.out.println("참여 중인 회원> "+mno);
+      System.out.println("접속명단 > "+clientList);
       
    }//f()
    
    @OnClose
-   public
+   public void onClose(Session session) {
+	   clientList.remove(session);
+   }//f()
 	 
+   
+   
 }//c
