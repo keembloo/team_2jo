@@ -1,3 +1,4 @@
+let boardList = {}; 
 
 
 // 카카오 지도 api
@@ -40,12 +41,15 @@ let getTexts = '';
     // 마커 클러스터러를 생성할 때 disableClickZoom을 true로 설정하지 않은 경우
     // 이벤트 헨들러로 cluster 객체가 넘어오지 않을 수도 있습니다
     kakao.maps.event.addListener(clusterer, 'clusterclick', function(cluster) {
-
-        // 현재 지도 레벨에서 1레벨 확대한 레벨
-        var level = map.getLevel()-1;
-
-        // 지도를 클릭된 클러스터의 마커의 위치를 기준으로 확대합니다
-        map.setLevel(level, {anchor: cluster.getCenter()});
+		let markerList = [];
+		
+	   	cluster.getMarkers().forEach( p => { // 클러스터안의 마커 정보 배열로 반환 후 markerList에 cno 저장 후 배열로 반환
+			
+			markerList.push(p.cno)
+				
+		})
+		
+		clusterPrint(markerList)
     });
 
 kakao.maps.event.addListener(map, 'dragend', function() {
@@ -90,6 +94,7 @@ function getInfo() {
 }   
 
 function mapAreaPrint(east, west, south, north, level){
+	boardList = {};
 	clusterer.clear();
 	if(level>4){
 		clusterer.setMinLevel(20);
@@ -105,9 +110,8 @@ function mapAreaPrint(east, west, south, north, level){
 			console.log("level : "+level);
 			if(level > 4){ // 확대 레벨 4 초과시 지역별로 묶어서 출력
 				var customOverlay = r.map( p => { 
-					
 					var content = `
-									<div onclick="listPrint()" class="customoverlay">
+									<div onclick="listPrint('${ p.areaName }', ${level} )" class="customoverlay">
 									    <span class="marker-title">${p.areaName}</span>
 									    <span class="marker-count">${p.count}</span>
 									</div>`
@@ -128,14 +132,17 @@ function mapAreaPrint(east, west, south, north, level){
 									    <span class="marker-title">${p.cname}</span>
 									</div>`	
 					
-								    
-					return new kakao.maps.CustomOverlay({
+					let kamap = new kakao.maps.CustomOverlay({
 						map: map,
 						position: new kakao.maps.LatLng(p.calat, p.calng),
 						content: content,
 						xAnchor: 1,
 						yAnchor: 1 
 					});
+					kamap.cno = p.cno;
+					
+					return kamap;
+					
 				});
 			}
 			// 클러스터러에 마커들을 추가합니다
@@ -150,14 +157,41 @@ function mapAreaPrint(east, west, south, north, level){
 }
 
 
-function listPrint(){
-	
+function listPrint(areaName, level){
+	 
 	$.ajax({
 		url : "/nichanaecha/MapController",
 		method: "get",
-		data: {type : "listPrint"},
+		data: {type : "listPrint", areaName: areaName, level : level },
 		success: r =>{
-			console.log(r);
+			let cardList = document.querySelector('.cardList');
+			
+			let html = ``;
+			
+			document.querySelector('.listTitle').innerHTML = areaName;
+			
+			cardList.scrollTo({ top: 0 })
+			
+			r.forEach(p => {
+				html += `
+							<div class="card mb-1 p-2" style="width:width: 100%;">
+							  <img src="../auction/img/${Object.values(p.car.imglist)[0]}" class="card-img-top" alt="...">
+							  <div class="card-body">
+								   <h5 class="card-title">${p.atitle}</h5>
+							    <p class="card-text">${p.acontent}</p>
+							  </div>
+							  <ul class="list-group list-group-flush">
+							    <li class="list-group-item">경매 시작일 : 2023-09-26</li>
+							    <li class="list-group-item">경매 종료일 : 2023-09-26</li>
+							    <li class="list-group-item">현재 입찰가 : 14,000,000원</li>
+							  </ul>
+							</div>					
+				`
+				
+			})
+				
+				cardList.innerHTML = html;
+			
 			
 		},
 		error: e =>{
@@ -167,16 +201,68 @@ function listPrint(){
 		}
 	
 		
-		
-		
-		
-		
-		
+	})
+	
+	
+	
+} // f n
+
+
+function clusterPrint( cnoList ){
+	
+	// 리스트를 json 형태로 변환
+	jsonList = JSON.stringify(cnoList);
+	
+	$.ajax({
+		url : "/nichanaecha/MapController",
+		method: "get",
+		data: {type : "clusterPrint", cnoList : jsonList },
+		success: r =>{
+			let cardList = document.querySelector('.cardList');
+			
+			let html = ``;
+			console.log("r[0].AuctionDto : "+r[0].AuctionDto)
+			console.log("r[0].car.carAddress : "+r[0].car.carAddress)
+			
+			document.querySelector('.listTitle').innerHTML = r[0].car.carAddress.cacodename;
+			
+			cardList.scrollTo({ top: 0 })
+			
+			r.forEach(p => {
+				html += `
+							<div class="card mb-1 p-2" style="width:width: 100%;">
+							  <img src="../auction/img/${Object.values(p.car.imglist)[0]}" class="card-img-top" alt="...">
+							  <div class="card-body">
+								   <h5 class="card-title">${p.atitle}</h5>
+							    <p class="card-text">${p.acontent}</p>
+							  </div>
+							  <ul class="list-group list-group-flush">
+							    <li class="list-group-item">경매 시작일 : 2023-09-26</li>
+							    <li class="list-group-item">경매 종료일 : 2023-09-26</li>
+							    <li class="list-group-item">현재 입찰가 : 14,000,000원</li>
+							  </ul>
+							</div>					
+				`
+				
+			})
+				
+				cardList.innerHTML = html;
+			
+			
+		},
+		error: e =>{
+			console.log('에러 발생 : '+e)
+			
+			
+		}
+	
 		
 	})
 	
 	
 	
+	
 }
+
 
  

@@ -49,14 +49,14 @@ public class AuctionDao extends Dao {
 	}
 	
 	// 경매 정보 dto 반환 함수
-	public AuctionDto auctionDto(int ano) {
+	public AuctionDto auctionDto(int cno) {
 	
 		
 		try {
-			String sql = "select * from auctionInfo where ano = ? ";
+			String sql = "select * from auctionInfo where cno = ? ";
 			
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setInt(1, ano);
+			ps.setInt(1, cno);
 			ResultSet rs = ps.executeQuery();
 			
 			rs.next();
@@ -291,7 +291,6 @@ public class AuctionDao extends Dao {
 		List<CarAddressDto> list = new ArrayList<>();
 		
 		try { // 확대 레벨 8 초과 시 광역 자치, 8 이하시 지방 자치 클러스터 반환
-			System.out.println(level);
 			String condition = level > 8 ? condition = "substring_index(cads,' ',1)" 
 					: "substring_index(substring_index(cads,' ',2),' ',-1)"; 
 			
@@ -319,6 +318,75 @@ public class AuctionDao extends Dao {
 		}
 	}
 
+	// 지도 클러스터, 마커 클릭 시 경매 정보 리스트 반환 [ 정용상 ]
+	public List<AuctionDto> listPrint(String areaName, int level){
+		List<AuctionDto> list = new ArrayList<>();
+		System.out.println("level : "+level);
+		try {
+			// caraddress과 auctioninfo테이블 inner join 후 주소에서 공백으로 구분된 두번째 위치가 매개변수의
+			// 지역명과 일치하는지 확인 후 auctioninfo의 등록 번호 내림차순으로 정렬 후 cno 출력 후 공통 함수 이용 List 객체에 담아 반환
+			String sql = "select au.cno from caraddress ca inner join auctioninfo as au\n"
+						+ "on ca.cno = au.cno\n";
+			
+			if(level >= 6 && level <= 8) {
+				sql += "where substring_index(substring_index(ca.cads,' ',2),' ',-1) = '"+areaName+"'\n"
+					+ "order by au.ano desc;";
+			}
+			else if(level == 5) {
+				sql += "where cacodename = '"+areaName+"'\n"
+						+ "order by au.ano desc;";
+			}
+			
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				int cno = rs.getInt("cno");
+				CarDto carDto = carDto(cno);
+				carDto.setImglist(imglist(cno));
+				
+				AuctionDto auctionDto = auctionDto(cno);
+				auctionDto.setCar(carDto);
+				
+				list.add(auctionDto);
+			}
+			
+			return list;
+			
+		} catch (Exception e) {
+			System.out.println("지도 경매 정보 리스트 반환 sql 예외 : "+e);
+			return null;
+		}
+		
+	}
+	
+	
+	// 클러스터 or 개별 마커 클릭 시 결과 반환
+	public List<AuctionDto> clusterPrint( List<Integer> list ){
+		List<AuctionDto> auctionDtoList = new ArrayList<>();
+		
+		try {
+			
+			for(Integer cno : list) {
+				
+				CarDto carDto = carDto(cno);
+				carDto.setImglist(imglist(cno));
+				
+				AuctionDto auctionDto = auctionDto(cno);
+				auctionDto.setCar(carDto);
+				
+				auctionDtoList.add(auctionDto);
+			}
+			
+			return auctionDtoList;
+			
+			
+		} catch (Exception e) {
+			System.out.println("클러스터 or 마커 결과 반환 sql문 예외 : "+e);
+			return null;
+		}
+		
+	}
 
 	
 } // 클래스 종료
