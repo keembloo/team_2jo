@@ -26,7 +26,7 @@
 				</div>
 			</div>
 			<div>
-				<button onclick="">등록</button>
+				<button onclick="" type="button">등록</button>
 				<button>취소</button>
 			</div>
 		</form>

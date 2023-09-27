@@ -110,39 +110,61 @@ public class AuctionDao extends Dao {
 	
 	
 	// 1.차 등록 성호
-	public boolean bcarsubmit(CarDto dto) {
-		try {
-			String sql= "insert into car(cno,ccompany,cnum,csize,cc,coil,cname,cdate,ckm,clat,clng) "
-					+ " values(?,?,?,?,?,?,?,?,?,?,?)";
-			ps = conn.prepareStatement( sql , Statement.RETURN_GENERATED_KEYS ); 
-			
-			ps.setInt(1, dto.getCno()); 				ps.setString(2, dto.getCcompany());
-			ps.setString(3, dto.getCnum());				ps.setString(4, dto.getCsize());
-			ps.setInt(5, dto.getCc()); 					ps.setString(6, dto.getCoil());
-			ps.setString(7, dto.getCname());			ps.setString(8, dto.getCdate());
-			ps.setInt(9, dto.getCkm());					ps.setString(10, dto.getClat());
-			ps.setString(11, dto.getClng());
-			
-			int count = ps.executeUpdate();
-			
-			rs = ps.getGeneratedKeys();
-			if( rs.next() ) {
-				if( count == 1 ) {
-					for( String img : dto.getImglist().values() ) {
-						sql = "insert into carimg( cino, ciimg) value ( ? ,? )";
-						ps = conn.prepareStatement(sql);
-						ps.setString(1, img);
-						ps.setInt(2, rs.getInt(1));
-						ps.executeUpdate();
-					}
-					return true;
-				}
-			}
-			
-		}catch (Exception e) {System.out.println(e);}
-		return false;
-	}
-	
+	  public boolean bcarsubmit(CarDto dto) {
+	      try {
+	         // ---------------------------------------------- 차량 등록 ---------------------------------------- // 
+	         String sql ="insert into car( ccompany , cnum , csize , cc , coil , cname , cdate ,  ckm , mno )"
+	               + "values(?,?,?,?,?,?,?,?,?)";
+	         ps =conn.prepareStatement(sql , Statement.RETURN_GENERATED_KEYS ); // 실행후 식별키[PK] 를 반환할 예정
+	         ps.setString( 1 , dto.getCcompany() );		// 제조사
+	         ps.setString( 2 , dto.getCnum() );			// 차량번호
+	         ps.setString( 3 , dto.getCsize() );		// 차량종류
+	         ps.setInt( 4 , dto.getCc() );				// 베기량
+	         ps.setString( 5 , dto.getCoil() );			// 연료
+	         ps.setString( 6 , dto.getCname() );		// 차량명
+	         ps.setString( 7 , dto.getCdate() );		// 제조년월
+	         ps.setInt( 8 , dto.getCkm() );				// KM
+	         ps.setInt( 9 , dto.getMno() );				// 회원번호
+	         int count = ps.executeUpdate();
+	         // ********** insert 후 생성된 pk번호 가져오기 
+	         rs = ps.getGeneratedKeys();
+	         rs.next();
+	         int cno = rs.getInt(1);
+	         // ***************************************
+	         
+	         if( count == 1 ) { // Car 등록 성공시 
+	            // --------------------------- 차량 주소 등록 -------------------------------------------------// 
+	            sql = "insert into caraddress(cads,calat,calng,cacode,cacodename,cno)"
+	                  + "values( ?,?,?,?,?,?) ";
+	            ps =conn.prepareStatement(sql);
+	            ps.setString( 1 , null );
+	            ps.setString( 2 , dto.getCarAddress().getCalat() );				// 차량 위치 위도
+	            ps.setString( 3 , dto.getCarAddress().getCalng() );				// 차량 위치 경도
+	            ps.setString( 4 , null );
+	            ps.setString( 5 , null );
+	            ps.setInt( 6 , cno );
+	            count = ps.executeUpdate();
+	            if( count == 1 ) {  // Car 주소 등록 성공시 
+	               // --------------------------- 차량 이미지 등록 -------------------------------------------------//
+	               //Map<키,값> imglist;
+	               //Map<이미지pk,이미지명> imglist;
+	                  // 모든 키 호출 : dto.getImglist().keySet()
+	                  // 모든 값 호출 : dto.getImglist().values()
+	               dto.getImglist().values().forEach( (img)->{ // 반복문 사용하는 이유.. map컬렉션에는 여러개 사진이 있으므로
+	                  try {
+	                     String sql2 = "insert into carimg(ciimg ,cno)values(?,?) ";
+	                     ps =conn.prepareStatement( sql2 );
+	                     ps.setString( 1 , img );
+	                     ps.setInt( 2 , cno );
+	                     ps.executeUpdate();
+	                  }catch (Exception e) {System.out.println(e);}
+	               });
+	               return true;
+	            }
+	         }
+	      }catch (Exception e) {System.out.println(e);}
+	      return false;
+	  }
 	
 //게시물 상세조회 [9월19일 고연진]------------------------------------------------------------
 	public AuctionDto auctionPrint(int ano) {
