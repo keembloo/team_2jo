@@ -1,6 +1,7 @@
  
 // 1. 현재 로그인된 회원정보 요청
 let loginMid = '';	// 로그인 성공된 아이디를 가지고 있는 변수 
+
 getMemberInfo();
 console.log('회원번호'+loginMid);
 function getMemberInfo(){

@@ -1,3 +1,4 @@
+
 console.log('상세페이지출력')
 
 let ano=new URL(location.href).searchParams.get("ano"); //경매게시글번호
@@ -8,19 +9,19 @@ let ano=new URL(location.href).searchParams.get("ano"); //경매게시글번호
 //(개별)상세페이지 출력 [9월24일 고연진]--------------------------------------------------------
 
 auctionPrint(ano);
-
+clipState();
+	
 function auctionPrint(ano){
    //if(loginMid==''){location.href='../member/memberlogin.jsp'}
    //경매글 출력(차량정보,게시물정보)
-	clipState();
 	
    $.ajax({
         url : "/nichanaecha/AuctionController",     
         method : "get", 
         async: false,  
         data : {ano:ano},      
-         success : r=>{
-           console.log('전체페이지출력성공')
+        success : r=>{
+           console.log('차정보출력성공')
            console.log(r);
                
          // 제목
@@ -37,6 +38,13 @@ function auctionPrint(ano){
                      </div>`
            })
             imgbox.innerHTML=html;
+            
+          
+           
+    
+            
+            
+            
             
             //차량정보
             document.querySelector('.ccompany').innerHTML=`${r.car.ccompany}`
@@ -59,6 +67,52 @@ function auctionPrint(ano){
          error : e=>{console.log('전체페이지출력통신실패');console.log(e)} ,         
    });
 
+//등록가격 가져오는 함수 -----------------------------------------------
+startPrice(ano);
+function startPrice(ano){console.log('등록가격가져오는함수실행')
+	 $.ajax({
+        url : "/nichanaecha/AuctionController",     
+        method : "get", 
+        async: false,  
+        data : {ano:ano},      
+        success : r=>{
+           console.log('등록가격 통신 성공')
+           console.log(r.aprice);
+           document.querySelector('.startPrice').innerHTML=`${r.aprice}원` 
+   
+         } ,       
+         error : e=>{console.log('등록가져오기실패');console.log(e)} ,         
+   });
+	
+	
+	
+}//f()
+
+//경매가격 가져오는 함수----------------------------------------------------------
+aprice(ano)
+function aprice(ano){console.log('입찰가격가져오는함수실행')
+	$.ajax({
+        url : "/nichanaecha/BattingController",     
+        method : "get", 
+        async: false,  
+        data : {type:'price',ano:ano, count:1},      
+        success : r=>{
+           console.log('현재가격 통신 성공')
+           console.log(r);
+           console.log(r[0].bprice)
+          
+          document.querySelector('.aprice').innerHTML=`${r[0].bprice}원` 
+   
+         } ,       
+         error : e=>{console.log('현재가격가져오기실패');console.log(e)} ,         
+   });
+	
+	
+	
+}//f()
+
+
+/*		
 		console.log('입찰내역출력함수실행됨?')
 	    $.ajax({
         url : "/nichanaecha/BattingController",     
@@ -91,7 +145,7 @@ function auctionPrint(ano){
 	
 
 
-
+*/
 }
 
 /* 남은 시간 구하는 방법-----------------------------------------------------------
@@ -150,7 +204,7 @@ setInterval(업데이트타이머, 1000);
 function clipping(){
    console.log('스크랩onclick함수 실행')
    //회원에 한해 사용 가능하도록
-   if(loginMid==''){location.href='../member/memberlogin.jsp'}
+   if(loginMid==0){location.href='../member/memberlogin.jsp'; return}
    $.ajax({
          url : "/nichanaecha/WishListController",     
         method : "post",  
@@ -174,18 +228,19 @@ function clipping(){
    clipping() 함수 성공 시 실행 . 스크랩 성공 시 아이콘 변경.
    유효성검사:비로그인시, 로그인 시 
  */
-clipState()
+//clipState();
 function clipState(){ console.log('찜하기상태변화함수실행')
    let state= document.querySelector('.state');
    //비회원
-   if(localStorage ==false){state.innerHTML='♡';}
+   if(localStorage == false){state.innerHTML='♡';}
+   
    //회원
      $.ajax({
          url : "/nichanaecha/WishListController",     
           method : "get",
          async : false ,   
          data : {type:'findByWish',ano:ano},      
-         success : r=>{console.log('찜상태통신성공'+r)
+         success : r=>{console.log('찜상태통신성공')
             if(r){state.innerHTML='♥'}//찜하기성공
             else{state.innerHTML='♡'}//찜취소
          } ,       
@@ -197,27 +252,29 @@ function clipState(){ console.log('찜하기상태변화함수실행')
 
 
 // 입찰 등록 [9월26일 고연진]-------------------------------------------------------------------------
+/*
+1. 경매참여 누르기 onclick="battingBtn()" 실행
+2. (bs) 모달창 열림
+3. 보유금액과 현재가격을 가져옴 (class="modalAprice")(class="valMcash")
+4. <input> 입력 (class="bprice")
+5.유효성검사
+ 5-1. 보유금액보다 클 것
+ 5-2. 이전 입찰테이블의 가격보다 클 것
+ 5-3. 조건에 만족하지 않을 시 onkey을 통해 알림. 버튼 비활성화 상태
+6. 입찰추가클릭onclick="batting()"  실행
+7. 클라이언트소켓.send(JOSON.stringify(bprice))
+8. 서버소켓에서 onMessage(Session session,String bprice)
+9. 전달 받은 내용을 누적뿌려주기 (class="auction")
 
-function batting(){console.log('batting() 실행')
+
+
+
+ */
+function battingBtn(){console.log('battingBtn() 실행')
    if(loginMid==''){location.href=location.href='/nichanaecha/member/memberlogin.jsp'}
-   let bprice = document.querySelector('.bprice').value;
-   $.ajax({
-      	url : "/nichanaecha/BattingController",     
-     	method : "post",   
-     	data : {ano:ano,bprice:bprice},      
-      	success : r=>{console.log('통신성공');console.log(r)
-      		if(r){
-				alert('입찰등록 성공');
-				console.log('입찰버튼눌림');
-				document.getElementById('submitBtn').addEventListener('click', function() {
- 				 $('#myModal').modal('hide');
-					});
+  	
 
-      		}
-      		else{alert('입찰등록 실패')}
-      	} ,       
-      	error : e=>{console.log('통신실패')} ,         
-   });
+
  
 
 }//f()
@@ -230,7 +287,7 @@ function batPrint(ano){
         url : "/nichanaecha/BattingController",     
         method : "get",   
         async : false ,
-        data : {type:'topByBatting',ano:ano },// 최근 추가된 3개의 입찰
+        data : {type:'topByBatting',ano:ano,count:3 },// 최근 추가된 3개의 입찰
          success : r=>{
            console.log('경매상황내용출력성공');console.log(r);
 
@@ -266,10 +323,24 @@ console.log('클라이언트소켓생성')
 clientSocket.onopen=e=>{console.log('클라이언트소켓열림')
 	}//socket(e)
 
-
-//소켓 호출 함수
-function battingView(){
-	
+clientSocket.onmessage=e=>{onMsg(e);}
+//서버에 메시지 전송--------------------------------------
+function batting(){
+	//1.값호출
+	let bprice = document.querySelector('.bprice').value;
+    console.log('입력받음금액>'); console.log(bprice);
+    //2.유효성검사
+    
+    //3. 메시지전송
+    clientSocket.send(JSON.stringify(bprice));
+    //document.querySelector('.msg').value=``
+    
 	
 }//f()
 	
+//메시지 받았을때 -----------------------------------------
+function onMsg(e){
+	console.log('서버소켓으로부터 받은 객ㅊㅔ');console.log(e);
+	console.log('가격얼마> '); console.log(e.data);
+	
+}//f()

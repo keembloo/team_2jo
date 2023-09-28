@@ -168,7 +168,7 @@ public class AuctionDao extends Dao {
 	
 //게시물 상세조회 [9월19일 고연진]------------------------------------------------------------
 	public AuctionDto auctionPrint(int ano) {
-		
+		//System.out.println("Dao들어옴> "+ano);
 		AuctionDto auctionDto = new AuctionDto();
 		
 		try {
@@ -199,7 +199,7 @@ public class AuctionDao extends Dao {
 	public boolean clipping(int mno, int ano) {
 		try {//스크랩 항목 추가하기
 			//스크랩 눌린 상태면 true로 아니면 false.( 현재 상태 확인을 하기 위한 함수 필요)
-			System.out.println("Dao에 전달된 값 : "+ mno+ano);
+			//System.out.println("dao로 전달된 mno와 ano> : "+ mno+ano);
 			String sql=	clipState(mno,ano)?
 						"delete from wishlist where mno=? and ano=?":
 						"insert into wishlist values (?,?)" ;
@@ -217,7 +217,7 @@ public class AuctionDao extends Dao {
 //현재 회원과 글의 상태를 확인하는 함수[9월21일 고연진]---------------------------------
 	public boolean clipState(int mno, int ano) {
 		try {//테이블에 있으면 true, 없으면 false
-			System.out.println("회원과글상태확인하는함수 들어옴 =성공");
+			//System.out.println("회원과글상태확인하는함수 들어옴 =성공");
 			String sql="select*from wishlist where mno=? and ano=?";
 			ps=conn.prepareStatement(sql);
 			ps.setInt(1, mno);

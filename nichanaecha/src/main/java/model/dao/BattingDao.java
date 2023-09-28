@@ -32,10 +32,10 @@ public class BattingDao extends Dao {
 	}//f()
 
 //기존입찰출력------------------------------------------------------------------
-	public List<BattingDto> batView(int ano){
-		List<BattingDto> battingList= new ArrayList<>();
+	public ArrayList<BattingDto> batView(int ano,int count){
+		ArrayList<BattingDto> battingList= new ArrayList<>();
 		try {
-			String sql="select*from buymember where ano=? order by bdate desc limit 5";
+			String sql="select*from buymember where ano=? order by bdate desc limit "+count;
 			ps=conn.prepareStatement(sql);
 			ps.setInt(1, ano);
 			rs=ps.executeQuery();
