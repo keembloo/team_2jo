@@ -9,9 +9,8 @@ let x; // 종료날짜(문자)
 let timerInter;
 let mcash=0;//회원보유금액
 let nowPay=0; 
-let valPay=[false,false] //보유금액,현재가
-let bprice = document.querySelector('.bprice').value;
-let valCheck=document.querySelector('.valCheck'); //입찰금액유효성검사 위치
+let bprice;
+
 let endTime;//종료시간
 
 let clientSocket= new WebSocket('ws://localhost:80/nichanaecha/BattingSocket')
@@ -34,7 +33,9 @@ function auctionPrint(ano){
 	console.log('현재시간(문자)')
 	console.log(firstTime)
 	
-	
+	document.querySelector('.buymember').innerHTML=
+	 
+	 ` <a href="/nichanaecha/auction/buymember.jsp?ano=${ano}"><button style="" type="button" >입찰내역</button></a>`
 
 
    $.ajax({
@@ -51,19 +52,22 @@ function auctionPrint(ano){
 		 // 시작입찰가
 		 	document.querySelector('.startPrice').innerHTML=`${r.aprice}원` 
 
-/*
+
             //캐러셀(여러개이미지)
             let imgbox=document.querySelector('.imgbox');
             let html=``;
-            //객체를 배열로 바꾸기
-            Object.values(r.car.imglist).forEach((img,i)=>{
-              //첫번째 이미지만 active
-              html+=`<div class="carousel-item ${ i==0 ? 'active' : '' }">
-                        <img src="/nichanaecha/auction/img/${img}" class="d-block w-100" alt="...">
-                     </div>`
-           })
-            imgbox.innerHTML=html;
-*/            
+            Object.values( r.car.imglist).forEach((img,i)=>{
+					  //첫번째 이미지에만 active 삽입
+					  html+=`
+					  	<div class="carousel-item ${ i==0 ? 'active' : '' }">
+					      <img src="/nichanaecha/auction/img/${img}" class="d-block w-100" alt="...">
+					    </div>
+					  `
+				  })
+      			imgbox.innerHTML=html;
+
+         
+           
          //차량정보
             document.querySelector('.ccompany').innerHTML=`${r.car.ccompany}`
             document.querySelector('.csize').innerHTML=`${r.car.csize}`
@@ -106,8 +110,8 @@ function aprice(ano){console.log('입찰가격가져오는함수실행')
         success : r=>{
            console.log('현재가격 통신 성공')
            console.log(r);
-           console.log(r[0].bprice)//최근입찰가격
-           console.log(r[0].bDate)//경매추가날짜
+           //console.log(r[0].bprice)//최근입찰가격
+           //console.log(r[0].bDate)//경매추가날짜
           nowPay=r[0].bprice
           document.querySelector('.aprice').innerHTML=`${r[0].bprice}원` 
          
@@ -152,7 +156,11 @@ function endDate(z){console.log('날짜변환함수실행')
 }//f()
 
 //타이머 함수-----------------------------------------------
+/*
+1. 타이머 실행
+2. 타이머 종료되면 경매 상태 변경
 
+ */
 
 function settimer(){ 
 	console.log('타이머함수실행')
@@ -229,7 +237,7 @@ function clipping(){
    //회원에 한해 사용 가능하도록
    if(loginMid==0){location.href='../member/memberlogin.jsp'; return}
    $.ajax({
-         url : "/nichanaecha/WishListController",     
+        url : "/nichanaecha/WishListController",     
         method : "post",  
         async: false, 
         data : {ano:ano}, //회원번호는 세션에 저장(전달x)      
@@ -261,7 +269,7 @@ function clipState(){ console.log('찜하기상태변화함수실행')
    //회원
      $.ajax({
          url : "/nichanaecha/WishListController",     
-          method : "get",
+         method : "get",
          async : false ,   
          data : {type:'findByWish',ano:ano},      
          success : r=>{console.log('찜상태통신성공')
@@ -298,7 +306,8 @@ function battingBtn(){console.log('battingBtn() 실행')
 //보유금액가져오기	
 	 $.ajax({
         url : "/nichanaecha/MemberPointController",     
-        method : "get",   
+        method : "get", 
+        async: false,   
         data : {type:'mpointView'},      
         success : r=>{console.log('보유금액가져오기통신성공')
          	console.log('규리쓰컨트롤러에서가져온mno정보');console.log(r);
@@ -309,41 +318,68 @@ function battingBtn(){console.log('battingBtn() 실행')
  	  });
  	  
 //현재가격
-	document.querySelector('.valAprice').innerHTML=	`${nowPay}원`
+	//소켓통신으로 업데이트된 값 가져오기.
+	document.querySelector('.valAprice').innerHTML=	`원`
  	  
- 	  
+ 	
  	  
  	  }//f()
  	  
 
-
+// 유효성검사 함수 (onkeyup) -----------------------------------------------------
 /*
-function valPay(){
-	//유효성검사	
-	//보유금액보다클때
-	if(mcash>bprice){valPay[0]=true; }
-	else{valPay[0]=false; valCheck.innerHTML=`보유금액을 넘길 수 없습니다`}
-	//현재가보다클때
-	valPay[1]=true;
-	//보유금액보다크고 현재가보다 작을때 버튼 활성화 &알림창 띄워주기
-	if(valPay[true,true]){document.querySelector('.val').disabled=false;}
-	
-	
-}
+
 */
+function valPay(){
+	console.log('입력중')
+	bprice=document.querySelector('.bprice').value
+	let valCheck=document.querySelector('.valCheck'); //입찰금액유효성검사 위치
+	//유효성검사 (입력받은값 bprice)	
+	console.log('onkeyup에서 mcash값'+mcash)
+	
+	//보유금액보다작을것(전역=> mcash)
+	if(mcash<bprice){//
+		console.log('보유변화유효성')
+		valCheck.innerHTML=`보유금액을 넘길 수 없음`
+		document.querySelector('.val').disabled=true;
+	}
+	//현재가격보다비쌀것(전역=> nowPay)
+	if(nowPay>bprice){
+		valCheck.innerHTML=`현재가격보다 높은 금액을 입력하셈`
+		document.querySelector('.val').disabled=true;
+	}
+	document.querySelector('.val').disabled=false;
+}//f()
+
 
 
 //입찰등록버튼 누를 시[10월3일 고연진]------------------------------------------------------
 function batting(){
-	let bprice=document.querySelector('.bprice').value
+//포인트차감
+	  $.ajax({
+         url : "/nichanaecha/MemberPointController",     
+        method : "put",   
+        async: false, 
+        //포인트내용알려줄 속성 하나 추가해야될듯 ,
+        data : {type:2,ano:ano, gold:bprice}, //type2=출금      
+         success : r=>{console.log('포인트차감통신성공')} ,       
+         error : e=>{console.log(e)} ,         
+   });
+
+
+
+//입찰등록	
    	$.ajax({
 		   
         url : "/nichanaecha/BattingController",     
-        method : "post",   
+        method : "post",  
+        async: false,  
         data : {ano:ano,bprice:bprice},      
         success : r=>{console.log('입찰등록통신성공');console.log(r)
             if(r){
             alert('입찰등록 성공');
+  //?????얘 왜 안됨 ,, 
+            bprice.innerHTML=``;
             document.querySelector('#closebtn').click()//코드가 실행 된 뒤에 #를 강제로 닫겠다는거임. close안에 기능
 
             }
@@ -352,7 +388,7 @@ function batting(){
          error : e=>{console.log('통신실패')} ,         
    });
 	
-	
+//이전 입찰자에게 포인트 돌려줌	
 	
 }//f()
 
@@ -437,6 +473,10 @@ function batPrint(ano){
 
 
 
+
+
+
+
 //소켓 통신---------------------------------------------------------
 
 
@@ -450,7 +490,7 @@ function nowContent(e){
 	console.log(e.data)
 	
 	let auctionSocket =document.querySelector('.auctionSocket')
-	auctionSocket.innerHTML=`아아아아`
+	//auctionSocket.innerHTML=``
 	
 	
 }//f()

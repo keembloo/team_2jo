@@ -11,6 +11,7 @@ public class BattingDto {
 	String bDate;  //참여날짜
 	long mcash; // 회원 보유 포인트
 	
+	String mid;//회원아이디
 
 //입찰 등록 보낼 시 사용 할 생성자
 	
@@ -29,6 +30,32 @@ public class BattingDto {
 		this.bprice = bprice;
 		this.bDate = bDate;
 	}
+	
+	
+//전체 출력에 필요한 생성자
+	
+	
+	
+	public BattingDto(int mno, int ano, long bprice, String bDate, String mid) {
+		super();
+		this.mno = mno;
+		this.ano = ano;
+		this.bprice = bprice;
+		this.bDate = bDate;
+		this.mid = mid;
+	}
+	
+	
+	
+//getter/setter	
+public String getMid() {
+		return mid;
+	}
+
+	public void setMid(String mid) {
+		this.mid = mid;
+	}
+
 	
 	
 public BattingDto() {}

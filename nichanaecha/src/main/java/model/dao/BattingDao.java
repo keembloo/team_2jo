@@ -80,6 +80,25 @@ public class BattingDao extends Dao {
 		return null;
 	}//f()
 
+//입찰기록 전체 출력
+	public ArrayList<BattingDto> buyView(int ano){
+		try {
+			System.out.println("Dao 들어옴> ");
+			ArrayList<BattingDto> battingList = new ArrayList<>();
+			String sql="select b.*, m.mid from buymember b natural join member m where ano=? order by bdate desc";
+			ps=conn.prepareStatement(sql);
+			ps.setInt(1, ano);
+			rs=ps.executeQuery();
+			while(rs.next()) {
+				BattingDto dto= new BattingDto(rs.getInt("mno"), rs.getInt("ano"), rs.getLong("bprice"), rs.getString("bdate"),  rs.getString("mid"));
+				battingList.add(dto);
+			}
+			return battingList;
+		} catch (Exception e) {System.out.println("경매전체출력오류"+e);}
+		
+		
+		return null;
+	}
 
 //소켓입찰출력---------------------------------------------------------
 

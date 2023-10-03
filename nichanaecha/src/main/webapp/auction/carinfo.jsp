@@ -44,48 +44,8 @@
             <div class="auctionPayBox">
                <div class="payBox_left">
 	               <div>최근입찰</div>
-				
-				   <button onclick="batView()" style="" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">입찰내역</button>
-				   
-<!-- 					   Modal
-					   <div class="modal fade" id="exampleModal"  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-					     <div class="modal-dialog modal-dialog-centered  modal-dialog-scrollable">
-					       <div class="modal-content">
-						     <div class="modal-header">
-	       					 	<h5 class="modal-title">전체입찰내역</h5>
-	       					  	<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-	    					 </div>
-					         <div class="modal-body">
-					         입찰내역출력 JS
-					         <table class="table">
-								  <thead>
-								    <tr>
-								      <th scope="col">#</th>
-								      <th scope="col">입찰금액</th>
-								      <th scope="col">시간</th>
-								      <th scope="col">아이디</th>
-								    </tr>
-								  </thead>
-								  <tbody>
-								    <tr>
-								      <th scope="row">1</th>
-								      <td>129,0000원</td>
-								      <td>12:00</td>
-								      <td>duswls3000</td>
-								    </tr>
-								  </tbody>
-								</table>
-					         
-					         
-					         
-					         </div>
-					       </div>
-					     </div>
-					   </div> -->
-					   
+					<div class="buymember"><!-- 입찰페이지버튼 --></div>
                </div>
-               
-               
                
                
                <div class="payBox_right">
@@ -119,13 +79,13 @@
 					              <div >현재가:<span class="valAprice"><!-- js --></span></div>
 					              <div >보유금액:<span  class="valMcash"><!-- js --></span></div>
 					             <!-- onkeyup="valPay()" -->
-					              입찰금액 : <input  class="bprice" type="text" >
+					              입찰금액 : <input onkeyup="valPay()" class="bprice" type="text" >
 					              <div class="valCheck"><!-- js --></div>
 					           
 					         </div>
 					         <div class="modal-footer">
 					         									<!-- disabled  -->
-					           <button onclick="batting()" type="button" class="btn btn-primary val" id="submitBtn" >입찰</button>
+					           <button onclick="batting()" disabled type="button" class="btn btn-primary val" id="submitBtn" >입찰</button>
 					           <button id="closebtn" type="button" id="closebtn" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 					         </div>
 					       </div>

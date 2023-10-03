@@ -57,6 +57,17 @@ public class BattingController extends HttpServlet {
 	       response.setContentType("application/json;charset=UTF-8");
 	       response.getWriter().print(jsonArray);
 	   }//if
+    else if(type.equals("all")) {
+    	System.out.println("all 들어옴? ");
+    	 int ano = Integer.parseInt(request.getParameter("ano"));
+    	 System.out.println("ano> "+ano);
+    	 ArrayList<BattingDto> result= BattingDao.getInstence().buyView(ano);
+		 String jsonArray=mapper.writeValueAsString(result); 
+		 System.out.println("전체출력> "+jsonArray);
+	     response.setContentType("application/json;charset=UTF-8");
+	     response.getWriter().print(jsonArray);
+    	
+    }
  
        
        
