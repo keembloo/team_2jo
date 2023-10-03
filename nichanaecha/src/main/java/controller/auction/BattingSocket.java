@@ -31,16 +31,17 @@ public class BattingSocket {
    }//f()
 	 
    @OnMessage
-   public void onMessage(Session session, String bprice) {
-	   System.out.println("[서버소켓]클라이언트소켓으로부터 받은 금액> "+bprice);
+   public void onMessage(Session session, String nowContent) {
+	   System.out.println("dao로부터 받은 내용> "+nowContent);
 	   
-	   
-	   
-	   for(Session s :clientList) {
+	   clientList.forEach((s)->{
 		   try {
-			s.getBasicRemote().sendText(bprice);
-		} catch (IOException e) {e.printStackTrace();System.out.println("클라이언트소켓으로부터 받은메시지 오류: "+e);}
-	   }//f
+			   s.getBasicRemote().sendText(nowContent);
+		} catch (Exception e) {e.printStackTrace();
+		}
+		   
+	   });
+
 	   
    }//f()
    

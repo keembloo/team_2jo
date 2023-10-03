@@ -1,9 +1,11 @@
 package model.dao;
 
+import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import controller.auction.BattingSocket;
 import model.dto.BattingDto;
 
 public class BattingDao extends Dao {
@@ -15,6 +17,7 @@ public class BattingDao extends Dao {
 //입찰등록-----------------------------------------------------------------------
 	public boolean batting(BattingDto dto) {
 		try {
+			System.out.println("컨트롤러에서 Dao로 입찰등록 들어옴");
 			String sql="insert into buymember (bprice,mno,ano) values(?,?,?)";
 			ps=conn.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
 			ps.setLong(1, dto.getBprice());
@@ -24,14 +27,42 @@ public class BattingDao extends Dao {
 			
 			rs=ps.getGeneratedKeys();
 			rs.next();
-			int addPk=rs.getInt(1);
-			
-			if(count==1) {return true;}
+			int newPk=rs.getInt(1);
+			System.out.println("newPk번호 > "+newPk);
+			if(count==1) {
+				System.out.println("count==1 실행 "+count);
+				sql="select*from buymember where bno= "+newPk;
+				System.out.println("count값 sql문으로 잘 들어옴"+sql);
+				ps=conn.prepareStatement(sql);
+				System.out.println("ps까진 ㄱㅊ???");
+				
+				rs=ps.executeQuery();
+				System.out.println("rs넘어옴??????"+rs);
+				
+				String nowContent="";
+				System.out.println("nowContent 초기> "+nowContent);
+				if(rs.next()) {
+					System.out.println("if문 안으로 들어오긴함?");
+					nowContent+=
+							"<div class=\"aSocket\">"
+							+"<li>"
+						    +rs.getLong("bprice")
+						    +"</li>"
+						    +"<li>"
+						    +rs.getString("bDate")
+							+"</li>"
+							+"</div>";
+					System.out.println("변경된nowContent> "+nowContent);
+				}
+				BattingSocket socket=new BattingSocket();
+				socket.onMessage(null, nowContent);
+				return true;
+			}
 		} catch (Exception e) {System.out.println("batting()오류"+e);}
 		return false;
 	}//f()
 
-//기존입찰출력------------------------------------------------------------------
+//기존입찰출력(상위3)------------------------------------------------------------------
 	public ArrayList<BattingDto> batView(int ano,int count){
 		ArrayList<BattingDto> battingList= new ArrayList<>();
 		try {
@@ -51,15 +82,6 @@ public class BattingDao extends Dao {
 
 
 //소켓입찰출력---------------------------------------------------------
-	public boolean socketView() {
-		   try {
-			   String sql = "insert into buymember (bprice,mno,ano) values (?,?,?); ";
-			   ps=conn.prepareStatement(sql);
-			   
-			
-		} catch (Exception e) {
-			}
-	}
 
 
 

@@ -42,12 +42,58 @@
             	<div style="text-align: right"class="aprice"><!-- js --></div>
             </div>
             <div class="auctionPayBox">
-               <div>최근입찰</div>
-               <div class="auctionBox"><!-- js반복문예정 -->
-                  <div class="auction">
-                     <li>177,000,000만원</li>
-                     <li>1시간 전</li>
-              	   </div>
+               <div class="payBox_left">
+	               <div>최근입찰</div>
+				
+				   <button onclick="batView()" style="" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">입찰내역</button>
+				   
+<!-- 					   Modal
+					   <div class="modal fade" id="exampleModal"  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					     <div class="modal-dialog modal-dialog-centered  modal-dialog-scrollable">
+					       <div class="modal-content">
+						     <div class="modal-header">
+	       					 	<h5 class="modal-title">전체입찰내역</h5>
+	       					  	<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	    					 </div>
+					         <div class="modal-body">
+					         입찰내역출력 JS
+					         <table class="table">
+								  <thead>
+								    <tr>
+								      <th scope="col">#</th>
+								      <th scope="col">입찰금액</th>
+								      <th scope="col">시간</th>
+								      <th scope="col">아이디</th>
+								    </tr>
+								  </thead>
+								  <tbody>
+								    <tr>
+								      <th scope="row">1</th>
+								      <td>129,0000원</td>
+								      <td>12:00</td>
+								      <td>duswls3000</td>
+								    </tr>
+								  </tbody>
+								</table>
+					         
+					         
+					         
+					         </div>
+					       </div>
+					     </div>
+					   </div> -->
+					   
+               </div>
+               
+               
+               
+               
+               <div class="payBox_right">
+               
+	               <div class="auctionBox">
+	                  <div class="auction"><!-- 최근3개 JS--></div>
+	              	   <div class="auctionSocket"><!-- JS --></div>
+	              	</div>
               	</div>
             </div>
             <div class="time">

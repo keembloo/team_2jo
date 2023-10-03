@@ -12,6 +12,13 @@ let nowPay=0;
 let valPay=[false,false] //보유금액,현재가
 let bprice = document.querySelector('.bprice').value;
 let valCheck=document.querySelector('.valCheck'); //입찰금액유효성검사 위치
+let endTime;//종료시간
+
+let clientSocket= new WebSocket('ws://localhost:80/nichanaecha/BattingSocket')
+console.log('클라이언트소켓생성')
+clientSocket.onopen=e=>{console.log('클라이언트소켓열림')}//socket(e)
+
+clientSocket.onmessage=e=>nowContent(e)
 
 //(개별)상세페이지 출력 [9월24일 고연진]--------------------------------------------------------
 
@@ -23,7 +30,13 @@ function auctionPrint(ano){
 	console.log('상세페이지출력')
    //if(loginMid==''){location.href='../member/memberlogin.jsp'}
    //경매글 출력(차량정보,게시물정보)
+	let firstTime=new Date();
+	console.log('현재시간(문자)')
+	console.log(firstTime)
 	
+	
+
+
    $.ajax({
         url : "/nichanaecha/AuctionController",     
         method : "get", 
@@ -77,7 +90,7 @@ function auctionPrint(ano){
    });
 
 	aprice(ano)
-
+	batPrint(ano)
 
 }//f()
 
@@ -111,8 +124,8 @@ function aprice(ano){console.log('입찰가격가져오는함수실행')
 
 //날짜 변환 함수(문자->숫자로 바꿔서 객체만듦)------------------------------------------------------
 
-function endDate(x){console.log('날짜변환함수실행')
-	let dateTime = x.split(" "); 
+function endDate(z){console.log('날짜변환함수실행')
+	let dateTime = z.split(" "); 
 	//console.log(dateTime);
 	let date = dateTime[0]; 
 	//console.log('날짜/시간쪼개기 날짜' +date);
@@ -144,7 +157,7 @@ function endDate(x){console.log('날짜변환함수실행')
 function settimer(){ 
 	console.log('타이머함수실행')
 	//숫자로 바꾼 날짜
-	let endTime=endDate(x);
+	endTime=endDate(x);
 	//console.log('날짜변화함수에서 결과값 돌려 받음?????')
 	// console.log(endTime)
 
@@ -162,6 +175,11 @@ function settimer(){
 		//console.log('남은분'+min);
 		let sec=Math.floor((timer/1000)%60);
 		//console.log('남은초'+sec);
+		hours=hours<10?"0"+hours:hours;
+		min=min<10?"0"+min:min;
+		sec=sec<10?"0"+sec:sec;
+		
+		
 		timer--;
 		document.querySelector('.remain').innerHTML=`${days}일 ${hours}:${min}:${sec}`
 		
@@ -192,7 +210,7 @@ function settimer(){
 	},1000)
 	
 	console.log('타이머함수종료')
-	
+
 }//f()
 
 
@@ -257,7 +275,7 @@ function clipState(){ console.log('찜하기상태변화함수실행')
 
 
 
-// 입찰 등록 [9월26일 고연진]-------------------------------------------------------------------------
+// 입찰등록 관련
 /*
 1. 경매참여 누르기 onclick="battingBtn()" 실행
 2. (bs) 모달창 열림
@@ -269,16 +287,11 @@ function clipState(){ console.log('찜하기상태변화함수실행')
  5-3. 조건에 만족하지 않을 시 onkey을 통해 알림. 버튼 비활성화 상태
 6. 입찰추가클릭onclick="batting()"  실행
 7. 등록 성공 시 회원의 보유금액 차감, 기존 회원에게 포인트 돌려줌.
-7. 클라이언트소켓.send(JOSON.stringify(bprice))
-8. 서버소켓에서 onMessage(Session session,String bprice)
-9. 전달 받은 내용을 누적뿌려주기 (class="auction")
-
-
 
  */
 
 
-
+//경매참여버튼 누를 시-----------------------------------------------------------
 function battingBtn(){console.log('battingBtn() 실행')
 	if(loginMid==''){location.href=location.href='/nichanaecha/member/memberlogin.jsp'}
 	
@@ -318,6 +331,9 @@ function valPay(){
 	
 }
 */
+
+
+//입찰등록버튼 누를 시[10월3일 고연진]------------------------------------------------------
 function batting(){
 	let bprice=document.querySelector('.bprice').value
    	$.ajax({
@@ -343,33 +359,72 @@ function batting(){
 
 
 
+
+//입찰내역출력관련------------------------------------------------
 /*
-//입찰내역출력[9월26일]------------------------------------------------
+1. 입찰내역버튼 클릭 시 전체 내역 출력 [추후 페이징처리] onclick="batView()"	
+2. 상세페이지 열렸을 시 최근 3개 출력 위치 class="auction"
+3. 소켓통신 출력 class ="auctionSocket" 위치
+
+return new Date(endYear,endMonth,endDay,endHour,endMinutes,endSecond); 
+
+dTime=입장시간(nowTime)-endDate(b.bDate)
+
+ */
 function batPrint(ano){
 		console.log('입찰내역출력함수실행')
+
 	    $.ajax({
         url : "/nichanaecha/BattingController",     
         method : "get",   
         async : false ,
         data : {type:'topByBatting',ano:ano,count:3 },// 최근 추가된 3개의 입찰
-         success : r=>{
-           console.log('경매상황내용출력성공');console.log(r);
-
-         //1.현재가격 (class="batPay")
-         //document.querySelector('.batPay').innerHTML=`${r[0].bprice}`
-
-         //2.경매진행상황(class="auctionBox")출력박스/ 출력물 class="auction"
-         let html=``;
-         let auctionBox=document.querySelector('.auctionBox');
-         r.forEach((b)=>{
-            html+=`
-                  <div class="auction">
-                     <li>${b.bprice}만원</li>
-                     <li>${b.bdate}</li>
-                  </div>
-            
-            `
-         })
+        success : r=>{
+        	console.log('상위3개내용출력성공');console.log(r);
+        	let html=``;
+         	let auctionBox=document.querySelector('.auctionBox');
+         	r.forEach((b)=>{
+				console.log('full상위날짜')
+				console.log(`${b.bDate}`); 
+	         	let buyDate=endDate(`${b.bDate}`);
+	         	console.log('상위입찰날짜')
+	         	console.log(buyDate.getDate())
+	         	console.log('상위 분')
+	         	console.log(buyDate.getMinutes())
+	         	console.log('오늘 날짜')
+	      
+	        	html+=`
+	                  <div class="auction">
+	                     <li>${b.bprice}만원</li>
+	                     <li>${b.bDate}</li>
+	                  </div>
+	            
+	            `
+  /*          	
+            	if(now.getDate()==buyDate.getDate()&&now.getMonth()==buyDate.getMonth()&&now.getFullYear()==buyDate.getFullYear()){
+	            	console.log('날짜가 완전히 동일할때,')
+	            	html+=`
+	                  <div class="auction">
+	                     <li>${b.bprice}만원</li>
+	                     <li>${endYear}-${endMinutes}-${endSecond}</li>
+	                  </div>
+	            
+	            `
+					
+				}
+				else{
+					console.log('날짜가 다를 때')
+					 html+=`
+	                  <div class="auction">
+	                     <li>${b.bprice}만원</li>
+	                     <li>${endHour}:${endMonth}:${endDay}</li>
+	                  </div>
+	            
+	            `
+					
+				}
+  */          	
+         	})
          auctionBox.innerHTML=html;
 
          } ,       
@@ -378,16 +433,26 @@ function batPrint(ano){
 	
 	
 	
-}
+}//f()
 
-*/
+
 
 //소켓 통신---------------------------------------------------------
 
-let clientSocket= new WebSocket('ws://localhost:80/nichanaecha/BattingSocket')
-console.log('클라이언트소켓생성')
-clientSocket.onopen=e=>{console.log('클라이언트소켓열림')}//socket(e)
-/*
-clientSocket.onmessage=e=>{onMsg(e);}
-*/
+
+	
+	
+
+
+function nowContent(e){
+	console.log('클라이언트소켓이벤트실행')
+	console.log(e)
+	console.log(e.data)
+	
+	let auctionSocket =document.querySelector('.auctionSocket')
+	auctionSocket.innerHTML=`아아아아`
+	
+	
+}//f()
+
 

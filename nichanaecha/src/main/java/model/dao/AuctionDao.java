@@ -231,17 +231,17 @@ public class AuctionDao extends Dao {
 	}//f()
 	
 	
-// 경매상태 변경 함수 [고연진]
- public boolean astateChage(int ano) {
-	try {//타이머가 종료되면 경매상태를 종료(1)로 변경
-		String sql= "update auctionInfo set astate=1 where ano=?";
-		ps=conn.prepareStatement(sql);
-		ps.setInt(1, ano);
-		int count = ps.executeUpdate();
-		if(count==1) {return true;}
-	} catch (Exception e) {System.out.println("astateChage()오류"+e);}
-	 return false;
-}//f()
+// 경매상태 변경 함수 [고연진]-------------------------------------------------------------
+	 public boolean astateChage(int ano) {
+		try {//타이머가 종료되면 경매상태를 종료(1)로 변경
+			String sql= "update auctionInfo set astate=1 where ano=?";
+			ps=conn.prepareStatement(sql);
+			ps.setInt(1, ano);
+			int count = ps.executeUpdate();
+			if(count==1) {return true;}
+		} catch (Exception e) {System.out.println("astateChage()오류"+e);}
+		 return false;
+	}//f()
 	
 	
 	
