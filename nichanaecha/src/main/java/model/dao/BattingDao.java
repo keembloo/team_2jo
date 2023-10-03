@@ -52,16 +52,13 @@ public class BattingDao extends Dao {
 
 //소켓입찰출력---------------------------------------------------------
 	public boolean socketView() {
-		try {
-			String sql = "select*from buymember where ano=?";
-			ps= conn.prepareStatement(sql);
-			ps.setInt(1, 0);
+		   try {
+			   String sql = "insert into buymember (bprice,mno,ano) values (?,?,?); ";
+			   ps=conn.prepareStatement(sql);
+			   
 			
-		
-		} catch (Exception e) {}
-		
-		
-		return false;
+		} catch (Exception e) {
+			}
 	}
 
 

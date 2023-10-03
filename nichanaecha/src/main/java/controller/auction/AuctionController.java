@@ -178,8 +178,16 @@ public class AuctionController extends HttpServlet {
 	}
  
 	
+	
+//경매상태변경	
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		int ano= Integer.parseInt(request.getParameter("ano"));
+		System.out.println("경매상태변경 ano > "+ano);
+		boolean result= AuctionDao.getInstence().astateChage(ano);
+		System.out.println("경매상태변경 성공 여부: "+result);
+		response.setContentType("application/json;charset=UTF-8");
+		response.getWriter().print(result);
+	
 	}
 
 	

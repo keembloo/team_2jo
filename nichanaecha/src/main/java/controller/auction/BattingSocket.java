@@ -9,6 +9,7 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
+import model.dao.BattingDao;
 import model.dto.BattingDto;
 
 @ServerEndpoint("/BattingSocket") //서버소켓 
@@ -32,10 +33,7 @@ public class BattingSocket {
    @OnMessage
    public void onMessage(Session session, String bprice) {
 	   System.out.println("[서버소켓]클라이언트소켓으로부터 받은 금액> "+bprice);
-	   try {
-		
-	} catch (Exception e) {
-		}
+	   
 	   
 	   
 	   for(Session s :clientList) {

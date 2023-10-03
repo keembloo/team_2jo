@@ -49,14 +49,15 @@ public class AuctionDao extends Dao {
 	}
 	
 	// 경매 정보 dto 반환 함수
-	public AuctionDto auctionDto(int cno) {
+	//[10월2일 고연진 수정] - int cno-> ano
+	public AuctionDto auctionDto(int ano) {
 	
 		
 		try {
-			String sql = "select * from auctionInfo where cno = ? ";
+			String sql = "select * from auctionInfo where ano = ? ";
 			
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setInt(1, cno);
+			ps.setInt(1, ano);
 			ResultSet rs = ps.executeQuery();
 			
 			rs.next();
@@ -168,11 +169,11 @@ public class AuctionDao extends Dao {
 	
 //게시물 상세조회 [9월19일 고연진]------------------------------------------------------------
 	public AuctionDto auctionPrint(int ano) {
-		//System.out.println("Dao들어옴> "+ano);
+		System.out.println("Dao들어옴> "+ano);
 		AuctionDto auctionDto = new AuctionDto();
 		
 		try {
-			String sql = "select * from auctioninfo where ano= ? ";
+			String sql = "select * from auctionInfo where ano= ? ";
 			ps=conn.prepareStatement(sql);
 			ps.setInt(1, ano);
 			rs=ps.executeQuery(); 
@@ -184,8 +185,9 @@ public class AuctionDao extends Dao {
 				
 				auctionDto =auctionDto(ano);
 				auctionDto.setCar(carDto);
+	
+				return auctionDto;
 			}
-			return auctionDto;
 			
 		} catch (Exception e) {System.out.println("auctionPrint() 오류: "+e);}
 		
@@ -229,7 +231,17 @@ public class AuctionDao extends Dao {
 	}//f()
 	
 	
-	
+// 경매상태 변경 함수 [고연진]
+ public boolean astateChage(int ano) {
+	try {//타이머가 종료되면 경매상태를 종료(1)로 변경
+		String sql= "update auctionInfo set astate=1 where ano=?";
+		ps=conn.prepareStatement(sql);
+		ps.setInt(1, ano);
+		int count = ps.executeUpdate();
+		if(count==1) {return true;}
+	} catch (Exception e) {System.out.println("astateChage()오류"+e);}
+	 return false;
+}//f()
 	
 	
 	

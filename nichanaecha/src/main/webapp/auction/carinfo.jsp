@@ -51,7 +51,7 @@
               	</div>
             </div>
             <div class="time">
-            	<div class="auctionState" >종료<!-- js --></div>
+            	<div class="auctionState" ><!-- js --></div>
             	<div class="remain"><!-- js --></div>
             </div>
             
@@ -70,14 +70,17 @@
 					       <div class="modal-content">
 					      
 					         <div class="modal-body">
-					              <div class="valAprice">현재가:</div>
-					              <div class="valMcash">보유금액:</div>
-					              입찰금액 : <input class="bprice" type="text" >
+					              <div >현재가:<span class="valAprice"><!-- js --></span></div>
+					              <div >보유금액:<span  class="valMcash"><!-- js --></span></div>
+					             <!-- onkeyup="valPay()" -->
+					              입찰금액 : <input  class="bprice" type="text" >
+					              <div class="valCheck"><!-- js --></div>
 					           
 					         </div>
 					         <div class="modal-footer">
-					           <button onclick="batting()" type="button" class="btn btn-primary " id="submitBtn" >입찰</button>
-					           <button id="closebtn" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+					         									<!-- disabled  -->
+					           <button onclick="batting()" type="button" class="btn btn-primary val" id="submitBtn" >입찰</button>
+					           <button id="closebtn" type="button" id="closebtn" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 					         </div>
 					       </div>
 					     </div>

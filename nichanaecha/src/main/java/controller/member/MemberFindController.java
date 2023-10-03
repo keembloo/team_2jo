@@ -39,6 +39,16 @@ public class MemberFindController extends HttpServlet {
 			response.getWriter().print(result);
 		
 		} 
+/*		
+		else if(type.equals("valMcash")) {
+			int mno =  Integer.parseInt((MemberDto)(request.getSession().getAttribute("loginDto"));
+					//(MemberDto)(request.getSession().getAttribute("loginDto"));
+		}//f()
+		
+*/		
+		
+		
+		
 		//------------------------성호-------------------------------
 		
 		// 요청한다 [기능 구분을 위한 요청]
