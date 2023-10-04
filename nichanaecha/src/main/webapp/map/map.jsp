@@ -144,17 +144,16 @@
 						<div class="auctionList">
 							
 							<div class="row listHeader p-3"><!-- 게시물 출력 헤더 -->
-								<div class="listClose col-2"><!-- 닫기 버튼 -->
+								<div onclick="listClose()" class="listClose col-2"><!-- 닫기 버튼 -->
 									<img src="../img/left_arrow.svg" style="width:70%;height:70%">
 								</div> 
-								<div class="listTitle col-8 text-center">경기도 안산시</div> <!-- 지역 타이틀  -->
+								<div class="listTitle col-8 text-center"></div> <!-- 지역 타이틀  -->
 								<div class="col-2"></div>
 							</div>
 								
 								<div class="cardList my-1">
 									<!-- 매물 출력 구역 -->
 								</div>
-								
 							
 							
 						</div>

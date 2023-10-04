@@ -65,8 +65,17 @@ public class MapController extends HttpServlet {
 		}else if(type.equals("clusterPrint")) { // 클러스터 또는 개별 매물 클릭시 출력
 			String cnoList = request.getParameter("cnoList");
 			
-			// json 객체를 정수 list로 반환
-			List<Integer> list = mapper.readValue(cnoList,mapper.getTypeFactory().constructCollectionType(List.class, Integer.class));
+			List<Integer> list = new ArrayList<>();
+			
+			// 파라미터값이 한개 ( 쉼표가 없으면 ) 리스트 한개 추가, 그 외 배열 값 정수 리스트로 변환
+			if(cnoList.indexOf(",") == -1) {
+				
+				list.add(Integer.parseInt(cnoList));
+			}
+			else {
+				list = mapper.readValue(cnoList,mapper.getTypeFactory().constructCollectionType(List.class, Integer.class));
+			}
+			
 			
 			List<AuctionDto> AuctionDtolist = AuctionDao.getInstence().clusterPrint(list);
 			System.out.println(AuctionDtolist);

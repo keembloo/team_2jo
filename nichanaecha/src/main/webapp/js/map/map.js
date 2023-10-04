@@ -136,10 +136,9 @@ function mapAreaPrint(east, west, south, north, level){
 			}else{	// 확대 레벨 3 이하시 개별 출력, 근접 위치는 클러스터 기능 사용
 				var customOverlay = r.map( p => {
 					
-					let cno = [p.cno];
 					
 					var content = `
-									<div onclick="${clusterPrint(cno)}" class="customoverlay">
+									<div onclick="clusterPrint(${p.cno})" class="customoverlay">
 									    <span class="marker-title">${p.cname}</span>
 									</div>`	
 					
@@ -170,6 +169,13 @@ function mapAreaPrint(east, west, south, north, level){
 
 
 function listPrint(areaName, level){
+	let auctionList = document.querySelector('.auctionList');
+    
+    auctionList.style.display = 'block';
+	
+	setTimeout(function () {
+        auctionList.style.opacity = 1;
+    }, 100); // 100ms 후에 투명도를 1로 변경
 	 
 	$.ajax({
 		url : "/nichanaecha/MapController",
@@ -177,12 +183,12 @@ function listPrint(areaName, level){
 		data: {type : "listPrint", areaName: areaName, level : level },
 		success: r =>{
 			let cardList = document.querySelector('.cardList');
+			cardList.scrollTo({ top: 0 })
 			
 			let html = ``;
 			
-			document.querySelector('.listTitle').innerHTML = areaName;
 			
-			cardList.scrollTo({ top: 0 })
+			
 			
 			r.forEach(p => {
 				html += `
@@ -201,8 +207,16 @@ function listPrint(areaName, level){
 				`
 				
 			})
-				
-				cardList.innerHTML = html;
+			
+			
+			$('.listTitle').fadeOut(100, function() {
+				// 내용을 페이드 아웃한 후에 내용을 업데이트하고 다시 페이드 인
+				$(this).html( document.querySelector('.listTitle').innerHTML = areaName ).fadeIn(100);
+			});
+			
+			$('.cardList').fadeOut(100, function() {
+				$(this).html( cardList.innerHTML = html ).fadeIn(100);
+			});
 			
 			
 		},
@@ -222,6 +236,15 @@ function listPrint(areaName, level){
 
 function clusterPrint( cnoList ){
 	
+	let auctionList = document.querySelector('.auctionList');
+    
+    auctionList.style.display = 'block';
+	
+	setTimeout(function () {
+        auctionList.style.opacity = 1;
+    }, 100); // 100ms 후에 투명도를 1로 변경
+	
+	
 	// 리스트를 json 형태로 변환
 	jsonList = JSON.stringify(cnoList);
 	
@@ -233,10 +256,6 @@ function clusterPrint( cnoList ){
 			let cardList = document.querySelector('.cardList');
 			
 			let html = ``;
-			
-			document.querySelector('.listTitle').innerHTML = r[0].car.carAddress.cacodename;
-			
-			cardList.scrollTo({ top: 0 })
 			
 			r.forEach(p => {
 				html += `
@@ -255,10 +274,18 @@ function clusterPrint( cnoList ){
 				`
 				
 			})
+			
 				
-				cardList.innerHTML = html;
+			$('.listTitle').fadeOut(100, function() {
+				$(this).html( document.querySelector('.listTitle').innerHTML = r[0].car.carAddress.cacodename ).fadeIn(100);
+			});
 			
-			
+			$('.cardList').fadeOut(100, function() {
+				$(this).html( cardList.innerHTML = html ).fadeIn(100);
+			});
+
+			cardList.scrollTo({ top: 0, behavior: 'smooth' })
+
 		},
 		error: e =>{
 			console.log('에러 발생 : '+e)
@@ -273,5 +300,17 @@ function clusterPrint( cnoList ){
 	
 }
 
+// 리스트 닫기 함수
+function listClose() {
+	let auctionList = document.querySelector('.auctionList');
+	
+	document.querySelector('.listTitle').innerHTML = ``; 
+	document.querySelector('.cardList').innerHTML = ``;
+	
+	auctionList.style.display = 'none';
+	auctionList.style.opacity = '0';
+	
+	
+}
 
  
