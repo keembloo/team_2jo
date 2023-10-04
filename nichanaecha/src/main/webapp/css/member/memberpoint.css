@@ -29,3 +29,17 @@
 .btnbox{
 	margin-bottom: 50px;
 }
+
+.pagebox{
+	margin-top : 40px;
+	text-align: center;
+}
+.pagebox button {
+	border: none;
+	background-color: #1450A3;
+	color: white;
+	margin: 0 3px;
+	padding: 7px;
+	border-radius: 5px;
+}
+

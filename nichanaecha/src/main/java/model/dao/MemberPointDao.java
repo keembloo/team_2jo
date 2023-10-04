@@ -8,7 +8,7 @@ public class MemberPointDao extends Dao {
 	private static MemberPointDao memberpointDao = new MemberPointDao();
 	public static MemberPointDao getInstence() {return memberpointDao;}
 	private MemberPointDao() {}
-	
+
 	// 규리 페이징 처리를 위한 포인트입출금내역 수 출력
 	public int totalSize (int mno , String type) {
 		try {
@@ -20,10 +20,13 @@ public class MemberPointDao extends Dao {
 			} else if (type.equals("PointOutput")) {
 				sql += " and pointhistory = '출금'";
 			}
-			System.out.println(sql);
+			//System.out.println(sql);
 			ps = conn.prepareStatement(sql);
+			ps.setInt(1, mno);
 			rs = ps.executeQuery();
-			if (rs.next())return rs.getInt(1);
+			if (rs.next()) {
+				return rs.getInt(1);
+			}
 		}catch (Exception e) {System.out.println(e);}
 		return 0;
 	}
@@ -37,21 +40,21 @@ public class MemberPointDao extends Dao {
 		ArrayList<MemberPointDto> list = new ArrayList<>();
 		
 		try {
-			String sql ="select * from pointrecord where mno =?";
+			String sql ="select * from pointrecord where mno = ?";
 			
 			if (type.equals("PointInput")) {
-				sql += " and pointhistory = '입금'";
+				sql += " and pointhistory like '%입금%'";
 			} else if (type.equals("PointOutput")) {
-				sql += " and pointhistory = '출금'";
+				sql += " and pointhistory like '%출금%'";
 			}
 			sql += " order by pointdate desc limit ? , ?";
-			
+			System.out.println("입출금내역출력 sql"+sql);
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, mno);
 			ps.setInt(2, startrow);
 			ps.setInt(3, listsize);
 			rs = ps.executeQuery();
-			System.out.println("sql : "+sql);
+			//System.out.println("sql : "+sql);
 			while (rs.next()) {
 				MemberPointDto memberPointDto = new MemberPointDto(
 						rs.getString("pointno"), 

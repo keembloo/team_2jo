@@ -55,6 +55,8 @@ public class MemberPointController extends HttpServlet {
 			int startbtn = ((page-1)/btnsize) * btnsize +1; //System.out.println(startbtn);
 			int endbtn = startbtn+(btnsize-1); // 페이지버튼의 마지막번호
 			// 만약에 마지막번호가 총 페이지수보다 크면 총페이지수로 제한두기
+			//System.out.println(endbtn+"endbtn");
+			//System.out.println(type+"type");
 			if (endbtn >= totalpage) endbtn = totalpage;
 						
 			ArrayList<MemberPointDto> result = MemberPointDao.getInstence().PointAllView(mno , type , startrow, listsize);

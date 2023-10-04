@@ -97,6 +97,7 @@ function PointAllView(page){
 				let html = ``;
 				
 				jason.pointList.forEach(p =>{
+					//console.log(p);
 					//console.log(p.pointhistory);
 					html += `<tr>
 						   		<td class="text-center">${p.mpoint.toLocaleString()}원</td>
@@ -179,6 +180,7 @@ function pageboxView(page , jason){
 	// 페이지 번호 버튼 [ * 페이지 개수만큼 반복 ]
 	for (let i= jason.startbtn; i <= jason.endbtn ; i++){
 		// 만약에 현재페이지와 i번째 페이지가 일치하면 버튼태그에 class="selectpage" 추가
+		//console.log("포문도나");
 		html += `<button class="${page==i ? 'selectpage' : '' }" onclick="PointAllView(${i})" type="button"> ${i} </button>`;
 	}
 	// 다음버튼 [ page >= r.totalpage ? page : page+1 ] 만약에 현재페이지가 마지막페이지면 고정 아니면 1증가
