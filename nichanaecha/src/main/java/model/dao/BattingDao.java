@@ -30,22 +30,20 @@ public class BattingDao extends Dao {
 			if(count==1) {
 				System.out.println("count==1 실행 "+count);
 				sql="select*from buymember where bno= "+newPk;
-				System.out.println("count값 sql문으로 잘 들어옴"+sql);
+				//System.out.println("count값 sql문으로 잘 들어옴"+sql);
 				ps=conn.prepareStatement(sql);
 				System.out.println("ps까진 ㄱㅊ???");
 				
 				rs=ps.executeQuery();
 				System.out.println("rs넘어옴??????"+rs);
 				
-				String nowPrice="";
-				String nowDate="";
+				String msg="";
 				if(rs.next()) {
 					System.out.println("if문 안으로 들어오긴함?");
-					nowPrice=Long.toString(rs.getLong("bprice"));
-					System.out.println("입찰금액> "+nowPrice);
+					msg+=rs.getLong("bprice")+"<br>"+rs.getString("bdate");
 				}
-				BattingSocket socketPrice=new BattingSocket();
-				socketPrice.onMessage(null, nowPrice);
+				BattingSocket socket = new BattingSocket();
+				socket.onMessage(null, msg);
 				return true;
 			}
 		} catch (Exception e) {System.out.println("batting()오류"+e);}

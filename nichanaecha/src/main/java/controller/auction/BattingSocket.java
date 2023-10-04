@@ -31,12 +31,12 @@ public class BattingSocket {
    }//f()
 	 
    @OnMessage
-   public void onMessage(Session session, String nowContent) {
-	   System.out.println("dao로부터 받은 내용> "+nowContent);
+   public void onMessage(Session session, String msg) {
+	   System.out.println("dao로부터 socketprice 받은 내용> "+msg);
 	   
 	   clientList.forEach((s)->{
 		   try {
-			   s.getBasicRemote().sendText(nowContent);
+			   s.getBasicRemote().sendText(msg);
 		} catch (Exception e) {e.printStackTrace();
 		}
 		   
@@ -44,5 +44,9 @@ public class BattingSocket {
 
 	   
    }//f()
+
+	   
+ 
+   
    
 }//c

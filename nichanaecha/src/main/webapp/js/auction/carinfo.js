@@ -14,6 +14,7 @@ let endTime;//종료시간
 
 let clientSocket= new WebSocket('ws://localhost:80/nichanaecha/BattingSocket')
 console.log('클라이언트소켓생성')
+//???????????소켓생성과 동시에 열린다고 하지 않았남.. console 왜 바로 안뜸?
 clientSocket.onopen=e=>{console.log('클라이언트소켓열림')}//socket(e)
 
 clientSocket.onmessage=e=>nowContent(e)
@@ -25,9 +26,20 @@ function nowContent(e){
 	console.log('클라이언트소켓이벤트실행')
 	console.log(e)
 	console.log(e.data)
+	let data= e.data
+	let msg = data.split("<br>");
+	let price= msg[0];
+	console.log('가격')
+	console.log(price)
+	let date=msg[1];
+	console.log('날짜')
+	console.log(date) 
+	let nprice=Number(price)
+	console.log('숫자로출력?')
+	console.log(nprice)
 	
-	let auctionSocket =document.querySelector('.auctionSocket')
-	auctionSocket.innerHTML=`아아아아`
+//???????????????? innerHTML 왜 안먹힘 .. 
+	document.querySelector('.auctionSocket').innerHTML=`아아아`
 	
 	
 }//f()
@@ -42,7 +54,7 @@ function auctionPrint(ano){
 	console.log('상세페이지출력')
    //if(loginMid==''){location.href='../member/memberlogin.jsp'}
    //경매글 출력(차량정보,게시물정보)
-	let firstTime=new Date();
+	//let firstTime=new Date();
 	//console.log('현재시간(문자)')
 	//console.log(firstTime)
 	
@@ -175,6 +187,8 @@ function endDate(z){console.log('날짜변환함수실행')
 
  */
 
+//?????????????????한달차이 나는거 같음 .. 
+//타이머<0 시에 새로고침 없이 AJAX 통신 가능?
 function settimer(){ 
 	console.log('타이머함수실행')
 	//숫자로 바꾼 날짜
@@ -226,7 +240,7 @@ function settimer(){
 		
 	},1000)
 	
-	console.log('타이머함수종료')
+	
 
 }//f()
 
@@ -269,9 +283,11 @@ function clipping(){
    clipping() 함수 성공 시 실행 . 스크랩 성공 시 아이콘 변경.
    유효성검사:비로그인시, 로그인 시 
  */
-//clipState();
+
 function clipState(){ console.log('찜하기상태변화함수실행')
    let state= document.querySelector('.state');
+   
+//?????????????????비로그인일때 innerHTML 실행 안됨.   
    //비회원
    if(localStorage == false){
 	   console.log('비로그인일때');console.log(localStorage)
@@ -297,7 +313,7 @@ function clipState(){ console.log('찜하기상태변화함수실행')
 /*
 1. 경매참여 누르기 onclick="battingBtn()" 실행
 2. (bs) 모달창 열림
-3. 보유금액과 현재가격을 가져옴 (class="valAprice")(class="valMcash")
+3. 보유금액 가져옴 (class="valMcash")
 4. <input> 입력 (class="bprice")
 5.유효성검사
  5-1. 보유금액보다 클 것(조건에 만족하지 않을 시 onkey을 통해 알림. 버튼 비활성화 상태)
@@ -315,8 +331,8 @@ function clipState(){ console.log('찜하기상태변화함수실행')
 //경매참여버튼 누를 시-----------------------------------------------------------
 function battingBtn(){console.log('battingBtn() 실행')
 	if(loginMid==''){location.href=location.href='/nichanaecha/member/memberlogin.jsp'}
-
-	
+	console.log('경매참여버튼누름')
+/*	
 //보유금액가져오기	
 	 $.ajax({
         url : "/nichanaecha/MypageController",     
@@ -330,7 +346,7 @@ function battingBtn(){console.log('battingBtn() 실행')
          } ,       
          error : e=>{console.log('보유금액가져오기실패')} ,         
  	  });
-
+*/
  	  
  	  
  }//f()
@@ -355,7 +371,7 @@ function valPay(){
 
 //입찰등록버튼 누를 시[10월3일 고연진]------------------------------------------------------
 function batting(){
-
+	bprice=document.querySelector('.bprice').value;
 /*
 //1.포인트차감
 	  $.ajax({
@@ -380,14 +396,15 @@ function batting(){
         success : r=>{console.log('입찰등록통신성공');console.log(r)
             if(r){
             alert('입찰등록 성공');
-  //?????얘 왜 안됨 ,, 
+ 
+ //????????????얘 왜 안됨 ,, 
             bprice.innerHTML=``;
             document.querySelector('#closebtn').click()//코드가 실행 된 뒤에 #를 강제로 닫겠다는거임. close안에 기능
 
             }
             else{alert('입찰등록 실패')}
          } ,       
-         error : e=>{console.log('통신실패')} ,         
+         error : e=>{console.log('입찰등록통신실패')} ,         
    });
 	
 //3.이전 입찰자에게 포인트 돌려줌	
