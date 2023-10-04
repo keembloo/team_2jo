@@ -45,7 +45,7 @@
 							
 						</div> <!-- carousel-inner end -->
 						
-						
+						<!-- 
 						<button class="carousel-control-prev" type="button"
 							data-bs-target="#imageCarousel" data-bs-slide="prev">
 							<span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -56,7 +56,7 @@
 							data-bs-target="#imageCarousel" data-bs-slide="next">
 							<span class="carousel-control-next-icon" aria-hidden="true"></span>
 							<span class="visually-hidden">Next</span>
-						</button>
+						</button> -->
 
 					</div> <!-- imageCarousel end -->
 				</div> <!-- autionInfo end -->
