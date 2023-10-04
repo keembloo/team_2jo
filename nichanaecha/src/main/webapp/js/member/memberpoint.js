@@ -26,7 +26,7 @@ function mpointView(){
 
 				cashInfo.innerHTML = `<div class="textId">'${r.mname}' 님</div>
 									<div class="textPoint">보유 포인트 : <span>${r.mcash.toLocaleString()}원</span></div>
-									<button class="btn btn-primary" onclick="inputPoint()" type=button>입금</button>
+									<button class="btn colorblue" onclick="inputPoint()" type=button>입금</button>
 									<button class="btn btn-danger" onclick="outputPoint(${r.mcash})" type=button>출금</button>`;
 				PointAllView(page); // 포인트내역 전체출력 함수 호출
 			} , 

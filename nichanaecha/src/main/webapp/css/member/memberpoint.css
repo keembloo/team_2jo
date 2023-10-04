@@ -32,14 +32,26 @@
 
 .pagebox{
 	margin-top : 40px;
+	margin-bottom : 100px;
 	text-align: center;
 }
 .pagebox button {
 	border: none;
-	background-color: #1450A3;
+	background-color: #337CCF;
 	color: white;
 	margin: 0 3px;
 	padding: 7px;
 	border-radius: 5px;
 }
-
+.selectpage {
+	background-color: #FFC436;
+}
+/*색상*/
+.colorblue {
+	background-color: #337CCF !important;
+	color: white !important;
+}
+.colorred {
+	background-color: #d54452 !important;
+	color: white !important;
+}
