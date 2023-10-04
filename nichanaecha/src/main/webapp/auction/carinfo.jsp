@@ -79,13 +79,13 @@
 					              <div >현재가:<span class="valAprice"><!-- js --></span></div>
 					              <div >보유금액:<span  class="valMcash"><!-- js --></span></div>
 					             <!-- onkeyup="valPay()" -->
-					              입찰금액 : <input onkeyup="valPay()" class="bprice" type="text" >
+					              입찰금액 : <input class="bprice" type="text" >
 					              <div class="valCheck"><!-- js --></div>
 					           
 					         </div>
 					         <div class="modal-footer">
 					         									<!-- disabled  -->
-					           <button onclick="batting()" disabled type="button" class="btn btn-primary val" id="submitBtn" >입찰</button>
+					           <button onclick="batting()" type="button" class="btn btn-primary val" id="submitBtn" >입찰</button>
 					           <button id="closebtn" type="button" id="closebtn" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 					         </div>
 					       </div>

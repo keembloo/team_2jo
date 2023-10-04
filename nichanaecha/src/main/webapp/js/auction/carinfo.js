@@ -10,7 +10,6 @@ let timerInter;
 let mcash=0;//회원보유금액
 let nowPay=0; 
 let bprice;
-
 let endTime;//종료시간
 
 let clientSocket= new WebSocket('ws://localhost:80/nichanaecha/BattingSocket')
@@ -18,6 +17,20 @@ console.log('클라이언트소켓생성')
 clientSocket.onopen=e=>{console.log('클라이언트소켓열림')}//socket(e)
 
 clientSocket.onmessage=e=>nowContent(e)
+
+
+//소켓 통신(메세지)---------------------------------------------------------
+	
+function nowContent(e){
+	console.log('클라이언트소켓이벤트실행')
+	console.log(e)
+	console.log(e.data)
+	
+	let auctionSocket =document.querySelector('.auctionSocket')
+	auctionSocket.innerHTML=`아아아아`
+	
+	
+}//f()
 
 //(개별)상세페이지 출력 [9월24일 고연진]--------------------------------------------------------
 
@@ -30,8 +43,8 @@ function auctionPrint(ano){
    //if(loginMid==''){location.href='../member/memberlogin.jsp'}
    //경매글 출력(차량정보,게시물정보)
 	let firstTime=new Date();
-	console.log('현재시간(문자)')
-	console.log(firstTime)
+	//console.log('현재시간(문자)')
+	//console.log(firstTime)
 	
 	document.querySelector('.buymember').innerHTML=
 	 
@@ -82,7 +95,7 @@ function auctionPrint(ano){
          //남은시간
            
            x = `${r.aenddate}`;
-   		  console.log('종료날짜'+x);
+   		  //console.log('종료날짜'+x);
    			settimer();
          
             
@@ -187,12 +200,8 @@ function settimer(){
 		min=min<10?"0"+min:min;
 		sec=sec<10?"0"+sec:sec;
 		
-		
 		timer--;
 		document.querySelector('.remain').innerHTML=`${days}일 ${hours}:${min}:${sec}`
-		
-
-
 
 		if(timer<=0){
 			clearInterval(timerInter);
@@ -204,7 +213,7 @@ function settimer(){
       	      method : "put",   
          	  data : {ano:ano},      
           	  success : r=>{
-					console.log('경매산태변경 통신성공');
+					console.log('경매상태변경 통신성공');
          			console.log(r)
       					} ,       
               error : e=>{console.log('경매상태변경통신실패')} ,         
@@ -244,6 +253,7 @@ function clipping(){
          success : r=>{console.log('찜하기통신성공');
             if(r){
               console.log('스크랩성공');
+              alert('스크랩성공')
               clipState();
             
             }
@@ -290,11 +300,14 @@ function clipState(){ console.log('찜하기상태변화함수실행')
 3. 보유금액과 현재가격을 가져옴 (class="valAprice")(class="valMcash")
 4. <input> 입력 (class="bprice")
 5.유효성검사
- 5-1. 보유금액보다 클 것
- 5-2. 이전 입찰테이블의 가격보다 클 것
- 5-3. 조건에 만족하지 않을 시 onkey을 통해 알림. 버튼 비활성화 상태
+ 5-1. 보유금액보다 클 것(조건에 만족하지 않을 시 onkey을 통해 알림. 버튼 비활성화 상태)
+ 5-2. 이전 입찰테이블의 가격보다 클 것(sql문 실패메세지)
 6. 입찰추가클릭onclick="batting()"  실행
-7. 등록 성공 시 회원의 보유금액 차감, 기존 회원에게 포인트 돌려줌.
+7. 등록 성공 시 회원의 보유금액 차감
+8. 기존 회원에게 포인트 돌려줌.
+	8-1 sql 두번째 사람 번호 가져옴
+	8-2 포인트테이블에서 포인트내용과 일치한 것 중 제일 위에 금액 가져옴
+	8-2 회원번호에 위 가격 더해줌
 
  */
 
@@ -302,73 +315,62 @@ function clipState(){ console.log('찜하기상태변화함수실행')
 //경매참여버튼 누를 시-----------------------------------------------------------
 function battingBtn(){console.log('battingBtn() 실행')
 	if(loginMid==''){location.href=location.href='/nichanaecha/member/memberlogin.jsp'}
+
 	
 //보유금액가져오기	
 	 $.ajax({
-        url : "/nichanaecha/MemberPointController",     
+        url : "/nichanaecha/MypageController",     
         method : "get", 
         async: false,   
-        data : {type:'mpointView'},      
+        data : {type:'mview'},      
         success : r=>{console.log('보유금액가져오기통신성공')
-         	console.log('규리쓰컨트롤러에서가져온mno정보');console.log(r);
+         	console.log('규리쓰마이페이지컨트롤러에서가져온mno정보');console.log(r);
          	document.querySelector('.valMcash').innerHTML=`${r.mcash}원`
          	mcash=`${r.mcash}`; 
          } ,       
          error : e=>{console.log('보유금액가져오기실패')} ,         
  	  });
+
  	  
-//현재가격
-	//소켓통신으로 업데이트된 값 가져오기.
-	document.querySelector('.valAprice').innerHTML=	`원`
  	  
- 	
- 	  
- 	  }//f()
+ }//f()
  	  
 
 // 유효성검사 함수 (onkeyup) -----------------------------------------------------
 /*
-
+1. 보유금액 가져오기
+2. onkeyup알림
+3. 버튼활성화
 */
 function valPay(){
 	console.log('입력중')
 	bprice=document.querySelector('.bprice').value
 	let valCheck=document.querySelector('.valCheck'); //입찰금액유효성검사 위치
 	//유효성검사 (입력받은값 bprice)	
-	console.log('onkeyup에서 mcash값'+mcash)
-	
-	//보유금액보다작을것(전역=> mcash)
-	if(mcash<bprice){//
-		console.log('보유변화유효성')
-		valCheck.innerHTML=`보유금액을 넘길 수 없음`
-		document.querySelector('.val').disabled=true;
-	}
-	//현재가격보다비쌀것(전역=> nowPay)
-	if(nowPay>bprice){
-		valCheck.innerHTML=`현재가격보다 높은 금액을 입력하셈`
-		document.querySelector('.val').disabled=true;
-	}
-	document.querySelector('.val').disabled=false;
+
+
 }//f()
 
 
 
 //입찰등록버튼 누를 시[10월3일 고연진]------------------------------------------------------
 function batting(){
-//포인트차감
+
+/*
+//1.포인트차감
 	  $.ajax({
          url : "/nichanaecha/MemberPointController",     
         method : "put",   
         async: false, 
         //포인트내용알려줄 속성 하나 추가해야될듯 ,
-        data : {type:2,ano:ano, gold:bprice}, //type2=출금      
+        data : {type:3,ano:ano, gold:bprice}, //type3 :포인트출금    
          success : r=>{console.log('포인트차감통신성공')} ,       
          error : e=>{console.log(e)} ,         
    });
 
+*/
 
-
-//입찰등록	
+//2.입찰등록	
    	$.ajax({
 		   
         url : "/nichanaecha/BattingController",     
@@ -388,7 +390,7 @@ function batting(){
          error : e=>{console.log('통신실패')} ,         
    });
 	
-//이전 입찰자에게 포인트 돌려줌	
+//3.이전 입찰자에게 포인트 돌려줌	
 	
 }//f()
 
@@ -420,14 +422,14 @@ function batPrint(ano){
         	let html=``;
          	let auctionBox=document.querySelector('.auctionBox');
          	r.forEach((b)=>{
-				console.log('full상위날짜')
-				console.log(`${b.bDate}`); 
-	         	let buyDate=endDate(`${b.bDate}`);
-	         	console.log('상위입찰날짜')
-	         	console.log(buyDate.getDate())
-	         	console.log('상위 분')
-	         	console.log(buyDate.getMinutes())
-	         	console.log('오늘 날짜')
+				//console.log('full상위날짜')
+				//console.log(`${b.bDate}`); 
+	         	//let buyDate=endDate(`${b.bDate}`);
+	         	//console.log('상위입찰날짜')
+	         	//console.log(buyDate.getDate())
+	         	//console.log('상위 분')
+	         	//console.log(buyDate.getMinutes())
+	         	//console.log('오늘 날짜')
 	      
 	        	html+=`
 	                  <div class="auction">
@@ -459,8 +461,9 @@ function batPrint(ano){
 	            `
 					
 				}
-  */          	
-         	})
+  */   
+        	
+         	})//forEach
          auctionBox.innerHTML=html;
 
          } ,       
@@ -477,22 +480,6 @@ function batPrint(ano){
 
 
 
-//소켓 통신---------------------------------------------------------
 
-
-	
-	
-
-
-function nowContent(e){
-	console.log('클라이언트소켓이벤트실행')
-	console.log(e)
-	console.log(e.data)
-	
-	let auctionSocket =document.querySelector('.auctionSocket')
-	//auctionSocket.innerHTML=``
-	
-	
-}//f()
 
 

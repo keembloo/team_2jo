@@ -1,9 +1,7 @@
 package model.dao;
 
-import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.List;
 
 import controller.auction.BattingSocket;
 import model.dto.BattingDto;
@@ -39,23 +37,15 @@ public class BattingDao extends Dao {
 				rs=ps.executeQuery();
 				System.out.println("rs넘어옴??????"+rs);
 				
-				String nowContent="";
-				System.out.println("nowContent 초기> "+nowContent);
+				String nowPrice="";
+				String nowDate="";
 				if(rs.next()) {
 					System.out.println("if문 안으로 들어오긴함?");
-					nowContent+=
-							"<div class=\"aSocket\">"
-							+"<li>"
-						    +rs.getLong("bprice")
-						    +"</li>"
-						    +"<li>"
-						    +rs.getString("bDate")
-							+"</li>"
-							+"</div>";
-					System.out.println("변경된nowContent> "+nowContent);
+					nowPrice=Long.toString(rs.getLong("bprice"));
+					System.out.println("입찰금액> "+nowPrice);
 				}
-				BattingSocket socket=new BattingSocket();
-				socket.onMessage(null, nowContent);
+				BattingSocket socketPrice=new BattingSocket();
+				socketPrice.onMessage(null, nowPrice);
 				return true;
 			}
 		} catch (Exception e) {System.out.println("batting()오류"+e);}
