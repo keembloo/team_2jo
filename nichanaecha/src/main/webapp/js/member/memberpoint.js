@@ -48,7 +48,7 @@ function inputPoint(){
 				url : "/nichanaecha/MemberPointController" ,
 				async : false ,
 				method : "put" ,
-				data : { type : 1 , gold : gold } , // type 1이면 입금
+				data : { type : "사용자 입금" , gold : gold } ,
 				success : r => { //console.log("js연결성공");
 					alert('입금 성공');
 					mpointView(); // 포인트출력함수 호출
@@ -70,7 +70,7 @@ function outputPoint(mcash){
 				url : "/nichanaecha/MemberPointController" , 
 				async : false ,
 				method : "put" ,
-				data : { type : 2 , gold : gold } ,  // type 2이면 출금
+				data : { type : "사용자 출금" , gold : gold } , 
 				success : r => { //console.log("js연결성공");
 					alert('출금 성공');
 					mpointView(); // 포인트출력함수 호출
@@ -113,7 +113,7 @@ function PointAllView(page){
 }
 
 // 규리 입금내역만보기
-function PointInputView(listsize, page){
+function PointInputView(page){
 		$.ajax({
 			url : "/nichanaecha/MemberPointController" , 
 			async : false ,
@@ -124,45 +124,42 @@ function PointInputView(listsize, page){
 				let pointbox = document.querySelector('.pointbox');
 				let html = ``;
 				
-				jasonArray.forEach(p =>{
-					if(p.pointhistory=='입금'){
-						html += `<tr>
-							   		<td class="text-center">${p.mpoint.toLocaleString()}원</td>
-							   		<td class="text-center">${p.pointdate}</td>
-							   		<td class="text-center">${p.pointhistory}</td>
-								</tr>`;
-					}
+				jasonArray.pointList.forEach(p =>{
+					html += `<tr>
+						   		<td class="text-center">${p.mpoint.toLocaleString()}원</td>
+						   		<td class="text-center">${p.pointdate}</td>
+						   		<td class="text-center">${p.pointhistory}</td>
+							</tr>`;
+					
 				});
 				pointbox.innerHTML = html;
-				pageboxView(page , jason);
+				pageboxView(page , jasonArray);
 			} , 
 			error : e => {console.log("실패"+e);}
 		})
 }
 
 // 규리 출금내역만보기
-function PointOutputView(listsize, page){
+function PointOutputView(page){
 		$.ajax({
 			url : "/nichanaecha/MemberPointController" , 
 			async : false ,
 			method : "get" ,
 			data : { type : "PointOutput" , listsize : listsize , page : page } ,  
 			success : jasonArray => { //console.log("js연결성공");
-				//console.log(jasonArray);
+				console.log(jasonArray);
 				let pointbox = document.querySelector('.pointbox');
 				let html = ``;
 				
-				jasonArray.forEach(p =>{
-					if(p.pointhistory=='출금'){
+				jasonArray.pointList.forEach(p =>{
 						html += `<tr>
 							   		<td class="text-center">${p.mpoint.toLocaleString()}원</td>
 							   		<td class="text-center">${p.pointdate}</td>
 							   		<td class="text-center">${p.pointhistory}</td>
 								</tr>`;
-					}
 				});
 				pointbox.innerHTML = html;
-				pageboxView(page , jason);
+				pageboxView(page , jasonArray);
 			} , 
 			error : e => {console.log("실패"+e);}
 		})

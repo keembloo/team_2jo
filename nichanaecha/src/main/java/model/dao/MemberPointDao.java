@@ -16,9 +16,9 @@ public class MemberPointDao extends Dao {
 			// 만약에 전체보기가 아니면 
 			
 			if (type.equals("PointInput")) {
-				sql += " and pointhistory = '입금'";
+				sql += " and mpoint > 0";
 			} else if (type.equals("PointOutput")) {
-				sql += " and pointhistory = '출금'";
+				sql += " and mpoint < 0";
 			}
 			//System.out.println(sql);
 			ps = conn.prepareStatement(sql);
@@ -43,12 +43,12 @@ public class MemberPointDao extends Dao {
 			String sql ="select * from pointrecord where mno = ?";
 			
 			if (type.equals("PointInput")) {
-				sql += " and pointhistory like '%입금%'";
+				sql += " and mpoint > 0";
 			} else if (type.equals("PointOutput")) {
-				sql += " and pointhistory like '%출금%'";
+				sql += " and mpoint < 0";
 			}
 			sql += " order by pointdate desc limit ? , ?";
-			System.out.println("입출금내역출력 sql"+sql);
+			//System.out.println("입출금내역출력 sql"+sql);
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, mno);
 			ps.setInt(2, startrow);
@@ -63,6 +63,7 @@ public class MemberPointDao extends Dao {
 						rs.getString("pointdate"), 
 						rs.getString("pointhistory"));
 				list.add(memberPointDto);
+				//System.out.println("memberPointDto : "+memberPointDto);
 			}
 			return list;
 		} catch (Exception e) {
