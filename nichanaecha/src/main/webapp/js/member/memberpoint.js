@@ -92,7 +92,7 @@ function PointAllView(page){
 			method : "get" ,
 			data : { type : "PointAllView" , listsize : listsize , page : page } ,  
 			success : jason => { //console.log("js연결성공");
-				console.log(jason);
+				//console.log(jason);
 				let pointbox = document.querySelector('.pointbox');
 				let html = ``;
 				
@@ -147,7 +147,7 @@ function PointOutputView(page){
 			method : "get" ,
 			data : { type : "PointOutput" , listsize : listsize , page : page } ,  
 			success : jasonArray => { //console.log("js연결성공");
-				console.log(jasonArray);
+				//console.log(jasonArray);
 				let pointbox = document.querySelector('.pointbox');
 				let html = ``;
 				
@@ -173,7 +173,7 @@ function pageboxView(page , jason){
 	// 이전버튼 [page<=1? page: page-1] 만약에 1페이지에서 이전버튼 클릭시 1페이지로 고정하고 아니면 1차감
 	let pagebox = document.querySelector('.pagebox');
 	let html = ``;
-	let before = `<button onclick="onView(${page<=1? page: page-1})" type="button"> < </button>`;
+	let before = `<button onclick="PointAllView(${page<=1? page: page-1})" type="button"> < </button>`;
 	// 페이지 번호 버튼 [ * 페이지 개수만큼 반복 ]
 	for (let i= jason.startbtn; i <= jason.endbtn ; i++){
 		// 만약에 현재페이지와 i번째 페이지가 일치하면 버튼태그에 class="selectpage" 추가
