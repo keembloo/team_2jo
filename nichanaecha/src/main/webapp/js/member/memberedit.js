@@ -14,11 +14,11 @@ function editview(){
 			
 			let infobox = document.querySelector('.infobox');
 
-			infobox.innerHTML = `<div class="textId">'${r.mname}' 님</div>
-								<div class="textPoint">보유 포인트 : <span>${r.mcash.toLocaleString()}원</span></div>
-								<div class="textId">아이디 : ${r.mid}</div>
-								<div class="textId">주소 : ${r.mads}</div>
-								<div class="textId">연락처 : ${r.mphone}</div>
+			infobox.innerHTML = `<div class="infotitle">'${r.mname}' 님</div>
+								<div class="infotitle">보유 포인트 : <span>${r.mcash.toLocaleString()}원</span></div>
+								<div class="infotitle">아이디 : ${r.mid}</div>
+								<div class="infotitle">주소 : ${r.mads}</div>
+								<div class="infotitle">연락처 : ${r.mphone}</div>
 								`;
 			
 		} , 

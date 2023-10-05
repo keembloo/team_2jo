@@ -3,8 +3,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<link href="/nichanaecha/css/member/memberedit.css" rel="stylesheet">
 </head>
 <body>
 	<!-- jsp  파일안에 다른 jsp파일 import -->
@@ -19,11 +20,7 @@
 			</div>
 			<div class="memberContent col-9">
 				<div class="infobox">
-					<div>이름</div>
-					<div>아이디</div>
-					<div>포인트</div>
-					<div>주소</div>
-					<div>연락처</div>
+					<!-- js에서 출력 -->
 				</div>
 				<div>
 					<div>새로운주소</div>

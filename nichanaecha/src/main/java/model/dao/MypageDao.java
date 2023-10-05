@@ -26,7 +26,7 @@ public class MypageDao extends Dao {
 			rs = ps.executeQuery();
 			if ( rs.next()) {
 				MemberDto memberDto = new MemberDto(
-						rs.getInt("mno"), rs.getString("mname"),  rs.getInt("mcash")
+						rs.getInt("mno"), rs.getString("mname"),  rs.getLong("mcash")
 						);
 				//System.out.println(memberDto);
 				return memberDto;

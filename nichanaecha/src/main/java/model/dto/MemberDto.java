@@ -17,9 +17,6 @@ public class MemberDto {
 	}
 
 	
-	
-	
-	
 	public MemberDto() {
 		super();
 	}
