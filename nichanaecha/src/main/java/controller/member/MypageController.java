@@ -2,6 +2,7 @@ package controller.member;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.UUID;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import model.dao.MemberPointDao;
 import model.dao.MypageDao;
 import model.dto.AuctionDto;
 import model.dto.MemberDto;
@@ -63,14 +65,28 @@ public class MypageController extends HttpServlet {
 
 	// 규리 마이페이지 입금,출금
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int type = Integer.parseInt(request.getParameter("type"));
-		int mno = Integer.parseInt(request.getParameter("mno"));
-		int gold = Integer.parseInt(request.getParameter("gold"));
-			
-		boolean result = MypageDao.getInstence().PointUpdate( type , mno , gold);
-			
-		response.setContentType("application/json;charset=UTF-8");
-    	response.getWriter().print(result);
+		//System.out.println(" 컨트롤러실행");
+				String type = request.getParameter("type");
+				int mno = ((MemberDto)request.getSession().getAttribute("loginDto")).getMno();
+				long gold = Integer.parseInt(request.getParameter("gold"));
+				String mpno = (UUID.randomUUID().toString())+"_"+mno; 
+				//System.out.println("컨트롤ㄹ러 uuid : "+mpno);
+				if(type.equals("사용자 입금")) {
+					type="사용자 입금";
+				} else if (type.equals("사용자 출금")){
+					type="사용자 출금";
+					gold = -gold;
+				} 
+				
+				boolean result1 = MemberPointDao.getInstence().PointUpdate( type , mno , gold , mpno);
+				boolean result2 = MemberPointDao.getInstence().setPoint( type , mno , gold , mpno);
+				boolean allrs = false;
+				
+				if (result1 == true && result2 == true) { // 포인트업데이트, 포인트저장 둘다 성공이면
+					allrs =true;
+				}
+				response.setContentType("application/json;charset=UTF-8");
+		    	response.getWriter().print(allrs);
 	}
 
 

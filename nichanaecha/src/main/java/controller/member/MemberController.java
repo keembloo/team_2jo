@@ -8,10 +8,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import model.dao.MemberDao;
+import model.dao.MypageDao;
 import model.dto.MemberDto;
 
 /**
@@ -26,9 +28,19 @@ public class MemberController extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 
-	
+	// 규리 내정보 수정 회원정보 불러오기 출력용
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		String type = request.getParameter("type");
+		int mno = ((MemberDto)request.getSession().getAttribute("loginDto")).getMno();
+		if (type.equals("editview")) {
+			//System.out.println("컨트롤러실행");
+			MemberDto result = MemberDao.getInstence().editview( mno );
+			//System.out.println("컨트롤러 result : "+result);
+			ObjectMapper objectMapper = new ObjectMapper();
+			String json = objectMapper.writeValueAsString(result);
+			response.setContentType("application/json;charset=UTF-8");
+	    	response.getWriter().print(json);
+		}
 	}
 
 // 회원가입[9월15일 고연진]

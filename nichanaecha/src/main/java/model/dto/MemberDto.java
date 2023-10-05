@@ -7,7 +7,7 @@ public class MemberDto {
 	private String mphone;	//회원 전화번호
 	private String mname;	//회원 이름 
 	private String mads;	//회원 주소 
-	private int mcash;		//회원 보유 금액 
+	private long mcash;		//회원 보유 금액 
 	
 	//내정보 호출 생성자
 	public MemberDto(int mno, String mid) {
@@ -24,7 +24,7 @@ public class MemberDto {
 		super();
 	}
 	
-	public MemberDto(int mno, String mid, String mpw, String mphone, String mname, String mads, int mcash) {
+	public MemberDto(int mno, String mid, String mpw, String mphone, String mname, String mads, long mcash) {
 		super();
 		this.mno = mno;
 		this.mid = mid;
@@ -44,6 +44,29 @@ public class MemberDto {
 		this.mphone = mphone;
 		this.mname = mname;
 		this.mads = mads;
+	}
+	
+	
+
+	// 규리 마이페이지 출력시 사용 [회원번호, 이름 , 포인트 ]
+	public MemberDto(int mno, String mname, long mcash) {
+		super();
+		this.mno = mno;
+		this.mname = mname;
+		this.mcash = mcash;
+	}
+	
+
+
+	// 규리 내정보 수정 출력시 사용 [ 회원번호, 이름 , 아이디 , 주소, 연락처 , 포인트 ]
+	public MemberDto(int mno, String mid, String mphone, String mname, String mads, long mcash) {
+		super();
+		this.mno = mno;
+		this.mid = mid;
+		this.mphone = mphone;
+		this.mname = mname;
+		this.mads = mads;
+		this.mcash = mcash;
 	}
 	
 	
@@ -97,11 +120,11 @@ public class MemberDto {
 		this.mads = mads;
 	}
 
-	public int getMcash() {
+	public long getMcash() {
 		return mcash;
 	}
 
-	public void setMcash(int mcash) {
+	public void setMcash(long mcash) {
 		this.mcash = mcash;
 	}
 

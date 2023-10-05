@@ -89,4 +89,28 @@ public class MemberDao extends Dao {
 		} catch (Exception e) { System.out.println( "Dao오류: "+e);}
 		return false;
 	}
+	
+	
+	// 규리 내정보수정페이지 정보 호출
+	public MemberDto editview( int mno ) {
+		try {
+			String sql="select mno, mid ,mname , mads , mphone , mcash from member where mno = ?";
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, mno);
+			rs=ps.executeQuery();
+			if (rs.next()) {
+				MemberDto memberDto = new MemberDto(
+						rs.getInt("mno"), 
+						rs.getString("mid"), 
+						rs.getString("mphone"), 
+						rs.getString("mname"), 
+						rs.getString("mads"), 
+						rs.getLong("mcash")
+						);
+
+				return memberDto;
+			}
+		}catch (Exception e) {System.out.println(e);}
+		return null;
+	}
 }

@@ -22,7 +22,7 @@ function mview(){
 			data : {type : "mview"} ,
 			success : r => { //console.log("js연결성공");
 				//console.log('r.mno : '+r.mno);
-				//console.log('r: '+r);
+				//console.log(r);
 				//console.log('r[0].mno : '+r[0].mno);
 				
 				let cashInfo = document.querySelector('.cashInfo');

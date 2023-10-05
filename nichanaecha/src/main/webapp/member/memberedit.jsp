@@ -18,7 +18,7 @@
 				<a class="nav-link" href="/nichanaecha/member/memberpoint.jsp">포인트 입출금 내역확인</a>
 			</div>
 			<div class="memberContent col-9">
-				<div>
+				<div class="infobox">
 					<div>이름</div>
 					<div>아이디</div>
 					<div>포인트</div>
@@ -36,7 +36,7 @@
 	
 	<!-- jsp  파일안에 다른 jsp파일 import -->
 	<%@include file="../footer.jsp"%>
-	<script src="/nichanaecha/js/member/memberpoint.js"
+	<script src="/nichanaecha/js/member/memberedit.js"
 		type="text/javascript"></script>
 </body>
 </html>
