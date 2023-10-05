@@ -54,9 +54,9 @@ public class MemberController extends HttpServlet {
 		
 	}
 
-	
+	// 규리 회원정보 수정
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
+		
 	}
 
 	

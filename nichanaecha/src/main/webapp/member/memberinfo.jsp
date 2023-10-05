@@ -17,7 +17,7 @@
 			<div class="lInfo nav flex-column col-3">
 				<!-- 사이드바 -->
 				<a class="nav-link active" aria-current="page" href="/nichanaecha/member/memberinfo.jsp">마이페이지</a> 
-				<a class="nav-link" href="#">내정보 수정</a> 
+				<a class="nav-link" href="/nichanaecha/member/memberedit.jsp">내정보 수정</a> 
 				<a class="nav-link" href="/nichanaecha/member/memberpoint.jsp">포인트 입출금 내역확인</a>
 				
 			</div>
