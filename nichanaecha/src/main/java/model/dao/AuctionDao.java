@@ -201,7 +201,7 @@ public class AuctionDao extends Dao {
 		AuctionDto auctionDto = new AuctionDto();
 		
 		try {
-			String sql = "select * from auctionInfo where cno= ? ";
+			String sql = "select*from auctioninfo where cno=? order by astartdate desc limit 1";
 			ps=conn.prepareStatement(sql);
 			ps.setInt(1, cno);
 			rs=ps.executeQuery(); 

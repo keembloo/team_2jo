@@ -82,12 +82,10 @@ public class MemberPointController extends HttpServlet {
 		long gold = Integer.parseInt(request.getParameter("gold"));
 		String mpno = (UUID.randomUUID().toString())+"_"+mno; 
 		//System.out.println("컨트롤ㄹ러 uuid : "+mpno);
-		if(type.equals("사용자 입금")) {
-			type="사용자 입금";
-		} else if (type.equals("사용자 출금")){
-			type="사용자 출금";
-			gold = -gold;
-		} 
+	    //고연진 수정
+		if (type.equals("사용자 출금") ||type.equals("입찰참여출금")){
+		         gold = -gold;
+		      }
 		
 		boolean result1 = MemberPointDao.getInstence().PointUpdate( type , mno , gold , mpno);
 		boolean result2 = MemberPointDao.getInstence().setPoint( type , mno , gold , mpno);

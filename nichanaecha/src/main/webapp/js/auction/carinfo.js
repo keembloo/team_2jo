@@ -6,7 +6,6 @@ let x; // 종료날짜(문자)
 let timerInter;
 let mcash=0;//회원보유금액
 let nowPay=0; 
-let bprice;
 let endTime;//종료시간
 
 let clientSocket= new WebSocket('ws://localhost:80/nichanaecha/BattingSocket')
@@ -27,10 +26,6 @@ batPrint(ano)
 
 //(개별)상세페이지 출력 [9월24일 고연진]--------------------------------------------------------
 
-clipState();
-
-
-	
 function auctionPrint(){console.log('상세페이지출력')
 	
    let cno = new URL(location.href).searchParams.get("cno"); //경매게시글번호
@@ -43,17 +38,18 @@ function auctionPrint(){console.log('상세페이지출력')
         data : {cno : cno},      
         success : r=>{
            console.log('차정보출력성공')
-           console.log('차정보내용')
-           console.log(r)
+           //console.log('차정보내용')
+           //console.log(r)
            ano = r.ano;
            console.log("차 정보에서 가져온 ano >  "+ano)
-               
+          
+         clipState();      
          // 제목
             document.querySelector('.atitle').innerHTML=`${r.atitle}`
-		 
 		 // 시작입찰가
-		 	document.querySelector('.startPrice').innerHTML=`${r.aprice}원` 
-         
+		 	let startPrice=document.querySelector('.startPrice')
+		 	let price=r.aprice;
+         	startPrice.innerHTML=`${price.toLocaleString()}원`
          //캐러셀(여러개이미지)
             let imgbox=document.querySelector('.imgbox');
             let html=``;
@@ -65,7 +61,7 @@ function auctionPrint(){console.log('상세페이지출력')
 					    </div>
 					  `
 				  })
-      			imgbox.innerHTML=html;
+      		imgbox.innerHTML=html;
 		//전체 경매 내역 출력으로 가기 위한 <a>
          document.querySelector('.buymember').innerHTML=
 	 		` <a href="/nichanaecha/auction/buymember.jsp?ano=${ano}"><button style="" type="button" >입찰내역</button></a>`
@@ -81,13 +77,12 @@ function auctionPrint(){console.log('상세페이지출력')
             document.querySelector('.cads').innerHTML=`${r.car.cads}`
             //document.querySelector('.acontent').innerHTML=`${r.car.carAddress.cads}`
             
-         //남은시간
-           
+         //끝나는날짜
            x = `${r.aenddate}`;
    		  //console.log('종료날짜'+x);
    			settimer();
    			
-   			aprice(ano)
+   		//입찰내역출력
 			batPrint(ano)
             
          } ,       
@@ -98,33 +93,6 @@ function auctionPrint(){console.log('상세페이지출력')
 
 }//f()
 
-
-//경매가격 가져오는 함수----------------------------------------------------------
-
-function aprice(ano){console.log('입찰가격가져오는함수실행')
-	$.ajax({
-        url : "/nichanaecha/BattingController",     
-        method : "get", 
-        async: false,  
-        data : {type:'price',ano:ano, count:1},      
-        success : r=>{
-           console.log('현재가격 통신 성공')
-           console.log(r);
-           //console.log(r[0].bprice)//최근입찰가격
-           //console.log(r[0].bDate)//경매추가날짜
-          //nowPay=r[0].bprice
-        
-         
-   		
-
-   			
-         } ,       
-         error : e=>{console.log('현재가격가져오기실패');console.log(e)} ,         
-   });
-	
-	
-	
-}//f()
 
 //날짜 변환 함수(문자->숫자로 바꿔서 객체만듦)------------------------------------------------------
 
@@ -159,11 +127,8 @@ function endDate(z){console.log('날짜변환함수실행')
 /*
 1. 타이머 실행
 2. 타이머 종료되면 경매 상태 변경
-
  */
 
-//?????????????????한달차이 나는거 같음 .. 
-//타이머<0 시에 새로고침 없이 AJAX 통신 가능?
 function settimer(){ 
 	console.log('타이머함수실행')
 	//숫자로 바꾼 날짜
@@ -171,6 +136,7 @@ function settimer(){
 	//console.log('날짜변화함수에서 결과값 돌려 받음?????')
 	 console.log(endTime)
 
+	//1초마다함수실행
 	timerInter=setInterval(()=>{
 	
 		let nowTime=new Date();//현재시간
@@ -191,7 +157,8 @@ function settimer(){
 		
 		timer--;
 		document.querySelector('.remain').innerHTML=`${days}일 ${hours}:${min}:${sec}`
-
+		
+		//타이머가 종료 ()
 		if(timer<=0){
 			clearInterval(timerInter);
 			//종료 알림
@@ -213,7 +180,7 @@ function settimer(){
 		
 	  }
 		
-	},1000)
+	},1000) //setInterval()실행
 	
 	
 
@@ -262,7 +229,7 @@ function clipping(){
 function clipState(){ console.log('찜하기상태변화함수실행')
    let state= document.querySelector('.state');
    
-//?????????????????비로그인일때 innerHTML 실행 안됨.   
+  
    //비회원
    if(loginMid == ''){
 	   console.log('비로그인일때');console.log(localStorage)
@@ -307,7 +274,7 @@ function clipState(){ console.log('찜하기상태변화함수실행')
 function battingBtn(){console.log('battingBtn() 실행')
 	if(loginMid==''){location.href=location.href='/nichanaecha/member/memberlogin.jsp'}
 	console.log('경매참여버튼누름')
-/*	
+
 //보유금액가져오기	
 	 $.ajax({
         url : "/nichanaecha/MypageController",     
@@ -317,11 +284,13 @@ function battingBtn(){console.log('battingBtn() 실행')
         success : r=>{console.log('보유금액가져오기통신성공')
          	console.log('규리쓰마이페이지컨트롤러에서가져온mno정보');console.log(r);
          	document.querySelector('.valMcash').innerHTML=`${r.mcash}원`
-         	mcash=`${r.mcash}`; 
+         	mcash=r.mcash;
+         	//console.log('전역변수에 선언된 가격 변경됨')
+         	//console.log(mcash);
          } ,       
          error : e=>{console.log('보유금액가져오기실패')} ,         
  	  });
-*/
+
  	  
  	  
  }//f()
@@ -335,7 +304,7 @@ function battingBtn(){console.log('battingBtn() 실행')
 */
 function valPay(){
 	console.log('입력중')
-	bprice=document.querySelector('.bprice').value
+	let bprice=document.querySelector('.bprice').value
 	let valCheck=document.querySelector('.valCheck'); //입찰금액유효성검사 위치
 	//유효성검사 (입력받은값 bprice)	
 
@@ -346,34 +315,32 @@ function valPay(){
 
 //입찰등록버튼 누를 시[10월3일 고연진]------------------------------------------------------
 function batting(){
-	bprice = document.querySelector('.bprice').value;
-/*
-//1.포인트차감
+	 let bprice = document.querySelector('.bprice');
+
+
+//1. 보유금액 차감(update)+포인트테이블 (add)
 	  $.ajax({
-         url : "/nichanaecha/MemberPointController",     
-        method : "put",   
+        url : "/nichanaecha/MemberPointController",     
+        method : "post",   
         async: false, 
-        //포인트내용알려줄 속성 하나 추가해야될듯 ,
-        data : {type:3,ano:ano, gold:bprice}, //type3 :포인트출금    
-         success : r=>{console.log('포인트차감통신성공')} ,       
-         error : e=>{console.log(e)} ,         
+        data : {type:'입찰참여출금',ano:ano, gold:bprice.value}, //type3 :포인트출금    
+        success : r=>{console.log('포인트차감통신성공')} ,       
+        error : e=>{console.log(e)} ,         
    });
 
-*/
 
-//2.입찰등록	
+//3.입찰등록	
+
    	$.ajax({
 		   
         url : "/nichanaecha/BattingController",     
         method : "post",  
         async: false,  
-        data : {ano:ano,bprice:bprice},      
+        data : {ano:ano,bprice:bprice.value},      
         success : r=>{console.log('입찰등록통신성공');console.log(r)
             if(r){
             alert('입찰등록 성공');
- 
- //????????????얘 왜 안됨 ,, 
-            bprice.innerHTML=``;
+            bprice.value =``;
             document.querySelector('#closebtn').click()//코드가 실행 된 뒤에 #를 강제로 닫겠다는거임. close안에 기능
 
             }
