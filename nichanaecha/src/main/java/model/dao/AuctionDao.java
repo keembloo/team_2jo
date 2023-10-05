@@ -49,15 +49,14 @@ public class AuctionDao extends Dao {
 	}
 	
 	// 경매 정보 dto 반환 함수
-	//[10월2일 고연진 수정] - int cno-> ano
-	public AuctionDto auctionDto(int ano) {
+	public AuctionDto auctionDto(int cno) {
 	
 		
 		try {
-			String sql = "select * from auctionInfo where ano = ? ";
+			String sql = "select * from auctionInfo where cno = ? ";
 			
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setInt(1, ano);
+			ps.setInt(1, cno);
 			ResultSet rs = ps.executeQuery();
 			
 			rs.next();
@@ -108,6 +107,35 @@ public class AuctionDao extends Dao {
 		
 	}
 	
+	// 자동차 주소 테이블 반환 공통 함수
+	public CarAddressDto carAddressDto(int cno) {
+		try {
+			String sql = "select * from caraddress where cno = ?";
+			
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, cno);
+			ResultSet rs = ps.executeQuery();
+			
+			rs.next();
+			
+			CarAddressDto dto = new CarAddressDto(
+					rs.getString("cads"),
+					rs.getString("calat"),
+					rs.getString("calng"),
+					rs.getString("cacode"),
+					rs.getString("cacodename"),
+					rs.getInt("cno")
+			);
+			
+			return dto;
+			
+		} catch (Exception e) {
+			System.out.println("자동차 주소 테이블 반환 공통 함수 예외 : "+e);
+			return null;
+		}
+		
+		
+	}
 	
 	
 	// 1.차 등록 성호
@@ -168,14 +196,14 @@ public class AuctionDao extends Dao {
 	  }
 	
 //게시물 상세조회 [9월19일 고연진]------------------------------------------------------------
-	public AuctionDto auctionPrint(int ano) {
-		System.out.println("Dao들어옴> "+ano);
+	public AuctionDto auctionPrint(int cno) {
+		System.out.println("Dao들어옴> "+cno);
 		AuctionDto auctionDto = new AuctionDto();
 		
 		try {
-			String sql = "select * from auctionInfo where ano= ? ";
+			String sql = "select * from auctionInfo where cno= ? ";
 			ps=conn.prepareStatement(sql);
-			ps.setInt(1, ano);
+			ps.setInt(1, cno);
 			rs=ps.executeQuery(); 
 			//경매 번호에 맞는 차량 번호 찾기
 			if(rs.next()) {
@@ -183,7 +211,7 @@ public class AuctionDao extends Dao {
 				Map<Integer, String> imglist= imglist(rs.getInt("cno"));//cno에 맞는 차량이미지 저장한거 가져옴
 				carDto.setImglist(imglist);
 				
-				auctionDto =auctionDto(ano);
+				auctionDto =auctionDto(rs.getInt("cno"));
 				auctionDto.setCar(carDto);
 	
 				return auctionDto;
@@ -405,6 +433,7 @@ public class AuctionDao extends Dao {
 				
 				CarDto carDto = carDto(cno);
 				carDto.setImglist(imglist(cno));
+				carDto.setCarAddress(carAddressDto(cno));
 				
 				AuctionDto auctionDto = auctionDto(cno);
 				auctionDto.setCar(carDto);

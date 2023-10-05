@@ -38,9 +38,10 @@ public class AuctionController extends HttpServlet {
     
     //상세페이지조회 [9월19일 고연진]   
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int ano = Integer.parseInt(request.getParameter("ano"));
+		int cno = Integer.parseInt(request.getParameter("cno"));
+		System.out.println("cno : "+cno);
 		//System.out.println("controller 들어옴 > ano:  "+ano);
-		AuctionDto result= AuctionDao.getInstence().auctionPrint(ano);
+		AuctionDto result= AuctionDao.getInstence().auctionPrint(cno);
 		//System.out.println("경매Dto: "+result);
 		//System.out.println("경매Dto 안에 CarDto: "+result.getCar());
 		//System.out.println("CarDto 안에 imglist: "+result.getCar().getImglist());

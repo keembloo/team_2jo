@@ -1,7 +1,8 @@
-
 console.log('carinfo.js 실행')
+let ano = 0;
 
-let ano=new URL(location.href).searchParams.get("ano"); //경매게시글번호
+
+
 //console.log('전달받은게시물번호')
 //console.log(ano)
 let timer=0; //시간변수.남은시간
@@ -19,6 +20,7 @@ clientSocket.onopen=e=>{console.log('클라이언트소켓열림')}//socket(e)
 
 clientSocket.onmessage=e=>nowContent(e)
 
+auctionPrint();
 
 //소켓 통신(메세지)---------------------------------------------------------
 	
@@ -30,10 +32,10 @@ batPrint(ano)
 //(개별)상세페이지 출력 [9월24일 고연진]--------------------------------------------------------
 
 clipState();
-auctionPrint(ano);
+
 
 	
-function auctionPrint(ano){
+function auctionPrint(){
 	console.log('상세페이지출력')
    //if(loginMid==''){location.href='../member/memberlogin.jsp'}
    //경매글 출력(차량정보,게시물정보)
@@ -41,19 +43,22 @@ function auctionPrint(ano){
 	//console.log('현재시간(문자)')
 	//console.log(firstTime)
 	
-	document.querySelector('.buymember').innerHTML=
-	 
-	 ` <a href="/nichanaecha/auction/buymember.jsp?ano=${ano}"><button style="" type="button" >입찰내역</button></a>`
+   let cno = new URL(location.href).searchParams.get("cno"); //경매게시글번호
+   console.log("cno: "+cno)
 
 
    $.ajax({
         url : "/nichanaecha/AuctionController",     
         method : "get", 
         async: false,  
-        data : {ano:ano},      
+        data : {cno : cno},      
         success : r=>{
            console.log('차정보출력성공')
-           console.log(r);
+           console.log("r.ano : "+r.ano);
+           console.log("ano : "+ano);
+           
+           ano = r.ano;
+           console.log("ano : "+ano)
                
          // 제목
             document.querySelector('.atitle').innerHTML=`${r.atitle}`
@@ -74,7 +79,9 @@ function auctionPrint(ano){
 				  })
       			imgbox.innerHTML=html;
 
-         
+         document.querySelector('.buymember').innerHTML=
+	 
+	 	` <a href="/nichanaecha/auction/buymember.jsp?ano=${ano}"><button style="" type="button" >입찰내역</button></a>`
            
          //차량정보
             document.querySelector('.ccompany').innerHTML=`${r.car.ccompany}`
@@ -92,17 +99,15 @@ function auctionPrint(ano){
            x = `${r.aenddate}`;
    		  //console.log('종료날짜'+x);
    			settimer();
-         
-            
-            
-            
+   			
+   			aprice(ano)
+			batPrint(ano)
             
          } ,       
          error : e=>{console.log('상세페이지통신실패');console.log(e)} ,         
    });
 
-	aprice(ano)
-	batPrint(ano)
+	
 
 }//f()
 
@@ -354,7 +359,7 @@ function valPay(){
 
 //입찰등록버튼 누를 시[10월3일 고연진]------------------------------------------------------
 function batting(){
-	bprice=document.querySelector('.bprice').value;
+	bprice = document.querySelector('.bprice').value;
 /*
 //1.포인트차감
 	  $.ajax({

@@ -69,7 +69,7 @@ function mySubmitcarView(){
 					// 제품1개 html 마크업
 					html += `<div class="col"> <!-- 제품1개 -->
 								<div class="card">
-									<a href="/nichanaecha/auction/carinfo.jsp?ano=${p.ano}">
+									<a href="/nichanaecha/auction/carinfo.jsp?cno=${p.cno}">
 										<img src="/nichanaecha/auction/img/seltosImgSample.jpg" class="card-img-top" alt="Image 1">
 										<div class="card-body">
 											<h5 class="card-title">${p.atitle}</h5>
@@ -145,7 +145,7 @@ function myAuctionView(){
 					// 제품1개 html 마크업
 					html += `<div class="col"> <!-- 제품1개 -->
 								<div class="card">
-									<a href="/nichanaecha/auction/carinfo.jsp?ano=${p.ano}">
+									<a href="/nichanaecha/auction/carinfo.jsp?cno=${p.cno}">
 										<img src="/nichanaecha/auction/img/seltosImgSample.jpg" class="card-img-top" alt="Image 1">
 										<div class="card-body">
 											<h5 class="card-title">${p.atitle}</h5>
@@ -208,7 +208,7 @@ function myWishlistView(){
 					// 제품1개 html 마크업
 					html += `<div class="col"> <!-- 제품1개 -->
 								<div class="card">
-									<a href="/nichanaecha/auction/carinfo.jsp?ano=${p.ano}">
+									<a href="/nichanaecha/auction/carinfo.jsp?cno=${p.cno}">
 										<img src="/nichanaecha/auction/img/seltosImgSample.jpg" class="card-img-top" alt="Image 1">
 										<div class="card-body">
 											<h5 class="card-title">${p.atitle}</h5>

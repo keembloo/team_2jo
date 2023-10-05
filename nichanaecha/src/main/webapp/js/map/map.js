@@ -40,25 +40,37 @@ let getTexts = '';
     // 마커 클러스터러에 클릭이벤트를 등록합니다
     // 마커 클러스터러를 생성할 때 disableClickZoom을 true로 설정하지 않은 경우
     // 이벤트 헨들러로 cluster 객체가 넘어오지 않을 수도 있습니다
-    kakao.maps.event.addListener(clusterer, 'clusterclick', function(cluster) {
-		let markerList = [];
-		
-	   	cluster.getMarkers().forEach( p => { // 클러스터안의 마커 정보 배열로 반환 후 markerList에 cno 저장 후 배열로 반환
-			
-			markerList.push(p.cno)
-				
-		})
-		
-		clusterPrint(markerList)
-    });
+ 
 
+/* --------------------------- 이벤트 영역 --------------------------- */
+
+// 드래그 이벤트
 kakao.maps.event.addListener(map, 'dragend', function() {
     getInfo();
 });
 
+//확대, 축소 이벤트
 kakao.maps.event.addListener(map, 'zoom_changed', function() {        
 	getInfo();    
 });
+
+// 클러스터 클릭 이벤트
+kakao.maps.event.addListener(clusterer, 'clusterclick', function(cluster) {
+	
+	
+	
+	let markerList = [];
+		
+	cluster.getMarkers().forEach( p => { // 클러스터안의 마커 정보 배열로 반환 후 markerList에 cno 저장 후 배열로 반환
+			
+		markerList.push(p.cno)
+				
+	})
+		
+	clusterPrint(markerList)
+});
+
+
 
 function getInfo() {
     // 지도의 현재 중심좌표를 얻어옵니다 
@@ -94,8 +106,10 @@ function getInfo() {
 }   
 
 function mapAreaPrint(east, west, south, north, level){
+		
 	boardList = {};
 	clusterer.clear();
+	
 	if(level>4){
 		clusterer.setMinLevel(20);
 	}else{
@@ -127,8 +141,9 @@ function mapAreaPrint(east, west, south, north, level){
 			}else{	// 확대 레벨 3 이하시 개별 출력, 근접 위치는 클러스터 기능 사용
 				var customOverlay = r.map( p => {
 					
+					
 					var content = `
-									<div class="customoverlay">
+									<div onclick="clusterPrint(${p.cno})" class="customoverlay">
 									    <span class="marker-title">${p.cname}</span>
 									</div>`	
 					
@@ -137,7 +152,8 @@ function mapAreaPrint(east, west, south, north, level){
 						position: new kakao.maps.LatLng(p.calat, p.calng),
 						content: content,
 						xAnchor: 1,
-						yAnchor: 1 
+						yAnchor: 1,
+						
 					});
 					kamap.cno = p.cno;
 					
@@ -158,19 +174,34 @@ function mapAreaPrint(east, west, south, north, level){
 
 
 function listPrint(areaName, level){
+	
+	console.log('map level : '+map.getLevel())
+	if(level>8){ // 확대 레벨 8 초과이면 클릭 시 확대
+		map.setLevel(level-1);
+		return;
+	}
+	
+	let auctionList = document.querySelector('.auctionList');
+    
+    auctionList.style.display = 'block';
+	
+	setTimeout(function () {
+        auctionList.style.opacity = 1;
+    }, 100); // 100ms 후에 투명도를 1로 변경
+    
+    
 	 
 	$.ajax({
 		url : "/nichanaecha/MapController",
 		method: "get",
 		data: {type : "listPrint", areaName: areaName, level : level },
 		success: r =>{
-			let cardList = document.querySelector('.cardList');
+			
 			
 			let html = ``;
 			
-			document.querySelector('.listTitle').innerHTML = areaName;
 			
-			cardList.scrollTo({ top: 0 })
+			
 			
 			r.forEach(p => {
 				html += `
@@ -189,8 +220,24 @@ function listPrint(areaName, level){
 				`
 				
 			})
-				
-				cardList.innerHTML = html;
+			
+			
+			let cardList = document.querySelector('.cardList');
+			
+			cardList.innerHTML = ``;
+			
+			cardList.scrollTo({ top: 0, behavior: 'smooth' })
+			
+			
+			$('.listTitle').fadeOut(100, function() {
+				// 내용을 페이드 아웃한 후에 내용을 업데이트하고 다시 페이드 인
+				$(this).html( document.querySelector('.listTitle').innerHTML = areaName ).fadeIn(100);
+			});
+			
+			
+			$('.cardList').fadeOut(100, function() {
+				$(this).html( cardList.innerHTML = html ).fadeIn(100);
+			});
 			
 			
 		},
@@ -210,6 +257,16 @@ function listPrint(areaName, level){
 
 function clusterPrint( cnoList ){
 	
+	let auctionList = document.querySelector('.auctionList');
+    
+    auctionList.style.display = 'block';
+	
+	setTimeout(function () {
+        auctionList.style.opacity = 1;
+    }, 100); // 100ms 후에 투명도를 1로 변경
+	
+	
+	
 	// 리스트를 json 형태로 변환
 	jsonList = JSON.stringify(cnoList);
 	
@@ -218,15 +275,9 @@ function clusterPrint( cnoList ){
 		method: "get",
 		data: {type : "clusterPrint", cnoList : jsonList },
 		success: r =>{
-			let cardList = document.querySelector('.cardList');
+			
 			
 			let html = ``;
-			console.log("r[0].AuctionDto : "+r[0].AuctionDto)
-			console.log("r[0].car.carAddress : "+r[0].car.carAddress)
-			
-			document.querySelector('.listTitle').innerHTML = r[0].car.carAddress.cacodename;
-			
-			cardList.scrollTo({ top: 0 })
 			
 			r.forEach(p => {
 				html += `
@@ -245,10 +296,26 @@ function clusterPrint( cnoList ){
 				`
 				
 			})
+			
+			
+			let cardList = document.querySelector('.cardList');
+			
+			cardList.innerHTML = ``;
+			
+			cardList.scrollTo({ top: 0, behavior: 'smooth' })
+			
 				
-				cardList.innerHTML = html;
+			$('.listTitle').fadeOut(100, function() {
+				$(this).html( document.querySelector('.listTitle').innerHTML = r[0].car.carAddress.cacodename ).fadeIn(100);
+			});
 			
+
+			$('.cardList').fadeOut(100, function() {
+				$(this).html(cardList.innerHTML = html).fadeIn(100);
+			});
+
 			
+
 		},
 		error: e =>{
 			console.log('에러 발생 : '+e)
@@ -261,8 +328,19 @@ function clusterPrint( cnoList ){
 	
 	
 	
-	
 }
 
+// 리스트 닫기 함수
+function listClose() {
+	let auctionList = document.querySelector('.auctionList');
+	
+	document.querySelector('.listTitle').innerHTML = ``; 
+	document.querySelector('.cardList').innerHTML = ``;
+	
+	auctionList.style.display = 'none';
+	auctionList.style.opacity = '0';
+	
+	
+}
 
  
