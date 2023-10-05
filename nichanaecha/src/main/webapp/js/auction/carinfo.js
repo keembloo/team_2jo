@@ -14,7 +14,7 @@ let endTime;//종료시간
 
 let clientSocket= new WebSocket('ws://localhost:80/nichanaecha/BattingSocket')
 console.log('클라이언트소켓생성')
-//???????????소켓생성과 동시에 열린다고 하지 않았남.. console 왜 바로 안뜸?
+
 clientSocket.onopen=e=>{console.log('클라이언트소켓열림')}//socket(e)
 
 clientSocket.onmessage=e=>nowContent(e)
@@ -23,24 +23,7 @@ clientSocket.onmessage=e=>nowContent(e)
 //소켓 통신(메세지)---------------------------------------------------------
 	
 function nowContent(e){
-	console.log('클라이언트소켓이벤트실행')
-	console.log(e)
-	console.log(e.data)
-	let data= e.data
-	let msg = data.split("<br>");
-	let price= msg[0];
-	console.log('가격')
-	console.log(price)
-	let date=msg[1];
-	console.log('날짜')
-	console.log(date) 
-	let nprice=Number(price)
-	console.log('숫자로출력?')
-	console.log(nprice)
-	
-//???????????????? innerHTML 왜 안먹힘 .. 
-	document.querySelector('.auctionSocket').innerHTML=`아아아`
-	
+batPrint(ano)
 	
 }//f()
 
@@ -177,7 +160,7 @@ function endDate(z){console.log('날짜변환함수실행')
 	let endSecond=parseInt(endTime[2]);
 	//console.log('끝나는초'+endSecond)
 	
-	return new Date(endYear,endMonth,endDay,endHour,endMinutes,endSecond); 
+	return new Date(endYear,endMonth-1,endDay,endHour,endMinutes,endSecond); 
 }//f()
 
 //타이머 함수-----------------------------------------------
@@ -194,7 +177,7 @@ function settimer(){
 	//숫자로 바꾼 날짜
 	endTime=endDate(x);
 	//console.log('날짜변화함수에서 결과값 돌려 받음?????')
-	// console.log(endTime)
+	 console.log(endTime)
 
 	timerInter=setInterval(()=>{
 	
@@ -289,9 +272,9 @@ function clipState(){ console.log('찜하기상태변화함수실행')
    
 //?????????????????비로그인일때 innerHTML 실행 안됨.   
    //비회원
-   if(localStorage == false){
+   if(loginMid == ''){
 	   console.log('비로그인일때');console.log(localStorage)
-	   state.innerHTML='♡';}
+	   state.innerHTML='♡';return}
    //회원
      $.ajax({
          url : "/nichanaecha/WishListController",     

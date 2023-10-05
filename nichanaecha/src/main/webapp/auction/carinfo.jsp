@@ -52,7 +52,7 @@
                
 	               <div class="auctionBox">
 	                  <div class="auction"><!-- 최근3개 JS--></div>
-	              	   <div class="auctionSocket"><!-- JS --></div>
+	              	   
 	              	</div>
               	</div>
             </div>
