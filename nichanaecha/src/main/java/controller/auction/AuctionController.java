@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import model.dao.AuctionDao;
 import model.dto.AuctionDto;
 import model.dto.CarDto;
+import model.dto.MemberDto;
 
 @WebServlet("/AuctionController")
 public class AuctionController extends HttpServlet {
@@ -112,6 +113,45 @@ public class AuctionController extends HttpServlet {
 			// FileItem 으로 가져온 데이터들을 각 필드에 맞춰서 제품Dto 에 저장하기 
 			
 			// 제품 등록한 회원번호 [ 서블릿 세션 ] 
+	      		
+	      	String ccompany = fileList.get(0).getString();		//제조사
+	      			System.out.println(ccompany);
+	      		String cnum = fileList.get(1).getString();;			//차량번호
+	      			System.out.println(cnum);
+	      		String csize  = fileList.get(2).getString();;			//차량종류
+	      			System.out.println(csize);
+	      		String cc  = fileList.get(3).getString();;				//베기량
+	      			System.out.println(cc);
+	      		String coil  = fileList.get(4).getString();;			//연료
+	      			System.out.println(coil);
+	      		String cname  = fileList.get(5).getString();;			//차량명
+	      			System.out.println(cname);	
+	      		String cdate  = fileList.get(6).getString();;			//제조년월
+	      			System.out.println(cdate);
+	      		String ckm  = fileList.get(7).getString();;			//KM
+	      		// 로그인 회원번호 없음 : 어디서 구해올까.
+		      		Object object = 
+		      				request.getSession().getAttribute("loginDto");
+		      		MemberDto loginDto = (MemberDto)object ;
+	      		int mno = loginDto.getMno();
+	      		
+	      			System.out.println(ckm);
+	      		String calat  = fileList.get(8).getString();;			//위도
+	      			System.out.println(calat);
+	      		String calng  = fileList.get(9).getString();;			//경도
+	      			System.out.println(calng);
+	      		
+	      		System.out.println( imgList ); // 이미지 목록
+	      		
+	      		
+	      		//위에서 만든 변수들 12개를 하나의 DTO로 만들기
+	      		
+	      		
+	      	
+	      /*
+	       * 
+	       * 
+	      
 			Object object = request.getSession().getAttribute("loginDto");
 			CarDto carDto = (CarDto)object;
 			int cmo = carDto.getCno();
@@ -137,6 +177,7 @@ public class AuctionController extends HttpServlet {
 			      //4. (Dao 결과) 응답
 			      response.setContentType("application/json; charset=UTF-8"); 
 			      response.getWriter().print(result);
+	       */
 			      
 		
 		      }catch (Exception e) {}	
