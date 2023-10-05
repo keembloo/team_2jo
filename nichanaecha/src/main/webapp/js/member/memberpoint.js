@@ -1,4 +1,6 @@
 //console.log('포인트실행');
+let listsize = 10;
+let page = 1; 
 mpointView();
 // 규리, 멤버 회원정보 출력
 function mpointView(){
@@ -24,9 +26,9 @@ function mpointView(){
 
 				cashInfo.innerHTML = `<div class="textId">'${r.mname}' 님</div>
 									<div class="textPoint">보유 포인트 : <span>${r.mcash.toLocaleString()}원</span></div>
-									<button class="btn btn-primary" onclick="inputPoint()" type=button>입금</button>
+									<button class="btn colorblue" onclick="inputPoint()" type=button>입금</button>
 									<button class="btn btn-danger" onclick="outputPoint(${r.mcash})" type=button>출금</button>`;
-				PointAllView(); // 포인트내역 전체출력 함수 호출
+				PointAllView(page); // 포인트내역 전체출력 함수 호출
 			} , 
 			error : e => {console.log("실패");}		
 		})
@@ -46,7 +48,7 @@ function inputPoint(){
 				url : "/nichanaecha/MemberPointController" ,
 				async : false ,
 				method : "put" ,
-				data : { type : 1 , gold : gold } , // type 1이면 입금
+				data : { type : "사용자 입금" , gold : gold } ,
 				success : r => { //console.log("js연결성공");
 					alert('입금 성공');
 					mpointView(); // 포인트출력함수 호출
@@ -68,7 +70,7 @@ function outputPoint(mcash){
 				url : "/nichanaecha/MemberPointController" , 
 				async : false ,
 				method : "put" ,
-				data : { type : 2 , gold : gold } ,  // type 2이면 출금
+				data : { type : "사용자 출금" , gold : gold } , 
 				success : r => { //console.log("js연결성공");
 					alert('출금 성공');
 					mpointView(); // 포인트출력함수 호출
@@ -79,22 +81,23 @@ function outputPoint(mcash){
 }
 
 
-let listsize = 10;
-let page = 1; 
-	
+
 // 규리 포인트내역 전체 출력 
-function PointAllView(listsize , page){
+function PointAllView(page){
+	//console.log(listsize);
+	//console.log(page);
 		$.ajax({
 			url : "/nichanaecha/MemberPointController" , 
 			async : false ,
 			method : "get" ,
 			data : { type : "PointAllView" , listsize : listsize , page : page } ,  
-			success : jasonArray => { //console.log("js연결성공");
-				//console.log(jasonArray);
+			success : jason => { //console.log("js연결성공");
+				//console.log(jason);
 				let pointbox = document.querySelector('.pointbox');
 				let html = ``;
 				
-				jasonArray.forEach(p =>{
+				jason.pointList.forEach(p =>{
+					//console.log(p);
 					//console.log(p.pointhistory);
 					html += `<tr>
 						   		<td class="text-center">${p.mpoint.toLocaleString()}원</td>
@@ -103,14 +106,14 @@ function PointAllView(listsize , page){
 							</tr>`;
 				});
 				pointbox.innerHTML = html;
-				pageboxView(page , jasonArray);
+				pageboxView(page , jason);
 			} , 
 			error : e => {console.log("실패"+e);}
 		})
 }
 
 // 규리 입금내역만보기
-function PointInputView(listsize, page){
+function PointInputView(page){
 		$.ajax({
 			url : "/nichanaecha/MemberPointController" , 
 			async : false ,
@@ -121,14 +124,13 @@ function PointInputView(listsize, page){
 				let pointbox = document.querySelector('.pointbox');
 				let html = ``;
 				
-				jasonArray.forEach(p =>{
-					if(p.pointhistory=='입금'){
-						html += `<tr>
-							   		<td class="text-center">${p.mpoint.toLocaleString()}원</td>
-							   		<td class="text-center">${p.pointdate}</td>
-							   		<td class="text-center">${p.pointhistory}</td>
-								</tr>`;
-					}
+				jasonArray.pointList.forEach(p =>{
+					html += `<tr>
+						   		<td class="text-center">${p.mpoint.toLocaleString()}원</td>
+						   		<td class="text-center">${p.pointdate}</td>
+						   		<td class="text-center">${p.pointhistory}</td>
+							</tr>`;
+					
 				});
 				pointbox.innerHTML = html;
 				pageboxView(page , jasonArray);
@@ -138,7 +140,7 @@ function PointInputView(listsize, page){
 }
 
 // 규리 출금내역만보기
-function PointOutputView(listsize, page){
+function PointOutputView(page){
 		$.ajax({
 			url : "/nichanaecha/MemberPointController" , 
 			async : false ,
@@ -149,14 +151,12 @@ function PointOutputView(listsize, page){
 				let pointbox = document.querySelector('.pointbox');
 				let html = ``;
 				
-				jasonArray.forEach(p =>{
-					if(p.pointhistory=='출금'){
+				jasonArray.pointList.forEach(p =>{
 						html += `<tr>
 							   		<td class="text-center">${p.mpoint.toLocaleString()}원</td>
 							   		<td class="text-center">${p.pointdate}</td>
 							   		<td class="text-center">${p.pointhistory}</td>
 								</tr>`;
-					}
 				});
 				pointbox.innerHTML = html;
 				pageboxView(page , jasonArray);
@@ -167,20 +167,21 @@ function PointOutputView(listsize, page){
 
 
 // 규리 페이지 번호 출력 함수 
-function pageboxView(page , jasonArray){
+function pageboxView(page , jason){
 	//console.log('실행된다');
 	//page : 조회한 페이지 번호 [ 현재 보고 잇는 페이지 번호 ]
 	// 이전버튼 [page<=1? page: page-1] 만약에 1페이지에서 이전버튼 클릭시 1페이지로 고정하고 아니면 1차감
 	let pagebox = document.querySelector('.pagebox');
 	let html = ``;
-	let before = `<button onclick="onView(${page<=1? page: page-1})" type="button"> < </button>`;
+	let before = `<button onclick="PointAllView(${page<=1? page: page-1})" type="button"> < </button>`;
 	// 페이지 번호 버튼 [ * 페이지 개수만큼 반복 ]
-	for (let i= jasonArray.startbtn; i <= jasonArray.endbtn ; i++){
+	for (let i= jason.startbtn; i <= jason.endbtn ; i++){
 		// 만약에 현재페이지와 i번째 페이지가 일치하면 버튼태그에 class="selectpage" 추가
-		html += `<button class="${page==i ? 'selectpage' : '' }" onclick="onView(${i})" type="button"> ${i} </button>`;
+		//console.log("포문도나");
+		html += `<button class="${page==i ? 'selectpage' : '' }" onclick="PointAllView(${i})" type="button"> ${i} </button>`;
 	}
 	// 다음버튼 [ page >= r.totalpage ? page : page+1 ] 만약에 현재페이지가 마지막페이지면 고정 아니면 1증가
-	let after = `<button onclick="onView(${page >= r.totalpage ? page : page+1})" type="button"> > </button>`;
+	let after = `<button onclick="PointAllView(${page >= jason.totalpage ? page : page+1})" type="button"> > </button>`;
 	
 	//console.log("html + "+html);
 	pagebox.innerHTML = before + html + after;

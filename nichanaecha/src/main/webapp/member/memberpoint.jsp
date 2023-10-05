@@ -17,7 +17,7 @@
 			<div class="lInfo nav flex-column col-3">
 				<!-- 사이드바 -->
 				<a class="nav-link active" aria-current="page" href="/nichanaecha/member/memberinfo.jsp">마이페이지</a> 
-				<a class="nav-link" href="#">내정보 수정</a> 
+				<a class="nav-link" href="/nichanaecha/member/memberedit.jsp">내정보 수정</a> 
 				<a class="nav-link" href="/nichanaecha/member/memberpoint.jsp">포인트 입출금 내역확인</a>
 				
 			</div>
@@ -31,9 +31,9 @@
 				<div class="lineBar">
 				</div>
 				<div class="btnbox">
-					<button type="button" onclick="PointAllView()" class="btn btn-primary">전체내역 보기</button>
-					<button type="button" onclick="PointInputView()" class="btn btn-primary">입금 내역만 보기</button>
-					<button type="button" onclick="PointOutputView()" class="btn btn-primary">출금 내역만 보기</button>
+					<button type="button" onclick="PointAllView(1)" class="btn colorblue">전체내역 보기</button>
+					<button type="button" onclick="PointInputView(1)" class="btn colorblue">입금 내역만 보기</button>
+					<button type="button" onclick="PointOutputView(1)" class="btn colorblue">출금 내역만 보기</button>
 				</div>
 				<!-- 포인트 입출금내역 구역-->
 				<table class="table table-hover"> 

@@ -17,7 +17,7 @@
 			<div class="lInfo nav flex-column col-3">
 				<!-- 사이드바 -->
 				<a class="nav-link active" aria-current="page" href="/nichanaecha/member/memberinfo.jsp">마이페이지</a> 
-				<a class="nav-link" href="#">내정보 수정</a> 
+				<a class="nav-link" href="/nichanaecha/member/memberedit.jsp">내정보 수정</a> 
 				<a class="nav-link" href="/nichanaecha/member/memberpoint.jsp">포인트 입출금 내역확인</a>
 				
 			</div>
@@ -45,7 +45,7 @@
 							
 						</div> <!-- carousel-inner end -->
 						
-						
+						<!-- 
 						<button class="carousel-control-prev" type="button"
 							data-bs-target="#imageCarousel" data-bs-slide="prev">
 							<span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -56,7 +56,7 @@
 							data-bs-target="#imageCarousel" data-bs-slide="next">
 							<span class="carousel-control-next-icon" aria-hidden="true"></span>
 							<span class="visually-hidden">Next</span>
-						</button>
+						</button> -->
 
 					</div> <!-- imageCarousel end -->
 				</div> <!-- autionInfo end -->

@@ -3,13 +3,13 @@ package model.dto;
 public class MemberPointDto {
 	private String pointno;
 	private int mno;
-	private int mpoint;
+	private long mpoint;
 	private String pointdate;
 	private String pointhistory;
 	
 	public MemberPointDto() {	}
 
-	public MemberPointDto(String pointno, int mno, int mpoint, String pointdate, String pointhistory) {
+	public MemberPointDto(String pointno, int mno, long mpoint, String pointdate, String pointhistory) {
 		super();
 		this.pointno = pointno;
 		this.mno = mno;
@@ -34,11 +34,11 @@ public class MemberPointDto {
 		this.mno = mno;
 	}
 
-	public int getMpoint() {
+	public long getMpoint() {
 		return mpoint;
 	}
 
-	public void setMpoint(int mpoint) {
+	public void setMpoint(long mpoint) {
 		this.mpoint = mpoint;
 	}
 
@@ -63,7 +63,7 @@ public class MemberPointDto {
 		return "MemberPointDto [pointno=" + pointno + ", mno=" + mno + ", mpoint=" + mpoint + ", pointdate=" + pointdate
 				+ ", pointhistory=" + pointhistory + "]";
 	}
-	
+
 	
 	
 }
