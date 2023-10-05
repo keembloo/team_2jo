@@ -1,10 +1,6 @@
 console.log('carinfo.js 실행')
 let ano = 0;
 
-
-
-//console.log('전달받은게시물번호')
-//console.log(ano)
 let timer=0; //시간변수.남은시간
 let x; // 종료날짜(문자)
 let timerInter;
@@ -35,17 +31,10 @@ clipState();
 
 
 	
-function auctionPrint(){
-	console.log('상세페이지출력')
-   //if(loginMid==''){location.href='../member/memberlogin.jsp'}
-   //경매글 출력(차량정보,게시물정보)
-	//let firstTime=new Date();
-	//console.log('현재시간(문자)')
-	//console.log(firstTime)
+function auctionPrint(){console.log('상세페이지출력')
 	
    let cno = new URL(location.href).searchParams.get("cno"); //경매게시글번호
-   console.log("cno: "+cno)
-
+   console.log("전달받은 cno> "+cno)
 
    $.ajax({
         url : "/nichanaecha/AuctionController",     
@@ -54,19 +43,18 @@ function auctionPrint(){
         data : {cno : cno},      
         success : r=>{
            console.log('차정보출력성공')
-           console.log("r.ano : "+r.ano);
-           console.log("ano : "+ano);
-           
+           console.log('차정보내용')
+           console.log(r)
            ano = r.ano;
-           console.log("ano : "+ano)
+           console.log("차 정보에서 가져온 ano >  "+ano)
                
          // 제목
             document.querySelector('.atitle').innerHTML=`${r.atitle}`
+		 
 		 // 시작입찰가
 		 	document.querySelector('.startPrice').innerHTML=`${r.aprice}원` 
-
-
-            //캐러셀(여러개이미지)
+         
+         //캐러셀(여러개이미지)
             let imgbox=document.querySelector('.imgbox');
             let html=``;
             Object.values( r.car.imglist).forEach((img,i)=>{
@@ -78,10 +66,9 @@ function auctionPrint(){
 					  `
 				  })
       			imgbox.innerHTML=html;
-
+		//전체 경매 내역 출력으로 가기 위한 <a>
          document.querySelector('.buymember').innerHTML=
-	 
-	 	` <a href="/nichanaecha/auction/buymember.jsp?ano=${ano}"><button style="" type="button" >입찰내역</button></a>`
+	 		` <a href="/nichanaecha/auction/buymember.jsp?ano=${ano}"><button style="" type="button" >입찰내역</button></a>`
            
          //차량정보
             document.querySelector('.ccompany').innerHTML=`${r.car.ccompany}`
@@ -92,7 +79,7 @@ function auctionPrint(){
             document.querySelector('.cdate').innerHTML=`${r.car.cdate}`
             document.querySelector('.ckm').innerHTML=`${r.car.ckm}`
             document.querySelector('.cads').innerHTML=`${r.car.cads}`
-            document.querySelector('.acontent').innerHTML=`${r.acontent}`
+            //document.querySelector('.acontent').innerHTML=`${r.car.carAddress.cads}`
             
          //남은시간
            
@@ -125,8 +112,8 @@ function aprice(ano){console.log('입찰가격가져오는함수실행')
            console.log(r);
            //console.log(r[0].bprice)//최근입찰가격
            //console.log(r[0].bDate)//경매추가날짜
-          nowPay=r[0].bprice
-          document.querySelector('.aprice').innerHTML=`${r[0].bprice}원` 
+          //nowPay=r[0].bprice
+        
          
    		
 
@@ -406,12 +393,11 @@ function batting(){
 //입찰내역출력관련------------------------------------------------
 /*
 1. 입찰내역버튼 클릭 시 전체 내역 출력 [추후 페이징처리] onclick="batView()"	
-2. 상세페이지 열렸을 시 최근 3개 출력 위치 class="auction"
-3. 소켓통신 출력 class ="auctionSocket" 위치
+2. 처음 열렸을 때, 상위 10개 출력
+3. 소켓통신 이후 입찰 출력을 다시 한번 실행해줌
 
 return new Date(endYear,endMonth,endDay,endHour,endMinutes,endSecond); 
 
-dTime=입장시간(nowTime)-endDate(b.bDate)
 
  */
 function batPrint(ano){
@@ -421,11 +407,12 @@ function batPrint(ano){
         url : "/nichanaecha/BattingController",     
         method : "get",   
         async : false ,
-        data : {type:'topByBatting',ano:ano,count:3 },// 최근 추가된 3개의 입찰
+        data : {type:'topByBatting',ano:ano,count:10 },// 최근 추가된 3개의 입찰
         success : r=>{
-        	console.log('상위3개내용출력성공');console.log(r);
+        	console.log('상위10개내용출력성공');console.log(r);
         	let html=``;
          	let auctionBox=document.querySelector('.auctionBox');
+         	//let aprice = document.querySelector('.aprice');
          	r.forEach((b)=>{
 				//console.log('full상위날짜')
 				//console.log(`${b.bDate}`); 
@@ -467,10 +454,10 @@ function batPrint(ano){
 					
 				}
   */   
-        	
          	})//forEach
          auctionBox.innerHTML=html;
-
+         console.log('상위1등금액 > '); console.log(r[0].bprice)
+		document.querySelector('.aprice').innerHTML=`${r[0].bprice}만원`
          } ,       
          error : e=>{console.log('경매상황내용출력실패');+e;} ,         
    });
