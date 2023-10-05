@@ -130,7 +130,7 @@
 			
 				<div class="col-4 text-end"> <!-- 검색 구역 -->
 					<span><img src="/nichanaecha/img/searchIcon.png" width="7%">
-					<input class="carSearch" type="text" placeholder="주소, 차량명"></span>
+					<input class="carSearch" type="text" placeholder="주소 검색"></span>
 				
 				</div> <!-- 검색 구역 종료 -->
 			
@@ -147,9 +147,17 @@
 								<div onclick="listClose()" class="listClose col-2"><!-- 닫기 버튼 -->
 									<img src="../img/left_arrow.svg" style="width:70%;height:70%">
 								</div> 
+								
 								<div class="listTitle col-8 text-center"></div> <!-- 지역 타이틀  -->
+								
 								<div class="col-2"></div>
+								
 							</div>
+							
+								<div class="row"> <!-- 검색 구역 -->
+										<span><img src="/nichanaecha/img/searchIcon.png" width="7%">
+										<input class="carSearch" type="text" placeholder="경매 검색"></span>
+								</div> <!-- 검색 구역 종료 -->
 								
 								<div class="cardList my-1">
 									<!-- 매물 출력 구역 -->

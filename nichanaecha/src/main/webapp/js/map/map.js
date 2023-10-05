@@ -56,6 +56,9 @@ kakao.maps.event.addListener(map, 'zoom_changed', function() {
 
 // 클러스터 클릭 이벤트
 kakao.maps.event.addListener(clusterer, 'clusterclick', function(cluster) {
+	
+	
+	
 	let markerList = [];
 		
 	cluster.getMarkers().forEach( p => { // 클러스터안의 마커 정보 배열로 반환 후 markerList에 cno 저장 후 배열로 반환
@@ -103,8 +106,10 @@ function getInfo() {
 }   
 
 function mapAreaPrint(east, west, south, north, level){
+		
 	boardList = {};
 	clusterer.clear();
+	
 	if(level>4){
 		clusterer.setMinLevel(20);
 	}else{
@@ -169,6 +174,13 @@ function mapAreaPrint(east, west, south, north, level){
 
 
 function listPrint(areaName, level){
+	
+	console.log('map level : '+map.getLevel())
+	if(level>8){ // 확대 레벨 8 초과이면 클릭 시 확대
+		map.setLevel(level-1);
+		return;
+	}
+	
 	let auctionList = document.querySelector('.auctionList');
     
     auctionList.style.display = 'block';
@@ -176,14 +188,15 @@ function listPrint(areaName, level){
 	setTimeout(function () {
         auctionList.style.opacity = 1;
     }, 100); // 100ms 후에 투명도를 1로 변경
+    
+    
 	 
 	$.ajax({
 		url : "/nichanaecha/MapController",
 		method: "get",
 		data: {type : "listPrint", areaName: areaName, level : level },
 		success: r =>{
-			let cardList = document.querySelector('.cardList');
-			cardList.scrollTo({ top: 0 })
+			
 			
 			let html = ``;
 			
@@ -209,10 +222,18 @@ function listPrint(areaName, level){
 			})
 			
 			
+			let cardList = document.querySelector('.cardList');
+			
+			cardList.innerHTML = ``;
+			
+			cardList.scrollTo({ top: 0, behavior: 'smooth' })
+			
+			
 			$('.listTitle').fadeOut(100, function() {
 				// 내용을 페이드 아웃한 후에 내용을 업데이트하고 다시 페이드 인
 				$(this).html( document.querySelector('.listTitle').innerHTML = areaName ).fadeIn(100);
 			});
+			
 			
 			$('.cardList').fadeOut(100, function() {
 				$(this).html( cardList.innerHTML = html ).fadeIn(100);
@@ -245,6 +266,7 @@ function clusterPrint( cnoList ){
     }, 100); // 100ms 후에 투명도를 1로 변경
 	
 	
+	
 	// 리스트를 json 형태로 변환
 	jsonList = JSON.stringify(cnoList);
 	
@@ -253,7 +275,7 @@ function clusterPrint( cnoList ){
 		method: "get",
 		data: {type : "clusterPrint", cnoList : jsonList },
 		success: r =>{
-			let cardList = document.querySelector('.cardList');
+			
 			
 			let html = ``;
 			
@@ -275,16 +297,24 @@ function clusterPrint( cnoList ){
 				
 			})
 			
+			
+			let cardList = document.querySelector('.cardList');
+			
+			cardList.innerHTML = ``;
+			
+			cardList.scrollTo({ top: 0, behavior: 'smooth' })
+			
 				
 			$('.listTitle').fadeOut(100, function() {
 				$(this).html( document.querySelector('.listTitle').innerHTML = r[0].car.carAddress.cacodename ).fadeIn(100);
 			});
 			
+
 			$('.cardList').fadeOut(100, function() {
-				$(this).html( cardList.innerHTML = html ).fadeIn(100);
+				$(this).html(cardList.innerHTML = html).fadeIn(100);
 			});
 
-			cardList.scrollTo({ top: 0, behavior: 'smooth' })
+			
 
 		},
 		error: e =>{
