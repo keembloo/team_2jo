@@ -153,12 +153,12 @@
 								<div class="col-2"></div>
 								
 							</div>
-							
-								<div class="row"> <!-- 검색 구역 -->
-										<span><img src="/nichanaecha/img/searchIcon.png" width="7%">
-										<input class="carSearch" type="text" placeholder="경매 검색"></span>
-								</div> <!-- 검색 구역 종료 -->
-								
+								<div class="row justify-content-center">
+									<div class="col-8 border-bottom"> <!-- 검색 구역 -->
+											<span><img src="/nichanaecha/img/searchIcon.png" width="7%">
+											<input class="carSearch " type="text" placeholder="경매 검색"></span>
+									</div> <!-- 검색 구역 종료 -->
+								</div>
 								<div class="cardList my-1">
 									<!-- 매물 출력 구역 -->
 								</div>
@@ -184,7 +184,7 @@
 	
 	<!-- 카카오 지도 api -->
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=4b3eb62505233f4a4ab13fff2d0ea438&libraries=clusterer"></script>
-	
+
 	<script src="../js/map/map.js"></script>
 	
 </body>

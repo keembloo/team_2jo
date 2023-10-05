@@ -196,15 +196,21 @@ function listPrint(areaName, level){
 		method: "get",
 		data: {type : "listPrint", areaName: areaName, level : level },
 		success: r =>{
-			
+			const currentDate = new Date(); // 현재 시간 반환
 			
 			let html = ``;
 			
-			
-			
-			
 			r.forEach(p => {
+				// 현재시간, 반환 시간 비교하여 차이일수로 반환, 0이면 '오늘' 출력
+				let inputDate = new Date(p.aenddate);
+				
+				let timeDifference = Math.floor((inputDate - currentDate) / (1000 * 60 * 60 * 24))
+				
+				timeDifference = 0 ? timeDifference = '오늘' : timeDifference = timeDifference+"일 전";
+				
+				
 				html += `
+						<a href="/nichanaecha/auction/carinfo.jsp?cno=${p.cno}">
 							<div class="card mb-1 p-2" style="width:width: 100%;">
 							  <img src="../auction/img/${Object.values(p.car.imglist)[0]}" class="card-img-top" alt="...">
 							  <div class="card-body">
@@ -212,11 +218,12 @@ function listPrint(areaName, level){
 							    <p class="card-text">${p.acontent}</p>
 							  </div>
 							  <ul class="list-group list-group-flush">
-							    <li class="list-group-item">경매 시작일 : 2023-09-26</li>
-							    <li class="list-group-item">경매 종료일 : 2023-09-26</li>
-							    <li class="list-group-item">현재 입찰가 : 14,000,000원</li>
+							    <li class="list-group-item">경매 시작일 : ${p.astartdate.slice(0,10)} </li>
+							    <li class="list-group-item">경매 종료일 : ${timeDifference} </li>
+							    <li class="list-group-item">입찰 시작가 : ${p.aprice.toLocaleString()}원 </li>
 							  </ul>
-							</div>					
+							</div>
+						</a>			
 				`
 				
 			})
@@ -281,6 +288,7 @@ function clusterPrint( cnoList ){
 			
 			r.forEach(p => {
 				html += `
+						<a href="/nichanaecha/auction/carinfo.jsp?cno=${p.cno}">
 							<div class="card mb-1 p-2" style="width:width: 100%;">
 							  <img src="../auction/img/${Object.values(p.car.imglist)[0]}" class="card-img-top" alt="...">
 							  <div class="card-body">
@@ -292,7 +300,8 @@ function clusterPrint( cnoList ){
 							    <li class="list-group-item">경매 종료일 : 2023-09-26</li>
 							    <li class="list-group-item">현재 입찰가 : 14,000,000원</li>
 							  </ul>
-							</div>					
+							</div>
+						</a>
 				`
 				
 			})
