@@ -86,7 +86,7 @@ public class MemberPointController extends HttpServlet {
 			type="사용자 입금";
 		} else if (type.equals("사용자 출금")){
 			type="사용자 출금";
-			gold = gold-(gold*2);
+			gold = -gold;
 		} 
 		
 		boolean result1 = MemberPointDao.getInstence().PointUpdate( type , mno , gold , mpno);
