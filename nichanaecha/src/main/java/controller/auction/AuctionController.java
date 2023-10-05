@@ -38,20 +38,27 @@ public class AuctionController extends HttpServlet {
     
     //상세페이지조회 [9월19일 고연진]   
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int cno = Integer.parseInt(request.getParameter("cno"));
-		System.out.println("cno : "+cno);
-		//System.out.println("controller 들어옴 > ano:  "+ano);
-		AuctionDto result= AuctionDao.getInstence().auctionPrint(cno);
-		//System.out.println("경매Dto: "+result);
-		//System.out.println("경매Dto 안에 CarDto: "+result.getCar());
-		//System.out.println("CarDto 안에 imglist: "+result.getCar().getImglist());
-		
+		String type= request.getParameter("type");
+		System.out.println("타입확인 > "+type);
 		ObjectMapper mapper=new ObjectMapper(); 
-		String jsonObject= mapper.writeValueAsString(result);
-		//System.out.println("jackson사용: "+jsonObject);
+		if(type.equals("거래종료유효성")) {
+			int ano = Integer.parseInt(request.getParameter("ano"));
+			int astate = AuctionDao.getInstence().astate(ano);
+			System.out.println("컨트롤러에서 출력되는 astate > "+astate);
+			response.setContentType("application/json;charset=UTF-8");
+			response.getWriter().print(astate);
+		}
+		else if(type.equals("상세페이지조회")) {
+			int cno = Integer.parseInt(request.getParameter("cno"));
+			System.out.println("cno : "+cno);
+			AuctionDto result= AuctionDao.getInstence().auctionPrint(cno);
+			String jsonObject= mapper.writeValueAsString(result);
+			response.setContentType("application/json;charset=UTF-8");
+			response.getWriter().print(jsonObject);
+			
+		}
+
 		
-		response.setContentType("application/json;charset=UTF-8");
-		response.getWriter().print(jsonObject);
 	}
 
 	

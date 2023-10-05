@@ -62,13 +62,14 @@
             </div>
             
             <div class="buttonBox">
-               <button onclick="clipping()"  type="button">스크랩<span class="state"></span></button>
+               <button onclick="clipping()" class="valTime1" type="button">스크랩<span class="state"></span></button>
                
 				<!-- -------------------------- 모달창 써보기 -------------------------------------------------->
 				
 				      <!-- Button trigger modal -->
-				
-				    <button onclick="battingBtn()" style="background-color:#0D6EFD; color: white; " type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">경매참여</button>
+					
+				    <button onclick="battingBtn()" class="valTime2"  style="background-color:#0D6EFD; color: white; " type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">경매참여</button>
+					
 				   
 					   <!-- Modal -->
 					   <div class="modal fade" id="exampleModal"  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -76,8 +77,7 @@
 					       <div class="modal-content">
 					      
 					         <div class="modal-body">
-					              <div >현재가:<span class="valAprice"><!-- js --></span></div>
-					              <div >보유금액:<span  class="valMcash"><!-- js --></span></div>
+					              <div >보유금액:<span  class="myCash"><!-- js --></span></div>
 					             <!-- onkeyup="valPay()" -->
 					              입찰금액 : <input class="bprice" type="text" >
 					              <div class="valCheck"><!-- js --></div>
@@ -85,7 +85,7 @@
 					         </div>
 					         <div class="modal-footer">
 					         									<!-- disabled  -->
-					           <button onclick="batting()" type="button" class="btn btn-primary val" id="submitBtn" >입찰</button>
+					           <button onclick="batting()" type="button" class="btn btn-primary valMcash" id="submitBtn" >입찰</button>
 					           <button id="closebtn" type="button" id="closebtn" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 					         </div>
 					       </div>

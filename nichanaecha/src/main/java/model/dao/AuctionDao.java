@@ -225,6 +225,28 @@ public class AuctionDao extends Dao {
 	
 	}//f()
 	
+	
+// 입찰 등록 시 유효성 검사를 위한 함수 [10월6일 고연진] 
+	public int astate(int ano) {		
+	
+		try {
+			String sql = "select astate from auctioninfo where ano=? ";
+			ps=conn.prepareStatement(sql);
+			ps.setInt(1, ano);
+			rs=ps.executeQuery(); 
+			if(rs.next()) {
+			return rs.getInt("astate");
+		}
+		
+	} catch (Exception e) {System.out.println("auctionPrint() 오류: "+e);}
+	
+	
+	
+	return 4;
+		
+		
+	}
+	
 //스크랩(찜) 테이블 추가[9월21일 고연진]----------------------------------------------------------------	
 	public boolean clipping(int mno, int ano) {
 		try {//스크랩 항목 추가하기

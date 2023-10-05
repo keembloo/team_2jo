@@ -5,6 +5,7 @@ let timer=0; //시간변수.남은시간
 let x; // 종료날짜(문자)
 let timerInter;
 let mcash=0;//회원보유금액
+let astate=4 //경매상태
 let nowPay=0; 
 let endTime;//종료시간
 
@@ -35,14 +36,15 @@ function auctionPrint(){console.log('상세페이지출력')
         url : "/nichanaecha/AuctionController",     
         method : "get", 
         async: false,  
-        data : {cno : cno},      
+        data : {type:'상세페이지조회',cno : cno},      
         success : r=>{
            console.log('차정보출력성공')
            //console.log('차정보내용')
            //console.log(r)
            ano = r.ano;
            console.log("차 정보에서 가져온 ano >  "+ano)
-          
+           astate=r.astate
+           console.log('경매상태'); console.log(astate)
          clipState();      
          // 제목
             document.querySelector('.atitle').innerHTML=`${r.atitle}`
@@ -65,7 +67,15 @@ function auctionPrint(){console.log('상세페이지출력')
 		//전체 경매 내역 출력으로 가기 위한 <a>
          document.querySelector('.buymember').innerHTML=
 	 		` <a href="/nichanaecha/auction/buymember.jsp?ano=${ano}"><button style="" type="button" >입찰내역</button></a>`
-           
+          
+		//경매가 진행 중이 아니라면 입찰참여버튼 없앰.
+         astate=r.astate
+         //console.log('경매상태' + astate)
+         if(astate!=0){
+			 document.querySelector('.valTime1').style.display="none"
+			 document.querySelector('.valTime2').style.display="none"
+			 }
+
          //차량정보
             document.querySelector('.ccompany').innerHTML=`${r.car.ccompany}`
             document.querySelector('.csize').innerHTML=`${r.car.csize}`
@@ -163,6 +173,10 @@ function settimer(){
 			clearInterval(timerInter);
 			//종료 알림
 			document.querySelector('.auctionState').innerHTML=`경매종료`;
+			document.querySelector('.remain').innerHTML=``
+			document.querySelector('.valTime1').style.display="none"
+			document.querySelector('.valTime2').style.display="none"
+			
 			// sql 업데이트
 			$.ajax({
        		  url : "/nichanaecha/AuctionController",     
@@ -171,11 +185,12 @@ function settimer(){
           	  success : r=>{
 					console.log('경매상태변경 통신성공');
          			console.log(r)
+         			
       					} ,       
               error : e=>{console.log('경매상태변경통신실패')} ,         
 		   });
 		
-		//입찰버튼 비활성화
+			
 		
 		
 	  }
@@ -283,8 +298,8 @@ function battingBtn(){console.log('battingBtn() 실행')
         data : {type:'mview'},      
         success : r=>{console.log('보유금액가져오기통신성공')
          	console.log('규리쓰마이페이지컨트롤러에서가져온mno정보');console.log(r);
-         	document.querySelector('.valMcash').innerHTML=`${r.mcash}원`
          	mcash=r.mcash;
+         	document.querySelector('.myCash').innerHTML=`${mcash.toLocaleString()}원`
          	//console.log('전역변수에 선언된 가격 변경됨')
          	//console.log(mcash);
          } ,       
@@ -317,19 +332,40 @@ function valPay(){
 function batting(){
 	 let bprice = document.querySelector('.bprice');
 
+//????????????????????????????? return 했는데 왜 함수 종료 안됨??
+//0. 거래가 종료됐을 때
+	 $.ajax({
+	        url : "/nichanaecha/AuctionController",     
+	        method : "get",   
+	        async: false, 
+	        data : {type:'거래종료유효성',ano:ano},      
+	        success : r=>{
+				 console.log('거래종료됐음을 확인하는 ajax 통신성공')
+				 console.log(r)
+	         	astate=r
+	         	console.log('거래종료되었을때 상태' +astate)
+	         	if(astate!=0){
+					 alert('경매가 종료되었습니다');
+					return;
+					 }
+	         } ,       
+	         error : e=>{console.log('거래종료됐음을 확인하는 ajax 통신실패')} ,         
+	   });
+
+	console.log('return 됨??????')
 
 //1. 보유금액 차감(update)+포인트테이블 (add)
 	  $.ajax({
         url : "/nichanaecha/MemberPointController",     
-        method : "post",   
+        method : "put",   
         async: false, 
-        data : {type:'입찰참여출금',ano:ano, gold:bprice.value}, //type3 :포인트출금    
+        data : {type:'입찰참여출금',ano:ano, gold:bprice.value},  
         success : r=>{console.log('포인트차감통신성공')} ,       
         error : e=>{console.log(e)} ,         
    });
 
 
-//3.입찰등록	
+//2.입찰등록	
 
    	$.ajax({
 		   
@@ -369,7 +405,7 @@ return new Date(endYear,endMonth,endDay,endHour,endMinutes,endSecond);
  */
 function batPrint(ano){
 		console.log('입찰내역출력함수실행')
-
+		let bprice=0;
 	    $.ajax({
         url : "/nichanaecha/BattingController",     
         method : "get",   
@@ -389,10 +425,10 @@ function batPrint(ano){
 	         	//console.log('상위 분')
 	         	//console.log(buyDate.getMinutes())
 	         	//console.log('오늘 날짜')
-	      
+	      		bprice=b.bprice
 	        	html+=`
 	                  <div class="auction">
-	                     <li>${b.bprice}만원</li>
+	                     <li>${bprice.toLocaleString()}원</li>
 	                     <li>${b.bDate}</li>
 	                  </div>
 	            
@@ -424,7 +460,7 @@ function batPrint(ano){
          	})//forEach
          auctionBox.innerHTML=html;
          console.log('상위1등금액 > '); console.log(r[0].bprice)
-		document.querySelector('.aprice').innerHTML=`${r[0].bprice}만원`
+		document.querySelector('.aprice').innerHTML=`${(r[0].bprice).toLocaleString()}원`
          } ,       
          error : e=>{console.log('경매상황내용출력실패');+e;} ,         
    });

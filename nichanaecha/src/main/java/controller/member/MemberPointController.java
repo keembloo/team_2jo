@@ -76,14 +76,16 @@ public class MemberPointController extends HttpServlet {
 
 	// 규리 마이페이지 입금,출금
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//System.out.println(" 컨트롤러실행");
+		System.out.println(" 포인트컨트롤러실행");
 		String type = request.getParameter("type");
+		System.out.println("들어갈타입> "+type);
 		int mno = ((MemberDto)request.getSession().getAttribute("loginDto")).getMno();
 		long gold = Integer.parseInt(request.getParameter("gold"));
 		String mpno = (UUID.randomUUID().toString())+"_"+mno; 
 		//System.out.println("컨트롤ㄹ러 uuid : "+mpno);
 	    //고연진 수정
-		if (type.equals("사용자 출금") ||type.equals("입찰참여출금")){
+		if (type.equals("사용자 출금")||type.equals("입찰참여출금")){
+			System.out.println("입찰참여출금으로 잘 들어옴?");
 		         gold = -gold;
 		      }
 		
