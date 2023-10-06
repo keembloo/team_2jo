@@ -59,7 +59,7 @@ public class MemberPointDao extends Dao {
 				MemberPointDto memberPointDto = new MemberPointDto(
 						rs.getString("pointno"), 
 						rs.getInt("mno"), 
-						rs.getInt("mpoint"), 
+						rs.getLong("mpoint"), 
 						rs.getString("pointdate"), 
 						rs.getString("pointhistory"));
 				list.add(memberPointDto);

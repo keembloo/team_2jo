@@ -44,19 +44,7 @@
 							<!--  js 등록매물 제품 출력 -->
 							
 						</div> <!-- carousel-inner end -->
-						
-						<!-- 
-						<button class="carousel-control-prev" type="button"
-							data-bs-target="#imageCarousel" data-bs-slide="prev">
-							<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-							<span class="visually-hidden">Previous</span>
-						</button>
-						
-						<button class="carousel-control-next" type="button"
-							data-bs-target="#imageCarousel" data-bs-slide="next">
-							<span class="carousel-control-next-icon" aria-hidden="true"></span>
-							<span class="visually-hidden">Next</span>
-						</button> -->
+						<!-- js 캐러셀 버튼 출력 -->
 
 					</div> <!-- imageCarousel end -->
 				</div> <!-- autionInfo end -->
@@ -78,20 +66,8 @@
 							<!--  js 등록매물 제품 출력 -->
 							
 						</div> <!-- carousel-inner end -->
+						<!-- js 캐러셀 버튼 출력 -->
 						
-						
-						<button class="carousel-control-prev" type="button"
-							data-bs-target="#imageCarousel2" data-bs-slide="prev">
-							<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-							<span class="visually-hidden">Previous</span>
-						</button>
-						
-						<button class="carousel-control-next" type="button"
-							data-bs-target="#imageCarousel2" data-bs-slide="next">
-							<span class="carousel-control-next-icon" aria-hidden="true"></span>
-							<span class="visually-hidden">Next</span>
-						</button>
-
 					</div> <!-- imageCarousel end -->
 					
 				</div> 
@@ -114,20 +90,8 @@
 							<!--  js 등록매물 제품 출력 -->
 							
 						</div> <!-- carousel-inner end -->
-						
-						
-						<button class="carousel-control-prev" type="button"
-							data-bs-target="#imageCarousel3" data-bs-slide="prev">
-							<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-							<span class="visually-hidden">Previous</span>
-						</button>
-						
-						<button class="carousel-control-next" type="button"
-							data-bs-target="#imageCarousel3" data-bs-slide="next">
-							<span class="carousel-control-next-icon" aria-hidden="true"></span>
-							<span class="visually-hidden">Next</span>
-						</button>
-
+						<!-- js 캐러셀 버튼 출력 -->
+					
 					</div> <!-- imageCarousel end -->
 				</div>
 			</div>
