@@ -122,9 +122,11 @@ public class MemberDao extends Dao {
 				type="mads";
 			} else if (type.equals("phoneSend")) {
 				type="mphone";
+			} else if (type.equals("newpwSend")) {
+				type="mpw";
 			}
 			System.out.println(type);
-			String sql="update member set" +type+" = ? where mno = ? and mpw = ?";
+			String sql="update member set "+type+" = ? where mno = ? and mpw = ?";
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, data);
 			ps.setInt(2, mno);

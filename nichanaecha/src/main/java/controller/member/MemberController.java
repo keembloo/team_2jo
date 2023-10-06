@@ -71,20 +71,14 @@ public class MemberController extends HttpServlet {
 		String type = request.getParameter("type");
 		boolean result=false;
 		int mno = ((MemberDto)request.getSession().getAttribute("loginDto")).getMno();
-		if (type.equals("adressSend")) {
-			String data = request.getParameter("data");
-			String pw = request.getParameter("pw");
-			//System.out.println(newAdress+pw);
-			result = MemberDao.getInstence().memberEdit(mno , data , pw , type);
-			//System.out.println(result);
-		} else if (type.equals("phoneSend")) {
-			String data = request.getParameter("data");
-			String pw = request.getParameter("pw");
-			//System.out.println(newAdress+pw);
-			result = MemberDao.getInstence().memberEdit(mno , data , pw , type);
-			//System.out.println(result);
-		}
-		System.out.println(result);
+	
+		String data = request.getParameter("data");
+		String pw = request.getParameter("pw");
+		//System.out.println(newAdress+pw);
+		result = MemberDao.getInstence().memberEdit(mno , data , pw , type);
+		//System.out.println(result);
+	
+		//System.out.println(result);
 		response.setContentType("application/json;charset=UTF-8");
 		response.getWriter().print(result);
 	}

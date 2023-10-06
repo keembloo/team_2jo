@@ -8,9 +8,11 @@
 	<link href="/nichanaecha/css/member/memberedit.css" rel="stylesheet">
 </head>
 <body>
-
+	<!-- jsp  파일안에 다른 jsp파일 import -->
+	<%@include file="../header.jsp"%>
+	
 	<!-- 모달1 -->
-	<div class="modal fade" id="adressmodal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="adressmodalLabel" aria-hidden="true">
+	<div class="modal fade" id="adressmodal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="adressmodalLabel" aria-hidden="true" data-bs-show="false">
 	  <div class="modal-dialog">
 	    <div class="modal-content">
 	      <div class="modal-header">
@@ -22,15 +24,15 @@
 	        <input class="pwcheck" type="password" placeholder="비밀번호 확인" autocomplete="on">
 	      </form>
 	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-	        <button type="button" class="btn btn-primary" onclick="editDataSend(1)">확인</button>
+	        <button type="button" class="btn btn-secondary" onclick="resetInput(0)" data-bs-dismiss="modal">닫기</button>
+	        <button type="button" class="btn btn-primary" onclick="editDataSend(0)">확인</button>
 	      </div>
 	    </div>
 	  </div>
 	</div>
 	
 	<!-- 모달2 -->
-	<div class="modal fade" id="adressmodal2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="adressmodal2Label" aria-hidden="true">
+	<div class="modal fade" id="adressmodal2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="adressmodal2Label" aria-hidden="true" data-bs-show="false">
 	  <div class="modal-dialog">
 	    <div class="modal-content">
 	      <div class="modal-header">
@@ -42,36 +44,38 @@
 	        <input class="pwcheck" type="password" placeholder="비밀번호 확인" autocomplete="on">
 	      </form>
 	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-	        <button type="button" class="btn btn-primary" onclick="editDataSend(2)">확인</button>
+	        <button type="button" class="btn btn-secondary" onclick="resetInput(1)" data-bs-dismiss="modal">닫기</button>
+	        <button type="button" class="btn btn-primary" onclick="editDataSend(1)">확인</button>
 	      </div>
 	    </div>
 	  </div>
 	</div>
 	
 	<!-- 모달3 -->
-	<div class="modal fade" id="adressmodal3" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="adressmodal3Label" aria-hidden="true">
+	<div class="modal fade" id="adressmodal3" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="adressmodal3Label" aria-hidden="true" data-bs-show="false">
 	  <div class="modal-dialog">
 	    <div class="modal-content">
 	      <div class="modal-header">
 	        <h5 class="modal-title" id="adressmodal3Label">비밀번호 수정하기</h5>
 	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 	      </div>
-	      <form class="modal-body">
-	        <input class="newDataInput" type="password" placeholder="새로운 비밀번호" autocomplete="on">
-	        <input class="newDataInputCheck" type="password" placeholder="새로운 비밀번호 확인" autocomplete="on">
-	        <input class="pwcheck" type="password" placeholder="기존 비밀번호" autocomplete="on">
-	      </form>
+	      <div class="modal-body">
+	      	<form>
+		        <input class="newDataInput" onkeyup="keyCheck()" type="password" placeholder="새로운 비밀번호" autocomplete="on">
+		        <input class="newDataInputCheck" onkeyup="keyCheck()" type="password" placeholder="새로운 비밀번호 확인" autocomplete="on">
+		        <input class="pwcheck" type="password" placeholder="기존 비밀번호" autocomplete="on">
+	        </form>
+	        <div class="checkhtml"></div>
+	      </div>
 	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-	        <button type="button" class="btn btn-primary" onclick="editDataSend(3)">확인</button>
+	        <button type="button" class="btn btn-secondary" onclick="resetInput(2)" data-bs-dismiss="modal">닫기</button>
+	        <button type="button" class="btn btn-primary" onclick="editDataSend(2)">확인</button>
 	      </div>
 	    </div>
 	  </div>
 	</div>
 
-	<!-- jsp  파일안에 다른 jsp파일 import -->
-	<%@include file="../header.jsp"%>
+	
 	<div class="container-xl"> <!-- 전체구역 -->
 		<div class="row"> <!-- row  -->
 			<div class="lInfo nav flex-column col-3">
