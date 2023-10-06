@@ -40,7 +40,7 @@
 	
 }
 
-.carSearch {
+.SearchBox {
     font-size: 15px;
     font-family: "맑은 고딕";
     font-weight: bold;
@@ -48,7 +48,7 @@
     border: none;
 }
 
-.carSearch:focus{
+.SearchBox:focus{
 	outline: none;
 	
 	
@@ -84,7 +84,7 @@
 .auctionList {
     position: absolute;
     width: 400px;
-    height: 100%;
+    height: 800px;
     right: 0;
     top: 0;
     border-left: 1px solid #e8e8e8;
@@ -118,8 +118,9 @@
 
 /* 리스트 스크롤 추가 */
 .cardList { 
-    max-height: 800px; /* 원하는 높이로 설정 */
-    overflow-y: scroll; /* 스크롤 가능하도록 추가 */
+    overflow-y: scroll;
+    height: calc(100% - 104px);
+    /* 스크롤 높이에 헤더 부분 제외 */
 }
 
 .listClose, .customoverlay:hover{

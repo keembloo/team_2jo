@@ -107,7 +107,6 @@ function getInfo() {
 
 function mapAreaPrint(east, west, south, north, level){
 		
-	boardList = {};
 	clusterer.clear();
 	
 	if(level>4){
@@ -172,10 +171,9 @@ function mapAreaPrint(east, west, south, north, level){
 	})
 }
 
-
+// 지역명 클러스터 클릭시 작동하는 함수
 function listPrint(areaName, level){
 	
-	console.log('map level : '+map.getLevel())
 	if(level>8){ // 확대 레벨 8 초과이면 클릭 시 확대
 		map.setLevel(level-1);
 		return;
@@ -194,51 +192,14 @@ function listPrint(areaName, level){
 	$.ajax({
 		url : "/nichanaecha/MapController",
 		method: "get",
+		async: false,
 		data: {type : "listPrint", areaName: areaName, level : level },
 		success: r =>{
+			r.areaName = areaName;
 			
+			boardList = r; // 결과 전역변수에 저장
 			
-			let html = ``;
-			
-			
-			
-			
-			r.forEach(p => {
-				html += `
-							<div class="card mb-1 p-2" style="width:width: 100%;">
-							  <img src="../auction/img/${Object.values(p.car.imglist)[0]}" class="card-img-top" alt="...">
-							  <div class="card-body">
-								   <h5 class="card-title">${p.atitle}</h5>
-							    <p class="card-text">${p.acontent}</p>
-							  </div>
-							  <ul class="list-group list-group-flush">
-							    <li class="list-group-item">경매 시작일 : 2023-09-26</li>
-							    <li class="list-group-item">경매 종료일 : 2023-09-26</li>
-							    <li class="list-group-item">현재 입찰가 : 14,000,000원</li>
-							  </ul>
-							</div>					
-				`
-				
-			})
-			
-			
-			let cardList = document.querySelector('.cardList');
-			
-			cardList.innerHTML = ``;
-			
-			cardList.scrollTo({ top: 0, behavior: 'smooth' })
-			
-			
-			$('.listTitle').fadeOut(100, function() {
-				// 내용을 페이드 아웃한 후에 내용을 업데이트하고 다시 페이드 인
-				$(this).html( document.querySelector('.listTitle').innerHTML = areaName ).fadeIn(100);
-			});
-			
-			
-			$('.cardList').fadeOut(100, function() {
-				$(this).html( cardList.innerHTML = html ).fadeIn(100);
-			});
-			
+			boardPrint(r) // 게시물 출력 공통 함수 호출
 			
 		},
 		error: e =>{
@@ -254,7 +215,7 @@ function listPrint(areaName, level){
 	
 } // f n
 
-
+// 카카오 api로 클러스터된 영역 클릭 시 리스트 출력 함수
 function clusterPrint( cnoList ){
 	
 	let auctionList = document.querySelector('.auctionList');
@@ -273,48 +234,13 @@ function clusterPrint( cnoList ){
 	$.ajax({
 		url : "/nichanaecha/MapController",
 		method: "get",
+		async: false,
 		data: {type : "clusterPrint", cnoList : jsonList },
 		success: r =>{
+			boardList = r; // 결과 전역변수에 저장
 			
-			
-			let html = ``;
-			
-			r.forEach(p => {
-				html += `
-							<div class="card mb-1 p-2" style="width:width: 100%;">
-							  <img src="../auction/img/${Object.values(p.car.imglist)[0]}" class="card-img-top" alt="...">
-							  <div class="card-body">
-								   <h5 class="card-title">${p.atitle}</h5>
-							    <p class="card-text">${p.acontent}</p>
-							  </div>
-							  <ul class="list-group list-group-flush">
-							    <li class="list-group-item">경매 시작일 : 2023-09-26</li>
-							    <li class="list-group-item">경매 종료일 : 2023-09-26</li>
-							    <li class="list-group-item">현재 입찰가 : 14,000,000원</li>
-							  </ul>
-							</div>					
-				`
+			boardPrint(r) // 게시물 출력 공통 함수 호출
 				
-			})
-			
-			
-			let cardList = document.querySelector('.cardList');
-			
-			cardList.innerHTML = ``;
-			
-			cardList.scrollTo({ top: 0, behavior: 'smooth' })
-			
-				
-			$('.listTitle').fadeOut(100, function() {
-				$(this).html( document.querySelector('.listTitle').innerHTML = r[0].car.carAddress.cacodename ).fadeIn(100);
-			});
-			
-
-			$('.cardList').fadeOut(100, function() {
-				$(this).html(cardList.innerHTML = html).fadeIn(100);
-			});
-
-			
 
 		},
 		error: e =>{
@@ -342,5 +268,121 @@ function listClose() {
 	
 	
 }
+
+// 리스트 출력 공통 함수
+function boardPrint(object){
+	
+	const currentDate = new Date(); // 현재 시간 반환
+			
+	let html = ``;
+	
+	object.forEach(p => {
+				// 현재시간, 반환 시간 비교하여 차이일수로 반환, 0이면 '오늘' 출력
+				let inputDate = new Date(p.aenddate);
+				
+				let timeDifference = Math.floor((inputDate - currentDate) / (1000 * 60 * 60 * 24))
+				
+				timeDifference = 0 ? timeDifference = '오늘' : timeDifference = timeDifference+"일 전";
+				
+				html += `
+						<a href="/nichanaecha/auction/carinfo.jsp?cno=${p.cno}">
+							<div class="card mb-1 p-2" style="width: 100%;">
+							  <img src="../auction/img/${Object.values(p.car.imglist)[0]}" class="card-img-top" alt="...">
+							  <div class="card-body">
+								   <h5 class="card-title">${p.atitle}</h5>
+							    <p class="card-text">${p.acontent}</p>
+							  </div>
+							  <ul class="list-group list-group-flush">
+							    <li class="list-group-item">경매 시작일 : ${p.astartdate.slice(0,10)} </li>
+							    <li class="list-group-item">경매 종료일 : ${timeDifference} </li>
+							    <li class="list-group-item">입찰 시작가 : ${p.aprice.toLocaleString()}원 </li>
+							  </ul>
+							</div>
+						</a>
+				`
+				
+			})
+			
+	
+	
+	let cardList = document.querySelector('.cardList');
+
+	cardList.innerHTML = ``;
+
+	cardList.scrollTo({ top: 0, behavior: 'smooth' })
+	
+	if(object.areaName != undefined ) { // 반환 속성에 지역명이 없을 경우 '' 출력
+		$('.listTitle').fadeOut(100, function() {
+			// 내용을 페이드 아웃한 후에 내용을 업데이트하고 다시 페이드 인
+			$(this).html(document.querySelector('.listTitle').innerHTML = object.areaName).fadeIn(100);
+		});
+	}else{
+		
+		document.querySelector('.listTitle').innerHTML = '';
+		
+	}
+	
+	$('.cardList').fadeOut(100, function() {
+		$(this).html(cardList.innerHTML = html).fadeIn(100);
+	});
+
+
+}
+
+
+// 경매 제목, 내용 검색 함수
+function auctionSearch(){
+	
+	let keyword = document.querySelector('.aucSerchValue').value;
+	
+	const currentDate = new Date(); // 현재 시간 반환
+			
+	let html = ``;
+	
+	for(let p of boardList){
+		
+		console.log('title : '+p.atitle.indexOf(keyword))
+		console.log('content : '+p.acontent.indexOf(keyword))
+		
+		if (p.atitle.indexOf(keyword) == -1 && p.acontent.indexOf(keyword) == -1) {
+			continue;
+		}
+
+		// 현재시간, 반환 시간 비교하여 차이일수로 반환, 0이면 '오늘' 출력
+		let inputDate = new Date(p.aenddate);
+
+		let timeDifference = Math.floor((inputDate - currentDate) / (1000 * 60 * 60 * 24))
+
+		timeDifference = 0 ? timeDifference = '오늘' : timeDifference = timeDifference + "일 전";
+
+		html += `
+						<a href="/nichanaecha/auction/carinfo.jsp?cno=${p.cno}">
+							<div class="card mb-1 p-2" style="width 100%;">
+							  <img src="../auction/img/${Object.values(p.car.imglist)[0]}" class="card-img-top" alt="...">
+							  <div class="card-body">
+								   <h5 class="card-title">${p.atitle}</h5>
+							    <p class="card-text">${p.acontent}</p>
+							  </div>
+							  <ul class="list-group list-group-flush">
+							    <li class="list-group-item">경매 시작일 : ${p.astartdate.slice(0, 10)} </li>
+							    <li class="list-group-item">경매 종료일 : ${timeDifference} </li>
+							    <li class="list-group-item">입찰 시작가 : ${p.aprice.toLocaleString()}원 </li>
+							  </ul>
+							</div>
+						</a>
+				`
+
+	}
+	
+	document.querySelector('.cardList').innerHTML = html
+	
+}
+
+
+
+
+
+
+
 
  

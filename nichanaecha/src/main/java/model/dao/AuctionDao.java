@@ -301,7 +301,11 @@ public class AuctionDao extends Dao {
 		
 		try {
 			
-			String sql = "select calat, calng, cads, cname, car.cno from caraddress as cads inner join car on cads.cno = car.cno where calat between ? and ? and calng between ? and ?";
+			String sql = "select calat, calng, cads, cname, car.cno\n"
+					+ "from caraddress as cads inner join car\n"
+					+ "on cads.cno = car.cno\n"
+					+ "where calat between ? and ? and calng between ? and ?\n"
+					+ "and car.cno in (select cno from auctionInfo where astate = 0)";
 			
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, west);
@@ -338,6 +342,7 @@ public class AuctionDao extends Dao {
 		try {
 			String sql = "select cacodename as areaName, count(cacodename) as count, avg(calat) as calat, avg(calng) as calng from caraddress\n"
 						+ "where calat between ? and ? and calng between ? and ?\n"
+						+ "and cno in (select cno from auctionInfo where astate = 0)\n"
 						+ "group by cacodename;";
 			
 			ps = conn.prepareStatement(sql);
@@ -375,6 +380,7 @@ public class AuctionDao extends Dao {
 					: "substring_index(substring_index(cads,' ',2),' ',-1)"; 
 			
 			String sql = "select "+condition+" as areaName, count(cads) as count, avg(calat) as calat, avg(calng) as calng from caraddress\n"
+						+ "where cno in (select cno from auctionInfo where astate = 0)\n"
 						+ "group by "+condition;
 				
 			ps = conn.prepareStatement(sql);
@@ -410,10 +416,12 @@ public class AuctionDao extends Dao {
 			
 			if(level >= 6 && level <= 8) {
 				sql += "where substring_index(substring_index(ca.cads,' ',2),' ',-1) = '"+areaName+"'\n"
+						+ "and au.astate = 0\n"
 					+ "order by au.ano desc;";
 			}
 			else if(level == 5) {
 				sql += "where cacodename = '"+areaName+"'\n"
+						+ "and au.astate = 0\n"
 						+ "order by au.ano desc;";
 			}
 			
