@@ -139,7 +139,7 @@ public class AuctionController extends HttpServlet {
 	      			System.out.println(cname);	
 	      		String cdate  = fileList.get(6).getString();			//제조년월
 	      			System.out.println(cdate);
-	      			int ckm  = Integer.parseInt(fileList.get(7).getString());			//KM
+	      		int ckm  = Integer.parseInt(fileList.get(7).getString());			//KM
 	      		// 로그인 회원번호 없음 : 어디서 구해올까.
 		      		Object object = 
 		      				request.getSession().getAttribute("loginDto");
