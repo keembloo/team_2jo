@@ -155,18 +155,18 @@ public class AuctionController extends HttpServlet {
 	      		String cads  = fileList.get(10).getString();;			//주소
 	      			System.out.println(cads);
 	      			
-	      			String cacode  = fileList.get(11).getString();;			//법정동코드
+	      		String cacode  = fileList.get(11).getString();;			//법정동코드
 	      			System.out.println(cacode);
 	      			
-	      			String cacodename  = fileList.get(12).getString();;			//법정동이름
+	      		String cacodename  = fileList.get(12).getString();;			//법정동이름
 	      			System.out.println(cacodename);
 	      		
 	      		CarAddressDto carAddressDto = new CarAddressDto();
-	      		carAddressDto.setCalat(calat);
-	      		carAddressDto.setCalng(calng);
-	      		carAddressDto.setCads(cads);
-	      		carAddressDto.setCacode(cacode);
-	      		carAddressDto.setCacodename(cacodename);
+	      			carAddressDto.setCalat(calat);
+	      			carAddressDto.setCalng(calng);
+	      			carAddressDto.setCads(cads);
+	      			carAddressDto.setCacode(cacode);
+	      			carAddressDto.setCacodename(cacodename);
 	      		
 	      		System.out.println( imgList ); // 이미지 목록
 	      		
@@ -182,75 +182,8 @@ public class AuctionController extends HttpServlet {
 			    response.setContentType("application/json; charset=UTF-8"); 
 			    response.getWriter().print(result);
 	      	
-	      /*
-	       * 
-	       * 
-	      
-			Object object = request.getSession().getAttribute("loginDto");
-			CarDto carDto = (CarDto)object;
-			int cmo = carDto.getCno();
-			  CarDto car = new CarDto(
-			            0 ,                                       		//cno 호출(x) : 차 등록시에는 매물 번호 는 자동부여 되므로 가지고 있을 필요가 없음
-			            fileList.get(0).getString(),                  	//제조사(0)
-			            fileList.get(1).getString(),                  	//차량번호(1)
-			            fileList.get(2).getString(),                  	//차량종류(2)
-			            Integer.parseInt(fileList.get(3).getString()),  //배기량(3)
-			            fileList.get(4).getString(),                  	//연료(4)
-			            fileList.get(5).getString(),                  	//차량명(5)
-			            fileList.get(6).getString(),                  	//제조년월(6)
-			            Integer.parseInt(fileList.get(7).getString()),  //주행거리(7)
-			            null,                                       	// 주소
-			            fileList.get(8).getString(),                  	//위도(8)
-			            fileList.get(9).getString()                     //경도(9)
-			             );                                 
-			      
-			      System.out.println( carDto );
-
-			      //3. Dao 처리
-			      boolean result = AuctionDao.getInstence().bcarsubmit(carDto);
-			      //4. (Dao 결과) 응답
-			      response.setContentType("application/json; charset=UTF-8"); 
-			      response.getWriter().print(result);
-	       */
-			      
+	        }catch (Exception e) {}	
 		
-		      }catch (Exception e) {}	
-		/*
-				//1. (입력받은 매개변수)요청
-				String ccompany = multi.getParameter("ccompany");			//제조사(1)
-					System.out.println(ccompany);
-				String cnum = multi.getParameter("cnum");					//차량번호(2)
-					System.out.println(cnum);
-				String csize = multi.getParameter("csize");					//차량종류(3)
-					System.out.println(csize);
-				int cc = Integer.parseInt( multi.getParameter("cc") );		//배기량(4)
-					System.out.println(cc);
-				String coil = multi.getParameter("coil");					//연료(5)
-					System.out.println(coil);
-				String cname = multi.getParameter("cname");					//차량명(6)
-					System.out.println(cname);
-				String cdate = multi.getParameter("cdate");					//제조년월(7)
-					System.out.println(cdate);
-				int ckm = Integer.parseInt( multi.getParameter("ckm") );	//주행거리(8)
-					System.out.println(ckm);
-				//차량 등록 주소(9)
-				String clat = multi.getParameter("clat");
-					System.out.println(clat);
-				String clng = multi.getParameter("clng");
-					System.out.println(clng);
-				
-	*/		
-				
-				
-	
-				//2. 유효성 검사/객체화
-				//CarDto carDto = new CarDto();
-				
-				//3. Dao 처리
-				//boolean result = AuctionDao.getInstence().bcarsubmit(CarDto);
-				//4. (Dao 결과) 응답
-				//response.setContentType("application/json; charset=UTF-8"); 
-				//response.getWriter().print(result);
 	}
  
 	
