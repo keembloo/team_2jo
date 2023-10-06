@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import model.dao.AuctionDao;
 import model.dto.AuctionDto;
+import model.dto.CarAddressDto;
 import model.dto.CarDto;
 import model.dto.MemberDto;
 
@@ -114,21 +115,21 @@ public class AuctionController extends HttpServlet {
 			
 			// 제품 등록한 회원번호 [ 서블릿 세션 ] 
 	      		
-	      	String ccompany = fileList.get(0).getString();		//제조사
+	      		String ccompany = fileList.get(0).getString();		//제조사
 	      			System.out.println(ccompany);
-	      		String cnum = fileList.get(1).getString();;			//차량번호
+	      		String cnum = fileList.get(1).getString();			//차량번호
 	      			System.out.println(cnum);
-	      		String csize  = fileList.get(2).getString();;			//차량종류
+	      		String csize  = fileList.get(2).getString();			//차량종류
 	      			System.out.println(csize);
-	      		String cc  = fileList.get(3).getString();;				//베기량
+	      		int cc  = Integer.parseInt(fileList.get(3).getString());				//베기량
 	      			System.out.println(cc);
-	      		String coil  = fileList.get(4).getString();;			//연료
+	      		String coil  = fileList.get(4).getString();			//연료
 	      			System.out.println(coil);
-	      		String cname  = fileList.get(5).getString();;			//차량명
+	      		String cname  = fileList.get(5).getString();			//차량명
 	      			System.out.println(cname);	
-	      		String cdate  = fileList.get(6).getString();;			//제조년월
+	      		String cdate  = fileList.get(6).getString();			//제조년월
 	      			System.out.println(cdate);
-	      		String ckm  = fileList.get(7).getString();;			//KM
+	      			int ckm  = Integer.parseInt(fileList.get(7).getString());			//KM
 	      		// 로그인 회원번호 없음 : 어디서 구해올까.
 		      		Object object = 
 		      				request.getSession().getAttribute("loginDto");
@@ -141,12 +142,23 @@ public class AuctionController extends HttpServlet {
 	      		String calng  = fileList.get(9).getString();;			//경도
 	      			System.out.println(calng);
 	      		
+	      		CarAddressDto carAddressDto = new CarAddressDto();
+	      		carAddressDto.setCalat(calat);
+	      		carAddressDto.setCalng(calng);
+	      		
 	      		System.out.println( imgList ); // 이미지 목록
 	      		
 	      		
 	      		//위에서 만든 변수들 12개를 하나의 DTO로 만들기
+	      		CarDto carDto = new CarDto(0, ccompany, cnum, csize, cc, coil, cname,
+	      				cdate, ckm, mno, carAddressDto, imgList);
+	      		System.out.println(carDto);
 	      		
-	      		
+	      		//3. Dao 처리
+			    boolean result = AuctionDao.getInstence().bcarsubmit(carDto);
+			    //4. (Dao 결과) 응답
+			    response.setContentType("application/json; charset=UTF-8"); 
+			    response.getWriter().print(result);
 	      	
 	      /*
 	       * 
