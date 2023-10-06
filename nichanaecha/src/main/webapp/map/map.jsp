@@ -130,7 +130,7 @@
 			
 				<div class="col-4 text-end"> <!-- 검색 구역 -->
 					<span><img src="/nichanaecha/img/searchIcon.png" width="7%">
-					<input class="carSearch" type="text" placeholder="주소 검색"></span>
+					<input class="SearchBox" type="text" placeholder="주소 검색"></span>
 				
 				</div> <!-- 검색 구역 종료 -->
 			
@@ -153,15 +153,17 @@
 								<div class="col-2"></div>
 								
 							</div>
-								<div class="row justify-content-center">
-									<div class="col-8 border-bottom"> <!-- 검색 구역 -->
-											<span><img src="/nichanaecha/img/searchIcon.png" width="7%">
-											<input class="carSearch " type="text" placeholder="경매 검색"></span>
-									</div> <!-- 검색 구역 종료 -->
-								</div>
-								<div class="cardList my-1">
-									<!-- 매물 출력 구역 -->
-								</div>
+							
+							<div class="row justify-content-center">
+								<div class="col-8 border-bottom"> <!-- 검색 구역 -->
+										<span><img src="/nichanaecha/img/searchIcon.png" width="7%">
+										<input onkeyup="auctionSearch()" class="SearchBox aucSerchValue" type="text" placeholder="경매 제목, 내용 검색"></span>
+								</div> <!-- 검색 구역 종료 -->
+							</div>
+							
+							<div class="cardList my-1">
+								<!-- 매물 출력 구역 -->
+							</div>
 							
 							
 						</div>
