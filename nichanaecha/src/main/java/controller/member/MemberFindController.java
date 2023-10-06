@@ -72,7 +72,7 @@ public class MemberFindController extends HttpServlet {
 	}
 
 
-	// 로그인 ( 세션저장 )
+	// 로그인 ( 세션저장 ) 성호
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		//1. 매개변수 요청

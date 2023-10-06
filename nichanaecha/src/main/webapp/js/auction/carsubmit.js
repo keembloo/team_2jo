@@ -56,7 +56,7 @@ let plng = 0;
 
 function bcarsubmit(){
 	//1. form 가져오기
-	let form = document.querySelectorAll('.carsubmitForm')[0];	console.log( carsubmitForm );
+	let form = document.querySelectorAll('.carsubmitForm')[0];	
 	
 	//2. form 객체화 하기
 	let formData = new FormData(form);		console.log(formData);

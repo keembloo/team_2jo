@@ -23,6 +23,27 @@ public class CarDto {
 	
 
 
+	//풀생성자
+	public CarDto(int cno, String ccompany, String cnum, String csize, int cc, String coil, String cname, String cdate,
+			int ckm, int mno, CarAddressDto carAddress, Map<Integer, String> imglist) {
+		super();
+		this.cno = cno;
+		this.ccompany = ccompany;
+		this.cnum = cnum;
+		this.csize = csize;
+		this.cc = cc;
+		this.coil = coil;
+		this.cname = cname;
+		this.cdate = cdate;
+		this.ckm = ckm;
+		this.mno = mno;
+		this.carAddress = carAddress;
+		this.imglist = imglist;
+	}
+
+
+
+
 
 	public CarDto(int cno, String ccompany, String cnum, String csize, int cc, String coil, String cname, String cdate,
 			int ckm, String cads, String clat, String clng) {
