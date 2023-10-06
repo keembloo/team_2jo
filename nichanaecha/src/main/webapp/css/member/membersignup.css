@@ -1,1 +1,70 @@
 @charset "UTF-8";
+/* .signupForm{
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    width: 50%;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: center;
+}
+.signupBtn{
+	
+} */
+
+.signupForm {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  
+}
+
+/* Style for the form input labels */
+.signupForm label {
+  font-weight: bold;
+}
+
+/* Style for the form input fields */
+.signupForm input[type="text"],
+.signupForm input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+border: none; /* Remove the default border */
+  border-bottom: 1px solid #ccc; /* Add a border only to the bottom */
+  outline: none;
+}
+
+/* Style for the validation messages */
+.signupForm .idValBox,
+.signupForm .valBox,
+.signupForm .valphone {
+  color: red;
+  font-size: 14px;
+  margin: 20px
+}
+
+/* Style for the Sign Up button */
+.signupBtn {
+  display: block;
+  width: 45%;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  align-items: center;
+  margin: 0 auto;
+  margin-top: 40px;
+}
+
+/* Style for the Sign Up button on hover */
+.signupBtn:hover {
+  background-color: #0056b3;
+}

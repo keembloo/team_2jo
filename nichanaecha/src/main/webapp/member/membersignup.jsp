@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-	<link href="" rel = "stylesheet">
+	<link href="../css/member/membersignup.css" rel = "stylesheet">
 </head>
 <body>
 
