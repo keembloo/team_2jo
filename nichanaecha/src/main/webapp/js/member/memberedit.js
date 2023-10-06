@@ -23,12 +23,17 @@ function editview(){
 								<div class="linedeco"></div>
 								<div class="infoflexbox">
 									<div class="infotitle">주소 : ${r.mads}</div>
-									<button class="btn editbtn" onclick="adressEdit()" data-toggle="modal" data-target="#exampleModal" type="button">수정</button>
+									<button class="btn editbtn" onclick="adressEdit()" data-toggle="adressmodal" data-target="adressmodal" type="button">수정</button>
 								</div>
 								<div class="linedeco"></div>
 								<div class="infoflexbox">
 									<div class="infotitle">연락처 : ${r.mphone}</div>
 									<button class="btn editbtn" onclick="phoneEdit()" type="button">수정</button>
+								</div>
+								<div class="linedeco"></div>
+								<div class="infoflexbox">
+									<div class="infotitle">비밀번호</div>
+									<button class="btn editbtn" onclick="pwEdit()" type="button">수정</button>
 								</div>
 								`;
 			
@@ -38,12 +43,11 @@ function editview(){
 }
 
 
+	
 function adressEdit(){
 	console.log("주소수정");
-	let modal = document.querySelector('.modal');
-	//modal.moda
+	$("#adressmodal").modal("show");
 
-	
 }
 
 function phoneEdit(){
@@ -51,3 +55,29 @@ function phoneEdit(){
 	
 }
 
+// 규리 주소 수정
+function adressSend(){
+	console.log("입력값");
+	let newAdress = document.querySelector('.newadressinput');
+	let pw = document.querySelector('.pwcheck');
+	console.log('g확인 : '+  newAdress.value + pw.value);
+	$.ajax({
+			url : "/nichanaecha/MemberController" , 
+			async : false ,
+			method : "put" ,
+			data : { type : "adressSend" , data: newAdress.value , pw : pw.value } ,
+			success : r => { 
+				newAdress.value="";
+				pw.value="";
+				$("#adressmodal").modal("hide");
+				if(r){
+					alert('정보가 변경되었습니다');
+					editview();
+				}else{
+					alert('정보 수정 실패');
+				}
+				
+			} , 
+			error : e => {console.log("실패");}		
+	})
+}

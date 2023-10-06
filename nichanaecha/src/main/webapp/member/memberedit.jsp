@@ -8,23 +8,25 @@
 	<link href="/nichanaecha/css/member/memberedit.css" rel="stylesheet">
 </head>
 <body>
-<div class="modal" tabindex="-1">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Modal title</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p>Modal body text goes here.</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
+	<!-- 모달 -->
+	<div class="modal fade" id="adressmodal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="adressmodalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="adressmodalLabel">내 주소 수정하기</h5>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body">
+	        <input class="newadressinput" type="text" placeholder="새로운 주소">
+	        <input class="pwcheck" type="password" placeholder="비밀번호 확인">
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+	        <button type="button" class="btn btn-primary" onclick="adressSend()">확인</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
 
 	<!-- jsp  파일안에 다른 jsp파일 import -->
 	<%@include file="../header.jsp"%>

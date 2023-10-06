@@ -68,7 +68,19 @@ public class MemberController extends HttpServlet {
 
 	// 규리 회원정보 수정
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		String type = request.getParameter("type");
+		boolean result=false;
+		int mno = ((MemberDto)request.getSession().getAttribute("loginDto")).getMno();
+		if (type.equals("adressSend")) {
+			String data = request.getParameter("data");
+			String pw = request.getParameter("pw");
+			//System.out.println(newAdress+pw);
+			result = MemberDao.getInstence().memberEdit(mno , data , pw);
+			//System.out.println(result);
+		}
+		System.out.println(result);
+		response.setContentType("application/json;charset=UTF-8");
+		response.getWriter().print(result);
 	}
 
 	
