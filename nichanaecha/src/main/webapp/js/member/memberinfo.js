@@ -70,9 +70,9 @@ function mySubmitcarView(){
 					html += `<div class="col"> <!-- 제품1개 -->
 								<div class="card">
 									<a href="/nichanaecha/auction/carinfo.jsp?cno=${p.cno}">
-										<img src="/nichanaecha/auction/img/seltosImgSample.jpg" class="card-img-top" alt="Image 1">
+										<img src="/nichanaecha/auction/img/${p.cimg}" class="card-img-top" alt="Image 1">
 										<div class="card-body">
-											<h5 class="card-title">${p.atitle}</h5>
+											<h5 class="card-title">${Object.values(p.car.imglist)[0]}</h5>
 											<div class="card-text">경매 등록번호 : ${p.ano}</div>
 											<div class="card-text">최소 입찰 금액 : ${p.aprice.toLocaleString()}원</div>
 											<div class="card-text">경매 종료 : ${p.aenddate}</div>
@@ -146,7 +146,7 @@ function myAuctionView(){
 					html += `<div class="col"> <!-- 제품1개 -->
 								<div class="card">
 									<a href="/nichanaecha/auction/carinfo.jsp?cno=${p.cno}">
-										<img src="/nichanaecha/auction/img/seltosImgSample.jpg" class="card-img-top" alt="Image 1">
+										<img src="/nichanaecha/auction/img/${p.cimg}" class="card-img-top" alt="Image 1">
 										<div class="card-body">
 											<h5 class="card-title">${p.atitle}</h5>
 											<div class="card-text">경매 등록번호 : ${p.ano}</div>
@@ -220,7 +220,7 @@ function myWishlistView(){
 					html += `<div class="col"> <!-- 제품1개 -->
 								<div class="card">
 									<a href="/nichanaecha/auction/carinfo.jsp?cno=${p.cno}">
-										<img src="/nichanaecha/auction/img/seltosImgSample.jpg" class="card-img-top" alt="Image 1">
+										<img src="/nichanaecha/auction/img/${p.cimg}" class="card-img-top" alt="Image 1">
 										<div class="card-body">
 											<h5 class="card-title">${p.atitle}</h5>
 											<div class="card-text">경매 등록번호 : ${p.ano}</div>
@@ -260,7 +260,3 @@ function myWishlistView(){
 			error : e => {console.log("실패"+e);}
 		});
 }
-
-
-
-

@@ -23,7 +23,7 @@ function editview(){
 								<div class="linedeco"></div>
 								<div class="infoflexbox">
 									<div class="infotitle">주소 : ${r.mads}</div>
-									<button class="btn editbtn" onclick="adressEdit()" type="button">수정</button>
+									<button class="btn editbtn" onclick="adressEdit()" data-toggle="modal" data-target="#exampleModal" type="button">수정</button>
 								</div>
 								<div class="linedeco"></div>
 								<div class="infoflexbox">
@@ -39,8 +39,9 @@ function editview(){
 
 
 function adressEdit(){
-	//console.log("주소수정");
-
+	console.log("주소수정");
+	let modal = document.querySelector('.modal');
+	//modal.moda
 
 	
 }
@@ -49,3 +50,4 @@ function phoneEdit(){
 	//console.log("전화수정");
 	
 }
+
