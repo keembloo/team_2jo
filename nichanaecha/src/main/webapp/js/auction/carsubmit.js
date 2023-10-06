@@ -101,7 +101,7 @@ let plng = 0;
 
 function bcarsubmit(){
 	
-	// 만약에 비 로그인이면 ㄹ
+	
 	
 	//1. form 가져오기
 	let form = document.querySelectorAll('.carsubmitForm')[0];	
