@@ -79,13 +79,11 @@ public class MemberPointController extends HttpServlet {
 		//System.out.println(" 컨트롤러실행");
 		String type = request.getParameter("type");
 		int mno = ((MemberDto)request.getSession().getAttribute("loginDto")).getMno();
-		long gold = Integer.parseInt(request.getParameter("gold"));
+		long gold = Long.parseLong(request.getParameter("gold"));
 		String mpno = (UUID.randomUUID().toString())+"_"+mno; 
 		//System.out.println("컨트롤ㄹ러 uuid : "+mpno);
-		if(type.equals("사용자 입금")) {
-			type="사용자 입금";
-		} else if (type.equals("사용자 출금")){
-			type="사용자 출금";
+
+		if (type.equals("사용자 출금")){
 			gold = -gold;
 		} 
 		
