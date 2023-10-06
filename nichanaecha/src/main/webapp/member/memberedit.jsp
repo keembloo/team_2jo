@@ -8,21 +8,63 @@
 	<link href="/nichanaecha/css/member/memberedit.css" rel="stylesheet">
 </head>
 <body>
-	<!-- 모달 -->
+
+	<!-- 모달1 -->
 	<div class="modal fade" id="adressmodal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="adressmodalLabel" aria-hidden="true">
 	  <div class="modal-dialog">
 	    <div class="modal-content">
 	      <div class="modal-header">
-	        <h5 class="modal-title" id="adressmodalLabel">내 주소 수정하기</h5>
+	        <h5 class="modal-title" id="adressmodalLabel">주소 수정하기</h5>
 	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 	      </div>
-	      <div class="modal-body">
-	        <input class="newadressinput" type="text" placeholder="새로운 주소">
-	        <input class="pwcheck" type="password" placeholder="비밀번호 확인">
-	      </div>
+	      <form class="modal-body">
+	      	<input class="newDataInput" type="text" placeholder="새로운 주소">
+	        <input class="pwcheck" type="password" placeholder="비밀번호 확인" autocomplete="on">
+	      </form>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-	        <button type="button" class="btn btn-primary" onclick="adressSend()">확인</button>
+	        <button type="button" class="btn btn-primary" onclick="editDataSend(1)">확인</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+	<!-- 모달2 -->
+	<div class="modal fade" id="adressmodal2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="adressmodal2Label" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="adressmodal2Label">연락처 수정하기</h5>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <form class="modal-body">
+	     	<input class="newDataInput" type="text" placeholder="새로운 연락처">
+	        <input class="pwcheck" type="password" placeholder="비밀번호 확인" autocomplete="on">
+	      </form>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+	        <button type="button" class="btn btn-primary" onclick="editDataSend(2)">확인</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+	<!-- 모달3 -->
+	<div class="modal fade" id="adressmodal3" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="adressmodal3Label" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="adressmodal3Label">비밀번호 수정하기</h5>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <form class="modal-body">
+	        <input class="newDataInput" type="password" placeholder="새로운 비밀번호" autocomplete="on">
+	        <input class="newDataInputCheck" type="password" placeholder="새로운 비밀번호 확인" autocomplete="on">
+	        <input class="pwcheck" type="password" placeholder="기존 비밀번호" autocomplete="on">
+	      </form>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+	        <button type="button" class="btn btn-primary" onclick="editDataSend(3)">확인</button>
 	      </div>
 	    </div>
 	  </div>

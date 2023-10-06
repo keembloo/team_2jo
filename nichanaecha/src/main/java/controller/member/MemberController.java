@@ -75,7 +75,13 @@ public class MemberController extends HttpServlet {
 			String data = request.getParameter("data");
 			String pw = request.getParameter("pw");
 			//System.out.println(newAdress+pw);
-			result = MemberDao.getInstence().memberEdit(mno , data , pw);
+			result = MemberDao.getInstence().memberEdit(mno , data , pw , type);
+			//System.out.println(result);
+		} else if (type.equals("phoneSend")) {
+			String data = request.getParameter("data");
+			String pw = request.getParameter("pw");
+			//System.out.println(newAdress+pw);
+			result = MemberDao.getInstence().memberEdit(mno , data , pw , type);
 			//System.out.println(result);
 		}
 		System.out.println(result);

@@ -115,11 +115,16 @@ public class MemberDao extends Dao {
 	}
 	
 	//규리 회원정보 수정
-	public boolean memberEdit(int mno , String data , String pw) {
+	public boolean memberEdit(int mno , String data , String pw , String type) {
 		try {
-			System.out.println("다오성공");
-			System.out.println("mno"+mno+"주소"+data+"비번"+pw);
-			String sql="update member set mads = ? where mno = ? and mpw = ?";
+			//System.out.println("mno"+mno+"주소"+data+"비번"+pw);
+			if (type.equals("adressSend")) {
+				type="mads";
+			} else if (type.equals("phoneSend")) {
+				type="mphone";
+			}
+			System.out.println(type);
+			String sql="update member set" +type+" = ? where mno = ? and mpw = ?";
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, data);
 			ps.setInt(2, mno);
@@ -133,5 +138,6 @@ public class MemberDao extends Dao {
 		}
 		return false;
 	}
+	
 	
 }

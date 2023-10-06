@@ -23,17 +23,17 @@ function editview(){
 								<div class="linedeco"></div>
 								<div class="infoflexbox">
 									<div class="infotitle">주소 : ${r.mads}</div>
-									<button class="btn editbtn" onclick="adressEdit()" data-toggle="adressmodal" data-target="adressmodal" type="button">수정</button>
+									<button class="btn editbtn" onclick="memberEdit(1)" data-toggle="adressmodal" data-target="adressmodal" type="button">수정</button>
 								</div>
 								<div class="linedeco"></div>
 								<div class="infoflexbox">
 									<div class="infotitle">연락처 : ${r.mphone}</div>
-									<button class="btn editbtn" onclick="phoneEdit()" type="button">수정</button>
+									<button class="btn editbtn" onclick="memberEdit(2)" type="button">수정</button>
 								</div>
 								<div class="linedeco"></div>
 								<div class="infoflexbox">
 									<div class="infotitle">비밀번호</div>
-									<button class="btn editbtn" onclick="pwEdit()" type="button">수정</button>
+									<button class="btn editbtn" onclick="memberEdit(3)" type="button">수정</button>
 								</div>
 								`;
 			
@@ -44,10 +44,15 @@ function editview(){
 
 
 	
-function adressEdit(){
+function memberEdit(num){
 	console.log("주소수정");
-	$("#adressmodal").modal("show");
-
+	if (num ==1){
+		$("#adressmodal").modal("show");
+	}else if (num ==2){
+		$("#adressmodal2").modal("show");
+	}else if (num ==3){
+		$("#adressmodal3").modal("show");
+	}
 }
 
 function phoneEdit(){
@@ -55,19 +60,31 @@ function phoneEdit(){
 	
 }
 
-// 규리 주소 수정
-function adressSend(){
-	console.log("입력값");
-	let newAdress = document.querySelector('.newadressinput');
+// 규리 주소 , 연락처 수정
+function editDataSend(num){
+	//console.log("입력값");
+	let data = document.querySelector('.newDataInput');
 	let pw = document.querySelector('.pwcheck');
-	console.log('g확인 : '+  newAdress.value + pw.value);
+	let type="";
+	if (num==1){ // 주소수정
+		type="adressSend";
+	} else if (num==2){ // 연락처수정
+		type="phoneSend";
+	} else if (num==3){ // 비번수정
+		type="newpwSend";
+	}
+	//console.log('g확인 : '+  data.value + pw.value);
+	if (data.value ==""){
+		alert('입력한 내용이 없습니다');
+		return;
+	}
 	$.ajax({
 			url : "/nichanaecha/MemberController" , 
 			async : false ,
 			method : "put" ,
-			data : { type : "adressSend" , data: newAdress.value , pw : pw.value } ,
+			data : { type : type , data : data.value , pw : pw.value } ,
 			success : r => { 
-				newAdress.value="";
+				data.value="";
 				pw.value="";
 				$("#adressmodal").modal("hide");
 				if(r){
@@ -76,7 +93,6 @@ function adressSend(){
 				}else{
 					alert('정보 수정 실패');
 				}
-				
 			} , 
 			error : e => {console.log("실패");}		
 	})
