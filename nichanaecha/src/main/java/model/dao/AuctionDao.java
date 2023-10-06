@@ -167,11 +167,11 @@ public class AuctionDao extends Dao {
 	            sql = "insert into caraddress(cads,calat,calng,cacode,cacodename,cno)"
 	                  + "values( ?,?,?,?,?,?) ";
 	            ps =conn.prepareStatement(sql);
-	            ps.setString( 1 , null );
-	            ps.setString( 2 , dto.getCarAddress().getCalat() );				// 차량 위치 위도
-	            ps.setString( 3 , dto.getCarAddress().getCalng() );				// 차량 위치 경도
-	            ps.setString( 4 , null );
-	            ps.setString( 5 , null );
+	            ps.setString( 1 , dto.getCarAddress().getCads() );							// 차량 등록 주소
+	            ps.setString( 2 , dto.getCarAddress().getCalat() );	// 차량 위치 위도
+	            ps.setString( 3 , dto.getCarAddress().getCalng() );	// 차량 위치 경도
+	            ps.setString( 4 , dto.getCarAddress().getCacode() );							// 법정동 코드
+	            ps.setString( 5 , dto.getCarAddress().getCacodename() );							// 법정동명
 	            ps.setInt( 6 , cno );
 	            count = ps.executeUpdate();
 	            if( count == 1 ) {  // Car 주소 등록 성공시 

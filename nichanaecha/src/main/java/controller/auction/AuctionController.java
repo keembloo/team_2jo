@@ -151,10 +151,22 @@ public class AuctionController extends HttpServlet {
 	      			System.out.println(calat);
 	      		String calng  = fileList.get(9).getString();;			//경도
 	      			System.out.println(calng);
+	      			
+	      		String cads  = fileList.get(10).getString();;			//주소
+	      			System.out.println(cads);
+	      			
+	      			String cacode  = fileList.get(11).getString();;			//법정동코드
+	      			System.out.println(cacode);
+	      			
+	      			String cacodename  = fileList.get(12).getString();;			//법정동이름
+	      			System.out.println(cacodename);
 	      		
 	      		CarAddressDto carAddressDto = new CarAddressDto();
 	      		carAddressDto.setCalat(calat);
 	      		carAddressDto.setCalng(calng);
+	      		carAddressDto.setCads(cads);
+	      		carAddressDto.setCacode(cacode);
+	      		carAddressDto.setCacodename(cacodename);
 	      		
 	      		System.out.println( imgList ); // 이미지 목록
 	      		
