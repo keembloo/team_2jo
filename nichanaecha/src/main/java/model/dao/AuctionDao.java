@@ -227,7 +227,7 @@ public class AuctionDao extends Dao {
 	}//f()
 	
 	
-// 입찰 등록 시 유효성 검사를 위한 함수 [10월6일 고연진] 
+// 입찰 등록 시 유효성 검사를 위한 함수 (타이머) [10월6일 고연진] 
 	public int astate(int ano) {		
 	
 		try {
@@ -242,6 +242,8 @@ public class AuctionDao extends Dao {
 	} catch (Exception e) {System.out.println("auctionPrint() 오류: "+e);}
 	return 4;
 	}
+
+
 	
 //스크랩(찜) 테이블 추가[9월21일 고연진]----------------------------------------------------------------	
 	public boolean clipping(int mno, int ano) {

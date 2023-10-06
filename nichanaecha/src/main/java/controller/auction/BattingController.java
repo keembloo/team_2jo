@@ -29,9 +29,9 @@ public class BattingController extends HttpServlet {
 
   //경매내용 출력   
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    //System.out.println("배팅컨트롤러출력진입> ");
+    System.out.println("배팅컨트롤러출력진입> ");
     String type = request.getParameter("type");
-    //System.out.println("타입확인> "+type);
+    System.out.println("타입확인> "+type);
     ObjectMapper mapper = new ObjectMapper();
     
     if(type.equals("topByBatting")) {
@@ -66,6 +66,16 @@ public class BattingController extends HttpServlet {
 		 System.out.println("전체출력> "+jsonArray);
 	     response.setContentType("application/json;charset=UTF-8");
 	     response.getWriter().print(jsonArray);
+    	
+    }
+    else if(type.equals("getBuyTop")) {
+    	System.out.println("배팅컨트롤러 입찰참여자 get 들어옴>");
+    	int ano = Integer.parseInt(request.getParameter("ano"));
+    	BattingDto dto= BattingDao.getInstence().getBuyTop(ano);
+    	String json = mapper.writeValueAsString(dto);
+    	System.out.println("json전환> "+dto);
+    	response.setContentType("application/json;charset=UTF-8");
+ 	    response.getWriter().print(json);
     	
     }
  

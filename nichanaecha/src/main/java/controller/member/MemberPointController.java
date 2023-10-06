@@ -76,16 +76,23 @@ public class MemberPointController extends HttpServlet {
 
 	// 규리 마이페이지 입금,출금
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("규리쓰컨트롤러실행>>>> ");
 		//System.out.println(" 컨트롤러실행");
 		String type = request.getParameter("type");
 		int mno = ((MemberDto)request.getSession().getAttribute("loginDto")).getMno();
 		long gold = Long.parseLong(request.getParameter("gold"));
 		String mpno = (UUID.randomUUID().toString())+"_"+mno; 
-		//System.out.println("컨트롤ㄹ러 uuid : "+mpno);
-
+	
 		if (type.equals("사용자 출금")||type.equals("입찰참여출금")){
 			gold = -gold;
 		} 
+		else if(type.equals("입찰금환급")) {
+			mno=Integer.parseInt(request.getParameter("mno"));
+		}
+		//System.out.println("컨트롤ㄹ러 uuid : "+mpno);
+		System.out.println("타입내용>>>>>> "+type);
+		System.out.println("돌려주는mno>>  "+mno);
+		System.out.println("환급금액>>> "+gold);
 		
 		boolean result1 = MemberPointDao.getInstence().PointUpdate( type , mno , gold , mpno);
 		boolean result2 = MemberPointDao.getInstence().setPoint( type , mno , gold , mpno);

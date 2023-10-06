@@ -76,7 +76,7 @@ function auctionPrint(){console.log('상세페이지출력')
 			 document.querySelector('.valTime1').style.display="none"
 			 document.querySelector('.valTime2').style.display="none"
 			 }
-
+	
          //차량정보
             document.querySelector('.ccompany').innerHTML=`${r.car.ccompany}`
             document.querySelector('.csize').innerHTML=`${r.car.csize}`
@@ -347,9 +347,11 @@ function batting(){
 	if(valnowpay==false){return;}
 	console.log('3유효성검사 후 batting()실행')
 
+//1. 등록 전 가장 상위에 있는 사람에게 금액 돌려줌.
+	console.log('돌려주는 함수 실행됨??')
+	getBuyTop(ano)
 
-
-//1. 보유금액 차감(update)+포인트테이블 (add)
+//2. 신규 입찰자의 보유금액 차감(update)+포인트테이블 (add)
 	  $.ajax({
         url : "/nichanaecha/MemberPointController",     
         method : "put",   
@@ -360,7 +362,7 @@ function batting(){
    });
 
 
-//2.입찰등록	
+//3.입찰등록	
 
    	$.ajax({
 		   
@@ -380,9 +382,49 @@ function batting(){
          error : e=>{console.log('입찰등록통신실패')} ,         
    });
 	
-//3.이전 입찰자에게 포인트 돌려줌	
+
 	
 }//f()
+
+//이전입찰자에게 돈 돌려주는 함수[10월6일 고연진]-----------------------
+/*
+	1.가장 최근에 입찰한 사람의 mno와 가격을 가져옴
+	2.결과를 pointcontroller로 전달
+ */
+function getBuyTop(ano){
+	$.ajax({
+      	url : "/nichanaecha/BattingController",     
+     	method : "get",   
+     	data : {type:'getBuyTop',ano:ano},   
+        async: false,   
+      	success : r=>{
+			  console.log('최근입찰자정보가져오기 통신성공');console.log(r)
+			  console.log('최근입찰자mno> '+r.mno);
+			  console.log('최근입찰가bprice> '+r.bprice)
+			  returnMno=r.mno; console.log('최근입찰자mno> '+returnMno);
+			  returnBprice=r.bprice
+			  $.ajax({
+      			url : "/nichanaecha/MemberPointController",     
+     			method : "put",   
+     			data : {type:'입찰금환급', mno:returnMno, gold:returnBprice},   
+         	    async: false,   
+      			success : b=>{
+					  console.log('규리님포인트컨트롤러통신성공');console.log(b);
+      				  console.log('환급성공')
+      			
+      			} ,       
+      	error : e=>{console.log('규리님포인트컨트롤러연동통신실패')} ,         
+   });
+
+			  
+			  } ,       
+      	error : e=>{console.log('최근입찰자정보가져오기 통신실패')} ,         
+   });
+
+	
+	
+}//f()
+
 
 
 //경매상태가 0이 아닐 때 종료되는 함수[10월6일 고연진]
@@ -396,6 +438,7 @@ function checkAstate(){
 				console.log('거래종료됐음을 확인하는 ajax 통신성공')
 	         	astate=r
 	         	console.log('거래종료되었을때 상태' +r)
+	         	
 	         	if(r!=0){
 					 alert('경매가 종료되었습니다');
 					 document.querySelector('#closebtn').click()

@@ -88,8 +88,25 @@ public class BattingDao extends Dao {
 		return null;
 	}
 
-
-
+// 입찰자 회원정보를 가져오는 함수 [10월6일 고연진]
+		public BattingDto getBuyTop(int ano){
+			System.out.println("입찰자함수 실행> ");
+			try {
+				String sql="select*from buymember where ano=? order by bno desc limit 1";
+				ps=conn.prepareStatement(sql);
+				ps.setInt(1, ano);
+				rs=ps.executeQuery();
+				if(rs.next()) {
+					BattingDto dto = new BattingDto(rs.getInt("mno"), rs.getLong("bprice"));
+					System.out.println("전달받은 dto > "+dto);
+					return dto;
+				}
+				
+			} catch (Exception e) {System.out.println("getBuyMember()오류> "+e);
+			}
+			
+			return null;
+		}//f()
 
 
 

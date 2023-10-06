@@ -22,8 +22,7 @@ public class BattingDto {
 		this.bprice = bprice;
 	}
 	
-//상위5개 경매내역출력 생성자
-	
+//상위 게시글 경매내역출력 생성자
 	
 	public BattingDto(long bprice, String bDate) {
 		super();
@@ -33,8 +32,6 @@ public class BattingDto {
 	
 	
 //전체 출력에 필요한 생성자
-	
-	
 	
 	public BattingDto(int mno, int ano, long bprice, String bDate, String mid) {
 		super();
@@ -46,11 +43,25 @@ public class BattingDto {
 	}
 	
 	
+//최근 입찰자에게 금액 돌려주기 위해 만든 함수 사용[10월6일 고연진]
+
+
+public BattingDto(int mno, long bprice) {
+	super();
+	this.mno = mno;
+	this.bprice = bprice;
+}
+
+ 
+	
+	
+	
 	
 //getter/setter	
 public String getMid() {
 		return mid;
 	}
+
 
 	public void setMid(String mid) {
 		this.mid = mid;

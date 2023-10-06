@@ -114,5 +114,9 @@ public class MemberPointDao extends Dao {
 	}
 	
 	
+
+	
+	
+	
 	
 }
