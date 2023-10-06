@@ -239,12 +239,7 @@ public class AuctionDao extends Dao {
 		}
 		
 	} catch (Exception e) {System.out.println("auctionPrint() 오류: "+e);}
-	
-	
-	
 	return 4;
-		
-		
 	}
 	
 //스크랩(찜) 테이블 추가[9월21일 고연진]----------------------------------------------------------------	

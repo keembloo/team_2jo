@@ -88,7 +88,7 @@ public class BattingDao extends Dao {
 		return null;
 	}
 
-//소켓입찰출력---------------------------------------------------------
+
 
 
 

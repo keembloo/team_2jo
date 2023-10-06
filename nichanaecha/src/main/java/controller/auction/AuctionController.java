@@ -1,7 +1,7 @@
 package controller.auction;
 
-import java.io.IOException;
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,9 +57,12 @@ public class AuctionController extends HttpServlet {
 			response.getWriter().print(jsonObject);
 			
 		}
-
+		else if(type.equals("본인글유효성")) {
+			int ano = Integer.parseInt(request.getParameter("ano"));
+			
+		}
 		
-	}
+	}//f()
 
 	
 

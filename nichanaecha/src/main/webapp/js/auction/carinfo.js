@@ -1,12 +1,13 @@
 console.log('carinfo.js 실행')
-let ano = 0;
 
+
+let ano = 0;
 let timer=0; //시간변수.남은시간
 let x; // 종료날짜(문자)
 let timerInter;
 let mcash=0;//회원보유금액
 let astate=4 //경매상태
-let nowPay=0; 
+let nowPay=0; //현재가
 let endTime;//종료시간
 
 let clientSocket= new WebSocket('ws://localhost:80/nichanaecha/BattingSocket')
@@ -29,8 +30,8 @@ batPrint(ano)
 
 function auctionPrint(){console.log('상세페이지출력')
 	
-   let cno = new URL(location.href).searchParams.get("cno"); //경매게시글번호
-   console.log("전달받은 cno> "+cno)
+	 let cno = new URL(location.href).searchParams.get("cno"); //경매게시글번호   
+	 console.log("전달받은 cno> "+cno)
 
    $.ajax({
         url : "/nichanaecha/AuctionController",     
@@ -177,7 +178,7 @@ function settimer(){
 			document.querySelector('.valTime1').style.display="none"
 			document.querySelector('.valTime2').style.display="none"
 			
-			// sql 업데이트
+			// sql 업데이트(astate필드 0->1로 변경)
 			$.ajax({
        		  url : "/nichanaecha/AuctionController",     
       	      method : "put",   
@@ -189,11 +190,14 @@ function settimer(){
       					} ,       
               error : e=>{console.log('경매상태변경통신실패')} ,         
 		   });
-		
+			//입찰자확정함수(10분뒤 확정)
+			setTimeout(() => alert('안녕하세요.')
+			 
+				,600000);//setTimeout()
 			
 		
 		
-	  }
+	  }//타이머종료if
 		
 	},1000) //setInterval()실행
 	
@@ -290,6 +294,17 @@ function battingBtn(){console.log('battingBtn() 실행')
 	if(loginMid==''){location.href=location.href='/nichanaecha/member/memberlogin.jsp'}
 	console.log('경매참여버튼누름')
 
+//0.본인은 입찰 참여 불가능
+	$.ajax({
+      	url : "/nichanaecha/AuctionController",     
+     	method : "get",   
+     	data : {type:'본인글유효성',ano:ano},   
+            async: false,   
+      	success : r=>{console.log('본인글 유효성 검사 통신성공');console.log(r)} ,       
+      	error : e=>{console.log('본인글 유효성 검사통신실패')} ,         
+   });
+
+
 //보유금액가져오기	
 	 $.ajax({
         url : "/nichanaecha/MypageController",     
@@ -311,48 +326,28 @@ function battingBtn(){console.log('battingBtn() 실행')
  }//f()
  	  
 
-// 유효성검사 함수 (onkeyup) -----------------------------------------------------
-/*
-1. 보유금액 가져오기
-2. onkeyup알림
-3. 버튼활성화
-*/
-function valPay(){
-	console.log('입력중')
-	let bprice=document.querySelector('.bprice').value
-	let valCheck=document.querySelector('.valCheck'); //입찰금액유효성검사 위치
-	//유효성검사 (입력받은값 bprice)	
 
-
-}//f()
 
 
 
 //입찰등록버튼 누를 시[10월3일 고연진]------------------------------------------------------
 function batting(){
-	 let bprice = document.querySelector('.bprice');
+	let bprice = document.querySelector('.bprice');
+	console.log('batting()함수실행')
+//0.경매상태확인하고 종료됐으면 batting() 실행 종료
+	let valTime=checkAstate()
+	if(valTime==false){return;}
+	console.log('1 유효성 검사 후 batting()함수실행')
+//0.보유금액을 넘기지 않도록 유효성
+	let valmcash=valMcash(bprice.value);
+	if(valmcash==false){return;}
+	console.log('2유효성 검사 후 batting()함수실행')
+//0. 현재가보다 높은 가격
+	let valnowpay=valNowPay(bprice.value);
+	if(valnowpay==false){return;}
+	console.log('3유효성검사 후 batting()실행')
 
-//????????????????????????????? return 했는데 왜 함수 종료 안됨??
-//0. 거래가 종료됐을 때
-	 $.ajax({
-	        url : "/nichanaecha/AuctionController",     
-	        method : "get",   
-	        async: false, 
-	        data : {type:'거래종료유효성',ano:ano},      
-	        success : r=>{
-				 console.log('거래종료됐음을 확인하는 ajax 통신성공')
-				 console.log(r)
-	         	astate=r
-	         	console.log('거래종료되었을때 상태' +astate)
-	         	if(astate!=0){
-					 alert('경매가 종료되었습니다');
-					return;
-					 }
-	         } ,       
-	         error : e=>{console.log('거래종료됐음을 확인하는 ajax 통신실패')} ,         
-	   });
 
-	console.log('return 됨??????')
 
 //1. 보유금액 차감(update)+포인트테이블 (add)
 	  $.ajax({
@@ -390,8 +385,48 @@ function batting(){
 }//f()
 
 
+//경매상태가 0이 아닐 때 종료되는 함수[10월6일 고연진]
+function checkAstate(){
+		 $.ajax({
+	        url : "/nichanaecha/AuctionController",     
+	        method : "get",   
+	        async: false, 
+	        data : {type:'거래종료유효성',ano:ano},      
+	        success : r=>{
+				console.log('거래종료됐음을 확인하는 ajax 통신성공')
+	         	astate=r
+	         	console.log('거래종료되었을때 상태' +r)
+	         	if(r!=0){
+					 alert('경매가 종료되었습니다');
+					 document.querySelector('#closebtn').click()
+					return false;
+					 }
+	         } ,       
+	         error : e=>{console.log('거래종료됐음을 확인하는 ajax 통신실패')} ,         
+	   });
+} //f()
 
+//보유금액을 넘지 않도록 유효성검사[10월6일 고연진]
+function valMcash(x){
+	console.log('valMcash()함수로 넘어온 bprice');
+	console.log(x)
+	if(x>mcash){
+		alert('보유금액을 확인해주세요');
+		document.querySelector('#closebtn').click();
+		return false;}
+}//f()
 
+//현재가격을 넘기는 유효성검사 [10월6일 고연진]
+function valNowPay(x){
+	console.log('valNowPay()로 넘겨받은 값');
+	console.log(nowPay);
+	if(x<=nowPay){
+		alert('입찰금액은 현재가보다 높여주세요');
+		document.querySelector('#closebtn').click();
+		return false;
+		
+	}
+}
 
 //입찰내역출력관련------------------------------------------------
 /*
@@ -460,6 +495,8 @@ function batPrint(ano){
          	})//forEach
          auctionBox.innerHTML=html;
          console.log('상위1등금액 > '); console.log(r[0].bprice)
+         nowPay=r[0].bprice;
+         console.log('상위금액'+nowPay);
 		document.querySelector('.aprice').innerHTML=`${(r[0].bprice).toLocaleString()}원`
          } ,       
          error : e=>{console.log('경매상황내용출력실패');+e;} ,         
