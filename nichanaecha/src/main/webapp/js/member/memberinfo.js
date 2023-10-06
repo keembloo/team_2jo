@@ -171,6 +171,17 @@ function myAuctionView(){
 				}); // forEach end 
 				// 첫번째 carousel-item 에 active 클래스를 넣어줘야 실행됨
 				document.querySelectorAll('.carouselth2')[0].className += ' active'; // 띄어쓰기 안하면 실행X
+				document.querySelector('#imageCarousel2').innerHTML += `<button class="carousel-control-prev" type="button"
+							data-bs-target="#imageCarousel" data-bs-slide="prev">
+							<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+							<span class="visually-hidden">Previous</span>
+						</button>
+						
+						<button class="carousel-control-next" type="button"
+							data-bs-target="#imageCarousel" data-bs-slide="next">
+							<span class="carousel-control-next-icon" aria-hidden="true"></span>
+							<span class="visually-hidden">Next</span>
+						</button>`;
 				myWishlistView();
 			} , 
 			error : e => {console.log("실패"+e);}
@@ -234,6 +245,17 @@ function myWishlistView(){
 				}); // forEach end 
 				// 첫번째 carousel-item 에 active 클래스를 넣어줘야 실행됨
 				document.querySelectorAll('.carouselth3')[0].className += ' active'; // 띄어쓰기 안하면 실행X
+				document.querySelector('#imageCarousel3').innerHTML += `<button class="carousel-control-prev" type="button"
+							data-bs-target="#imageCarousel" data-bs-slide="prev">
+							<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+							<span class="visually-hidden">Previous</span>
+						</button>
+						
+						<button class="carousel-control-next" type="button"
+							data-bs-target="#imageCarousel" data-bs-slide="next">
+							<span class="carousel-control-next-icon" aria-hidden="true"></span>
+							<span class="visually-hidden">Next</span>
+						</button>`;
 			} , 
 			error : e => {console.log("실패"+e);}
 		});
