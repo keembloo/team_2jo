@@ -15,6 +15,7 @@ function editview(){
 			let infobox = document.querySelector('.infobox');
 
 			infobox.innerHTML = `<div class="basictitle">기본정보</div>
+								<div class="linedeco"></div>
 								<div class="nameinfo">'${r.mname}' 님</div>
 								<div class="idinfo">${r.mid}</div> 
 								<div class="linedeco"></div>
@@ -22,16 +23,29 @@ function editview(){
 								<div class="linedeco"></div>
 								<div class="infoflexbox">
 									<div class="infotitle">주소 : ${r.mads}</div>
-									<button class="btn editbtn" type="button">수정</button>
+									<button class="btn editbtn" onclick="adressEdit()" type="button">수정</button>
 								</div>
 								<div class="linedeco"></div>
 								<div class="infoflexbox">
 									<div class="infotitle">연락처 : ${r.mphone}</div>
-									<button class="btn editbtn" type="button">수정</button>
+									<button class="btn editbtn" onclick="phoneEdit()" type="button">수정</button>
 								</div>
 								`;
 			
 		} , 
 		error : e => {console.log("실패");}		
 	})
+}
+
+
+function adressEdit(){
+	//console.log("주소수정");
+
+
+	
+}
+
+function phoneEdit(){
+	//console.log("전화수정");
+	
 }
