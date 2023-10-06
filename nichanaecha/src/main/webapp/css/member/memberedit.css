@@ -2,15 +2,59 @@
 
 .memberContent{
 	width: 100%;
-	text-align: center;
 }
 
 .infobox{
-	width: 100%;
-	margin: 50px 0;
+	width: 60%;
+	margin: 50px auto;
+	border: 1px solid #337CCF;
+	border-radius: 10px;
+	background-color: #F9FBFC;
+	padding: 50px 30px;
 }
 
 .infotitle {
-	margin: 10px 0;
 	font-size: 16px;
+}
+
+.basictitle{
+	color: #2F3337;
+	text-align : left;
+}
+
+.nameinfo {
+	font-size: 24px;
+	color: blue;
+	margin-top : 10px;
+}
+
+.idinfo{
+
+}
+
+.linedeco{
+	border-top: 1px solid black;
+	opacity: 0.3;
+	margin: 15px 0;
+}
+
+.pointinfo{
+	font-size: 18px;
+}
+
+.pointinfo span{
+	color: blue;
+	font-size: 20px;
+}
+
+.infoflexbox{
+	display: flex;
+	justify-content: space-between;
+	font-size: 18px;
+	align-items: center;
+}
+
+.editbtn{
+	background-color: #1450A3 !important;
+	color: white !important;
 }

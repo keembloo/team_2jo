@@ -22,12 +22,7 @@
 				<div class="infobox">
 					<!-- js에서 출력 -->
 				</div>
-				<div>
-					<div>새로운주소</div>
-					<div>새로운연락처</div>
-					<div>비밀번호확인</div>
-				</div>
-			</div>
+			</div>	
 		</div> <!-- row end -->
 	</div> <!-- 전체구역 end -->
 	
