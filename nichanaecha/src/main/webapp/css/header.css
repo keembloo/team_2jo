@@ -15,3 +15,18 @@ a{color:black;text-decoration: none;}
 .logoImg{
 	width: 200px;
 }
+
+/*x버튼 누르면 전체 사라짐*/
+.alarmBox{
+	position:stacky;
+	bottom: 200px;
+	right:0;
+	width: 200px;
+	height: 200px;
+	border: solid 1px red;
+}
+.topBox{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}

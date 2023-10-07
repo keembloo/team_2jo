@@ -19,8 +19,23 @@
 			
 	        <!-- 헤더 네비게이션 메뉴 : JS에서 로그인 상태에 따라 html 구성 대입-->
 	            <ul class="submenu navbar-nav ml-end">
-	                
+	             
+  
 	            </ul>
+	            
+	        	
+	        	
+	       
+	        	
+	        	
+	        	
+	        	
+	        	
+	        	
+	        
+
+	
+	
 	</div> 
 	</nav>
 	

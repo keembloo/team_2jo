@@ -35,8 +35,8 @@
   margin-bottom: 10px;
   border: 1px solid #ccc;
   border-radius: 3px;
-border: none; /* Remove the default border */
-  border-bottom: 1px solid #ccc; /* Add a border only to the bottom */
+  lborder: none; 
+  border-bottom: 1px solid #ccc; 
   outline: none;
 }
 

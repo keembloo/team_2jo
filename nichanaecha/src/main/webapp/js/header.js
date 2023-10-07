@@ -24,7 +24,10 @@ function getMemberInfo(){
 				html +=
 					`<li class="nav-item nav-link"> ${ r.mid } 님 </li>
 					 <li class="nav-item"><a onclick="logout()" class="nav-link" href="#">로그아웃</a></li>
-	                 <li class="nav-item"><a class="nav-link" href="/nichanaecha/member/memberinfo.jsp">마이페이지</a></li>`;
+	                 <li class="nav-item"><a class="nav-link" href="/nichanaecha/member/memberinfo.jsp">마이페이지</a></li>
+	                 
+	                 
+	                 `;
 			}
 			// 구성된 html 대입
 			submenu.innerHTML = html;
@@ -45,3 +48,60 @@ function logout(){
 		error : e => {}
 	})
 }
+
+
+
+
+
+
+//3. 알람메세지 출력 함수[10월7일 고연진] - 미완성
+function alarmPrint(x){
+	
+	
+	`<div class="position-relative "><!-- x버튼 누르면 전체 비움. -->
+   							 <div class="position-absolute top-0 end-0 alarmBox">
+    							<div class="topBox"><!-- js -->
+    								<div class="date">2022-12-12</div>
+    								<button type="button" class="btn-close" aria-label="Close"></button>
+    							</div>
+    							<div class="middleBox"><!-- js -->
+    								알람내용아아아아ㅏ아아아ㅏ앙
+    							</div>
+    	
+    							<div class="bottomBox"><!-- js -->
+    								<button>수락</button>
+    								<button>거절</button>
+   							 	</div>
+    
+  							  </div><!-- 상위배치 -->
+    					</div><!-- "position-relative" 상위꼭대기배치를위한 박스 -->
+	`
+	
+	
+}//f()
+
+
+
+// 입출금 관련 알람 등록 [10월7일 고연진]
+	// x(문자)= 입찰/환급/입금/출금  , y(숫자)=금액 
+function pointAlarm(x,y){ console.log ('입출금관련알람등록 함수실행')
+				console.log(x);
+				console.log(y);
+	              $.ajax({
+      			  url : "/nichanaecha/AlarmController",     
+      			  method : "post",   
+        		  async: false, 
+        		  data : {type:x,gold:y},      
+         		  success : r=>{
+					 console.log('[알람등록] 입출금 상태 알람 통신성공');
+         		  	 console.log(r)
+         		  } ,       
+         		  error : e=>{console.log('[알람등록] 입출금 상태 알림 통신실패')} ,         
+   			});
+	
+	
+}//f()
+	
+	
+	
+	

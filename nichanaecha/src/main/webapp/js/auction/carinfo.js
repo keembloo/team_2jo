@@ -1,5 +1,6 @@
 console.log('carinfo.js 실행')
 
+let cno = new URL(location.href).searchParams.get("cno");
 
 let ano = 0;
 let timer=0; //시간변수.남은시간
@@ -9,6 +10,9 @@ let mcash=0;//회원보유금액
 let astate=4 //경매상태
 let nowPay=0; //현재가
 let endTime;//종료시간
+let gold;//입찰참여금액
+let returnMno // 환급받을사람고유번호
+let returnBprice//환급받을금액
 
 let clientSocket= new WebSocket('ws://localhost:80/nichanaecha/BattingSocket')
 console.log('클라이언트소켓생성')
@@ -17,8 +21,8 @@ clientSocket.onopen=e=>{console.log('클라이언트소켓열림')}//socket(e)
 
 clientSocket.onmessage=e=>nowContent(e)
 
-auctionPrint();
-
+auctionPrint(cno);
+batPrint(ano)
 //소켓 통신(메세지)---------------------------------------------------------
 	
 function nowContent(e){
@@ -28,11 +32,9 @@ batPrint(ano)
 
 //(개별)상세페이지 출력 [9월24일 고연진]--------------------------------------------------------
 
-function auctionPrint(){console.log('상세페이지출력')
+function auctionPrint(cno){console.log('상세페이지출력')
 	
-	 let cno = new URL(location.href).searchParams.get("cno"); //경매게시글번호   
-	 console.log("전달받은 cno> "+cno)
-
+	
    $.ajax({
         url : "/nichanaecha/AuctionController",     
         method : "get", 
@@ -40,8 +42,7 @@ function auctionPrint(){console.log('상세페이지출력')
         data : {type:'상세페이지조회',cno : cno},      
         success : r=>{
            console.log('차정보출력성공')
-           //console.log('차정보내용')
-           //console.log(r)
+           //console.log(r.car.carAddress.cads)
            ano = r.ano;
            console.log("차 정보에서 가져온 ano >  "+ano)
            astate=r.astate
@@ -334,6 +335,8 @@ function battingBtn(){console.log('battingBtn() 실행')
 function batting(){
 	let bprice = document.querySelector('.bprice');
 	console.log('batting()함수실행')
+	gold=bprice.value
+	console.log(gold);
 //0.경매상태확인하고 종료됐으면 batting() 실행 종료
 	let valTime=checkAstate()
 	if(valTime==false){return;}
@@ -346,6 +349,7 @@ function batting(){
 	let valnowpay=valNowPay(bprice.value);
 	if(valnowpay==false){return;}
 	console.log('3유효성검사 후 batting()실행')
+
 
 //1. 등록 전 가장 상위에 있는 사람에게 금액 돌려줌.
 	console.log('돌려주는 함수 실행됨??')
@@ -362,7 +366,7 @@ function batting(){
    });
 
 
-//3.입찰등록	
+//1.입찰등록	
 
    	$.ajax({
 		   
@@ -373,10 +377,24 @@ function batting(){
         success : r=>{console.log('입찰등록통신성공');console.log(r)
             if(r){
             alert('입찰등록 성공');
+
             bprice.value =``;
             document.querySelector('#closebtn').click()//코드가 실행 된 뒤에 #를 강제로 닫겠다는거임. close안에 기능
+           
+            //입찰등록 시 알람메시지 
+            	/*
+            	1. 입찰한 사람한테 출금 상태 알림
+            	2. 글 등록한 사람한테 경매가격변동 알림
+            	
+            	
+            	 */
+           pointAlarm('입찰',gold)
 
-            }
+            
+  
+            
+
+            }//i
             else{alert('입찰등록 실패')}
          } ,       
          error : e=>{console.log('입찰등록통신실패')} ,         
@@ -385,6 +403,51 @@ function batting(){
 
 	
 }//f()
+
+
+
+
+/*
+function pointAlarm(x,y){ console.log ('알람함수실행')
+				console.log(x);
+				console.log(y)
+	              $.ajax({
+      			  url : "/nichanaecha/AlarmController",     
+      			  method : "post",   
+        		  async: false, 
+        		  data : {type:x,gold:y},      
+         		  success : r=>{
+					 console.log('[알람등록] 입찰자에게 출금 상태 알림 통신성공');
+         		  	 console.log(r)
+         		  } ,       
+         		  error : e=>{console.log('[알람등록] 입찰자에게 출금 상태 알림 통신실패')} ,         
+   			});
+	
+	
+}//f()
+
+
+*/
+/*
+function returnAlarm(y){
+	console.log('환급알람함수실행')
+		              $.ajax({
+      			  url : "/nichanaecha/AlarmController",     
+      			  method : "post",   
+        		  async: false, 
+        		  data : {type:'출금',gold:x},      
+         		  success : r=>{
+					 console.log('[알람등록] 입찰자에게 출금 상태 알림 통신성공');
+         		  	 console.log(r)
+         		  } ,       
+         		  error : e=>{console.log('[알람등록] 입찰자에게 출금 상태 알림 통신실패')} ,         
+   			});
+	
+	
+}
+*/
+
+
 
 //이전입찰자에게 돈 돌려주는 함수[10월6일 고연진]-----------------------
 /*
@@ -483,7 +546,7 @@ return new Date(endYear,endMonth,endDay,endHour,endMinutes,endSecond);
  */
 function batPrint(ano){
 		console.log('입찰내역출력함수실행')
-		let bprice=0;
+		//let bprice=0;
 	    $.ajax({
         url : "/nichanaecha/BattingController",     
         method : "get",   

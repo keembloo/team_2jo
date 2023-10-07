@@ -50,7 +50,7 @@ public class BattingDao extends Dao {
 		return false;
 	}//f()
 
-//기존입찰출력(상위3)------------------------------------------------------------------
+//기존입찰출력(상위count개)------------------------------------------------------------------
 	public ArrayList<BattingDto> batView(int ano,int count){
 		ArrayList<BattingDto> battingList= new ArrayList<>();
 		try {
