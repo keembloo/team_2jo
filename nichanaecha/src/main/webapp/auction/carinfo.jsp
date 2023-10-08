@@ -44,7 +44,7 @@
             </div>
             <div class="auctionPayBox">
                <div class="payBox_left">
-                  <div style="text-align: left; font-weight:lighter; font-size:20px">최근입찰</div>
+                  <div style="text-align: left; font-weight:lighter; font-size:22px">최근입찰</div>
                <div class="buymember"><!-- 입찰페이지버튼 --></div>
                </div>
                
@@ -59,17 +59,17 @@
             </div>
             <div class="time">
                <div class="auctionState" ><!-- js --></div>
-               <div class="remain"><!-- js --></div>
+               <div class="remain" style="color:#A80007"><!-- js --></div>
             </div>
             
             <div class="buttonBox">
-               <button onclick="clipping()" class="valTime1" type="button">스크랩<span class="state"></span></button>
+               <button onclick="clipping()" class="valTime1" type="button" style="background-color:#1450A3;color:white; font-size:15px">스크랩<span class="state"></span></button>
                
             <!-- -------------------------- 모달창 써보기 -------------------------------------------------->
             
                   <!-- Button trigger modal -->
                
-                <button onclick="battingBtn()" class="valTime2"  style="background-color:#0D6EFD; color: white; " type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">경매참여</button>
+                <button onclick="battingBtn()" class="valTime2"  style="background-color:#191D88; color: #FFC048; " type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">경매참여</button>
                
                
                   <!-- Modal -->
@@ -102,8 +102,12 @@
       
       </div>
       
+      <hr>
+   
       
-      <div class="bottom"><!-- 매물상세안내 -->
+      
+     
+      <div class="bottom">
          <p>매물상세안내</p>
          
        <div class="detailBox">
@@ -112,19 +116,19 @@
               <div class="ccompanyBox">
                   <ul>
                      <li>제조사</li>
-                     <li class="ccompany"><!-- js --></li>
+                     <li class="ccompany">js</li>
                   </ul>
                </div>
                <div class="csizeBox">
                   <ul>
                      <li>차종</li>
-                     <li class="csize"><!-- js --></li>
+                     <li class="csize">js</li>
                   </ul>
                </div>
                <div class="cnameBox">
                   <ul>
                      <li>차량명</li>
-                     <li class="cname"><!-- js --></li>
+                     <li class="cname">js</li>
                   </ul>
                </div>
             </div>
@@ -133,19 +137,19 @@
                <div class="coilBox">
                   <ul>
                      <li>연료</li>
-                     <li class="coil"><!-- js --></li>
+                     <li class="coil">js</li>
                   </ul>
                </div>
                <div class="ccBox">
                   <ul>
                      <li>배기량</li>
-                     <li class="cc"><!-- js --></li>
+                     <li class="cc">js</li>
                   </ul>
                </div>
                <div class="cdateBox">
                   <ul>
                      <li>연식</li>
-                     <li class="cdate"><!-- js --></li>
+                     <li class="cdate">js</li>
                   </ul>
                </div>
             </div>
@@ -154,13 +158,13 @@
                <div class="ckmBox">
                   <ul>
                      <li>주행거리</li>
-                     <li class="ckm"><!-- js --></li>
+                     <li class="ckm">js</li>
                   </ul>
                </div>
                <div class="cadsBox">
                   <ul>
                      <li>차량등록주소</li>
-                     <li class="cads"><!-- js --></li>
+                     <li class="cads">js</li>
                   </ul>
                </div>
                <div class="#">
@@ -171,11 +175,11 @@
                </div>
             </div>
             
-         </div><!-- detailBox -->
+         </div>detailBox
          
-         <div class="acontent"><!-- js --></div>
+         <div class="acontent">js</div>
       </div>
-      
+
       
    
    </div>

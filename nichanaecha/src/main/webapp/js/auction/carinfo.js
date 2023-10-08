@@ -68,7 +68,7 @@ function auctionPrint(cno){console.log('상세페이지출력')
       		imgbox.innerHTML=html;
 		//전체 경매 내역 출력으로 가기 위한 <a>
          document.querySelector('.buymember').innerHTML=
-	 		` <a href="/nichanaecha/auction/buymember.jsp?ano=${ano}"><button style="" type="button" >입찰내역</button></a>`
+	 		` <a href="/nichanaecha/auction/buymember.jsp?ano=${ano}"><button class="b" type="button" >입찰내역</button></a>`
           
 		//경매가 진행 중이 아니라면 입찰참여버튼 없앰.
          astate=r.astate
@@ -83,9 +83,9 @@ function auctionPrint(cno){console.log('상세페이지출력')
             document.querySelector('.csize').innerHTML=`${r.car.csize}`
             document.querySelector('.cname').innerHTML=`${r.car.cname}`
             document.querySelector('.coil').innerHTML=`${r.car.coil}`
-            document.querySelector('.cc').innerHTML=`${r.car.cc}`
+            document.querySelector('.cc').innerHTML=`${r.car.cc}cc`
             document.querySelector('.cdate').innerHTML=`${r.car.cdate}`
-            document.querySelector('.ckm').innerHTML=`${r.car.ckm}`
+            document.querySelector('.ckm').innerHTML=`${r.car.ckm}km`
             document.querySelector('.cads').innerHTML=`${r.car.cads}`
             //document.querySelector('.acontent').innerHTML=`${r.car.carAddress.cads}`
             
@@ -154,7 +154,7 @@ function settimer(){
 		let nowTime=new Date();//현재시간
 		timer=endTime-nowTime;
 
-		document.querySelector('.auctionState').innerHTML=`종료까지`;
+		document.querySelector('.auctionState').innerHTML=`종료`;
 		let days=Math.floor(timer/(1000*60*60*24)); 
 		//console.log('남은날짜'+days);
 		let hours=Math.floor((timer/(1000*60*60))%24);
@@ -168,7 +168,7 @@ function settimer(){
 		sec=sec<10?"0"+sec:sec;
 		
 		timer--;
-		document.querySelector('.remain').innerHTML=`${days}일 ${hours}:${min}:${sec}`
+		document.querySelector('.remain').innerHTML=`${days}일  ${hours}:${min}:${sec} `
 		
 		//타이머가 종료 ()
 		if(timer<=0){
