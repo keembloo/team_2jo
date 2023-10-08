@@ -46,8 +46,6 @@ function mySubmitcarView(){
 			data : { type : "mySubmitcarView" } ,
 			success : jsonArray => { 
 				//console.log(jsonArray);
-				//let count = 0;
-				//let html ='';
 				document.querySelector('.menuText').innerHTML = 
 											`<div>나의 등록 매물 정보</div>
 											<div>등록 차량수 : 총 ${jsonArray.length}대</div>`;
@@ -64,15 +62,14 @@ function mySubmitcarView(){
 					//console.log(p);
 					//console.log('카이미지리스트 : '+Object.values(p.car.imglist)[0]);
 					//Object.values() : 주어진 객체의 속성 값들을 배열로 반환
-	
-					count++;
 					// 제품1개 html 마크업
+					count++; // 카운트를 쓰지 않으면 캐러셀공간이 추가생성됨 화살표버튼 누르면 아무것도 없는데 넘어감
 					html += `<div class="col"> <!-- 제품1개 -->
 								<div class="card">
 									<a href="/nichanaecha/auction/carinfo.jsp?cno=${p.cno}">
-										<img src="/nichanaecha/auction/img/${p.cimg}" class="card-img-top" alt="Image 1">
+										<img src="/nichanaecha/auction/img/${Object.values(p.car.imglist)[0]}" class="card-img-top" alt="Image 1">
 										<div class="card-body">
-											<h5 class="card-title">${Object.values(p.car.imglist)[0]}</h5>
+											<h5 class="card-title">${p.atitle}</h5>
 											<div class="card-text">경매 등록번호 : ${p.ano}</div>
 											<div class="card-text">최소 입찰 금액 : ${p.aprice.toLocaleString()}원</div>
 											<div class="card-text">경매 종료 : ${p.aenddate}</div>
@@ -80,10 +77,12 @@ function mySubmitcarView(){
 									</a>
 								</div>
 							</div>`;
+							//console.log("html : "+html);
 					// <a href="/nichanaecha/auction/carinfo.jsp?ano=${p.ano}"> 클릭시 carinfo 의 url로 ano 보냄
-					if(jsonArray.length <3) {count==2;} // jsonArray길이가 3미만일경우 2개로인식해서 출력될수있게
-					if (jsonArray.length == 1 || count%2==0) { // 매물 2개씩 담기위해 나눔 /1개일때도 일단출력은되어야함
+					//if(jsonArray.length <3) {count==2;} // jsonArray길이가 3미만일경우 2개로인식해서 출력될수있게
+					if ( jsonArray.length ==1 || count%2==0) { // 매물 2개씩 담기위해 나눔 /1개일때도 일단출력은되어야함
 						//console.log(html);
+						//console.log("몇번도니");
 						document.querySelector('.carousel-inner').innerHTML += 
 						`<div class="carousel-item"> <!-- 제품 2개세트 -->
 							<div class="abox row row-cols-md-2 g-4 px-5">
@@ -91,9 +90,12 @@ function mySubmitcarView(){
 						</div>`;
 						// html 추가해주기 제품1개씩 
 						document.querySelectorAll('.abox')[Math.floor(i/2)].innerHTML = html; // Math.floor(i/2) 인덱스를 2로 나누고 소수점을 버림
-						html=''; // 제품 2개씩 넣어줘야하기 때문에 넣고나면 초기화
+						if (i%2==1){// 제품 2개씩 넣어줘야하기 때문에 넣고나면 초기화
+							html=''; 
+						}
 					} // if end
 				}); // forEach end 
+				
 				// 첫번째 carousel-item 에 active 클래스를 넣어줘야 실행됨
 				document.querySelectorAll('.carousel-item')[0].className += ' active'; // 띄어쓰기 안하면 실행X
 				document.querySelector('#imageCarousel').innerHTML += `<button class="carousel-control-prev" type="button"
@@ -123,7 +125,7 @@ function myAuctionView(){
 			method : "get" ,
 			async : false,
 			data : { type : "myAuctionView" } ,
-			success : jsonArray => { //console.log(jsonArray);
+			success : jsonArray => { console.log(jsonArray);
 				document.querySelector('.menuText2').innerHTML = 
 											`<div>나의 입찰 매물 정보</div>
 											<div>입찰한 경매수 : 총 ${jsonArray.length}개</div>`;
@@ -146,7 +148,7 @@ function myAuctionView(){
 					html += `<div class="col"> <!-- 제품1개 -->
 								<div class="card">
 									<a href="/nichanaecha/auction/carinfo.jsp?cno=${p.cno}">
-										<img src="/nichanaecha/auction/img/${p.cimg}" class="card-img-top" alt="Image 1">
+										<img src="/nichanaecha/auction/img/${Object.values(p.car.imglist)[0]}" class="card-img-top" alt="Image 1">
 										<div class="card-body">
 											<h5 class="card-title">${p.atitle}</h5>
 											<div class="card-text">경매 등록번호 : ${p.ano}</div>
@@ -157,17 +159,18 @@ function myAuctionView(){
 								</div>
 							</div>`;
 					// <a href="/nichanaecha/auction/carinfo.jsp?ano=${p.ano}"> 클릭시 carinfo 의 url로 ano 보냄
-						if (jsonArray.length == 1 || count%2==0) { // 매물 2개씩 담기위해 나눔 /1개일때도 일단출력은되어야함
-							//console.log('이프문도나');
-							document.querySelector('.carouselMyauction').innerHTML += 
-							`<div class="carousel-item carouselth2"> <!-- 제품 2개세트 -->
-								<div class="abox2 row row-cols-md-2 g-4 px-5">
-								</div>
-							</div>`;
-							// html 추가해주기 제품1개씩 
-							document.querySelectorAll('.abox2')[Math.floor(i/2)].innerHTML = html; // Math.floor(i/2) 인덱스를 2로 나누고 소수점을 버림
-							html=''; // 제품 2개씩 넣어줘야하기 때문에 넣고나면 초기화
-						} // if end
+					//if(jsonArray.length <3) {count==2;} // jsonArray길이가 3미만일경우 2개로인식해서 출력될수있게
+					if (jsonArray.length ==1 || count%2==0) { // 매물 2개씩 담기위해 나눔 /1개일때도 일단출력은되어야함
+						//console.log('이프문도나');
+						document.querySelector('.carouselMyauction').innerHTML += 
+						`<div class="carousel-item carouselth2"> <!-- 제품 2개세트 -->
+							<div class="abox2 row row-cols-md-2 g-4 px-5">
+							</div>
+						</div>`;
+						// html 추가해주기 제품1개씩 
+						document.querySelectorAll('.abox2')[Math.floor(i/2)].innerHTML = html; // Math.floor(i/2) 인덱스를 2로 나누고 소수점을 버림
+						html=''; // 제품 2개씩 넣어줘야하기 때문에 넣고나면 초기화
+					} // if end
 				}); // forEach end 
 				// 첫번째 carousel-item 에 active 클래스를 넣어줘야 실행됨
 				document.querySelectorAll('.carouselth2')[0].className += ' active'; // 띄어쓰기 안하면 실행X
@@ -204,7 +207,7 @@ function myWishlistView(){
 											<div>찜한 경매수 : 총 ${jsonArray.length}개</div>`;
 				let count = 0;
 				let html ='';
-				
+				//console.log("jsonArray.length"+jsonArray.length);
 				if (jsonArray.length==0) {
 					document.querySelector('.carouselMywishlist').innerHTML += `<div class="notext">찜한 매물이 없습니다.</div>`;
 					return;
@@ -220,7 +223,7 @@ function myWishlistView(){
 					html += `<div class="col"> <!-- 제품1개 -->
 								<div class="card">
 									<a href="/nichanaecha/auction/carinfo.jsp?cno=${p.cno}">
-										<img src="/nichanaecha/auction/img/${p.cimg}" class="card-img-top" alt="Image 1">
+										<img src="/nichanaecha/auction/img/${Object.values(p.car.imglist)[0]}" class="card-img-top" alt="Image 1">
 										<div class="card-body">
 											<h5 class="card-title">${p.atitle}</h5>
 											<div class="card-text">경매 등록번호 : ${p.ano}</div>
@@ -231,17 +234,18 @@ function myWishlistView(){
 								</div>
 							</div>`;
 					// <a href="/nichanaecha/auction/carinfo.jsp?ano=${p.ano}"> 클릭시 carinfo 의 url로 ano 보냄
-						if (jsonArray.length == 1 || count%2==0) { // 매물 2개씩 담기위해 나눔 /1개일때도 일단출력은되어야함
-							//console.log('이프문도나');
-							document.querySelector('.carouselMywishlist').innerHTML += 
-							`<div class="carousel-item carouselth3"> <!-- 제품 2개세트 -->
-								<div class="abox3 row row-cols-md-2 g-4 px-5">
-								</div>
-							</div>`;
-							// html 추가해주기 제품1개씩 
-							document.querySelectorAll('.abox3')[Math.floor(i/2)].innerHTML = html; // Math.floor(i/2) 인덱스를 2로 나누고 소수점을 버림
-							html=''; // 제품 2개씩 넣어줘야하기 때문에 넣고나면 초기화
-						} // if end
+					//if(jsonArray.length <3) {count==2;} // jsonArray길이가 3미만일경우 2개로인식해서 출력될수있게
+					if (jsonArray.length ==1 || count%2==0) { // 매물 2개씩 담기위해 나눔 /1개일때도 일단출력은되어야함
+						//console.log('이프문도나');
+						document.querySelector('.carouselMywishlist').innerHTML += 
+						`<div class="carousel-item carouselth3"> <!-- 제품 2개세트 -->
+							<div class="abox3 row row-cols-md-2 g-4 px-5">
+							</div>
+						</div>`;
+						// html 추가해주기 제품1개씩 
+						document.querySelectorAll('.abox3')[Math.floor(i/2)].innerHTML = html; // Math.floor(i/2) 인덱스를 2로 나누고 소수점을 버림
+						html=''; // 제품 2개씩 넣어줘야하기 때문에 넣고나면 초기화
+					} // if end
 				}); // forEach end 
 				// 첫번째 carousel-item 에 active 클래스를 넣어줘야 실행됨
 				document.querySelectorAll('.carouselth3')[0].className += ' active'; // 띄어쓰기 안하면 실행X
