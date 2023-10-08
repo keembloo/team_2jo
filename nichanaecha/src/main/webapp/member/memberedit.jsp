@@ -74,7 +74,6 @@
 	    </div>
 	  </div>
 	</div>
-
 	
 	<div class="container-xl"> <!-- 전체구역 -->
 		<div class="row"> <!-- row  -->
