@@ -87,7 +87,7 @@ function auctionPrint(cno){console.log('상세페이지출력')
             document.querySelector('.cdate').innerHTML=`${r.car.cdate}`
             document.querySelector('.ckm').innerHTML=`${r.car.ckm}km`
             document.querySelector('.cads').innerHTML=`${r.car.cads}`
-            //document.querySelector('.acontent').innerHTML=`${r.car.carAddress.cads}`
+            document.querySelector('.acontent').innerHTML=`${r.acontent}`
             
          //끝나는날짜
            x = `${r.aenddate}`;

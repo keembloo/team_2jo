@@ -95,91 +95,46 @@
                
 
 <!------------------------- 모달창 써보기 -------------------------->      
-            </div>
+          </div>
          
          
          </div>
       
       </div>
       
-      <hr>
-   
-      
-      
      
-      <div class="bottom">
-         <p>매물상세안내</p>
-         
-       <div class="detailBox">
-           
-           <div class="box1">
-              <div class="ccompanyBox">
-                  <ul>
-                     <li>제조사</li>
-                     <li class="ccompany">js</li>
-                  </ul>
-               </div>
-               <div class="csizeBox">
-                  <ul>
-                     <li>차종</li>
-                     <li class="csize">js</li>
-                  </ul>
-               </div>
-               <div class="cnameBox">
-                  <ul>
-                     <li>차량명</li>
-                     <li class="cname">js</li>
-                  </ul>
-               </div>
-            </div>
-            
-            <div class="box2">
-               <div class="coilBox">
-                  <ul>
-                     <li>연료</li>
-                     <li class="coil">js</li>
-                  </ul>
-               </div>
-               <div class="ccBox">
-                  <ul>
-                     <li>배기량</li>
-                     <li class="cc">js</li>
-                  </ul>
-               </div>
-               <div class="cdateBox">
-                  <ul>
-                     <li>연식</li>
-                     <li class="cdate">js</li>
-                  </ul>
-               </div>
-            </div>
-            
-            <div class="box3">
-               <div class="ckmBox">
-                  <ul>
-                     <li>주행거리</li>
-                     <li class="ckm">js</li>
-                  </ul>
-               </div>
-               <div class="cadsBox">
-                  <ul>
-                     <li>차량등록주소</li>
-                     <li class="cads">js</li>
-                  </ul>
-               </div>
-               <div class="#">
-                  <ul>
-                     <li></li>
-                     <li></li>
-                  </ul>
-               </div>
-            </div>
-            
-         </div>detailBox
-         
-         <div class="acontent">js</div>
-      </div>
-
+     
+     
+      <hr>
+   <h4 class="text-center" style="color:#191D88">매물 상세 안내</h4>
+    <table class="table table-striped-columns table-bordered text-center">
+  <thead>
+    <tr>
+      <th scope="col">제조사</th>
+      <th scope="col">차종</th>
+      <th scope="col">차량명</th>
+      <th scope="col">연료</th>
+      <th scope="col">배기량</th>
+      <th scope="col">연식</th>
+      <th scope="col">주행거리</th>
+      <th scope="col">차량등록주소</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><div class="ccompany"></div></td>
+      <td><div class="csize"></div></td>
+      <td><div class="cname"></div></td>
+      <td><div class="coil"></div></td>
+      <td><div class="cc"></div></td>
+      <td><div class="cdate"></div></td>
+      <td><div class="ckm"></div></td>
+      <td><div class="cads"></div></td>
+    </tr>
+    </tbody>
+    </table>
+    
+	<div class="acontent text-center"></div>
       
    
    </div>
