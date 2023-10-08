@@ -1,4 +1,26 @@
 
+// 만약에 비로그인이면 로그인창으로 이동.
+if(loginMid == ''){alert("로그인후 등록해주세요."); location.href="/nichanaecha/member/memberlogin.jsp";}
+
+// 
+let cads = '';
+let cacode = '';
+let cacodename = '';
+
+	
+	// 주소-좌표 변환 객체를 생성합니다
+	var geocoder = new kakao.maps.services.Geocoder();
+
+	function searchDetailAddrFromCoords(coords, callback) {
+	    // 좌표로 법정동 상세 주소 정보를 요청합니다
+	    geocoder.coord2Address(coords.getLng(), coords.getLat(), callback);
+	}
+	function searchAddrFromCoords(coords, callback) {
+	    // 좌표로 행정동 주소 정보를 요청합니다
+	    geocoder.coord2RegionCode(coords.getLng(), coords.getLat(), callback);         
+	}
+
+
 // 6. ---------------- 카카오 지도  표시 --------------------------- //
 
 	// 1.현재 접속한 클라이언트[브라우저]의 위치 좌표 구하기 
@@ -31,6 +53,29 @@ navigator.geolocation.getCurrentPosition( e => {
 	// 지도에 클릭 이벤트를 등록합니다
 	// 지도를 클릭하면 마지막 파라미터로 넘어온 함수를 호출합니다
 	kakao.maps.event.addListener(map, 'click', function(mouseEvent) {     
+		
+			// ---------------------- 법정동 코드얻기
+			searchAddrFromCoords(mouseEvent.latLng, function(result, status) {
+		        if (status === kakao.maps.services.Status.OK) {
+					console.log( result[0].code );
+					 cacode = result[0].code
+					  console.log(result )
+				}
+			});
+		
+			// ------------------------ 클릭한 위치의 주소 얻기.
+			searchDetailAddrFromCoords(mouseEvent.latLng, function(result, status) {
+		        if (status === kakao.maps.services.Status.OK) {
+		            //var detailAddr = !!result[0].road_address ? result[0].road_address.address_name  : '';
+		             	// ---------------------- 주소 얻기
+		             cads = result[0].address.address_name;
+		            	// ---------------------- 법정동 명 얻기
+		             cacodename = result[0].address.region_3depth_name
+		             console.log(result )
+		        }   
+		    });
+		    // ------------------------ 
+		    
 	    // 클릭한 위도, 경도 정보를 가져옵니다 
 	    var latlng = mouseEvent.latLng; 
 	    // 마커 위치를 클릭한 위치로 옮깁니다
@@ -42,7 +87,8 @@ navigator.geolocation.getCurrentPosition( e => {
 	    
 	    plat = latlng.getLat(); // 위도와 경도를 전역변수로 이동후 제품등록시 사용.
 	    plng = latlng.getLng();
-	    
+	   	
+	   	
 	});
 	
 }); // getCurrentPosition end 
@@ -51,10 +97,12 @@ let plat = 0;		// 현재 카카오지도에서 선택한 좌표.. 초기값은 0
 let plng = 0;
 
 
-
 // -------------------------------------------------------------- //
 
 function bcarsubmit(){
+	
+	
+	
 	//1. form 가져오기
 	let form = document.querySelectorAll('.carsubmitForm')[0];	
 	
@@ -68,7 +116,15 @@ function bcarsubmit(){
 		}
 		formData.set( 'plat' , plat );
 		formData.set( 'plng' , plng );
-	
+		
+		
+		// 주소 얻기 
+		formData.set( 'cads' , cads); 
+		// 법정동 코드
+		formData.set( 'cacode' , cacode); 
+		// 법정동 이름
+		formData.set( 'cacodename' , cacodename); 
+		
 		// *** 드랍앤드랍을 사용했을때. 
 			// 현재 드랍된 파일들을 form 같이 추가하기 [ 왜? 드랍된 파일은 input태그 드랍된 파일이 아니므로] 
 		if( fileList.length >= 1 ){ // 드랍된 파일 1개 이상이면  
@@ -94,7 +150,8 @@ function bcarsubmit(){
 			
 			if( r ){
 				alert('차량등록 성공 경매등록 갑시다');
-				location.href="/nichanaecha/src/main/webapp/auction/auction.jsp";
+				location.href="/nichanaecha/auction/auction.jsp";
+				
 			}else{
 				alert('차량등록 실패 ');
 			}

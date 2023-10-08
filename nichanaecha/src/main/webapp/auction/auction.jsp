@@ -15,11 +15,12 @@
 		<form class="carsubmitForm">
 			<div>
 				<div>
+					CNO도 필요[ CNO는 입력 안받고. 차량 등록후 가지고 와야함. ]
 					경매 제목 : 		<input type="text" class="ccompany">	<br/>
 					경매 내용 : 		<input type="text" class="cnum">		<br/>
 					경매등록 날짜 : 	<input type="text" class="csize">		<br/>
 					경매종료 날짜 : 	<input type="text" class="cc">			<br/>
-							
+					가격도 입력받기.
 				</div>
 				<div>
 					<!-- 첨부파일에 사진 첨부하면 사진 보여지는 구간  -->
