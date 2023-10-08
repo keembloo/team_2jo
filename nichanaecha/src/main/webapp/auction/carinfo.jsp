@@ -14,6 +14,7 @@
    <!-- jsp  파일안에 다른 jsp파일 import -->
    <%@include file ="../header.jsp" %>
 
+  
    <div class="container-xl allBox"><!-- 전체 구역 -->
    
       <div class="top atitle"><!-- js --></div>
@@ -32,66 +33,66 @@
          
          <div class="rightBox"><!-- 경매상황 -->
             <div class="startPayBox">
-            	<div style="text-align: left">시작입찰가</div>
-            	<div style="text-align: right" class="startPrice"><!-- js --></div>
+               <div style="text-align: left">시작입찰가</div>
+               <div style="text-align: right" class="startPrice"><!-- js --></div>
             </div> 
             
             
             <div class="nowPayBox">
-            	<div style="text-align: left">현재입찰가</div>
-            	<div style="text-align: right"class="aprice"><!-- js --></div>
+               <div style="text-align: left; font-weight:lighter;">현재입찰가</div>
+               <div style="text-align: right; color:#1450A3; font-weight:lighter;"class="aprice"><!-- js --></div>
             </div>
             <div class="auctionPayBox">
                <div class="payBox_left">
-	               <div>최근입찰</div>
-					<div class="buymember"><!-- 입찰페이지버튼 --></div>
+                  <div style="text-align: left; font-weight:lighter; font-size:20px">최근입찰</div>
+               <div class="buymember"><!-- 입찰페이지버튼 --></div>
                </div>
                
                
                <div class="payBox_right">
                
-	               <div class="auctionBox">
-	                  <div class="auction"><!-- 최근3개 JS--></div>
-	              	   
-	              	</div>
-              	</div>
+                  <div class="auctionBox">
+                     <div class="auction"><!-- 최근3개 JS--></div>
+                       
+                    </div>
+                 </div>
             </div>
             <div class="time">
-            	<div class="auctionState" ><!-- js --></div>
-            	<div class="remain"><!-- js --></div>
+               <div class="auctionState" ><!-- js --></div>
+               <div class="remain"><!-- js --></div>
             </div>
             
             <div class="buttonBox">
                <button onclick="clipping()" class="valTime1" type="button">스크랩<span class="state"></span></button>
                
-				<!-- -------------------------- 모달창 써보기 -------------------------------------------------->
-				
-				      <!-- Button trigger modal -->
-					
-				    <button onclick="battingBtn()" class="valTime2"  style="background-color:#0D6EFD; color: white; " type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">경매참여</button>
-					
-				   
-					   <!-- Modal -->
-					   <div class="modal fade" id="exampleModal"  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-					     <div class="modal-dialog modal-dialog-centered">
-					       <div class="modal-content">
-					      
-					         <div class="modal-body">
-					              <div >보유금액:<span  class="myCash"><!-- js --></span></div>
-					             <!-- onkeyup="valPay()" -->
-					              입찰금액 : <input class="bprice" type="text" >
-					              <div class="valCheck"><!-- js --></div>
-					           
-					         </div>
-					         <div class="modal-footer">
-					         									<!-- disabled  -->
-					           <button onclick="batting()" type="button" class="btn btn-primary valMcash" id="submitBtn" >입찰</button>
-					           <button id="closebtn" type="button" id="closebtn" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-					         </div>
-					       </div>
-					     </div>
-					   </div>
-					
+            <!-- -------------------------- 모달창 써보기 -------------------------------------------------->
+            
+                  <!-- Button trigger modal -->
+               
+                <button onclick="battingBtn()" class="valTime2"  style="background-color:#0D6EFD; color: white; " type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">경매참여</button>
+               
+               
+                  <!-- Modal -->
+                  <div class="modal fade" id="exampleModal"  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                      <div class="modal-content">
+                     
+                        <div class="modal-body">
+                             <div >보유금액:<span  class="myCash"><!-- js --></span></div>
+                            <!-- onkeyup="valPay()" -->
+                             입찰금액 : <input class="bprice" type="text" >
+                             <div class="valCheck"><!-- js --></div>
+                          
+                        </div>
+                        <div class="modal-footer">
+                                                   <!-- disabled  -->
+                          <button onclick="batting()" type="button" class="btn btn-primary valMcash" id="submitBtn" >입찰</button>
+                          <button id="closebtn" type="button" id="closebtn" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+               
 
 <!------------------------- 모달창 써보기 -------------------------->      
             </div>

@@ -3,7 +3,11 @@
 .allBox{display: flex; flex-direction: column;  }
 
 /*제목*/
-.atitle{text-align: center;}
+.atitle{
+   font-size:30px;
+   margin:60px 0px 30px 0px;
+   text-align: center;
+   font-size:40px;}
 
 /*현재가*/
 .nowPayBox{display:flex; flex-direction: row;justify-content: space-between;}
@@ -13,14 +17,14 @@
 
 
 /*이미지, 경매상황*/
-.middle{display:flex; flex-direction: row; justify-content: space-around; }
+.middle{display:flex; flex-direction: row; justify-content: space-between; }
 /*경매상황*/
-.rightBox{display: flex; flex-direction: column;}
+.rightBox{display: flex; flex-direction: column; width:600px;}
 
 /*경매가*/
 .auctionPayBox{display: flex; flex-direction: row; justify-content: space-between;}
-.nowPayBox{display: flex; flex-direction: row; justify-content: space-between;}
-.startPayBox{display: flex; flex-direction: row; justify-content: space-between;}
+.nowPayBox{display: flex; flex-direction: row; justify-content: space-between; font-size:30px; font-weight:lighter; }
+.startPayBox{display: flex; flex-direction: row; justify-content: space-between; font-size:20px;font-weight:lighter;}
 .auction li{display: inline;}
 /*매물상세안내*/
 
