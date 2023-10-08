@@ -35,14 +35,15 @@ public class BattingController extends HttpServlet {
     ObjectMapper mapper = new ObjectMapper();
     
     if(type.equals("topByBatting")) {
-    	//System.out.println("타입에 맞춰서 if문 들어옴> ");
+    	System.out.println("topBayBatting으로 들어옴> ");
     	int count=Integer.parseInt(request.getParameter("count"));
        int ano =Integer.parseInt(request.getParameter("ano"));
+       System.out.println("경매글번호> "+ano);
        //System.out.println("배팅컨트롤러(ano)> "+ano);
        List<BattingDto> result= BattingDao.getInstence().batView(ano,count); 
-       //System.out.println("mapper 전>"+result);
+       System.out.println("battingList  json 전>"+result);
        String jsonArray=mapper.writeValueAsString(result); 
-       //System.out.println("mapper> "+jsonArray);
+       System.out.println("json후> "+jsonArray);
        response.setContentType("application/json;charset=UTF-8");
        response.getWriter().print(jsonArray);
     }//if
@@ -71,6 +72,7 @@ public class BattingController extends HttpServlet {
     else if(type.equals("getBuyTop")) {
     	System.out.println("배팅컨트롤러 입찰참여자 get 들어옴>");
     	int ano = Integer.parseInt(request.getParameter("ano"));
+    	System.out.println("getbuytop에서의 ano> "+ano);
     	BattingDto dto= BattingDao.getInstence().getBuyTop(ano);
     	String json = mapper.writeValueAsString(dto);
     	System.out.println("json전환> "+dto);
@@ -89,9 +91,10 @@ public class BattingController extends HttpServlet {
 	
  // 입찰 등록 [9월26일 고연진]   
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	//System.out.println("입찰등록컨트롤러들어옴>");
+    	System.out.println("입찰등록컨트롤러들어옴>");
+    
     	long bprice=Long.parseLong(request.getParameter("bprice")); // 금액
-    	//System.out.println("controller받은금액> "+bprice);
+    	System.out.println("controller받은금액> "+bprice);
     	int ano=Integer.parseInt(request.getParameter("ano"));
     	int mno=((MemberDto)(request.getSession().getAttribute("loginDto"))).getMno();
     	BattingDto dto = new BattingDto(mno, ano, bprice);
