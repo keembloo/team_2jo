@@ -20,9 +20,8 @@
 }
 
 .dropmenu{ /* 드랍메뉴 크기 */
-	width: 300px;
-	height: 200px;
-	
+	width: 20rem;
+	height: 15rem;
 	
 }
 
@@ -54,6 +53,7 @@
 	
 }
 
+/* 마커 css */
 .customoverlay {
     background-color: rgba(0, 123, 255, 0.6);
     color: #fff;
@@ -62,6 +62,19 @@
     padding: 10px;
     text-align: center;
     width: 100%;
+}
+
+/* 주소 표시 마커 css */
+.adsOverlay{
+	background-color: black;
+    color: #fff;
+    border: 1px solid #007bff;
+    border-radius: 5px;
+    padding: 10px;
+    text-align: center;
+    width: 100%;
+    opacity: 0.75;
+	
 }
 
 .marker-title {

@@ -1,25 +1,30 @@
 let boardList = {}; 
-
+var adsMarkers = []; // 주소 마커 초기화용 배열
 
 // 카카오 지도 api
 let getTexts = '';
 
-  var map = new kakao.maps.Map(document.getElementById('map'), { // 지도를 표시할 div
-        center : new kakao.maps.LatLng(37.312345, 126.8256878), // 지도의 중심좌표
-        level : 8 // 지도의 확대 레벨
-    });
 
-    // 마커 클러스터러를 생성합니다
-    // 마커 클러스터러를 생성할 때 disableClickZoom 값을 true로 지정하지 않은 경우
-    // 클러스터 마커를 클릭했을 때 클러스터 객체가 포함하는 마커들이 모두 잘 보이도록 지도의 레벨과 영역을 변경합니다
-    // 이 예제에서는 disableClickZoom 값을 true로 설정하여 기본 클릭 동작을 막고
-    // 클러스터 마커를 클릭했을 때 클릭된 클러스터 마커의 위치를 기준으로 지도를 1레벨씩 확대합니다
-    var clusterer = new kakao.maps.MarkerClusterer({
-        map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체
-        averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
-        minLevel: 1, // 클러스터 할 최소 지도 레벨
-        disableClickZoom: true, // 클러스터 마커를 클릭했을 때 지도가 확대되지 않도록 설정한다
-        styles: [{	// 마커 클러스터리 스타일 지정
+//주소 검색에서 엔터 입력 시 검색 함수 실행 이벤트
+var adsSearchEvent = document.querySelector('.adsSearch');
+
+
+var map = new kakao.maps.Map(document.getElementById('map'), { // 지도를 표시할 div
+	center: new kakao.maps.LatLng(37.312345, 126.8256878), // 지도의 중심좌표
+	level: 8 // 지도의 확대 레벨
+});
+
+// 마커 클러스터러를 생성합니다
+// 마커 클러스터러를 생성할 때 disableClickZoom 값을 true로 지정하지 않은 경우
+// 클러스터 마커를 클릭했을 때 클러스터 객체가 포함하는 마커들이 모두 잘 보이도록 지도의 레벨과 영역을 변경합니다
+// 이 예제에서는 disableClickZoom 값을 true로 설정하여 기본 클릭 동작을 막고
+// 클러스터 마커를 클릭했을 때 클릭된 클러스터 마커의 위치를 기준으로 지도를 1레벨씩 확대합니다
+var clusterer = new kakao.maps.MarkerClusterer({
+	map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체
+	averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
+	minLevel: 1, // 클러스터 할 최소 지도 레벨
+	disableClickZoom: true, // 클러스터 마커를 클릭했을 때 지도가 확대되지 않도록 설정한다
+	styles: [{	// 마커 클러스터리 스타일 지정
                 backgroundColor: 'rgba(0, 123, 255, 0.6)',
 			    color: '#fff',
 			    border: '1px solid #007bff',
@@ -341,9 +346,6 @@ function auctionSearch(){
 	
 	for(let p of boardList){
 		
-		console.log('title : '+p.atitle.indexOf(keyword))
-		console.log('content : '+p.acontent.indexOf(keyword))
-		
 		if (p.atitle.indexOf(keyword) == -1 && p.acontent.indexOf(keyword) == -1) {
 			continue;
 		}
@@ -378,7 +380,86 @@ function auctionSearch(){
 	
 }
 
+// 주소 검색후 해당 위치로 이동 함수
+function adsSearch(){
+	
+var geocoder = new kakao.maps.services.Geocoder();
 
+let inputValue = document.querySelector('.adsSearch').value
+
+// 주소로 좌표를 검색합니다
+geocoder.addressSearch(inputValue, function(result, status) {
+	
+	// 마커 배열에 담긴 마커들 순회하며 null 대입하여 초기화
+	adsMarkers.forEach(p => {
+		p.setMap(null);
+	});
+	
+    // 정상적으로 검색이 완료됐으면 
+    if (status === kakao.maps.services.Status.OK) {
+		 
+		var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+		
+		 var callback = function(result, status) {
+           if (status === kakao.maps.services.Status.OK) {
+			   map.setLevel(5);
+
+			   var address = result[0].address.region_2depth_name;
+
+			   var content = `
+                    <div class="adsOverlay">
+                        <span class="marker-title">${address}</span>
+                    </div>`;
+
+			   var customOverlay = new kakao.maps.CustomOverlay({
+				   map: map,
+				   position: coords,
+				   content: content,
+				   xAnchor: 1,
+				   yAnchor: 1
+			   });
+
+               customOverlay.setZIndex(3);
+
+               // 커스텀 오버레이를 지도에 표시
+               customOverlay.setMap(map);
+               
+               adsMarkers.push(customOverlay);
+
+               // 지도의 중심을 결과값으로 받은 위치로 이동
+               map.setCenter(coords);
+
+               getInfo();
+               
+               adsSearchEvent.value = '';
+           }
+           else{
+				alert('정확한 주소를 입력해 주세요.');
+				return;
+			}
+        }
+
+        geocoder.coord2Address(result[0].x, result[0].y, callback);
+    }
+	 else {
+		 alert('정확한 주소를 입력해 주세요.');
+		 return;
+	 }
+});
+
+	
+}
+
+
+
+// 주소 검색 엔터키 이벤트 등록
+adsSearchEvent.addEventListener('keydown', function(event) {
+	
+	//엔터키 입력 시 주소 검색 함수 실행
+    if (event.keyCode === 13) {
+		adsSearch()
+    }
+});
 
 
 
