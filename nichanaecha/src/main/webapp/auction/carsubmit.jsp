@@ -15,11 +15,26 @@
 		<form class="carsubmitForm">
 			<div>
 				<div>
-					제조사 : 			<input type="text" name="ccompany" class="ccompany">	<br/>
+					제조사 : 			<select id="ccompany">
+										<option value="기아">기아</option>
+										<option value="르노삼성">르노삼성</option>
+										<option value="쉐보레">쉐보레</option>
+										<option value="쌍용">쌍용</option>
+										<option value="현대">현대</option>
+									</select>											<br/>
 					차량번호 : 		<input type="text" name="cnum" class="cnum">		<br/>
-					차량종류 : 		<input type="text" name="csize" class="csize">		<br/>
+					차량종류 : 		<select id="csize"> 
+										<option value="대형">대형</option>
+										<option value="중형">중형</option>
+										<option value="준중형">준중형</option>
+										<option value="소형">소형</option>
+									</select>											<br/>
 					배기량 : 			<input type="text" name="cc" class="cc">			<br/>
-					연료 : 			<input type="text" name="coil" class="coil">		<br/>
+					연료 : 			<select id="coil">
+										<option value="디젤">디젤</option>
+										<option value="하이브리드">하이브리드</option>
+										<option value="휘발유">휘발유</option>
+									</select>											<br/>
 					차량명 : 			<input type="text" name="cname" class="cname">		<br/>
 					제조년월 : 		<input type="text" name="cdate" class="cdate">		<br/>
 					KM : 			<input type="text" name="ckm" class="ckm">			<br/>
