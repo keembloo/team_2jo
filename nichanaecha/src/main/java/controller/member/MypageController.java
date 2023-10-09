@@ -46,27 +46,44 @@ public class MypageController extends HttpServlet {
 			response.setContentType("application/json;charset=UTF-8");
 	    	response.getWriter().print(json);
 	    	
-		}else if (type.equals("myAuctionView")||type.equals("myWishlistView")||type.equals("mySubmitcarView")){	// 마이페이지 매물관련 출력
+		}else if (type.equals("mySubmitcarView")){	// 마이페이지 등록 매물 출력
 			//System.out.println("컨트롤러연결");
-			ArrayList<AuctionDto> result = MypageDao.getInstence().myPageAuctionView( mno , type);
+			ArrayList<AuctionDto> result = MypageDao.getInstence().mySubmitcarView( mno , type);
 			ObjectMapper objectMapper = new ObjectMapper();
 			String json = objectMapper.writeValueAsString(result);
 			response.setContentType("application/json;charset=UTF-8");
 	    	response.getWriter().print(json);
-		} else if (type.equals("findphone")) {
+	    	
+		} else if (type.equals("myAuctionView")) { // 마이페이지 입찰 매물 출력 
+			ArrayList<AuctionDto> result = MypageDao.getInstence().myAuctionView( mno , type);
+			ObjectMapper objectMapper = new ObjectMapper();
+			String json = objectMapper.writeValueAsString(result);
+			response.setContentType("application/json;charset=UTF-8");
+	    	response.getWriter().print(json);
+	    	
+		} else if (type.equals("myWishlistView")) { // 마이페이지 찜한 매물 출력 
+			ArrayList<AuctionDto> result = MypageDao.getInstence().myWishlistView( mno , type);
+			ObjectMapper objectMapper = new ObjectMapper();
+			String json = objectMapper.writeValueAsString(result);
+			response.setContentType("application/json;charset=UTF-8");
+	    	response.getWriter().print(json);
+	    	
+		}else if (type.equals("findphone")) {
 			int cno = Integer.parseInt(request.getParameter("cno"));
 			
-			 MemberDto result = MypageDao.getInstence().findphone(cno);
-			 ObjectMapper objectMapper = new ObjectMapper();
-				String json = objectMapper.writeValueAsString(result);
+			MemberDto result = MypageDao.getInstence().findphone(cno);
+			//System.out.println("컨트롤러 result"+result);
+			
+			ObjectMapper objectMapper = new ObjectMapper();
+			String json = objectMapper.writeValueAsString(result);
 			response.setContentType("application/json;charset=UTF-8");
 	    	response.getWriter().print(json);
 		} else if (type.equals("findSeller")) {
 			int cno = Integer.parseInt(request.getParameter("cno"));
 			
-			 MemberDto result = MypageDao.getInstence().findSeller(cno);
-			 ObjectMapper objectMapper = new ObjectMapper();
-				String json = objectMapper.writeValueAsString(result);
+			MemberDto result = MypageDao.getInstence().findSeller(cno);
+			ObjectMapper objectMapper = new ObjectMapper();
+			String json = objectMapper.writeValueAsString(result);
 			response.setContentType("application/json;charset=UTF-8");
 	    	response.getWriter().print(json);
 		}

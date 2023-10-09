@@ -52,14 +52,14 @@ function logout(){
 
 //알람 소켓[10월8일 고연진]
 
-
+/*
 let alarmCSocket= new WebSocket('ws://localhost:80/nichanaecha/AlarmSocket/${loginMid}');
 console.log('알람관련 클라이언트 소켓 생성');
 clientSocket.onopen=e=>{console.log('클라이언트소켓열림');}
 clientSocket.onclose=e=>{console.log('서버소켓과 통신이 끝났음. 로그아웃 시 출력되야됨 ,,')};
 clientSocket.onmessage=e=>newAlarm(e)
 
-
+*/
 
 
 
