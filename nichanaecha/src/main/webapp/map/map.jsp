@@ -20,7 +20,7 @@
 						  <button class="dropdown-toggle dropbutton" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
 						    제조사
 						  </button>
-						  <div class="dropdown-menu dropmenu p-3">
+						  <div class="dropdown-menu dropmenu menu1 p-3">
 							
 							<div class="form-check py-1">
 							  <input class="form-check-input" type="checkbox" value="현대" id="ccheck1" checked>
@@ -64,7 +64,7 @@
 						  <button class="dropdown-toggle dropbutton" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
 						    차종
 						  </button>
-						  <div class="dropdown-menu dropmenu p-3">
+						  <div class="dropdown-menu dropmenu menu2 p-3">
 							
 							<div class="form-check py-1">
 							  <input class="form-check-input" type="checkbox" value="대형" id="scheck1" checked>
@@ -101,7 +101,7 @@
 						  <button class="dropdown-toggle dropbutton" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
 						    연식
 						  </button>
-						  <div class="dropdown-menu dropmenu p-3">
+						  <div class="dropdown-menu dropmenu menu3 p-3">
 							
 							<input type="month" class="minMonth mx-3 mb-1 mt-1" id="customRange1"> 부터
 							<input type="month" class="maxMonth m-3" id="customRange1"> 까지
@@ -129,7 +129,7 @@
 						  <button class="dropdown-toggle dropbutton" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
 						    연료
 						  </button>
-						  <div class="dropdown-menu dropmenu p-3">
+						  <div class="dropdown-menu dropmenu menu4 p-3">
 							
 							<div class="form-check py-1">
 							  <input class="form-check-input" type="checkbox" value="휘발유" id="ccheck1" checked>
@@ -182,7 +182,7 @@
 						  <button class="dropdown-toggle dropbutton" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
 						    가격
 						  </button>
-						  <div class="dropdown-menu dropmenu p-3">
+						  <div class="dropdown-menu dropmenu menu5 p-3">
 							
 							<div class="d-flex justify-content-between mb-2"><h6> 최소 경매가 </h6><h6 class="minPricePrint"> 0원 </h6></div>
 							<input type="number" maxlength="13" oninput="minPricePrint(this)" class="form-control minPriceValue">
