@@ -2,6 +2,12 @@
 
 /* 브라우저에서 제공하는 스크롤바 숨기기  */
 ::-webkit-scrollbar{ display: none; }
+/* number 화살표 제거 */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
 
 .carType{
 	background: white;

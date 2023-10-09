@@ -462,8 +462,112 @@ adsSearchEvent.addEventListener('keydown', function(event) {
 });
 
 
+//---------------- 옵션 그룹 이벤트 영역---------------------------
+
+// 주행거리 표시 함수 그룹
+
+// 최소 주행거리 표시
+function minKmPrint(){
+	let minKmValue = document.querySelector('.minKm').value;
+	let minKmPrint = document.querySelector('.minKmPrint');
+	
+	minKmPrint.innerHTML = parseInt(minKmValue, 10).toLocaleString()+"km";
+	
+}
+
+// 최대 주행거리 표시
+function maxKmPrint(){
+	let maxKmValue = document.querySelector('.maxKm').value;
+	let maxKmPrint = document.querySelector('.maxKmPrint');
+	
+	if(maxKmValue==200000){
+		maxKmPrint.innerHTML = "무제한";
+		return;
+	}
+	maxKmPrint.innerHTML = parseInt(maxKmValue, 10).toLocaleString()+"km";
+	
+}
+
+let minKmInput = document.querySelector('.minKm');
+minKmInput.addEventListener('input', function () {
+    let minKmValue = parseInt(this.value, 10);
+    let maxKmInput = document.querySelector('.maxKm');
+    let maxKmValue = parseInt(maxKmInput.value, 10);
+
+    if (minKmValue > maxKmValue) {
+        maxKmInput.value = minKmValue;
+        maxKmInput.dispatchEvent(new Event('input')); // 최대 주행거리에 대한 input 이벤트 다시 발생
+    }
+
+    updateMinKmPrint(minKmValue);
+});
+
+// 최대 주행거리(input 요소)에 대한 이벤트 처리
+let maxKmInput = document.querySelector('.maxKm');
+maxKmInput.addEventListener('input', function () {
+    let maxKmValue = parseInt(this.value, 10);
+    let minKmInput = document.querySelector('.minKm');
+    let minKmValue = parseInt(minKmInput.value, 10);
+
+    if (maxKmValue < minKmValue) {
+        minKmInput.value = maxKmValue;
+        minKmInput.dispatchEvent(new Event('input')); // 최소 주행거리에 대한 input 이벤트 다시 발생
+    }
+
+    updateMaxKmPrint(maxKmValue);
+});
+
+// 최소 주행거리 출력 업데이트
+function updateMinKmPrint(value) {
+    let minKmPrint = document.querySelector('.minKmPrint');
+    minKmPrint.textContent = value.toLocaleString() + "km";
+}
+
+// 최대 주행거리 출력 업데이트
+function updateMaxKmPrint(value) {
+    let maxKmPrint = document.querySelector('.maxKmPrint');
+    
+    maxKmPrint.textContent = value.toLocaleString() + "km";
+}
 
 
+ 
+ // 경매가 출력 함수 그룹
+ 
+// 최소 경매 가격 출력 함수
+function minPricePrint(e) {
+	let minPricePrint = document.querySelector('.minPricePrint');
+	
+	if (e.value == '') {
+		minPricePrint.innerHTML = '0원';
+		return;
+	}
+	
+	if (e.value.length > e.maxLength) {
+		e.value = e.value.slice(0, e.maxLength);
+	}
+	
+	minPricePrint.innerHTML = parseInt(e.value, 10).toLocaleString() + "원";
+	
+}
 
+// 최소 경매 가격 출력 함수
+function maxPricePrint(e) {
+	let maxPricePrint = document.querySelector('.maxPricePrint');
+	
+	if (e.value == '') {
+		maxPricePrint.innerHTML = '무제한';
+		return;
+	}
+	
+	if (e.value.length > e.maxLength) {
+		e.value = e.value.slice(0, e.maxLength);
+	}
+	
+	
+	
+	maxPricePrint.innerHTML = parseInt(e.value, 10).toLocaleString() + "원";
+	
+}
 
  

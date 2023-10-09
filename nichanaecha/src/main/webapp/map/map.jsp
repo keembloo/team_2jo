@@ -103,8 +103,8 @@
 						  </button>
 						  <div class="dropdown-menu dropmenu p-3">
 							
-							<label for="customRange1" class="form-label">Example range</label>
-							<input type="range" class="form-range" id="customRange1">
+							<input type="month" class="minMonth mx-3 mb-1 mt-1" id="customRange1"> 부터
+							<input type="month" class="maxMonth m-3" id="customRange1"> 까지
 							
 						  </div>
 					</div>
@@ -113,10 +113,14 @@
 						  <button class="dropdown-toggle dropbutton" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
 						    주행거리
 						  </button>
+						  
 						  <div class="dropdown-menu dropmenu p-3">
 							
-							<label for="customRange1" class="form-label">Example range</label>
-							<input type="range" class="form-range" id="customRange1">
+							<div class="d-flex justify-content-between"><h6> 최소 주행거리 </h6><h6 class="minKmPrint"> 0km </h6></div>
+							<input type="range" onmousemove="minKmPrint()" step="10000" min="0" max="200000" class="minKm form-range" value="0" id="customRange1">
+							
+							<div class="d-flex justify-content-between"><h6> 최대 주행거리 </h6><h6 class="maxKmPrint"> 무제한 </h6></div>
+							<input type="range" onmousemove="maxKmPrint()" step="10000" min="0" max="200000" class="maxKm form-range" value="200000" id="customRange1">
 							
 						  </div>
 					</div>
@@ -180,13 +184,14 @@
 						  </button>
 						  <div class="dropdown-menu dropmenu p-3">
 							
-							<label for="customRange2" class="form-label">최소 가격</label>
-							<input type="range" class="form-range" min="0" max="5" step="0.5" value="0" id="customRange2">
+							<div class="d-flex justify-content-between mb-2"><h6> 최소 경매가 </h6><h6 class="minPricePrint"> 0원 </h6></div>
+							<input type="number" maxlength="13" oninput="minPricePrint(this)" class="form-control minPriceValue">
 							
-							<label for="customRange2" class="form-label">최대 가격</label>
-							<input type="range" class="form-range" min="0" max="5" step="0.5" value="5" id="customRange2">
-							
+							<div class="d-flex justify-content-between mt-3 mb-2"><h6> 최대 경매가 </h6><h6 class="maxPricePrint"> 무제한 </h6></div>
+							<input type="number" maxlength="13" oninput="maxPricePrint(this)" class="form-control maxPriceValue">
 						  </div>
+						  
+						  
 					</div>
 					
 					
