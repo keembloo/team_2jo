@@ -3,6 +3,7 @@ package controller.map;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,6 +16,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import model.dao.AuctionDao;
 import model.dto.AuctionDto;
 import model.dto.CarAddressDto;
+import model.dto.OptionDto;
 
 @WebServlet("/MapController")
 public class MapController extends HttpServlet {
@@ -28,7 +30,37 @@ public class MapController extends HttpServlet {
 		String type = request.getParameter("type");
 		ObjectMapper mapper = new ObjectMapper();
 		
-		System.out.println("type : "+type);
+		String optionsData = request.getParameter("jsonObject");
+		System.out.println(optionsData);
+		
+		OptionDto optionDto = new OptionDto();
+		
+		// 옵션 객체 저장
+		Map<String, Map<String, List<String>>> jsonData = mapper.readValue(optionsData, Map.class);
+		Map<String, Map<String, String>> jsonData2 = mapper.readValue(optionsData, Map.class);
+		Map<String, Map<String, Integer>> jsonData3 = mapper.readValue(optionsData, Map.class);
+		Map<String, Map<String, Integer>> jsonData4 = mapper.readValue(optionsData, Map.class);
+		Map<String, List<String>> jsonData5 = mapper.readValue(optionsData, Map.class);
+		
+		Map<String, List<String>> carType = jsonData.get("carType");
+		Map<String, String> year = jsonData2.get("year");
+		Map<String, Integer> mileage = jsonData3.get("mileage");
+		Map<String, Integer> price = jsonData4.get("price");
+		
+		System.out.println("price : "+price);
+		System.out.println("minPrice : "+price.get("minPrice"));
+		System.out.println("maxPrice : "+price.get("maxPrice"));
+		optionDto.setManufacturer(carType.get("manufacturer"));
+		optionDto.setCarClass(carType.get("carClass"));
+		optionDto.setMinYear(year.get("minYear"));
+		optionDto.setMaxYear(year.get("maxYear"));
+		optionDto.setMinMileage(mileage.get("minMileage"));
+		optionDto.setMaxMileage(mileage.get("maxMileage"));
+		optionDto.setFuelType(jsonData5.get("fuelType"));
+		optionDto.setMinPrice(price.get("minPrice"));
+		optionDto.setMaxPrice(price.get("maxPrice"));
+		
+		System.out.println("optionDto : "+optionDto);
 		
 		response.setContentType("application/json;charset=UTF-8");
 		// 동,서,남,북 좌표로 결과 반환해주는 함수
@@ -78,7 +110,6 @@ public class MapController extends HttpServlet {
 			
 			
 			List<AuctionDto> AuctionDtolist = AuctionDao.getInstence().clusterPrint(list);
-			System.out.println(AuctionDtolist);
 			String jsonObject = mapper.writeValueAsString(AuctionDtolist);
 			
 		

@@ -3,7 +3,8 @@ var adsMarkers = []; // 주소 마커 초기화용 배열
 let startMonth = '1980-01' // 검색 시작 년도
 let currentMonth = ''; // 현재 달 저장용 변수
 
-//옵션 검색용 전역 변수
+defaultMonth()
+//옵션 검색용 전역 객체
 var optionsData = {
 	carType: {
 		manufacturer: [
@@ -28,6 +29,12 @@ var optionsData = {
 		minMileage: 0,
 		maxMileage: 10000000,
 	},
+	
+	price: {
+		minPrice: 0,
+		maxPrice: 2000000000,
+	},
+	
 	fuelType: [
 		"휘발유",
 		"디젤",
@@ -36,10 +43,6 @@ var optionsData = {
 		"전기",
 		"수소"
 	],
-	price: {
-		minPrice: 0,
-		maxPrice: 100000000000,
-	},
 };
 
 // 카카오 지도 api
@@ -149,50 +152,50 @@ function defaultOption() {
 	// 가격 초기화
 	document.querySelector('.minPriceValue').value = '';
 	document.querySelector('.maxPriceValue').value = '';
-}
-minKmPrint()
-maxKmPrint()
-minPricePrint(document.querySelector('.minPriceValue'))
-maxPricePrint(document.querySelector('.maxPriceValue'))
 
-optionsData = {
-	carType: {
-		manufacturer: [
-			"현대",
-			"기아",
-			"르노삼성",
-			"쉐보레",
-			"쌍용"
-		],
-		carClass: [
-			"대형",
-			"중형",
-			"준중형",
-			"소형"
-		],
-	},
-	year: {
-		minYear: startMonth,
-		maxYear: currentMonth,
-	},
-	mileage: {
-		minMileage: 0,
-		maxMileage: 10000000,
-	},
-	fuelType: [
-		"휘발유",
-		"디젤",
-		"LPG",
-		"하이브리드",
-		"전기",
-		"수소"
-	],
-	price: {
-		minPrice: 0,
-		maxPrice: 100000000000,
-	},
-}
+	document.querySelector('.minPricePrint').innerHTML = '0원';
+	document.querySelector('.maxPricePrint').innerHTML = '무제한';
+	document.querySelector('.minKmPrint').innerHTML = '0km';
+	document.querySelector('.maxKmPrint').innerHTML = '무제한';
 
+	optionsData = {
+		carType: {
+			manufacturer: [
+				"현대",
+				"기아",
+				"르노삼성",
+				"쉐보레",
+				"쌍용"
+			],
+			carClass: [
+				"대형",
+				"중형",
+				"준중형",
+				"소형"
+			],
+		},
+		year: {
+			minYear: startMonth,
+			maxYear: currentMonth,
+		},
+		mileage: {
+			minMileage: 0,
+			maxMileage: 10000000,
+		},
+		fuelType: [
+			"휘발유",
+			"디젤",
+			"LPG",
+			"하이브리드",
+			"전기",
+			"수소"
+		],
+		price: {
+			minPrice: 0,
+			maxPrice: 100000000000,
+		},
+	}
+}
 
 
 var clusterer = new kakao.maps.MarkerClusterer({
@@ -283,6 +286,8 @@ function mapAreaPrint(east, west, south, north, level){
 		
 	clusterer.clear();
 	
+	jsonObject = JSON.stringify(optionsData);
+	
 	if(level>4){
 		clusterer.setMinLevel(20);
 	}else{
@@ -292,7 +297,7 @@ function mapAreaPrint(east, west, south, north, level){
 		url : "/nichanaecha/MapController",
 		method : "get",
 		async : false,
-		data : {type : "mapAreaPrint", east : east, west : west, south : south, north : north, level : level},
+		data : {type : "mapAreaPrint", east : east, west : west, south : south, north : north, level : level, jsonObject : jsonObject},
 		success : r => {
 			console.log("level : "+level);
 			if(level > 4){ // 확대 레벨 4 초과시 지역별로 묶어서 출력
@@ -739,7 +744,7 @@ function maxPricePrint(e) {
 	
 }
 
-defaultMonth()
+
 // 기본 날짜 설정
 function defaultMonth() {
 	var curDate = new Date();
