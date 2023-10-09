@@ -46,6 +46,52 @@ function mview(){
 }
 
 
+// 최종 입찰자 찾기 함수
+function findphone(cno){
+	$.ajax({
+		url : "/nichanaecha/MypageController" , 
+			method : "get" ,
+			async : false,
+			data : { type : "findphone" , cno: cno } ,
+			success : jsonArray => {
+				//console.log('findphone 여연결된');
+				//console.log(jsonArray);
+				//console.log(jsonArray.mid);
+				//console.log(jsonArray.mphone);
+				finalmid = jsonArray.mid;
+				finalmphone = jsonArray.mphone;
+				finalmno = jsonArray.mno;
+			} ,
+			error : e=>{console.log(e);}
+	});
+}
+
+// 판매자 아이디, 연락처 찾기 함수
+function findseller(cno){
+	$.ajax({
+		url : "/nichanaecha/MypageController" , 
+			method : "get" ,
+			async : false,
+			data : { type : "findSeller" , cno: cno } ,
+			success : jsonArray => {
+				//console.log('findphone 여연결된');
+				//console.log(jsonArray);
+				//console.log(jsonArray.mid);
+				//console.log(jsonArray.mphone);
+				sellermid = jsonArray.mid;
+				sellermphone = jsonArray.mphone;
+				sellermno = jsonArray.mno;
+			} ,
+			error : e=>{console.log(e);}
+	});
+}
+
+
+
+
+
+
+
 // 규리 1. 등록매물정보(캐러셀) 출력
 function mySubmitcarView(){
 
@@ -164,45 +210,7 @@ function mySubmitcarView(){
 		})
 }
 
-// 최종 입찰자 찾기 함수
-function findphone(cno){
-	$.ajax({
-		url : "/nichanaecha/MypageController" , 
-			method : "get" ,
-			async : false,
-			data : { type : "findphone" , cno: cno } ,
-			success : jsonArray => {
-				//console.log('findphone 여연결된');
-				//console.log(jsonArray);
-				//console.log(jsonArray.mid);
-				//console.log(jsonArray.mphone);
-				finalmid = jsonArray.mid;
-				finalmphone = jsonArray.mphone;
-				finalmno = jsonArray.mno;
-			} ,
-			error : e=>{console.log(e);}
-	});
-}
 
-// 판매자 아이디, 연락처 찾기 함수
-function findseller(cno){
-	$.ajax({
-		url : "/nichanaecha/MypageController" , 
-			method : "get" ,
-			async : false,
-			data : { type : "findSeller" , cno: cno } ,
-			success : jsonArray => {
-				//console.log('findphone 여연결된');
-				//console.log(jsonArray);
-				//console.log(jsonArray.mid);
-				//console.log(jsonArray.mphone);
-				sellermid = jsonArray.mid;
-				sellermphone = jsonArray.mphone;
-				sellermno = jsonArray.mno;
-			} ,
-			error : e=>{console.log(e);}
-	});
-}
 
 // 규리 2. 입찰한 매물정보(캐러셀) 출력
 function myAuctionView(){

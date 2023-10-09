@@ -19,10 +19,33 @@ public class AuctionDto {
 	public BattingDto getBatting() {return batting;}
 	public void setBatting(BattingDto batting) {this.batting = batting;}
 	
+//입찰등록 시 작성자(mid)에게 알람 보내기 위해 필요한 [고연진]
+	private String mid;
+	private int mno;
+	
+	public int getMno() {
+		return mno;
+	}
+	public void setMno(int mno) {
+		this.mno = mno;
+	}
+	public String getMid() {
+		return mid;
+	}
+	public void setMid(String mid) {
+		this.mid = mid;
+	}
 	
 	
-//--------------------------------------------------------------------------//
+	
+public AuctionDto(int ano, String mid, int mno) {
+		super();
+		this.ano = ano;
+		this.mid = mid;
+		this.mno = mno;
+	}
 
+	//--------------------------------------------------------------------------//
 	public AuctionDto() {}
 	
 	

@@ -31,7 +31,7 @@ public class BattingController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     System.out.println("배팅컨트롤러출력진입> ");
     String type = request.getParameter("type");
-    System.out.println("타입확인> "+type);
+    System.out.println("여기타입맞냐 ? 타입확인> "+type);
     ObjectMapper mapper = new ObjectMapper();
     
     if(type.equals("topByBatting")) {
@@ -81,7 +81,17 @@ public class BattingController extends HttpServlet {
     	
     }
  
-       
+    else if(type.equals("getBuyAuation")) {
+    	System.out.println("배팅컨트롤러입장> ");
+    	System.out.println("들어온타입> "+type);
+    	int mno= Integer.parseInt(request.getParameter("mno"));
+    	System.out.println("js에서 전달 받은 mno> "+mno);
+    	List<BattingDto> result=BattingDao.getInstence().getBuyAuation(mno);
+    	System.out.println("DAO에서 돌려 받은 모든 입찰자 정보 >"+result);
+    	String allMemerArray=mapper.writeValueAsString(result);
+    	response.setContentType("application/json;charset=UTF-8");
+	    response.getWriter().print(allMemerArray);
+    }  
        
        
     

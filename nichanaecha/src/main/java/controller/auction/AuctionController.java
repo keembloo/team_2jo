@@ -63,6 +63,18 @@ public class AuctionController extends HttpServlet {
 			int ano = Integer.parseInt(request.getParameter("ano"));
 			
 		}
+		else if(type.equals("경매글작성자")) {
+			System.out.println("[컨트롤러들어옴] 경매글작성자 타입 확인> "+type);
+			int mno= Integer.parseInt(request.getParameter("mno"));
+			System.out.println("경매글 작성자> "+mno);
+			AuctionDto result = AuctionDao.getInstence().findAuctionMid(mno);
+			String json=mapper.writeValueAsString(result);
+			System.out.println("dao에서 전달된 dto> "+result);
+			response.setContentType("application/json;charset=UTF-8");
+			response.getWriter().print(json);
+			
+		}
+		
 		
 	}//f()
 

@@ -297,7 +297,23 @@ public class AuctionDao extends Dao {
 	}//f()
 	
 	
-	
+// 경매글 작성하는 mid 찾기
+	 public AuctionDto findAuctionMid(int mno) {
+		 System.out.println("DAO 들어옴");
+		 try {
+			 String sql="select*from auctioninfo a natural join member m where mno= "+mno;
+			System.out.println("sql> "+sql);
+			 ps=conn.prepareStatement(sql);
+			 rs=ps.executeQuery();
+			 if(rs.next()) {
+				 AuctionDto dto = new AuctionDto(rs.getInt("ano"), rs.getString("mid"),mno );
+				 System.out.println("반환되는 dto > "+dto);
+				 return dto;
+			 }
+		} catch (Exception e) {System.out.println("findAuctionMid() 함수 실행 실패"+e);}
+		 
+		 return null;
+	 }
 	
 	
 	

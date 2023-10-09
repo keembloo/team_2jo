@@ -2,6 +2,11 @@
 // 1. 현재 로그인된 회원정보 요청
 let loginMid = '';	// 로그인 성공된 아이디를 가지고 있는 변수 
 
+//let mno=0;//로그인된 회원 번호
+
+//let ano=0; //접속자가 쓴 글 번호
+
+
 getMemberInfo();
 console.log('회원번호'+loginMid);
 function getMemberInfo(){
@@ -21,6 +26,10 @@ function getMemberInfo(){
 	                 <li class="nav-item"><a class="nav-link" href="/nichanaecha/member/memberlogin.jsp">로그인</a></li>`;
 			}else{//로그인
 				loginMid = r.mid;
+			
+			//고연진추가-------------------
+				mno=r.mno
+			//------------------------------	
 				html +=
 					`<li class="nav-item nav-link"> ${ r.mid } 님 </li>
 					 <li class="nav-item"><a onclick="logout()" class="nav-link" href="#">로그아웃</a></li>
@@ -51,13 +60,69 @@ function logout(){
 
 
 //알람 소켓[10월8일 고연진]
+/*
+	1. 입찰이 추가된 글 찾기
+	2. 글의 작성자
+	3. 접속된 사람의 아이디와 작성자가 동일하면 메세지 보냄.
+
+ */
 
 
-let alarmCSocket= new WebSocket('ws://localhost:80/nichanaecha/AlarmSocket/${loginMid}');
+
+let MSocket= new WebSocket(`ws://localhost:80/nichanaecha/AlarmSocket/${loginMid}`);
 console.log('알람관련 클라이언트 소켓 생성');
-clientSocket.onopen=e=>{console.log('클라이언트소켓열림');}
-clientSocket.onclose=e=>{console.log('서버소켓과 통신이 끝났음. 로그아웃 시 출력되야됨 ,,')};
-clientSocket.onmessage=e=>newAlarm(e)
+MSocket.onopen=e=>{
+	console.log('클라이언트소켓열림');
+	
+}
+
+
+
+
+// 접속한 사람이 등록한 글 가져오기 [수정필요/기능 실행에 필요한 함수는 아님]
+function findAuctionMid(){
+	console.log('경매글 작성자 mid 찾는 함수 실행 ')
+	  $.ajax({
+         url : "/nichanaecha/AuctionController",     
+        method : "get",   
+        async: false, 
+        data : {type:'경매글작성자',loginMid:'loginMid'},      
+         success : r=>{console.log('경매글작성자 찾는 ajax 통신성공')
+         	console.log(r)
+         	console.log(r.mid)
+         	console.log(r.ano)
+         	ano=r.ano
+         } ,       
+         error : e=>{console.log('경매글작성자 찾는 ajax 통신실패')} ,         
+   });
+}
+
+
+
+
+
+
+//mno 회원이 참여한 모든 경매글 가져오기
+function getBuyAuation(mno){
+	  $.ajax({
+         url : "/nichanaecha/BattingController",     
+        method : "get",   
+        async: false, 
+        data : {type:'getBuyAuation',mno:mno},      
+         success : r=>{console.log('입찰자가 참여한 모든 경매글 가져오는 ajax 통신성공')
+         	console.log(r)
+         
+         } ,       
+         error : e=>{console.log('입찰자가 참여한 모든 경매글 가져오는 ajax 통신실패')} ,         
+   });
+
+}
+
+
+MSocket.onclose=e=>{console.log('서버소켓과 통신이 끝났음. 로그아웃 시 출력되야됨 ,,')};
+
+
+//MSocket.onmessage=e=>newAlarm(e)
 
 
 

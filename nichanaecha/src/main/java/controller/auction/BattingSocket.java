@@ -23,6 +23,7 @@ public class BattingSocket {
       clientList.add(session);
       System.out.println("접속명단 > "+clientList);
       
+      
    }//f()
    
    @OnClose
@@ -32,8 +33,6 @@ public class BattingSocket {
 	 
    @OnMessage
    public void onMessage(Session session, String msg) {
-	   System.out.println("dao로부터 socketprice 받은 내용> "+msg);
-	   
 	   clientList.forEach((s)->{
 		   try {
 			   s.getBasicRemote().sendText(msg);

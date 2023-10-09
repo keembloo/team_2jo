@@ -2,8 +2,10 @@ package model.dao;
 
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 import controller.auction.BattingSocket;
+import controller.member.AlarmSocket;
 import model.dto.BattingDto;
 
 public class BattingDao extends Dao {
@@ -29,23 +31,45 @@ public class BattingDao extends Dao {
 			System.out.println("newPk번호 > "+newPk);
 			if(count==1) {
 				System.out.println("count==1 실행 "+count);
-				sql="select*from buymember where bno= "+newPk;
+				sql="select*from buymember b natural join auctioninfo a  natural join member m where bno= "+newPk;
 				//System.out.println("count값 sql문으로 잘 들어옴"+sql);
 				ps=conn.prepareStatement(sql);
-				System.out.println("ps까진 ㄱㅊ???");
+				//System.out.println("ps까진 ㄱㅊ???");
 				
 				rs=ps.executeQuery();
 				System.out.println("rs넘어옴??????"+rs);
+			
+			/*
+				String alarm="참여중인 경매의 가격 변동이 있습니다";
+				AlarmSocket socket= new AlarmSocket();
+			*/
+				
+				
 				
 				String msg="";
-				if(rs.next()) {
+			/*
+			 	if(rs.next()) {
 					System.out.println("if문 안으로 들어오긴함?");
 					msg+=rs.getLong("bprice")+"<br>"+rs.getString("bdate");
 				}
+			 */	
+				//입찰내역을 실시간으로 보여주기 위해 사용
 				BattingSocket socket = new BattingSocket();
 				socket.onMessage(null, msg);
+				
+//???????????????????????????????????????????????
+	//null에 뭘넣어야될지 ,,, AlarmSoketdptj session 어떻게 비교해야할지 모르겠... 			
+				//작성자에게 업데이트된 상황을 알려줄 메세지 작성
+				String mid=rs.getString("mid");
+				String alarm="입찰가 업데이트 되었습니다";
+				AlarmSocket alarmSocket=new AlarmSocket();
+				alarmSocket.onMessage(null, alarm);
+				
 				return true;
+			
+			
 			}
+		
 		} catch (Exception e) {System.out.println("batting()오류"+e);}
 		return false;
 	}//f()
@@ -91,7 +115,7 @@ public class BattingDao extends Dao {
 		return null;
 	}
 
-// 입찰자 회원정보를 가져오는 함수 [10월6일 고연진]
+// 최신 입찰자 회원정보를 가져오는 함수 [10월6일 고연진]
 		// 10/08 오류 : carinfo.js  getBuyTop함수에게 null 값을 반환했을때 오류 발생 .. 문제 파악은 되셨쬬??
 	
 		public BattingDto getBuyTop(int ano){
@@ -114,5 +138,30 @@ public class BattingDao extends Dao {
 			
 			return null; // carinfo.js  getBuyTop함수에게 반환되는 값 
 		}//f()
-				
+		
+		
+// 입찰자가 참여한 모든 경매글 조회
+		public List<BattingDto> getBuyAuation(int mno) {
+			System.out.println("모든 입찰자 회원정보 가져오는 함수 실행 ");
+			List<BattingDto> list = new ArrayList<>();
+			try {
+				String sql="select distinct ano from buymember natural join member where mno= "+mno;
+				System.out.println("sql> "+sql);
+				ps=conn.prepareStatement(sql);
+				rs=ps.executeQuery();
+				while(rs.next()) {
+					BattingDto dto = new BattingDto(mno, rs.getInt("ano"));
+					list.add(dto);
+					System.out.println("입찰자가 참여한 모든 경매글 번호> "+list);
+				}
+				return list;
+			} catch (Exception e) {System.out.println("AllbuyMember()오류 > "+e);
+			}
+			
+			return null;
+			
+		}
+		
+		
+		
 }//c
