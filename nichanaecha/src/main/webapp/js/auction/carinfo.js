@@ -51,12 +51,19 @@ function auctionPrint(cno){
          	
          	//이미지 출력 위치
             let mainCarImg=document.querySelector('.mainCarImg');
+           	let carImgBox=document.querySelector('.carImgBox')
+           	
            	//이미지객체를 배열로 반환
-           	let carImg= Object.values(r.car.imglist)[0]
-           	console.log(carImg)
-         	
-         	mainCarImg.innerHTML=`<img src="/nichanaecha/auction/img/K7.png">`
-           
+           	let carImgList= Object.values(r.car.imglist)
+            //반복문 출력
+            carImgList.forEach((img,i)=>{
+				i==0?
+				mainCarImg.innerHTML=`<img src="/nichanaecha/auction/img/${carImgList[i]}">`:
+				carImgBox.innerHTML+=`<div class="carImg"><img src="/nichanaecha/auction/img/${carImgList[i]}"></div>`
+				
+			})
+            
+            
             
 			//전체 경매 내역 출력으로 가기 위한 <a>
        		document.querySelector('.buymember').innerHTML=` <a href="/nichanaecha/auction/buymember.jsp?ano=${ano}"><button class="b" type="button" >입찰내역</button></a>`

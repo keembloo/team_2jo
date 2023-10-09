@@ -122,8 +122,7 @@
     
   
 	<div class="acontent text-center" style="margin-top: 70px"><!-- 경매내용 --></div>
-     <div class="carImg"><!-- 나머지차량사진 --></div>
-   
+     <div class="carImgBox"><!-- 나머지차량사진위치 --></div>
    </div>
 
 
