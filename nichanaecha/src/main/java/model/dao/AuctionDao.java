@@ -195,6 +195,29 @@ public class AuctionDao extends Dao {
 	      }catch (Exception e) {System.out.println(e);}
 	      return false;
 	  }
+	  
+	  //2. 경매등록 성호
+	  public AuctionDto Auctionregistration(int ano) {
+		  try {
+			// ---------------------------------------------- 경매 등록 ---------------------------------------- // 
+		         String sql ="insert into auctionInfo( ano , atitle , acontent , astartdate , aenddate , aprice , astate ,  cno )"
+		               + "values(?,?,?,?,?,?,?,?)";
+		         ps =conn.prepareStatement(sql , Statement.RETURN_GENERATED_KEYS ); // 실행후 식별키[PK] 를 반환할 예정
+		         ps.setInt( 1 , dto.getano() );				// 경매 번호 
+		         ps.setString( 2 , dto.getatitle() );		// 경매 제목
+		         ps.setString( 3 , dto.getacontent() );		// 경매 내용 
+		         ps.setString( 4 , dto.getastartdate() );	// 경매 등록 날짜 
+		         ps.setString( 5 , dto.getaenddate() );		// 경매 종료 날짜 
+		         ps.setInt( 6 , dto.getaprice() );			// 경매 등록 가격
+		         ps.setInt( 7 , dto.getastate() );			// 경매 상태
+		         ps.setInt( 8 , dto.getcno() );				// 매물 정보
+		         int count = ps.executeUpdate();
+		         // ********** insert 후 생성된 pk번호 가져오기 
+		         rs = ps.getGeneratedKeys();
+		         rs.next();
+		         int cno = rs.getInt(1);
+		  }catch (Exception e) {}
+	  }
 	
 //게시물 상세조회 [9월19일 고연진]------------------------------------------------------------
 	public AuctionDto auctionPrint(int cno) {

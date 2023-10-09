@@ -26,11 +26,11 @@ import model.dto.CarDto;
 import model.dto.MemberDto;
 
 @WebServlet("/AuctionController")
-public class AuctionController extends HttpServlet {
+public class AuctionController2 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
     
-    public AuctionController() {
+    public AuctionController2() {
         // TODO Auto-generated constructor stub
     }
 
@@ -38,39 +38,16 @@ public class AuctionController extends HttpServlet {
     
     
     
-    //상세페이지조회 [9월19일 고연진]   
+      
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String type= request.getParameter("type");
-		System.out.println("타입확인 > "+type);
-		ObjectMapper mapper=new ObjectMapper(); 
-		if(type.equals("거래종료유효성")) {
-			int ano = Integer.parseInt(request.getParameter("ano"));
-			int astate = AuctionDao.getInstence().astate(ano);
-			System.out.println("컨트롤러에서 출력되는 astate > "+astate);
-			response.setContentType("application/json;charset=UTF-8");
-			response.getWriter().print(astate);
-		}
-		else if(type.equals("상세페이지조회")) {
-			int cno = Integer.parseInt(request.getParameter("cno"));
-			System.out.println("cno : "+cno);
-			AuctionDto result= AuctionDao.getInstence().auctionPrint(cno);
-			String jsonObject= mapper.writeValueAsString(result);
-			response.setContentType("application/json;charset=UTF-8");
-			response.getWriter().print(jsonObject);
-			
-		}
-		else if(type.equals("본인글유효성")) {
-			int ano = Integer.parseInt(request.getParameter("ano"));
-			
-		}
 		
-	}//f()
+	}
 
 	
 
-	//차량등록페이지 성호
+	//경매등록페이지 성호
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	      //1. 저장경로 [ 첨부파일이 저장될 폴더 위치]
+		 //1. 저장경로 [ 첨부파일이 저장될 폴더 위치]
 	      String uploadPath = request.getServletContext().getRealPath("/auction/img");
 	      
 	      // 2. 파일아이템저장소 객체 : 업로드할 옵션  [ import org.apache.commons.fileupload.FileItem; ]
@@ -81,10 +58,10 @@ public class AuctionController extends HttpServlet {
 	      
 	      // 3. 파일 업로드 객체 [ import org.apache.commons.fileupload.servlet.ServletFileUpload; ] 
 	      ServletFileUpload fileUpload = new ServletFileUpload(  itemFactory );
-	      
-	      // 4. 파일 업로드 요청 [ 요청방식 : request ]
-	      try {
-	    	  // ?????? array 대신에 map 사용하기 된 이유 : 차량 이미지가 여러개라서 하나의 키의 값를 불러오기위해
+		
+	   // 4. 파일 업로드 요청 [ 요청방식 : request ]
+		try {	
+			// ?????? array 대신에 map 사용하기 된 이유 : 차량 이미지가 여러개라서 하나의 키의 값를 불러오기위해
 	    	  Map< Integer, String > imgList = new HashMap<>(); // 업로드된 파일명 들을 저장하기 위한 map컬렉션
 	         
 	         // form전송시 input/select/textarea 등 태그의 모든 데이터 한번에 요청해서 결과를 List 반환 
@@ -119,83 +96,36 @@ public class AuctionController extends HttpServlet {
 	            // MAP 컬렉션은 키 와 값으로 구성된 엔트리 [ * 키는 중복 불가능 ]
 	         }
 	      }
-	      // ------------------------------------- 업로드 끝 --> DB처리 --------------------- //
-
-			// FileItem 으로 가져온 데이터들을 각 필드에 맞춰서 제품Dto 에 저장하기 
-			
-			// 차 등록한 회원번호 [ 서블릿 세션 ] 
-	      		
-	      		String ccompany = fileList.get(0).getString();		//제조사
-	      			System.out.println(ccompany);
-	      		String cnum = fileList.get(1).getString();			//차량번호
-	      			System.out.println(cnum);
-	      		String csize  = fileList.get(2).getString();			//차량종류
-	      			System.out.println(csize);
-	      		int cc  = Integer.parseInt(fileList.get(3).getString());				//베기량
-	      			System.out.println(cc);
-	      		String coil  = fileList.get(4).getString();			//연료
-	      			System.out.println(coil);
-	      		String cname  = fileList.get(5).getString();			//차량명
-	      			System.out.println(cname);	
-	      		String cdate  = fileList.get(6).getString();			//제조년월
-	      			System.out.println(cdate);
-	      		int ckm  = Integer.parseInt(fileList.get(7).getString());			//KM
-	      		// 로그인 회원번호 없음 : 어디서 구해올까.
-		      		Object object = 
-		      				request.getSession().getAttribute("loginDto");
-		      		MemberDto loginDto = (MemberDto)object ;
-	      		int mno = loginDto.getMno();
-	      		
-	      			System.out.println(ckm);
-	      		String calat  = fileList.get(8).getString();;			//위도
-	      			System.out.println(calat);
-	      		String calng  = fileList.get(9).getString();;			//경도
-	      			System.out.println(calng);
-	      			
-	      		String cads  = fileList.get(10).getString();;			//주소
-	      			System.out.println(cads);
-	      			
-	      		String cacode  = fileList.get(11).getString();;			//법정동코드
-	      			System.out.println(cacode);
-	      			
-	      		String cacodename  = fileList.get(12).getString();;			//법정동이름
-	      			System.out.println(cacodename);
-	      		
-	      		CarAddressDto carAddressDto = new CarAddressDto();
-	      			carAddressDto.setCalat(calat);
-	      			carAddressDto.setCalng(calng);
-	      			carAddressDto.setCads(cads);
-	      			carAddressDto.setCacode(cacode);
-	      			carAddressDto.setCacodename(cacodename);
-	      		
-	      		System.out.println( imgList ); // 이미지 목록
-	      		
-	      		
-	      		//위에서 만든 변수들 12개를 하나의 DTO로 만들기
-	      		CarDto carDto = new CarDto(0, ccompany, cnum, csize, cc, coil, cname,
-	      				cdate, ckm, mno, carAddressDto, imgList);
-	      		System.out.println(carDto);
-	      		
-	      		//3. Dao 처리
-			    boolean result = AuctionDao.getInstence().bcarsubmit(carDto);
-			    //4. (Dao 결과) 응답
-			    response.setContentType("application/json; charset=UTF-8"); 
-			    response.getWriter().print(result);
-	      	
-	        }catch (Exception e) {}	
 		
+		String atitle = fileList.get(0).getString();			//경매 제목
+			System.out.println(atitle);
+		String acontent = fileList.get(1).getString();			//경매 내용
+			System.out.println(acontent);
+		String aenddate  = fileList.get(2).getString();			//차량종류
+			System.out.println(aenddate);
+		long aprice  = Integer.parseInt(fileList.get(3).getString());//가격
+			System.out.println(aprice);
+			
+		// 위에서 만든 변수들 4개를 하나의 DTO로 만들기
+			
+		AuctionDto auctionDto = new AuctionDto(0, atitle, acontent, acontent, aenddate, aprice, 0, 0)
+		System.out.println(AuctionDto);	
+		
+		//3. Dao 처리
+	    boolean result = AuctionDao.getInstence().Auctionregistration(AuctionDto);
+	    //4. (Dao 결과) 응답
+	    response.setContentType("application/json; charset=UTF-8"); 
+	    response.getWriter().print(result);
+		
+		}catch (Exception e) {}	 
+	
 	}
  
 	
 	
-//경매상태변경	
+	
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int ano= Integer.parseInt(request.getParameter("ano"));
-		System.out.println("경매상태변경 ano > "+ano);
-		boolean result= AuctionDao.getInstence().astateChage(ano);
-		System.out.println("경매상태변경 성공 여부: "+result);
-		response.setContentType("application/json;charset=UTF-8");
-		response.getWriter().print(result);
+		
 	
 	}
 

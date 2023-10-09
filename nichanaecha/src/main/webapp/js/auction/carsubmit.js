@@ -159,7 +159,35 @@ function bcarsubmit(){
 		} , 
 		error : e => { } 
 	})
+	
+	
 }
+
+function auction() {
+		
+		
+		$.ajax({
+		url : "/nichanaecha/AuctionController2" , 
+		method: "post" , 
+		data : formData ,
+		contentType : false , 
+		processData : false ,
+		success : r => {
+			
+			if( r ){
+				alert('경매등록 성공');
+				location.href="/nichanaecha/index.jsp";
+				
+			}else{
+				alert('경매등록 실패 ');
+			}
+			
+		} , 
+		error : e => { } 
+	})
+	
+}
+
 
 // 2. 드래그 앤 드랍 
 	// 1. 드래그 앤 드랍 할 구역 dom객체 호출 
