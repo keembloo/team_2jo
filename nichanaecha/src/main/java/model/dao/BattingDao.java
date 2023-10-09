@@ -49,7 +49,8 @@ public class BattingDao extends Dao {
 		} catch (Exception e) {System.out.println("batting()오류"+e);}
 		return false;
 	}//f()
-
+	
+	
 //기존입찰출력(상위count개)------------------------------------------------------------------
 	public ArrayList<BattingDto> batView(int ano,int count){
 		ArrayList<BattingDto> battingList= new ArrayList<>();
@@ -59,10 +60,12 @@ public class BattingDao extends Dao {
 			ps.setInt(1, ano);
 			rs=ps.executeQuery();
 			while(rs.next()) {
-			 BattingDto dto= new BattingDto(rs.getLong("bprice"), rs.getString("bdate"));
+			System.out.println("List 구하는건데 whlile문 들어옴? ");
+			BattingDto dto= new BattingDto(rs.getLong("bprice"), rs.getString("bdate"));
 			 battingList.add(dto);
-				
+			System.out.println("while문 안에서 List 잘 더해지고 있음? "+battingList);	
 			}
+			System.out.println("DAO에서 battingList > "+battingList);
 			return battingList;
 		} catch (Exception e) {System.out.println("batView()오류>"+e);}
 		return null;
@@ -89,6 +92,8 @@ public class BattingDao extends Dao {
 	}
 
 // 입찰자 회원정보를 가져오는 함수 [10월6일 고연진]
+		// 10/08 오류 : carinfo.js  getBuyTop함수에게 null 값을 반환했을때 오류 발생 .. 문제 파악은 되셨쬬??
+	
 		public BattingDto getBuyTop(int ano){
 			System.out.println("입찰자함수 실행> ");
 			try {
@@ -96,23 +101,18 @@ public class BattingDao extends Dao {
 				ps=conn.prepareStatement(sql);
 				ps.setInt(1, ano);
 				rs=ps.executeQuery();
+				
 				if(rs.next()) {
+					System.out.println("if안으로 들어오나요?? ");
 					BattingDto dto = new BattingDto(rs.getInt("mno"), rs.getLong("bprice"));
 					System.out.println("전달받은 dto > "+dto);
-					return dto;
+					return dto; // carinfo.js  getBuyTop함수에게 반환되는 값 
 				}
 				
 			} catch (Exception e) {System.out.println("getBuyMember()오류> "+e);
 			}
 			
-			return null;
+			return null; // carinfo.js  getBuyTop함수에게 반환되는 값 
 		}//f()
-
-
-
-
-
-
-
-
+				
 }//c

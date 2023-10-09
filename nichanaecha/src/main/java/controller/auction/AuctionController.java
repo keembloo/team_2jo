@@ -31,7 +31,6 @@ public class AuctionController extends HttpServlet {
 
     
     public AuctionController() {
-        // TODO Auto-generated constructor stub
     }
 
 	
@@ -46,15 +45,16 @@ public class AuctionController extends HttpServlet {
 		if(type.equals("거래종료유효성")) {
 			int ano = Integer.parseInt(request.getParameter("ano"));
 			int astate = AuctionDao.getInstence().astate(ano);
-			System.out.println("컨트롤러에서 출력되는 astate > "+astate);
+			//System.out.println("컨트롤러에서 출력되는 astate > "+astate);
 			response.setContentType("application/json;charset=UTF-8");
 			response.getWriter().print(astate);
 		}
 		else if(type.equals("상세페이지조회")) {
 			int cno = Integer.parseInt(request.getParameter("cno"));
-			System.out.println("cno : "+cno);
+			//System.out.println("cno : "+cno);
 			AuctionDto result= AuctionDao.getInstence().auctionPrint(cno);
 			String jsonObject= mapper.writeValueAsString(result);
+			//System.out.println("json 전환> "+jsonObject);
 			response.setContentType("application/json;charset=UTF-8");
 			response.getWriter().print(jsonObject);
 			

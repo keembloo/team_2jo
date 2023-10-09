@@ -23,21 +23,26 @@
 										<option value="현대">현대</option>
 									</select>											<br/>
 					차량번호 : 		<input type="text" name="cnum" class="cnum">		<br/>
-					차량종류 : 		<select id="csize" name="ccompany"> 
+					차량종류 : 		<select id="csize" name="csize"> 
 										<option value="대형">대형</option>
 										<option value="중형">중형</option>
 										<option value="준중형">준중형</option>
 										<option value="소형">소형</option>
 									</select>											<br/>
 					배기량 : 			<input type="text" name="cc" class="cc">			<br/>
-					연료 : 			<select id="coil" name="ccompany">
-										<option value="디젤">디젤</option>
-										<option value="하이브리드">하이브리드</option>
+					연료 : 			<select id="coil" name="coil">
 										<option value="휘발유">휘발유</option>
+										<option value="디젤">디젤</option>
+										<option value="LPG">LPG</option>
+										<option value="하이브리드">하이브리드</option>
+										<option value="전기">전기</option>
+										<option value="수소">수소</option>
 									</select>											<br/>
 					차량명 : 			<input type="text" name="cname" class="cname">		<br/>
 					제조년월 : 		<input type="month" name="cdate" class="cdate">		<br/>
 					KM : 			<input type="text" name="ckm" class="ckm">			<br/>
+					
+					
 					차량 등록 주소 : 	<div id="map" style="width:300px;height:350px;"></div>
 									<p><em>지도를 클릭해주세요!</em></p> 
 									<div id="clickLatlng"></div>

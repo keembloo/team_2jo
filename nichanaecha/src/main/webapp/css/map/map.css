@@ -2,6 +2,12 @@
 
 /* 브라우저에서 제공하는 스크롤바 숨기기  */
 ::-webkit-scrollbar{ display: none; }
+/* number 화살표 제거 */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
 
 .carType{
 	background: white;
@@ -19,12 +25,31 @@
 		
 }
 
-.dropmenu{ /* 드랍메뉴 크기 */
-	width: 300px;
-	height: 200px;
-	
+.menu1{ /* 드랍메뉴 크기 */
+	width: 20rem;
+	height: 15rem;
 	
 }
+.menu2{ /* 드랍메뉴 크기 */
+	width: 20rem;
+	height: 15rem;
+}
+	
+.menu3{ /* 드랍메뉴 크기 */
+	width: 20rem;
+	height: 15rem;
+}
+
+.menu4{ /* 드랍메뉴 크기 */
+	width: 20rem;
+	height: 15rem;
+}	
+
+.menu5{ /* 드랍메뉴 크기 */
+	width: 20rem;
+	height: 15rem;
+}
+
 
 .dropbutton{
 	width: 100%;
@@ -54,6 +79,7 @@
 	
 }
 
+/* 마커 css */
 .customoverlay {
     background-color: rgba(0, 123, 255, 0.6);
     color: #fff;
@@ -62,6 +88,19 @@
     padding: 10px;
     text-align: center;
     width: 100%;
+}
+
+/* 주소 표시 마커 css */
+.adsOverlay{
+	background-color: black;
+    color: #fff;
+    border: 1px solid #007bff;
+    border-radius: 5px;
+    padding: 10px;
+    text-align: center;
+    width: 100%;
+    opacity: 0.75;
+	
 }
 
 .marker-title {

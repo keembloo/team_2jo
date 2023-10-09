@@ -231,13 +231,18 @@ public class AuctionDao extends Dao {
 			rs=ps.executeQuery(); 
 			//경매 번호에 맞는 차량 번호 찾기
 			if(rs.next()) {
+				//System.out.println("if문 들어옴");
 				CarDto carDto = carDto(rs.getInt("cno"));//차량번호에 맞는 CarDto 객체 가져옴.
+				//CarAddressDto carAdressDto=carAddressDto(rs.getInt("cno"));
 				Map<Integer, String> imglist= imglist(rs.getInt("cno"));//cno에 맞는 차량이미지 저장한거 가져옴
 				carDto.setImglist(imglist);
 				
 				auctionDto =auctionDto(rs.getInt("cno"));
 				auctionDto.setCar(carDto);
-	
+				
+				
+				
+				System.out.println("반환되는 auctionDto> "+auctionDto);
 				return auctionDto;
 			}
 			

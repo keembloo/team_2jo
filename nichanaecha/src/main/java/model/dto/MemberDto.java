@@ -9,12 +9,7 @@ public class MemberDto {
 	private String mads;	//회원 주소 
 	private long mcash;		//회원 보유 금액 
 	
-	//내정보 호출 생성자
-	public MemberDto(int mno, String mid) {
-		super();
-		this.mno = mno;
-		this.mid = mid;
-	}
+	
 
 	
 	public MemberDto() {
@@ -31,7 +26,15 @@ public class MemberDto {
 		this.mads = mads;
 		this.mcash = mcash;
 	}
-
+	
+	
+	//내정보 호출 생성자
+		public MemberDto(int mno, String mid) {
+			super();
+			this.mno = mno;
+			this.mid = mid;
+		}
+		
 	//회원가입 시 사용 [9월15일 고연진]
 	
 	public MemberDto(String mid, String mpw, String mphone, String mname, String mads) {
@@ -42,8 +45,7 @@ public class MemberDto {
 		this.mname = mname;
 		this.mads = mads;
 	}
-	
-	
+
 
 	// 규리 마이페이지 출력시 사용 [회원번호, 이름 , 포인트 ]
 	public MemberDto(int mno, String mname, long mcash) {
@@ -66,11 +68,19 @@ public class MemberDto {
 		this.mcash = mcash;
 	}
 	
+	// 규리 회원 , 전화번호 출력시 사용  [ 회원번호, 아이디 , 연락처 ]
+	public MemberDto(int mno, String mid, String mphone) {
+		super();
+		this.mno = mno;
+		this.mid = mid;
+		this.mphone = mphone;
+	}
 	
+	
+
 	public int getMno() {
 		return mno;
 	}
-
 
 
 	public void setMno(int mno) {

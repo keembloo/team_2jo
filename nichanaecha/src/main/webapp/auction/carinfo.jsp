@@ -14,22 +14,17 @@
    <!-- jsp  파일안에 다른 jsp파일 import -->
    <%@include file ="../header.jsp" %>
 
-  
+ 
    <div class="container-xl allBox"><!-- 전체 구역 -->
    
       <div class="top atitle"><!-- js --></div>
-   
-   
  <!-- ------------------------------------------------------------------------ -->     
+ 
       <div class="middle"><!-- 이미지, 경매상황 -->
-         <!-- 이미지( 캐러셀 시작) -->
-         <div id="carouselExample" class="carousel slide">
-            <div class="imgbox carousel-inner"><!-- js -->
-               <!-- carousel-inner : 캐러셀 안에 넣을 이미지 목록 구역   -->
-               <!-- carousel-item : 이미지1개당 / active : 현재 보고있는 이미지를 표현해주는 css클래스명  -->
-            </div>
-         </div>
-         <!-- 이미지 캐러셀 끝 -->
+         <div class="mainCarImg"> <!--대표이미지1개  --></div>
+         
+         <div class="test"></div>
+         
          
          <div class="rightBox"><!-- 경매상황 -->
             <div class="startPayBox">
@@ -37,40 +32,34 @@
                <div style="text-align: right" class="startPrice"><!-- js --></div>
             </div> 
             
-            
             <div class="nowPayBox">
                <div style="text-align: left; font-weight:lighter;">현재입찰가</div>
                <div style="text-align: right; color:#1450A3; font-weight:lighter;"class="aprice"><!-- js --></div>
             </div>
+            
             <div class="auctionPayBox">
                <div class="payBox_left">
                   <div style="text-align: left; font-weight:lighter; font-size:22px">최근입찰</div>
-               <div class="buymember"><!-- 입찰페이지버튼 --></div>
-               </div>
-               
-               
-               <div class="payBox_right">
-               
+               <div class="buymember"><!-- 전입찰출력페이지버튼 --></div>
+             </div>
+             <div class="payBox_right">
                   <div class="auctionBox">
-                     <div class="auction"><!-- 최근3개 JS--></div>
-                       
-                    </div>
-                 </div>
+                     <div class="auction"><!-- 최근10개 JS--></div>
+                  </div>
+               </div>
             </div>
+            
             <div class="time">
-               <div class="auctionState" ><!-- js --></div>
-               <div class="remain" style="color:#A80007"><!-- js --></div>
+               <div class="auctionState" ><!-- JS --></div>
+               <div class="remain" style="color:#A80007"><!-- JS --></div>
             </div>
             
             <div class="buttonBox">
                <button onclick="clipping()" class="valTime1" type="button" style="background-color:#1450A3;color:white; font-size:15px">스크랩<span class="state"></span></button>
                
-            <!-- -------------------------- 모달창 써보기 -------------------------------------------------->
-            
-                  <!-- Button trigger modal -->
+            <!-- -------------------------- 경매등록 관련 모달-------------------------------------------------->
                
                 <button onclick="battingBtn()" class="valTime2"  style="background-color:#191D88; color: #FFC048; " type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">경매참여</button>
-               
                
                   <!-- Modal -->
                   <div class="modal fade" id="exampleModal"  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -79,35 +68,32 @@
                      
                         <div class="modal-body">
                              <div >보유금액:<span  class="myCash"><!-- js --></span></div>
-                            <!-- onkeyup="valPay()" -->
                              입찰금액 : <input class="bprice" type="text" >
-                             <div class="valCheck"><!-- js --></div>
-                          
                         </div>
+                        
                         <div class="modal-footer">
-                                                   <!-- disabled  -->
                           <button onclick="batting()" type="button" class="btn btn-primary valMcash" id="submitBtn" >입찰</button>
                           <button id="closebtn" type="button" id="closebtn" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         </div>
+                     
                       </div>
                     </div>
                   </div>
-               
-
-<!------------------------- 모달창 써보기 -------------------------->      
-          </div>
+               <!------------------------ 경매등록관련 -------------------------------------->
+   
+          </div><!-- 스크랩/경매참여 -->
          
          
-         </div>
+         </div><!-- 경매상황관련부분 -->
       
       </div>
       
      
      
      
-      <hr>
-   <h4 class="text-center" style="color:#191D88">매물 상세 안내</h4>
-    <table class="table table-striped-columns table-bordered text-center">
+   <hr>
+   <h4 class="text-center" style="color:#191D88;margin: 50px 0px">매물 상세 안내</h4>
+  <table class="table table-striped-columns table-bordered text-center" >
   <thead>
     <tr>
       <th scope="col">제조사</th>
@@ -134,9 +120,9 @@
     </tbody>
     </table>
     
-	<div class="acontent text-center"></div>
-      
-   
+  
+	<div class="acontent text-center" style="margin-top: 70px"><!-- 경매내용 --></div>
+     <div class="carImgBox"><!-- 나머지차량사진위치 --></div>
    </div>
 
 
