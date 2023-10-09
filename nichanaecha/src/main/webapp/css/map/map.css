@@ -25,11 +25,31 @@ input[type="number"]::-webkit-inner-spin-button {
 		
 }
 
-.dropmenu{ /* 드랍메뉴 크기 */
+.menu1{ /* 드랍메뉴 크기 */
 	width: 20rem;
 	height: 15rem;
 	
 }
+.menu2{ /* 드랍메뉴 크기 */
+	width: 20rem;
+	height: 15rem;
+}
+	
+.menu3{ /* 드랍메뉴 크기 */
+	width: 20rem;
+	height: 15rem;
+}
+
+.menu4{ /* 드랍메뉴 크기 */
+	width: 20rem;
+	height: 15rem;
+}	
+
+.menu5{ /* 드랍메뉴 크기 */
+	width: 20rem;
+	height: 15rem;
+}
+
 
 .dropbutton{
 	width: 100%;
