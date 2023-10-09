@@ -40,7 +40,7 @@ public class AuctionController extends HttpServlet {
     //상세페이지조회 [9월19일 고연진]   
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String type= request.getParameter("type");
-		//System.out.println("타입확인 > "+type);
+		System.out.println("타입확인 > "+type);
 		ObjectMapper mapper=new ObjectMapper(); 
 		if(type.equals("거래종료유효성")) {
 			int ano = Integer.parseInt(request.getParameter("ano"));
