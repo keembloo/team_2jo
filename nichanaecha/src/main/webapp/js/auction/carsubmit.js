@@ -159,6 +159,8 @@ function bcarsubmit(){
 		} , 
 		error : e => { } 
 	})
+	
+	
 }
 
 // 2. 드래그 앤 드랍 
