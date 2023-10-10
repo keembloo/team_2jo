@@ -80,8 +80,19 @@ MSocket.onmessage=e=>{ alarm(e)}
 
 //메세지 받을 때 추후 행동 함수
 function alarm(e){
-	document.querySelector('.alarm').innerHTML=`입찰가가 업데이트 되었습니다`
 	
+	 let msgbox = document.querySelector('.alarm')
+	 msgbox.style.top = "0px";
+	 
+	setTimeout( ()=>{  
+		 msgbox.style.top = "-100px"; 
+	} , 10000 )
+	
+	// 여러명이 채팅 요청 하면 Dao 메소드 충돌 발생
+		// Dao 메소드에 synchronized 키워드 사용 
+		// 스레드1 해당 메소드를 사용하고 있을떄[ return 전] 다른 스레드2 해당 메소드에 대기상태 
+		// 멀티스레드 : HttpServlet 에 포함
+		
 }
 
 

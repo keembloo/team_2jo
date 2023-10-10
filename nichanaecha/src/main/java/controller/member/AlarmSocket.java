@@ -36,7 +36,6 @@ public class AlarmSocket {
 	   public void onClose(Session session) {
 		  //리스트안에 있는 모든 아이디를 배열로 반환.
 		 list.remove(session);
-		 System.out.println("한명 빠졌을때 list 줄어듦? > "+list);
 		 
 	  }//f()
 	
@@ -46,17 +45,13 @@ public class AlarmSocket {
 		  // 1. 받은 string -> dto 
 		  ObjectMapper mapper = new ObjectMapper();
 		  AlarmDto msg = mapper.readValue( alarm , AlarmDto.class );
-		  System.out.println("22222");
 		  // 2. 
 		  list.keySet().forEach( (s)->{
 			 
 			  if( list.get( s ).equals( msg.getMid() ) ) {
-				  
 				  try {
 					s.getBasicRemote().sendText(alarm);
-					System.out.println("111111");
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			  }

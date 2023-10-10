@@ -24,19 +24,8 @@
 	            </ul>
 	            
 	        
-	        <div class="alarm"><!-- 알람기능 --></div>	
+	        <div class="alarm"><MARQUEE id="weatherbox">입찰가가 업데이트 되었습니다</MARQUEE></div>	
 	        	
-	       
-	        	
-	        	
-	        	
-	        	
-	        	
-	        	
-	        
-
-	
-	
 	</div> 
 	</nav>
 	

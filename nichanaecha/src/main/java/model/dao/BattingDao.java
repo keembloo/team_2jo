@@ -21,9 +21,8 @@ public class BattingDao extends Dao {
 //입찰등록-----------------------------------------------------------------------
 	public boolean batting(BattingDto dto) {
 		try {
-			System.out.println("컨트롤러에서 Dao로 입찰등록 들어옴");
 			String sql="insert into buymember (bprice,mno,ano) values(?,?,?)";
-			 ps=conn.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+			ps=conn.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
 			ps.setLong(1, dto.getBprice());
 			ps.setInt(2, dto.getMno());
 			ps.setInt(3, dto.getAno());
@@ -36,7 +35,6 @@ public class BattingDao extends Dao {
 			System.out.println("newPk번호 > "+newPk);
 			if(count==1) {
 				
-				System.out.println("count==1 실행 "+count);
 				sql="select m.mid \r\n"
 						+ "	from car c , auctioninfo auc  , member m , buymember buy\r\n"
 						+ "where \r\n"
@@ -44,31 +42,19 @@ public class BattingDao extends Dao {
 						+ "    c.mno = m.mno   and\r\n"
 						+ "    buy.ano = auc.ano   and \r\n"
 						+ "    bno = "+newPk;
-				//System.out.println("count값 sql문으로 잘 들어옴"+sql);
+			
 				ps=conn.prepareStatement(sql);
-				//System.out.println("ps까진 ㄱㅊ???");
 				
 				ResultSet rs2 =  ps.executeQuery();
 				rs2.next();
-			
-			/*
-				String alarm="참여중인 경매의 가격 변동이 있습니다";
-				AlarmSocket socket= new AlarmSocket();
-			*/
 				
 				String msg="";
-			/*
-			 	if(rs.next()) {
-					System.out.println("if문 안으로 들어오긴함?");
-					msg+=rs.getLong("bprice")+"<br>"+rs.getString("bdate");
-				}
-			 */	
+
 				//입찰내역을 실시간으로 보여주기 위해 사용
 				BattingSocket socket = new BattingSocket();
 				socket.onMessage(null, msg);
 				
-//???????????????????????????????????????????????
-	//null에 뭘넣어야될지 ,,, AlarmSoketdptj session 어떻게 비교해야할지 모르겠... 			
+			
 				//작성자에게 업데이트된 상황을 알려줄 메세지 작성
 				String mid=rs2.getString("mid");
 				String alarm="입찰가 업데이트 되었습니다";
