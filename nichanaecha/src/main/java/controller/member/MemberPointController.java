@@ -36,12 +36,11 @@ public class MemberPointController extends HttpServlet {
 		int mno = ((MemberDto)request.getSession().getAttribute("loginDto")).getMno();
 		//System.out.println("실행됨 mno : "+mno);
 		// MypageDao 에 있는 mview()함수로 중복 호출
+		String json ="";
 		if (type.equals("mpointView")) { // 현재포인트상태 출력
 			MemberDto result = MypageDao.getInstence().mview(mno); // 마이페이지Dao에서 가져옵니다...
 			ObjectMapper objectMapper = new ObjectMapper();
-			String json = objectMapper.writeValueAsString(result);
-			response.setContentType("application/json;charset=UTF-8");
-			response.getWriter().print(json);
+			json = objectMapper.writeValueAsString(result);
 			
 		} else if (type.equals("PointAllView") || type.equals("PointOutput") || type.equals("PointInput")) { // 전체 포인트입출금내역 출력
 			int listsize = Integer.parseInt(request.getParameter("listsize"));  // 최대게시물수
@@ -63,10 +62,10 @@ public class MemberPointController extends HttpServlet {
 			PageDto pageDto = new PageDto(page, listsize, startrow, totalsize, totalpage, startbtn , endbtn , result);
 			
 			ObjectMapper objectMapper = new ObjectMapper();
-			String json = objectMapper.writeValueAsString(pageDto);
-			response.setContentType("application/json;charset=UTF-8");
-			response.getWriter().print(json);
+			json = objectMapper.writeValueAsString(pageDto);
 		}
+		response.setContentType("application/json;charset=UTF-8");
+		response.getWriter().print(json);
 	}
 
 
@@ -90,9 +89,9 @@ public class MemberPointController extends HttpServlet {
 			mno=Integer.parseInt(request.getParameter("mno"));
 		}
 		//System.out.println("컨트롤ㄹ러 uuid : "+mpno);
-		System.out.println("타입내용>>>>>> "+type);
-		System.out.println("돌려주는mno>>  "+mno);
-		System.out.println("환급금액>>> "+gold);
+		//System.out.println("타입내용>>>>>> "+type);
+		//System.out.println("돌려주는mno>>  "+mno);
+		//System.out.println("환급금액>>> "+gold);
 		
 		boolean result1 = MemberPointDao.getInstence().PointUpdate( type , mno , gold , mpno);
 		boolean result2 = MemberPointDao.getInstence().setPoint( type , mno , gold , mpno);

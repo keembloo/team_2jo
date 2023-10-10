@@ -69,7 +69,7 @@ public class MypageDao extends Dao {
 				
 				//System.out.println("carimglist"+carimglist);
 				//System.out.println("carDto"+carDto);
-				System.out.println("auctionDto"+auctionDto);
+				//System.out.println("auctionDto"+auctionDto);
 				list.add(auctionDto); // 리스트에 추가
 				//System.out.println(list);
 			}
@@ -192,7 +192,7 @@ public class MypageDao extends Dao {
 	//규리 회원 연락처 출력 ( 판매자를 찾아라 )
 	public MemberDto findSeller(int cno) {
 		try {
-			System.out.println("판매자 다오cno : " +cno);
+			//System.out.println("판매자 다오cno : " +cno);
 			String sql = "select * from car as c"
 					+ " inner join member as m on m.mno = c.mno where cno = ?";
 			ps = conn.prepareStatement(sql);
