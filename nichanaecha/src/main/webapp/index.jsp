@@ -23,4 +23,4 @@
 	  <script src="/nichanaecha/js/index.js" type="text/javascript"></script>
 	  
 </body>
-</html> 
+</html>  
