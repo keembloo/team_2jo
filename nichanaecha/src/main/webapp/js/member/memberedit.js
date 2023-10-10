@@ -6,6 +6,11 @@ let pwstate = false; // 비밀번호일치 상태 확인 변수
 
 // 기본정보 출력 
 function editview(){
+	if (loginMid == '') {
+		alert('로그인된 회원만 볼수 있습니다. 로그인페이지로 돌아갑니다.');
+		location.href='/nichanaecha/member/memberlogin.jsp';
+		return;
+	 }// 로그인된 상태면
 	$.ajax({
 		url : "/nichanaecha/MemberController" , 
 		async : false ,

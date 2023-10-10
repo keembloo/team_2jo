@@ -39,6 +39,10 @@ function mpointView(){
 function inputPoint(){
 	//console.log('입금실행');
 	let gold = prompt('입금하실 금액을 입력해주세요');
+	if (gold === null) {
+    	return;
+ 	}
+
 	if (gold < 10000 ){
 		alert('입금 금액은 10000원 이상이어야합니다');
 	} else {
@@ -63,6 +67,10 @@ function inputPoint(){
 function outputPoint(mcash){
 	//console.log('출금실행');
 	let gold = prompt('출금하실 금액을 입력해주세요');
+	if (gold === null) {
+    	return;
+ 	}
+	
 	if ( gold > mcash) {
 		alert('출금금액은 보유 포인트를 초과할 수 없습니다');
 	} else {

@@ -5,16 +5,45 @@
 let finalmno = -1;
 let finalmid = '';
 let finalmphone = '';
-
+let statefinal = false; // 입찰자의 값이 있는지 상태변수 false면 null
 // 판매자 회원 아이디, 연락처 변수 저장
 let sellermno = -1;
 let sellermid = '';
 let sellermphone = '';
 
+let countDate =''; // "00일00시00분 전"으로 표시하는 날짜 변수
+
+
 
 // 규리 , 마이페이지 전체 출력 함수	
 mview(); 
-	
+//findphone(14718);	 입찰자 찾는 함수 테스트
+
+// 날짜 차이 구하는 함수
+function dateCal(date){
+	let atime = new Date(date);
+	let ntime = new Date();
+	//console.log("atime : "+atime);
+	//console.log("ntime : "+ntime);
+	let gap = atime.getTime() - ntime.getTime();
+	//console.log("gap : "+gap);
+	formatTime(gap);
+}
+// 계산한 날짜 형식에 맞게 변환 함수
+function formatTime(gap) {
+  let seconds = Math.floor(gap / 1000);
+  let minutes = Math.floor(seconds / 60);
+  let hours = Math.floor(minutes / 60);
+  let days = Math.floor(hours / 24);
+
+  //let secondsRemainder = seconds % 60;
+  let minutesRemainder = minutes % 60;
+  let hoursRemainder = hours % 24;
+
+  countDate = `${days}일 ${hoursRemainder}시간 ${minutesRemainder}분 전`;
+  //console.log(countDate);
+
+}
 
 // 규리, 멤버 회원정보 출력
 function mview(){
@@ -46,51 +75,6 @@ function mview(){
 }
 
 
-// 최종 입찰자 찾기 함수
-function findphone(cno){
-	$.ajax({
-		url : "/nichanaecha/MypageController" , 
-			method : "get" ,
-			async : false,
-			data : { type : "findphone" , cno: cno } ,
-			success : jsonArray => {
-				//console.log('findphone 여연결된');
-				//console.log(jsonArray);
-				//console.log(jsonArray.mid);
-				//console.log(jsonArray.mphone);
-				finalmid = jsonArray.mid;
-				finalmphone = jsonArray.mphone;
-				finalmno = jsonArray.mno;
-			} ,
-			error : e=>{console.log(e);}
-	});
-}
-
-// 판매자 아이디, 연락처 찾기 함수
-function findseller(cno){
-	$.ajax({
-		url : "/nichanaecha/MypageController" , 
-			method : "get" ,
-			async : false,
-			data : { type : "findSeller" , cno: cno } ,
-			success : jsonArray => {
-				//console.log('findphone 여연결된');
-				//console.log(jsonArray);
-				//console.log(jsonArray.mid);
-				//console.log(jsonArray.mphone);
-				sellermid = jsonArray.mid;
-				sellermphone = jsonArray.mphone;
-				sellermno = jsonArray.mno;
-			} ,
-			error : e=>{console.log(e);}
-	});
-}
-
-
-
-
-
-
 
 // 규리 1. 등록매물정보(캐러셀) 출력
 function mySubmitcarView(){
@@ -115,7 +99,7 @@ function mySubmitcarView(){
 			
 
 				jsonArray.forEach( (p,i)=>{
-					console.log(p);
+					//console.log(p);
 					//console.log('카이미지리스트 : '+Object.values(p.car.imglist)[0]);
 					//Object.values() : 주어진 객체의 속성 값들을 배열로 반환
 					// 제품1개 html 마크업
@@ -123,27 +107,10 @@ function mySubmitcarView(){
 					if (p.astate >= 1){ // 경매중인 상태가 아니면 (경매완료면)
 						// 전화번호 가져오는 함수실행
 							//console.log("p.car.cno : "+p.car.cno);
-								findphone(p.car.cno); // 차량번호로 최종입찰자 찾기함수
-								findseller(p.car.cno); // 차량번호로 판매자 찾기 함수
-						if (finalmid == loginMid || sellermid == loginMid){ // 로그인한 사람이 판매자이거나 최종 입찰자이면
-						html += `<div class="col"> <!-- 제품1개 -->
-									<div class="card">
-										<a href="/nichanaecha/auction/carinfo.jsp?cno=${p.cno}">
-											<img src="/nichanaecha/auction/img/${Object.values(p.car.imglist)[0]}" class="card-img-top" alt="Image 1">
-											<div class="card-body">
-												<h5 class="card-title">${p.atitle}</h5>
-												<div class="card-text">경매 등록번호 : ${p.ano}</div>
-												<div class="card-text">최소 입찰 금액 : ${p.aprice.toLocaleString()}원</div>
-												<div class="card-text">이미 종료된 경매입니다.</div>
-												<div class="card-text">판매자 아이디 : ${sellermid}</div>
-												<div class="card-text">판매자 연락처 : ${sellermphone}</div>
-												<div class="card-text">구매자 아이디 : ${finalmid}</div>
-												<div class="card-text">구매자 연락처 : ${finalmphone}</div>
-											</div>
-										</a>
-									</div>
-								</div>`;
-						}else { // 로그인 한 사람이나 , 판매자나 최종입찰자가 아니면 경매종료된 상태면 경매종료된것만 알림
+								findseller(p.cno); // 차량번호로 판매자 찾기 함수
+								findphone(p.cno); // 차량번호로 최종입찰자 찾기함수
+								//console.log("입찰상태체크 : "+statefinal);
+						if (statefinal==false){ // 경매종료이나 입찰자가 없으면
 							html += `<div class="col"> <!-- 제품1개 -->
 										<div class="card">
 											<a href="/nichanaecha/auction/carinfo.jsp?cno=${p.cno}">
@@ -152,12 +119,49 @@ function mySubmitcarView(){
 													<h5 class="card-title">${p.atitle}</h5>
 													<div class="card-text">경매 등록번호 : ${p.ano}</div>
 													<div class="card-text">이미 종료된 경매입니다.</div>
+													<div class="card-text">입찰자가 없습니다.</div>
 												</div>
 											</a>
 										</div>
-									</div>`;	
-						}
+									</div>`;
+						} else { // 경매종료이나 입찰자가 있으면
+							if (finalmid == loginMid || sellermid == loginMid){ // 로그인한 사람이 판매자이거나 최종 입찰자이면
+								html += `<div class="col"> <!-- 제품1개 -->
+											<div class="card">
+												<a href="/nichanaecha/auction/carinfo.jsp?cno=${p.cno}">
+													<img src="/nichanaecha/auction/img/${Object.values(p.car.imglist)[0]}" class="card-img-top" alt="Image 1">
+													<div class="card-body">
+														<h5 class="card-title">${p.atitle}</h5>
+														<div class="card-text">경매 등록번호 : ${p.ano}</div>
+														<div class="card-text">최소 입찰 금액 : ${p.aprice.toLocaleString()}원</div>
+														<div class="card-text">이미 종료된 경매입니다.</div>
+														<div class="card-text">판매자 아이디 : ${sellermid}</div>
+														<div class="card-text">판매자 연락처 : ${sellermphone}</div>
+														<div class="card-text">구매자 아이디 : ${finalmid}</div>
+														<div class="card-text">구매자 연락처 : ${finalmphone}</div>
+													</div>
+												</a>
+											</div>
+										</div>`;
+							}else { // 로그인 한 사람이나 , 판매자나 최종입찰자가 아니면 경매종료된 상태면 경매종료된것만 알림
+								html += `<div class="col"> <!-- 제품1개 -->
+											<div class="card">
+												<a href="/nichanaecha/auction/carinfo.jsp?cno=${p.cno}">
+													<img src="/nichanaecha/auction/img/${Object.values(p.car.imglist)[0]}" class="card-img-top" alt="Image 1">
+													<div class="card-body">
+														<h5 class="card-title">${p.atitle}</h5>
+														<div class="card-text">경매 등록번호 : ${p.ano}</div>
+														<div class="card-text">최소 입찰 금액 : ${p.aprice.toLocaleString()}원</div>
+														<div class="card-text">이미 종료된 경매입니다.</div>
+													</div>
+												</a>
+											</div>
+										</div>`;
+							}
+						}							
+	
 					} else { // 경매중인 상태면
+						dateCal(p.aenddate);
 						html += `<div class="col"> <!-- 제품1개 -->
 										<div class="card">
 											<a href="/nichanaecha/auction/carinfo.jsp?cno=${p.cno}">
@@ -166,7 +170,7 @@ function mySubmitcarView(){
 													<h5 class="card-title">${p.atitle}</h5>
 													<div class="card-text">경매 등록번호 : ${p.ano}</div>
 													<div class="card-text">최소 입찰 금액 : ${p.aprice.toLocaleString()}원</div>
-													<div class="card-text">경매 종료 : ${p.aenddate}</div>
+													<div class="card-text">경매 종료 : ${countDate}</div>
 												</div>
 											</a>
 										</div>
@@ -211,6 +215,55 @@ function mySubmitcarView(){
 }
 
 
+// 최종 입찰자 찾기 함수
+function findphone(cno){
+	$.ajax({
+		url : "/nichanaecha/MypageController" , 
+			method : "get" ,
+			async : false,
+			data : { type : "findphone" , cno: cno } ,
+			success : jsonArray => {
+				//console.log('findphone 여연결된');
+				//console.log(jsonArray);
+				//console.log("jsonArray.mid : "+jsonArray.mid);
+				//console.log(jsonArray.mphone);
+				//finalmid.push(jsonArray.mid);
+				//finalmphone.push(jsonArray.mphone);
+				//finalmno.push(jsonArray.mno);
+				if (jsonArray== null){
+					//console.log("널일때js에서도나");
+					statefinal = false; //상태체크
+				} else {
+					finalmid=jsonArray.mid;
+					finalmphone=jsonArray.mphone;
+					finalmno=jsonArray.mno;
+					statefinal = true;
+					//console.log('함수성공');
+				}
+			} ,
+			error : e=>{console.log(e);}
+	});
+}
+
+// 판매자 아이디, 연락처 찾기 함수
+function findseller(cno){
+	$.ajax({
+		url : "/nichanaecha/MypageController" , 
+			method : "get" ,
+			async : false,
+			data : { type : "findSeller" , cno: cno } ,
+			success : jsonArray => {
+				//console.log('findphone 여연결된');
+				//console.log(jsonArray);
+				//console.log("jsonArray.mid : " + jsonArray.mid);
+				//console.log(jsonArray.mphone);
+				sellermid = jsonArray.mid;
+				sellermphone = jsonArray.mphone;
+				sellermno = jsonArray.mno;
+			} ,
+			error : e=>{console.log(e);}
+	});
+}
 
 // 규리 2. 입찰한 매물정보(캐러셀) 출력
 function myAuctionView(){
@@ -241,13 +294,13 @@ function myAuctionView(){
 					//console.log('도는거여?');
 					count++;
 					if (p.astate >= 1){// 경매중인 상태가 아니면 (경매완료면)
-						findphone(p.car.cno); // 차량번호로 최종입찰자 찾기함수
-						findseller(p.car.cno); // 차량번호로 판매자 찾기 함수
-						console.log("finalmid : "+finalmid);
-						console.log("sellermid : "+sellermid);
-						console.log("loginMid : "+loginMid);
+						findseller(p.cno); // 차량번호로 판매자 찾기 함수
+						findphone(p.cno); // 차량번호로 최종입찰자 찾기함수
+						//console.log("finalmid : "+finalmid);
+						//console.log("sellermid : "+sellermid);
+						//console.log("loginMid : "+loginMid);
 						if (finalmid == loginMid || sellermid == loginMid){ // 로그인한 사람이 판매자이거나 최종 입찰자이면
-							console.log("도니");
+							//console.log("도니");
 							// 제품1개 html 마크업
 							html += `<div class="col"> <!-- 제품1개 -->
 										<div class="card">
@@ -267,7 +320,7 @@ function myAuctionView(){
 										</div>
 									</div>`;
 						}else { // 로그인 했으나 , 판매자나 최종입찰자가 아니면 경매종료된 상태면 경매종료된것만 알림
-							console.log("두번째도니");
+							//console.log("두번째도니");
 							html += `<div class="col"> <!-- 제품1개 -->
 										<div class="card">
 											<a href="/nichanaecha/auction/carinfo.jsp?cno=${p.cno}">
@@ -282,7 +335,10 @@ function myAuctionView(){
 										</div>
 									</div>`;
 						}
+						
+						
 					} else { // 경매중인 상태면
+						dateCal(p.aenddate);
 						html += `<div class="col"> <!-- 제품1개 -->
 									<div class="card">
 										<a href="/nichanaecha/auction/carinfo.jsp?cno=${p.cno}">
@@ -291,7 +347,7 @@ function myAuctionView(){
 												<h5 class="card-title">${p.atitle}</h5>
 												<div class="card-text">경매 등록번호 : ${p.ano}</div>
 												<div class="card-text">최소 입찰 금액 : ${p.aprice.toLocaleString()}원</div>
-												<div class="card-text">경매 종료일 : ${p.aenddate}</div>
+												<div class="card-text">경매 종료일 : ${countDate}</div>
 											</div>
 										</a>
 									</div>
@@ -358,28 +414,9 @@ function myWishlistView(){
 					//console.log('도는거여?');
 					count++;
 					if (p.astate >= 1){// 경매중인 상태가 아니면 (경매완료면)
-						findphone(p.car.cno); // 차량번호로 최종입찰자 찾기함수
-						findseller(p.car.cno); // 차량번호로 판매자 찾기 함수
-						if (finalmid == loginMid || sellermid == loginMid){ // 로그인한 사람이 판매자이거나 최종 입찰자이면
-						// 제품1개 html 마크업
-						html += `<div class="col"> <!-- 제품1개 -->
-									<div class="card">
-										<a href="/nichanaecha/auction/carinfo.jsp?cno=${p.cno}">
-											<img src="/nichanaecha/auction/img/${Object.values(p.car.imglist)[0]}" class="card-img-top" alt="Image 1">
-											<div class="card-body">
-												<h5 class="card-title">${p.atitle}</h5>
-												<div class="card-text">경매 등록번호 : ${p.ano}</div>
-												<div class="card-text">최소 입찰 금액 : ${p.aprice.toLocaleString()}원</div>
-												<div class="card-text">이미 종료된 경매입니다.</div>
-												<div class="card-text">판매자 아이디 : ${sellermid}</div>
-												<div class="card-text">판매자 연락처 : ${sellermphone}</div>
-												<div class="card-text">구매자 아이디 : ${finalmid}</div>
-												<div class="card-text">구매자 연락처 : ${finalmphone}</div>
-											</div>
-										</a>
-									</div>
-								</div>`;
-						}else { // 로그인 한 사람이나 , 판매자나 최종입찰자가 아니면 경매종료된 상태면 경매종료된것만 알림
+						findseller(p.cno); // 차량번호로 판매자 찾기 함수
+						findphone(p.cno); // 차량번호로 최종입찰자 찾기함수
+						if (statefinal==false){ // 경매종료이나 입찰자가 없으면
 							html += `<div class="col"> <!-- 제품1개 -->
 										<div class="card">
 											<a href="/nichanaecha/auction/carinfo.jsp?cno=${p.cno}">
@@ -389,12 +426,51 @@ function myWishlistView(){
 													<div class="card-text">경매 등록번호 : ${p.ano}</div>
 													<div class="card-text">최소 입찰 금액 : ${p.aprice.toLocaleString()}원</div>
 													<div class="card-text">이미 종료된 경매입니다.</div>
+													<div class="card-text">입찰자가 없습니다.</div>
 												</div>
 											</a>
 										</div>
 									</div>`;
+						
+						} else { // 경매종료이나 입찰자가 있으면
+							if (finalmid == loginMid || sellermid == loginMid){ // 로그인한 사람이 판매자이거나 최종 입찰자이면
+							// 제품1개 html 마크업
+							html += `<div class="col"> <!-- 제품1개 -->
+										<div class="card">
+											<a href="/nichanaecha/auction/carinfo.jsp?cno=${p.cno}">
+												<img src="/nichanaecha/auction/img/${Object.values(p.car.imglist)[0]}" class="card-img-top" alt="Image 1">
+												<div class="card-body">
+													<h5 class="card-title">${p.atitle}</h5>
+													<div class="card-text">경매 등록번호 : ${p.ano}</div>
+													<div class="card-text">최소 입찰 금액 : ${p.aprice.toLocaleString()}원</div>
+													<div class="card-text">이미 종료된 경매입니다.</div>
+													<div class="card-text">판매자 아이디 : ${sellermid}</div>
+													<div class="card-text">판매자 연락처 : ${sellermphone}</div>
+													<div class="card-text">구매자 아이디 : ${finalmid}</div>
+													<div class="card-text">구매자 연락처 : ${finalmphone}</div>
+												</div>
+											</a>
+										</div>
+									</div>`;
+							}else { // 로그인 한 사람이나 , 판매자나 최종입찰자가 아니면 경매종료된 상태면 경매종료된것만 알림
+								html += `<div class="col"> <!-- 제품1개 -->
+											<div class="card">
+												<a href="/nichanaecha/auction/carinfo.jsp?cno=${p.cno}">
+													<img src="/nichanaecha/auction/img/${Object.values(p.car.imglist)[0]}" class="card-img-top" alt="Image 1">
+													<div class="card-body">
+														<h5 class="card-title">${p.atitle}</h5>
+														<div class="card-text">경매 등록번호 : ${p.ano}</div>
+														<div class="card-text">최소 입찰 금액 : ${p.aprice.toLocaleString()}원</div>
+														<div class="card-text">이미 종료된 경매입니다.</div>
+													</div>
+												</a>
+											</div>
+										</div>`;
+							}
+							
 						}
 					} else { // 경매중인 상태면
+						dateCal(p.aenddate);
 						html += `<div class="col"> <!-- 제품1개 -->
 									<div class="card">
 										<a href="/nichanaecha/auction/carinfo.jsp?cno=${p.cno}">
@@ -403,7 +479,7 @@ function myWishlistView(){
 												<h5 class="card-title">${p.atitle}</h5>
 												<div class="card-text">경매 등록번호 : ${p.ano}</div>
 												<div class="card-text">최소 입찰 금액 : ${p.aprice.toLocaleString()}원</div>
-												<div class="card-text">경매 종료일 : ${p.aenddate}</div>
+												<div class="card-text">경매 종료일 : ${countDate}</div>
 											</div>
 										</a>
 									</div>

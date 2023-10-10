@@ -13,9 +13,22 @@
 	<!-- jsp  파일안에 다른 jsp파일 import -->
 	<%@include file ="header.jsp" %>
 	<div class="container-xl">
-		<a href="./map/map.jsp"> <button>내근처 매물 보러가기 </button></a>
-		<a href="./auction/carsubmit.jsp"> <button>내차경매 등록하기 </button></a>
-		<a href="/nichanaecha/auction/carinfo.jsp?cno=1"> <button> 고연진샘플 </button></a>
+		<div class="mainimgBox">
+			<div class="titleText">누구보다 빠르게!<br>누구보다 정확하게!<br>쉽게하는 중고차 경매</div>
+			<div class="blacksolid"></div>
+			<img src="/nichanaecha/img/indexCar.jpg">
+		</div>
+		<div class="linkBox">
+			<a href="./map/map.jsp"> <button class="btnGo" type="button">내근처 매물 보러가기 </button></a>
+			<a href="./auction/carsubmit.jsp"> <button class="btnGo" type="button">내차경매 등록하기 </button></a>
+		</div>
+		<!-- 
+		<div class="mainimgBox2">
+			<img src="/nichanaecha/img/indexCar2.jpg">
+		</div>
+		
+		<a href="/nichanaecha/auction/carinfo.jsp?cno=1"> <button type="button"> 고연진샘플 </button></a>
+		 -->
 	</div>
 	<!-- jsp  파일안에 다른 jsp파일 import -->
 	<%@include file ="footer.jsp" %>

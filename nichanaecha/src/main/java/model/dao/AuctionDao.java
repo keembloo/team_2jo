@@ -52,7 +52,6 @@ public class AuctionDao extends Dao {
 	// 경매 정보 dto 반환 함수
 	public AuctionDto auctionDto(int cno) {
 	
-		
 		try {
 			String sql = "select * from auctionInfo where cno = ? ";
 			

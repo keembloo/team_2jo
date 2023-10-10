@@ -125,7 +125,7 @@ public class MemberDao extends Dao {
 			} else if (type.equals("newpwSend")) {
 				type="mpw";
 			}
-			System.out.println(type);
+			//System.out.println(type);
 			String sql="update member set "+type+" = ? where mno = ? and mpw = ?";
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, data);
