@@ -119,6 +119,7 @@ function mySubmitcarView(){
 													<h5 class="card-title">${p.atitle}</h5>
 													<div class="card-text">경매 등록번호 : ${p.ano}</div>
 													<div class="card-text">이미 종료된 경매입니다.</div>
+													<div class="card-text">입찰자가 없습니다.</div>
 												</div>
 											</a>
 										</div>
@@ -425,6 +426,7 @@ function myWishlistView(){
 													<div class="card-text">경매 등록번호 : ${p.ano}</div>
 													<div class="card-text">최소 입찰 금액 : ${p.aprice.toLocaleString()}원</div>
 													<div class="card-text">이미 종료된 경매입니다.</div>
+													<div class="card-text">입찰자가 없습니다.</div>
 												</div>
 											</a>
 										</div>
