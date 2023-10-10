@@ -11,6 +11,7 @@ import java.util.Map;
 import model.dto.AuctionDto;
 import model.dto.CarAddressDto;
 import model.dto.CarDto;
+import model.dto.OptionDto;
 
 public class AuctionDao extends Dao {
 	private static AuctionDao auctionDao = new AuctionDao();
@@ -52,6 +53,7 @@ public class AuctionDao extends Dao {
 	// 경매 정보 dto 반환 함수
 	public AuctionDto auctionDto(int cno) {
 	
+		
 		try {
 			String sql = "select * from auctionInfo where cno = ? ";
 			
@@ -139,7 +141,7 @@ public class AuctionDao extends Dao {
 	
 	
 	// 1.차 등록 성호
-	  public int bcarsubmit(CarDto dto) {
+	  public boolean bcarsubmit(CarDto dto) {
 	      try {
 	         // ---------------------------------------------- 차량 등록 ---------------------------------------- // 
 	         String sql ="insert into car( ccompany , cnum , csize , cc , coil , cname , cdate ,  ckm , mno )"
@@ -188,47 +190,11 @@ public class AuctionDao extends Dao {
 	                     ps.executeUpdate();
 	                  }catch (Exception e) {System.out.println(e);}
 	               });
-	               return cno;
+	               return true;
 	            }
 	         }
 	      }catch (Exception e) {System.out.println(e);}
-	      return -1;
-	  }
-	  
-	  //2. 경매등록 성호
-	  public AuctionDto Auctionregistration( AuctionDto auctionDto ) {
-		  try {
-			// ---------------------------------------------- 경매 등록 ---------------------------------------- // 
-		         String sql ="insert into auctionInfo( ano , atitle , acontent , aenddate , aprice , astate ,  cno )"
-		               + "values(?,?,?,?,?,?,?)";
-		         System.out.println("1"+auctionDto);
-		         ps = conn.prepareStatement(sql , Statement.RETURN_GENERATED_KEYS ); // 실행후 식별키[PK] 를 반환할 예정
-		         ps.setInt( 1 , auctionDto.getAno() );				// 경매 번호 
-		         ps.setString( 2 , auctionDto.getAtitle() );		// 경매 제목
-		         ps.setString( 3 , auctionDto.getAcontent() );		// 경매 내용 
-		         ps.setString( 4 , auctionDto.getAenddate() );		// 경매 종료 날짜 
-		         ps.setLong( 5 , auctionDto.getAprice() );			// 경매 등록 가격
-		         ps.setInt( 6 , auctionDto.getAstate() );			// 경매 상태
-		         ps.setInt( 7 , auctionDto.getCno() );				// 매물 정보
-		         System.out.println("2"+auctionDto);
-		         int count = ps.executeUpdate();
-		         // ********** insert 후 생성된 pk번호 가져오기 
-		         System.out.println("3"+auctionDto);
-		         rs = ps.getGeneratedKeys();
-		         System.out.println("4"+auctionDto);
-		         boolean result = rs.next();
-		         System.out.println("등록 성공 여부 : "+result);
-		         if(!result) { return null; }
-		        
-		         int ano = rs.getInt(1);
-		         auctionDto.setAno(ano);
-		         
-		  }catch (Exception e) {
-			  System.out.println("경매 등록 에러 : "+e);
-			  
-		  }
-		  
-		return auctionDto;
+	      return false;
 	  }
 	
 //게시물 상세조회 [9월19일 고연진]------------------------------------------------------------
@@ -332,38 +298,85 @@ public class AuctionDao extends Dao {
 	}//f()
 	
 	
-// 경매글 작성하는 mid 찾기
-	 public AuctionDto findAuctionMid(int mno) {
-		 System.out.println("DAO 들어옴");
-		 try {
-			 String sql="select*from auctioninfo a natural join member m where mno= "+mno;
-			System.out.println("sql> "+sql);
-			 ps=conn.prepareStatement(sql);
-			 rs=ps.executeQuery();
-			 if(rs.next()) {
-				 AuctionDto dto = new AuctionDto(rs.getInt("ano"), rs.getString("mid"),mno );
-				 System.out.println("반환되는 dto > "+dto);
-				 return dto;
-			 }
-		} catch (Exception e) {System.out.println("findAuctionMid() 함수 실행 실패"+e);}
-		 
-		 return null;
-	 }
 	
+	// 검색 옵션 적용 공통 함수
+	public String optionSearch( String sql, OptionDto dto ) {
+		
+		List<String> manufacturer = dto.getManufacturer();
+		List<String> carClass = dto.getCarClass();
+		List<String> fuelType = dto.getFuelType();
+		String minYear = dto.getMinYear();
+		String maxYear = dto.getMaxYear();
+		int minMileage = dto.getMinMileage();
+		int maxMileage = dto.getMaxMileage();
+		Long minPrice = dto.getMinPrice();
+		Long maxPrice = dto.getMaxPrice();
+		
+		if(manufacturer.size() != 0) {
+			int i = 0;
+			sql += "and c.ccompany in ( ";
+			
+			for(String s :  manufacturer) {
+				sql += "\'"+s+"\'";
+				if(i != manufacturer.size()-1) {
+					sql += ",";
+				}
+				i++;
+			}
+			sql += " )\n";
+		}
+		
+		if(carClass.size() != 0) {
+			int i = 0;
+			sql += "and c.csize in ( ";
+			
+			for(String s :  carClass) {
+				sql += "\'"+s+"\'";
+				if(i != carClass.size()-1) {
+					sql += ",";
+				}
+				i++;
+			}
+			sql += " )\n";
+		}
+		
+		if(fuelType.size() != 0) {
+			int i = 0;
+			sql += "and c.coil in ( ";
+			
+			for(String s :  fuelType) {
+				sql += "\'"+s+"\'";
+				if(i != fuelType.size()-1) {
+					sql += ",";
+				}
+				i++;
+			}
+			sql += " )\n";
+		}
+		
+		sql += "and c.cdate between \'"+minYear+"\' and \'"+maxYear+"\'\n";
+		sql += "and c.ckm between "+minMileage+" and "+maxMileage+"\n";
+		sql += "and c.cno in (select cno from auctionInfo where aprice between "+minPrice+" and "+maxPrice+" )\n";
+		
+		return sql;
 	
+	}
 	
 	
 	// 좌표 영역 내 옥션,자동차 정보 반환 [ 정용상 ]
-	public List<CarAddressDto> mapAreaPrint1(String east, String west, String south, String north) {
+	public List<CarAddressDto> mapAreaPrint1(String east, String west, String south, String north, OptionDto dto) {
 		List<CarAddressDto> list = new ArrayList<>();
 		
 		try {
 			
-			String sql = "select calat, calng, cads, cname, car.cno\n"
-					+ "from caraddress as cads inner join car\n"
-					+ "on cads.cno = car.cno\n"
-					+ "where calat between ? and ? and calng between ? and ?\n"
-					+ "and car.cno in (select cno from auctionInfo where astate = 0)";
+			String sql = "select calat, calng, cads, cname, c.cno\n"
+					+ "from caraddress as cads inner join car as c\n"
+					+ "on cads.cno = c.cno\n"
+					+ "where calat between ? and ? and calng between ? and ?\n";
+					
+			sql = optionSearch( sql, dto );
+			
+			sql += "and c.cno in (select cno from auctionInfo where astate = 0)";
 			
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, west);
@@ -394,14 +407,18 @@ public class AuctionDao extends Dao {
 	}
 	
 	// 행정동 기준 클러스터 반환
-	public List<CarAddressDto> mapAreaPrint2(String east, String west, String south, String north) {
+	public List<CarAddressDto> mapAreaPrint2(String east, String west, String south, String north, OptionDto dto) {
 		List<CarAddressDto> list = new ArrayList<>();
 		
 		try {
 			String sql = "select cacodename as areaName, count(cacodename) as count, avg(calat) as calat, avg(calng) as calng from caraddress\n"
+					+ "inner join car as c on caraddress.cno = c.cno\n"
 						+ "where calat between ? and ? and calng between ? and ?\n"
-						+ "and cno in (select cno from auctionInfo where astate = 0)\n"
-						+ "group by cacodename;";
+						+ "and c.cno in (select cno from auctionInfo where astate = 0)\n";
+			
+			sql = optionSearch( sql, dto );
+			
+			sql += "group by cacodename;";
 			
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, west);
@@ -430,17 +447,21 @@ public class AuctionDao extends Dao {
 	}
 	
 	// 광역시 또는 자치구 기준 클러스터 반환
-	public List<CarAddressDto> mapAreaPrint3(String east, String west, String south, String north, int level) {
+	public List<CarAddressDto> mapAreaPrint3(String east, String west, String south, String north, int level, OptionDto dto) {
 		List<CarAddressDto> list = new ArrayList<>();
 		
 		try { // 확대 레벨 8 초과 시 광역 자치, 8 이하시 지방 자치 클러스터 반환
 			String condition = level > 8 ? condition = "substring_index(cads,' ',1)" 
 					: "substring_index(substring_index(cads,' ',2),' ',-1)"; 
 			
-			String sql = "select "+condition+" as areaName, count(cads) as count, avg(calat) as calat, avg(calng) as calng from caraddress\n"
-						+ "where cno in (select cno from auctionInfo where astate = 0)\n"
-						+ "group by "+condition;
-				
+			String sql = "select "+condition+" as areaName, count(cads) as count, avg(calat) as calat, avg(calng) as calng from caraddress as a\n"
+					+ "inner join car as c on a.cno = c.cno\n"
+						+ "where a.cno in (select cno from auctionInfo where astate = 0)\n";
+			
+			sql = optionSearch( sql, dto );
+			
+			sql += "group by "+condition;
+			
 			ps = conn.prepareStatement(sql);
 			rs = ps.executeQuery();
 				
@@ -463,26 +484,34 @@ public class AuctionDao extends Dao {
 	}
 
 	// 지도 클러스터, 마커 클릭 시 경매 정보 리스트 반환 [ 정용상 ]
-	public List<AuctionDto> listPrint(String areaName, int level){
+	public List<AuctionDto> listPrint(String areaName, int level, OptionDto dto){
 		List<AuctionDto> list = new ArrayList<>();
 		System.out.println("level : "+level);
 		try {
 			// caraddress과 auctioninfo테이블 inner join 후 주소에서 공백으로 구분된 두번째 위치가 매개변수의
 			// 지역명과 일치하는지 확인 후 auctioninfo의 등록 번호 내림차순으로 정렬 후 cno 출력 후 공통 함수 이용 List 객체에 담아 반환
 			String sql = "select au.cno from caraddress ca inner join auctioninfo as au\n"
-						+ "on ca.cno = au.cno\n";
+						+ "on ca.cno = au.cno inner join car as c on ca.cno = c.cno\n";
 			
 			if(level >= 6 && level <= 8) {
 				sql += "where substring_index(substring_index(ca.cads,' ',2),' ',-1) = '"+areaName+"'\n"
-						+ "and au.astate = 0\n"
-					+ "order by au.ano desc;";
+						+ "and au.astate = 0\n";
+			
+				sql = optionSearch( sql, dto );
+				
+				sql += "order by au.ano desc;";
+			
 			}
 			else if(level == 5) {
 				sql += "where cacodename = '"+areaName+"'\n"
-						+ "and au.astate = 0\n"
-						+ "order by au.ano desc;";
+						+ "and au.astate = 0\n";
+				
+				sql = optionSearch( sql, dto );
+			
+				sql += "order by au.ano desc;";
 			}
 			
+			System.out.println(sql);
 			ps = conn.prepareStatement(sql);
 			rs = ps.executeQuery();
 			
@@ -508,12 +537,35 @@ public class AuctionDao extends Dao {
 	
 	
 	// 클러스터 or 개별 마커 클릭 시 결과 반환
-	public List<AuctionDto> clusterPrint( List<Integer> list ){
+	public List<AuctionDto> clusterPrint( List<Integer> list, OptionDto dto ){
 		List<AuctionDto> auctionDtoList = new ArrayList<>();
 		
 		try {
+			String sql = "select cno from car as c \n";
 			
-			for(Integer cno : list) {
+			if (list.size() != 0) {
+				int i = 0;
+				sql += "where c.cno in ( ";
+
+				for (int cno : list) {
+					sql += cno;
+					if (i != list.size() - 1) {
+						sql += ",";
+					}
+					i++;
+				}
+				sql += " )\n";
+			}
+			
+			sql = optionSearch( sql, dto );
+			
+			System.out.println(sql);
+			
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				int cno = rs.getInt("cno");
 				
 				CarDto carDto = carDto(cno);
 				carDto.setImglist(imglist(cno));

@@ -1,5 +1,49 @@
 let boardList = {}; 
 var adsMarkers = []; // 주소 마커 초기화용 배열
+let startMonth = '1980-01' // 검색 시작 년도
+let currentMonth = ''; // 현재 달 저장용 변수
+
+defaultMonth()
+//옵션 검색용 전역 객체
+var optionsData = {
+	carType: {
+		manufacturer: [
+			"현대",
+			"기아",
+			"르노삼성",
+			"쉐보레",
+			"쌍용"
+		],
+		carClass: [
+			"대형",
+			"중형",
+			"준중형",
+			"소형"
+		],
+	},
+	year: {
+		minYear: startMonth,
+		maxYear: currentMonth,
+	},
+	mileage: {
+		minMileage: 0,
+		maxMileage: 10000000,
+	},
+	
+	price: {
+		minPrice: 0,
+		maxPrice: 2000000000,
+	},
+	
+	fuelType: [
+		"휘발유",
+		"디젤",
+		"LPG",
+		"하이브리드",
+		"전기",
+		"수소"
+	],
+};
 
 // 카카오 지도 api
 let getTexts = '';
@@ -14,11 +58,148 @@ var map = new kakao.maps.Map(document.getElementById('map'), { // 지도를 표�
 	level: 8 // 지도의 확대 레벨
 });
 
-// 마커 클러스터러를 생성합니다
-// 마커 클러스터러를 생성할 때 disableClickZoom 값을 true로 지정하지 않은 경우
-// 클러스터 마커를 클릭했을 때 클러스터 객체가 포함하는 마커들이 모두 잘 보이도록 지도의 레벨과 영역을 변경합니다
-// 이 예제에서는 disableClickZoom 값을 true로 설정하여 기본 클릭 동작을 막고
-// 클러스터 마커를 클릭했을 때 클릭된 클러스터 마커의 위치를 기준으로 지도를 1레벨씩 확대합니다
+
+// 옵션 적용 함수
+function applyOptions() {
+	// 제조사 데이터 적용
+	optionsData.carType.manufacturer = [];
+	var manufacturerCheckboxes = document.querySelectorAll('.manufacturer');
+	manufacturerCheckboxes.forEach(function(checkbox) {
+		if (checkbox.checked) {
+			optionsData.carType.manufacturer.push(checkbox.value);
+		}
+	});
+
+	// 차종 데이터 적용
+	optionsData.carType.carClass = [];
+	var carClassCheckboxes = document.querySelectorAll('.carClass');
+	carClassCheckboxes.forEach(function(checkbox) {
+		if (checkbox.checked) {
+			optionsData.carType.carClass.push(checkbox.value);
+		}
+	});
+
+	// 연식 데이터 적용
+	optionsData.year.minYear = document.getElementById('customRange1-start').value;
+	optionsData.year.maxYear = document.getElementById('customRange1-end').value;
+
+	// 주행거리 데이터 적용
+	let minKm = document.querySelector('.minKm').value
+	let maxKm = document.querySelector('.maxKm').value
+	
+	if(maxKm == 200000){
+		maxKm = 10000000;
+	}
+	
+	optionsData.mileage.minMileage = parseInt(minKm, 10);
+	optionsData.mileage.maxMileage = parseInt(maxKm, 10);
+
+	// 연료 데이터 적용
+	optionsData.fuelType = [];
+	var fuelTypeCheckboxes = document.querySelectorAll('.fuelType');
+	fuelTypeCheckboxes.forEach(function(checkbox) {
+		if (checkbox.checked) {
+			optionsData.fuelType.push(checkbox.value);
+		}
+	});
+
+	// 가격 데이터 적용
+	let minPriceValue = document.querySelector('.minPriceValue').value
+	let maxPriceValue = document.querySelector('.maxPriceValue').value
+	
+	if(minPriceValue == ''){
+		minPriceValue = 0;
+	}
+	if(maxPriceValue == ''){
+		maxPriceValue = 100000000000;
+	}
+	
+	optionsData.price.minPrice = parseInt(minPriceValue,10);
+	optionsData.price.maxPrice = parseInt(maxPriceValue,10);
+
+	getInfo();
+	listClose()
+}
+
+// 옵션 초기화
+function defaultOption() {
+	
+	// 제조사 초기화
+	var manufacturerCheckboxes = document.querySelectorAll('.manufacturer');
+	for (var i = 0; i < manufacturerCheckboxes.length; i++) {
+		manufacturerCheckboxes[i].checked = true; // 체크값 순회하면서 true로 변경
+	}
+	
+	// 차종 초기화
+	var carClassCheckboxes = document.querySelectorAll('.carClass');
+	for (var i = 0; i < carClassCheckboxes.length; i++) {
+		carClassCheckboxes[i].checked = true; // 체크값 순회하면서 true로 변경
+	}
+
+	// 연식 초기화
+	optionsData.year.minYear = document.getElementById('customRange1-start').value = '2000-01';
+	optionsData.year.maxYear = document.getElementById('customRange1-end').value = currentMonth;
+
+	// 주행거리 초기화
+	document.querySelector('.minKm').value = 0;
+	document.querySelector('.maxKm').value = 200000;
+
+	// 연료 초기화
+	var fuelCheckboxes = document.querySelectorAll('.fuelType');
+	for (var i = 0; i < fuelCheckboxes.length; i++) {
+		fuelCheckboxes[i].checked = true; // 체크값 순회하면서 true로 변경
+	}
+
+	// 가격 초기화
+	document.querySelector('.minPriceValue').value = '';
+	document.querySelector('.maxPriceValue').value = '';
+
+	document.querySelector('.minPricePrint').innerHTML = '0원';
+	document.querySelector('.maxPricePrint').innerHTML = '무제한';
+	document.querySelector('.minKmPrint').innerHTML = '0km';
+	document.querySelector('.maxKmPrint').innerHTML = '무제한';
+
+	optionsData = {
+		carType: {
+			manufacturer: [
+				"현대",
+				"기아",
+				"르노삼성",
+				"쉐보레",
+				"쌍용"
+			],
+			carClass: [
+				"대형",
+				"중형",
+				"준중형",
+				"소형"
+			],
+		},
+		year: {
+			minYear: startMonth,
+			maxYear: currentMonth,
+		},
+		mileage: {
+			minMileage: 0,
+			maxMileage: 10000000,
+		},
+		fuelType: [
+			"휘발유",
+			"디젤",
+			"LPG",
+			"하이브리드",
+			"전기",
+			"수소"
+		],
+		price: {
+			minPrice: 0,
+			maxPrice: 100000000000,
+		},
+	}
+	getInfo();
+}
+
+
 var clusterer = new kakao.maps.MarkerClusterer({
 	map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체
 	averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
@@ -78,14 +259,9 @@ kakao.maps.event.addListener(clusterer, 'clusterclick', function(cluster) {
 
 
 function getInfo() {
-    // 지도의 현재 중심좌표를 얻어옵니다 
-    var center = map.getCenter(); 
     
     // 지도의 현재 레벨을 얻어옵니다
     var level = map.getLevel();
-    
-    // 지도타입을 얻어옵니다
-    var mapTypeId = map.getMapTypeId(); 
     
     // 지도의 현재 영역을 얻어옵니다 
     var bounds = map.getBounds();
@@ -96,8 +272,6 @@ function getInfo() {
     // 영역의 북동쪽 좌표를 얻어옵니다 
     var neLatLng = bounds.getNorthEast(); 
     
-    // 영역정보를 문자열로 얻어옵니다. ((남,서), (북,동)) 형식입니다
-    var boundsStr = bounds.toString();
     
     let east = neLatLng.getLat();
 	let west = swLatLng.getLat();
@@ -114,6 +288,8 @@ function mapAreaPrint(east, west, south, north, level){
 		
 	clusterer.clear();
 	
+	jsonObject = JSON.stringify(optionsData);
+	
 	if(level>4){
 		clusterer.setMinLevel(20);
 	}else{
@@ -123,9 +299,8 @@ function mapAreaPrint(east, west, south, north, level){
 		url : "/nichanaecha/MapController",
 		method : "get",
 		async : false,
-		data : {type : "mapAreaPrint", east : east, west : west, south : south, north : north, level : level},
+		data : {type : "mapAreaPrint", east : east, west : west, south : south, north : north, level : level, jsonObject : jsonObject},
 		success : r => {
-			console.log("level : "+level);
 			if(level > 4){ // 확대 레벨 4 초과시 지역별로 묶어서 출력
 				var customOverlay = r.map( p => { 
 					var content = `
@@ -184,6 +359,8 @@ function listPrint(areaName, level){
 		return;
 	}
 	
+	jsonObject = JSON.stringify(optionsData);
+	
 	let auctionList = document.querySelector('.auctionList');
     
     auctionList.style.display = 'block';
@@ -198,7 +375,7 @@ function listPrint(areaName, level){
 		url : "/nichanaecha/MapController",
 		method: "get",
 		async: false,
-		data: {type : "listPrint", areaName: areaName, level : level },
+		data: {type : "listPrint", areaName: areaName, level : level, jsonObject : jsonObject },
 		success: r =>{
 			r.areaName = areaName;
 			
@@ -225,13 +402,13 @@ function clusterPrint( cnoList ){
 	
 	let auctionList = document.querySelector('.auctionList');
     
+    jsonObject = JSON.stringify(optionsData);
+    
     auctionList.style.display = 'block';
 	
 	setTimeout(function () {
         auctionList.style.opacity = 1;
     }, 100); // 100ms 후에 투명도를 1로 변경
-	
-	
 	
 	// 리스트를 json 형태로 변환
 	jsonList = JSON.stringify(cnoList);
@@ -240,12 +417,11 @@ function clusterPrint( cnoList ){
 		url : "/nichanaecha/MapController",
 		method: "get",
 		async: false,
-		data: {type : "clusterPrint", cnoList : jsonList },
+		data: {type : "clusterPrint", cnoList : jsonList, jsonObject : jsonObject },
 		success: r =>{
 			boardList = r; // 결과 전역변수에 저장
 			
 			boardPrint(r) // 게시물 출력 공통 함수 호출
-				
 
 		},
 		error: e =>{
@@ -570,4 +746,15 @@ function maxPricePrint(e) {
 	
 }
 
- 
+
+// 기본 날짜 설정
+function defaultMonth() {
+	var curDate = new Date();
+	var curYear = curDate.getFullYear();
+	var curMonth = (curDate.getMonth() + 1).toString().padStart(2, '0');
+	currentMonth = curYear + '-' + curMonth;
+	
+	document.getElementById('customRange1-start').value = "2000-01";
+	document.getElementById('customRange1-end').value = currentMonth;
+
+}
