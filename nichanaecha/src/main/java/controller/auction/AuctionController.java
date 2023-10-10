@@ -62,7 +62,7 @@ public class AuctionController extends HttpServlet {
 		else if(type.equals("본인글유효성")) {
 			int ano = Integer.parseInt(request.getParameter("ano"));
 			
-		}
+		}/*
 		else if(type.equals("경매글작성자")) {
 			System.out.println("[컨트롤러들어옴] 경매글작성자 타입 확인> "+type);
 			int mno= Integer.parseInt(request.getParameter("mno"));
@@ -74,7 +74,7 @@ public class AuctionController extends HttpServlet {
 			response.getWriter().print(json);
 			
 		}
-		
+		*/
 		
 	}//f()
 

@@ -68,7 +68,7 @@ function logout(){
 
 
 
-let MSocket= new WebSocket(`ws://localhost:80/nichanaecha/AlarmSocket/${loginMid}`);
+let MSocket= new WebSocket(`ws://localhost:8080/nichanaecha/AlarmSocket/${loginMid}`);
 //console.log('알람관련 클라이언트 소켓 생성');
 MSocket.onopen=e=>{
 	//console.log('클라이언트소켓열림');

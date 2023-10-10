@@ -17,7 +17,7 @@ let price//시작금액
 let getBprice; //입력받은 입찰가
 
 //입찰내용출력을 위한 소켓
-let clientSocket= new WebSocket('ws://localhost:80/nichanaecha/BattingSocket')
+let clientSocket= new WebSocket('ws://localhost:8080/nichanaecha/BattingSocket')
 console.log('클라이언트소켓생성')
 clientSocket.onopen=e=>{console.log('클라이언트소켓열림')}//socket(e)
 clientSocket.onmessage=e=>nowContent(e)

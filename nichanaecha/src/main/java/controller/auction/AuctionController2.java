@@ -112,16 +112,18 @@ public class AuctionController2 extends HttpServlet {
 		// 타입변한한다.
 		int cno = (int) session;
 		
-		AuctionDto auctionDto = new AuctionDto(0, atitle, acontent, acontent, aenddate, aprice, 0, 0);
+		AuctionDto auctionDto = new AuctionDto(0, atitle, acontent, aenddate, aprice, 0, 0);
 		auctionDto.setCno(cno);
 		
 		//3. Dao 처리
 	    AuctionDto result = AuctionDao.getInstence().Auctionregistration(auctionDto);
 	    //4. (Dao 결과) 응답
 	    System.out.println("결과 dto 정보 : "+result);
-	    response.setContentType("application/json; charset=UTF-8"); 
-	    response.getWriter().print(result);
-		
+		ObjectMapper objectMapper = new ObjectMapper();
+		String json = objectMapper.writeValueAsString(result);
+		response.setContentType("application/json;charset=UTF-8");
+		response.getWriter().print(json);
+	
 		}catch (Exception e) { System.out.println(e);}	 
 	
 	}

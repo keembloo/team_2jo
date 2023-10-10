@@ -170,7 +170,7 @@ function auction() {
 		let form = document.querySelectorAll('.carsubmitForm')[0];	
 		console.log(form);
 		//2. form 객체화 하기
-		let formData = new FormData(form);		console.log(formData);
+		let formData = new FormData(form);		//console.log(formData);
 		
 		
 		$.ajax({
@@ -180,8 +180,8 @@ function auction() {
 		contentType : false , 
 		processData : false ,
 		success : r => {
-			
-			if( r > 0 ){
+			//console.log("되는겨?");
+			if( r != null || r != undefined){
 				alert('경매등록 성공');
 				location.href="/nichanaecha/index.jsp";
 				
@@ -190,7 +190,7 @@ function auction() {
 			}
 			
 		} , 
-		error : e => { } 
+		error : e => { console.log(e);} 
 	})
 	
 }

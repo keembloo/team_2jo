@@ -73,7 +73,7 @@ public AuctionDto(int ano, String mid, int mno) {
 		this.astate = astate;
 	}
 
-
+	// 공통함수
 	public AuctionDto(int ano, String atitle, String acontent, String astartdate, String aenddate, long aprice,
 			int astate, int cno) {
 		super();
@@ -81,6 +81,17 @@ public AuctionDto(int ano, String mid, int mno) {
 		this.atitle = atitle;
 		this.acontent = acontent;
 		this.astartdate = astartdate;
+		this.aenddate = aenddate;
+		this.aprice = aprice;
+		this.astate = astate;
+		this.cno = cno;
+	}
+	public AuctionDto(int ano, String atitle, String acontent,  String aenddate, long aprice,
+			int astate, int cno) {
+		super();
+		this.ano = ano;
+		this.atitle = atitle;
+		this.acontent = acontent;
 		this.aenddate = aenddate;
 		this.aprice = aprice;
 		this.astate = astate;
