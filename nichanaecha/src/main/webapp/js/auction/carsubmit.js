@@ -181,7 +181,7 @@ function auction() {
 		processData : false ,
 		success : r => {
 			
-			if( r ){
+			if( r > 0 ){
 				alert('경매등록 성공');
 				location.href="/nichanaecha/index.jsp";
 				
