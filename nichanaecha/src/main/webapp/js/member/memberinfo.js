@@ -11,10 +11,39 @@ let sellermno = -1;
 let sellermid = '';
 let sellermphone = '';
 
+let countDate =''; // "00일00시00분 전"으로 표시하는 날짜 변수
+
+
 
 // 규리 , 마이페이지 전체 출력 함수	
 mview(); 
 //findphone(14718);	 입찰자 찾는 함수 테스트
+
+// 날짜 차이 구하는 함수
+function dateCal(date){
+	let atime = new Date(date);
+	let ntime = new Date();
+	//console.log("atime : "+atime);
+	//console.log("ntime : "+ntime);
+	let gap = atime.getTime() - ntime.getTime();
+	//console.log("gap : "+gap);
+	formatTime(gap);
+}
+// 계산한 날짜 형식에 맞게 변환 함수
+function formatTime(gap) {
+  let seconds = Math.floor(gap / 1000);
+  let minutes = Math.floor(seconds / 60);
+  let hours = Math.floor(minutes / 60);
+  let days = Math.floor(hours / 24);
+
+  //let secondsRemainder = seconds % 60;
+  let minutesRemainder = minutes % 60;
+  let hoursRemainder = hours % 24;
+
+  countDate = `${days}일 ${hoursRemainder}시간 ${minutesRemainder}분 전`;
+  //console.log(countDate);
+
+}
 
 // 규리, 멤버 회원정보 출력
 function mview(){
@@ -131,6 +160,7 @@ function mySubmitcarView(){
 						}							
 	
 					} else { // 경매중인 상태면
+						dateCal(p.aenddate);
 						html += `<div class="col"> <!-- 제품1개 -->
 										<div class="card">
 											<a href="/nichanaecha/auction/carinfo.jsp?cno=${p.cno}">
@@ -139,7 +169,7 @@ function mySubmitcarView(){
 													<h5 class="card-title">${p.atitle}</h5>
 													<div class="card-text">경매 등록번호 : ${p.ano}</div>
 													<div class="card-text">최소 입찰 금액 : ${p.aprice.toLocaleString()}원</div>
-													<div class="card-text">경매 종료 : ${p.aenddate}</div>
+													<div class="card-text">경매 종료 : ${countDate}</div>
 												</div>
 											</a>
 										</div>
@@ -307,6 +337,7 @@ function myAuctionView(){
 						
 						
 					} else { // 경매중인 상태면
+						dateCal(p.aenddate);
 						html += `<div class="col"> <!-- 제품1개 -->
 									<div class="card">
 										<a href="/nichanaecha/auction/carinfo.jsp?cno=${p.cno}">
@@ -315,7 +346,7 @@ function myAuctionView(){
 												<h5 class="card-title">${p.atitle}</h5>
 												<div class="card-text">경매 등록번호 : ${p.ano}</div>
 												<div class="card-text">최소 입찰 금액 : ${p.aprice.toLocaleString()}원</div>
-												<div class="card-text">경매 종료일 : ${p.aenddate}</div>
+												<div class="card-text">경매 종료일 : ${countDate}</div>
 											</div>
 										</a>
 									</div>
@@ -437,6 +468,7 @@ function myWishlistView(){
 							
 						}
 					} else { // 경매중인 상태면
+						dateCal(p.aenddate);
 						html += `<div class="col"> <!-- 제품1개 -->
 									<div class="card">
 										<a href="/nichanaecha/auction/carinfo.jsp?cno=${p.cno}">
@@ -445,7 +477,7 @@ function myWishlistView(){
 												<h5 class="card-title">${p.atitle}</h5>
 												<div class="card-text">경매 등록번호 : ${p.ano}</div>
 												<div class="card-text">최소 입찰 금액 : ${p.aprice.toLocaleString()}원</div>
-												<div class="card-text">경매 종료일 : ${p.aenddate}</div>
+												<div class="card-text">경매 종료일 : ${countDate}</div>
 											</div>
 										</a>
 									</div>
