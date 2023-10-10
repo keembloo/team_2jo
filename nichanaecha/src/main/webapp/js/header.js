@@ -74,8 +74,15 @@ MSocket.onopen=e=>{
 	//console.log('클라이언트소켓열림');
 	
 }
+//메세지 받을때 소켓
+MSocket.onmessage=e=>{ alarm(e)}
 
 
+//메세지 받을 때 추후 행동 함수
+function alarm(e){
+	document.querySelector('.alarm').innerHTML=`입찰가가 업데이트 되었습니다`
+	
+}
 
 
 // 접속한 사람이 등록한 글 가져오기 [수정필요/기능 실행에 필요한 함수는 아님]
@@ -121,7 +128,7 @@ function getBuyAuation(mno){
 MSocket.onclose=e=>{console.log('서버소켓과 통신이 끝났음. 로그아웃 시 출력되야됨 ,,')};
 
 
-MSocket.onmessage=e=>{ console.log(e); }
+
 
 
 //3. 알람메세지 출력 함수[10월7일 고연진] - 미완성

@@ -30,3 +30,7 @@ a{color:black;text-decoration: none;}
 	flex-direction: row;
 	justify-content: space-between;
 }
+
+.alarm{
+	width: 200px; height: 200px;
+}

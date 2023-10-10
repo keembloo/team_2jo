@@ -23,7 +23,8 @@
   
 	            </ul>
 	            
-	        	
+	        
+	        <div class="alarm"><!-- 알람기능 --></div>	
 	        	
 	       
 	        	
