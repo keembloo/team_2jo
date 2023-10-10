@@ -97,8 +97,8 @@ let plat = 0;		// 현재 카카오지도에서 선택한 좌표.. 초기값은 0
 let plng = 0;
 
 
-// -------------------------------------------------------------- //
-
+// --------------------------- 카카오지도 성호 --------------------------------- //
+// 차등록 성호
 function bcarsubmit(){
 	
 	
@@ -148,10 +148,10 @@ function bcarsubmit(){
 		processData : false ,
 		success : r => {
 			
-			if( r ){
+			if( r > 0 ){
 				alert('차량등록 성공 경매등록 갑시다');
 				location.href="/nichanaecha/auction/auction.jsp";
-				
+				 
 			}else{
 				alert('차량등록 실패 ');
 			}
@@ -163,7 +163,14 @@ function bcarsubmit(){
 	
 }
 
+// 경매등록 성호
 function auction() {
+		
+		//1. form 가져오기
+		let form = document.querySelectorAll('.carsubmitForm')[0];	
+		console.log(form);
+		//2. form 객체화 하기
+		let formData = new FormData(form);		console.log(formData);
 		
 		
 		$.ajax({

@@ -15,10 +15,10 @@
 		<form class="carsubmitForm">
 			<div>
 				<div>
-					경매 제목 : 		<input type="text" class="atitle">			<br/>
-					경매 내용 : 		<input type="text" class="acontent">		<br/>
-					경매종료 날짜 : 	<input type="date" class="aenddate">			<br/>
-					가격 : 			<input type="number" class="aprice">		<br/>
+					경매 제목 : 		<input type="text" class="atitle" name="atitle">			<br/>
+					경매 내용 : 		<input type="text" class="acontent" name="acontent">		<br/>
+					경매종료 날짜 : 	<input type="date" class="aenddate" name="aenddate">			<br/>
+					가격 : 			<input type="number" class="aprice" name="aprice">		<br/>
 				</div>
 				<div>
 					<!-- 첨부파일에 사진 첨부하면 사진 보여지는 구간  -->

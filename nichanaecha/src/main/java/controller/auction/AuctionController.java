@@ -177,12 +177,13 @@ public class AuctionController extends HttpServlet {
 	      		System.out.println(carDto);
 	      		
 	      		//3. Dao 처리
-			    boolean result = AuctionDao.getInstence().bcarsubmit(carDto);
+			    int result = AuctionDao.getInstence().bcarsubmit(carDto);
 			    //4. (Dao 결과) 응답
+			    request.getSession().setAttribute("cno", result);
 			    response.setContentType("application/json; charset=UTF-8"); 
 			    response.getWriter().print(result);
 	      	
-	        }catch (Exception e) {}	
+	        }catch (Exception e) { }	
 		
 	}
  
