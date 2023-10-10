@@ -91,8 +91,8 @@ function applyOptions() {
 		maxKm = 10000000;
 	}
 	
-	optionsData.mileage.minMileage = minKm;
-	optionsData.mileage.maxMileage = maxKm;
+	optionsData.mileage.minMileage = parseInt(minKm, 10);
+	optionsData.mileage.maxMileage = parseInt(maxKm, 10);
 
 	// 연료 데이터 적용
 	optionsData.fuelType = [];
@@ -114,10 +114,11 @@ function applyOptions() {
 		maxPriceValue = 100000000000;
 	}
 	
-	optionsData.price.minPrice = minPriceValue;
-	optionsData.price.maxPrice = maxPriceValue;
+	optionsData.price.minPrice = parseInt(minPriceValue,10);
+	optionsData.price.maxPrice = parseInt(maxPriceValue,10);
 
-	console.log(optionsData);
+	getInfo();
+	listClose()
 }
 
 // 옵션 초기화
@@ -195,6 +196,7 @@ function defaultOption() {
 			maxPrice: 100000000000,
 		},
 	}
+	getInfo();
 }
 
 
@@ -299,7 +301,6 @@ function mapAreaPrint(east, west, south, north, level){
 		async : false,
 		data : {type : "mapAreaPrint", east : east, west : west, south : south, north : north, level : level, jsonObject : jsonObject},
 		success : r => {
-			console.log("level : "+level);
 			if(level > 4){ // 확대 레벨 4 초과시 지역별로 묶어서 출력
 				var customOverlay = r.map( p => { 
 					var content = `
@@ -358,6 +359,8 @@ function listPrint(areaName, level){
 		return;
 	}
 	
+	jsonObject = JSON.stringify(optionsData);
+	
 	let auctionList = document.querySelector('.auctionList');
     
     auctionList.style.display = 'block';
@@ -372,7 +375,7 @@ function listPrint(areaName, level){
 		url : "/nichanaecha/MapController",
 		method: "get",
 		async: false,
-		data: {type : "listPrint", areaName: areaName, level : level },
+		data: {type : "listPrint", areaName: areaName, level : level, jsonObject : jsonObject },
 		success: r =>{
 			r.areaName = areaName;
 			
@@ -399,13 +402,13 @@ function clusterPrint( cnoList ){
 	
 	let auctionList = document.querySelector('.auctionList');
     
+    jsonObject = JSON.stringify(optionsData);
+    
     auctionList.style.display = 'block';
 	
 	setTimeout(function () {
         auctionList.style.opacity = 1;
     }, 100); // 100ms 후에 투명도를 1로 변경
-	
-	
 	
 	// 리스트를 json 형태로 변환
 	jsonList = JSON.stringify(cnoList);
@@ -414,12 +417,11 @@ function clusterPrint( cnoList ){
 		url : "/nichanaecha/MapController",
 		method: "get",
 		async: false,
-		data: {type : "clusterPrint", cnoList : jsonList },
+		data: {type : "clusterPrint", cnoList : jsonList, jsonObject : jsonObject },
 		success: r =>{
 			boardList = r; // 결과 전역변수에 저장
 			
 			boardPrint(r) // 게시물 출력 공통 함수 호출
-				
 
 		},
 		error: e =>{

@@ -12,14 +12,14 @@ public class OptionDto {
 	private String maxYear;
 	private int minMileage;
 	private int maxMileage;
-	private int minPrice;
-	private int maxPrice;
+	private Long minPrice;
+	private Long maxPrice;
 	
 	// 생성자
 	public OptionDto() {}
 	
 	public OptionDto(List<String> manufacturer, List<String> carClass, List<String> fuelType, String minYear,
-			String maxYear, int minMileage, int maxMileage, int minPrice, int maxPrice) {
+			String maxYear, int minMileage, int maxMileage, Long minPrice, Long maxPrice) {
 		super();
 		this.manufacturer = manufacturer;
 		this.carClass = carClass;
@@ -109,7 +109,7 @@ public class OptionDto {
 	}
 
 
-	public void setMinPrice(int minPrice) {
+	public void setMinPrice(Long minPrice) {
 		this.minPrice = minPrice;
 	}
 
@@ -119,7 +119,7 @@ public class OptionDto {
 	}
 
 
-	public void setMaxPrice(int maxPrice) {
+	public void setMaxPrice(Long maxPrice) {
 		this.maxPrice = maxPrice;
 	}
 
