@@ -103,7 +103,7 @@
       <th scope="col">배기량</th>
       <th scope="col">연식</th>
       <th scope="col">주행거리</th>
-      <th scope="col">차량등록주소</th>
+      
     </tr>
   </thead>
   <tbody>
@@ -115,7 +115,7 @@
       <td><div class="cc"></div></td>
       <td><div class="cdate"></div></td>
       <td><div class="ckm"></div></td>
-      <td><div class="cads"></div></td>
+      
     </tr>
     </tbody>
     </table>
@@ -128,7 +128,7 @@
 
 
 
-
+<div class="box2"></div>
 
    <!-- jsp  파일안에 다른 jsp파일 import -->
    <%@include file ="../footer.jsp" %>

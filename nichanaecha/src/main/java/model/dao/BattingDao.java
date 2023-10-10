@@ -1,11 +1,15 @@
 package model.dao;
 
+import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import controller.auction.BattingSocket;
 import controller.member.AlarmSocket;
+import model.dto.AlarmDto;
 import model.dto.BattingDto;
 
 public class BattingDao extends Dao {
@@ -19,32 +23,38 @@ public class BattingDao extends Dao {
 		try {
 			System.out.println("컨트롤러에서 Dao로 입찰등록 들어옴");
 			String sql="insert into buymember (bprice,mno,ano) values(?,?,?)";
-			ps=conn.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+			 ps=conn.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
 			ps.setLong(1, dto.getBprice());
 			ps.setInt(2, dto.getMno());
 			ps.setInt(3, dto.getAno());
 			int count=ps.executeUpdate();
 			
 			rs=ps.getGeneratedKeys();
+			
 			rs.next();
 			int newPk=rs.getInt(1);
 			System.out.println("newPk번호 > "+newPk);
 			if(count==1) {
+				
 				System.out.println("count==1 실행 "+count);
-				sql="select*from buymember b natural join auctioninfo a  natural join member m where bno= "+newPk;
+				sql="select m.mid \r\n"
+						+ "	from car c , auctioninfo auc  , member m , buymember buy\r\n"
+						+ "where \r\n"
+						+ "	c.cno = auc.cno  and\r\n"
+						+ "    c.mno = m.mno   and\r\n"
+						+ "    buy.ano = auc.ano   and \r\n"
+						+ "    bno = "+newPk;
 				//System.out.println("count값 sql문으로 잘 들어옴"+sql);
 				ps=conn.prepareStatement(sql);
 				//System.out.println("ps까진 ㄱㅊ???");
 				
-				rs=ps.executeQuery();
-				System.out.println("rs넘어옴??????"+rs);
+				ResultSet rs2 =  ps.executeQuery();
+				rs2.next();
 			
 			/*
 				String alarm="참여중인 경매의 가격 변동이 있습니다";
 				AlarmSocket socket= new AlarmSocket();
 			*/
-				
-				
 				
 				String msg="";
 			/*
@@ -60,10 +70,16 @@ public class BattingDao extends Dao {
 //???????????????????????????????????????????????
 	//null에 뭘넣어야될지 ,,, AlarmSoketdptj session 어떻게 비교해야할지 모르겠... 			
 				//작성자에게 업데이트된 상황을 알려줄 메세지 작성
-				String mid=rs.getString("mid");
+				String mid=rs2.getString("mid");
 				String alarm="입찰가 업데이트 되었습니다";
+				
+				AlarmDto alarmDto= new AlarmDto( mid, alarm);
+				
+				ObjectMapper mapper=new ObjectMapper();
+				String json=mapper.writeValueAsString(alarmDto);				
+				
 				AlarmSocket alarmSocket=new AlarmSocket();
-				alarmSocket.onMessage(null, alarm);
+				alarmSocket.onMessage(null, json);
 				
 				return true;
 			

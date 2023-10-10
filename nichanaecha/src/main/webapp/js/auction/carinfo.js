@@ -39,7 +39,7 @@ function auctionPrint(cno){
         async: false,  
         data : {type:'상세페이지조회',cno : cno},      
         success : r=>{
-            console.log('차정보출력성공'); console.log(r)
+            //console.log('차정보출력성공'); console.log(r)
             ano = r.ano;//경매번호 
             astate=r.astate//경매상태
         	clipState();//스크랩상태변화 
@@ -78,7 +78,7 @@ function auctionPrint(cno){
             document.querySelector('.cc').innerHTML=`${r.car.cc}cc`
             document.querySelector('.cdate').innerHTML=`${r.car.cdate}`
             document.querySelector('.ckm').innerHTML=`${r.car.ckm}km`
-            document.querySelector('.cads').innerHTML=`${r.car.cads}`
+           // document.querySelector('.cads').innerHTML=`${r.car.cads}`
             document.querySelector('.acontent').innerHTML=`${r.acontent}`
             
         	//경매종료날짜
@@ -106,7 +106,7 @@ function batPrint(ano){
         async : false ,
         data : {type:'topByBatting',ano:ano,count:10 },// 최근 추가된 10개의 입찰
         success : r=>{
-        	console.log('상위10개내용출력성공');//console.log(r);
+        	//console.log('상위10개내용출력성공');//console.log(r);
         	if(r==null){return;} //입찰참여가 처음인 글
         	
         	let html=``;
@@ -141,8 +141,12 @@ function battingBtn(){console.log('battingBtn() 실행')
 	     	method : "get",   
 	     	data : {type:'본인글유효성',ano:ano},   
 	            async: false,   
-	      	success : r=>{console.log('본인글 유효성 검사 통신성공');console.log(r)} ,       
-	      	error : e=>{console.log('본인글 유효성 검사통신실패')} ,         
+	      	success : r=>{
+				  //console.log('본인글 유효성 검사 통신성공');
+				  //console.log(r)
+				  } ,       
+	      	error : e=>{//console.log('본인글 유효성 검사통신실패')
+	      	} ,         
 	   });
 
 	
@@ -152,7 +156,7 @@ function battingBtn(){console.log('battingBtn() 실행')
         method : "get", 
         async: false,   
         data : {type:'mview'},      
-        success : r=>{console.log('보유금액가져오기통신성공')
+        success : r=>{//console.log('보유금액가져오기통신성공')
          	//console.log('마이페이지컨트롤러에서가져온mno정보');console.log(r);
          	mcash=r.mcash; //보유금액
          	document.querySelector('.myCash').innerHTML=`${mcash.toLocaleString()}원`
@@ -165,7 +169,7 @@ function battingBtn(){console.log('battingBtn() 실행')
 
 //입찰등록버튼 누를 시[1,2,3 순서 수정 추천]------------------------------------------------------
 function batting(){
-	console.log('batting()함수실행')
+	//console.log('batting()함수실행')
 	getBprice = document.querySelector('.bprice'); 
 	gold=getBprice.value// 입력받은 입찰가
 	//console.log(gold);
@@ -173,15 +177,15 @@ function batting(){
 	//0.경매상태확인하고 종료됐으면 batting() 실행 종료
 	let valTime=checkAstate()
 	if(valTime==false){return;}
-	console.log('1 유효성 검사 후 batting()함수실행')
+	//console.log('1 유효성 검사 후 batting()함수실행')
 	//0.보유금액을 넘기지 않도록 유효성
 	let valmcash=valMcash(getBprice.value);
 	if(valmcash==false){return;}
-	console.log('2유효성 검사 후 batting()함수실행')
+	//console.log('2유효성 검사 후 batting()함수실행')
 	//0. 현재가보다 높은 가격
 	let valnowpay=valNowPay(getBprice.value);
 	if(valnowpay==false){return;}
-	console.log('3유효성검사 후 batting()실행')
+	//console.log('3유효성검사 후 batting()실행')
 
 	//1. 등록 전 가장 상위에 있는 사람에게 금액 돌려줌.
 	//console.log('돌려주는 함수 실행됨??')
@@ -193,8 +197,12 @@ function batting(){
         method : "put",   
         async: false, 
         data : {type:'입찰참여출금',ano:ano, gold:getBprice.value},  
-        success : r=>{console.log('포인트차감통신성공')} ,       
-        error : e=>{console.log(e)} ,         
+        success : r=>{
+			//console.log('포인트차감통신성공')
+			} ,       
+        error : e=>{
+			//console.log(e)
+			} ,         
    });
 
 
@@ -204,7 +212,8 @@ function batting(){
         method : "post",  
         async: false,  
         data : {ano:ano,bprice:gold},  
-        success : r=>{console.log('입찰등록통신성공'); //console.log(r)
+        success : r=>{
+			//console.log('입찰등록통신성공'); //console.log(r)
             if(r){
             	alert('입찰등록 성공');
            		getBprice=``;
@@ -212,7 +221,9 @@ function batting(){
              }//i
             else{alert('입찰등록 실패')}
          } ,       
-         error : e=>{console.log('입찰등록통신실패')} ,         
+         error : e=>{
+			 //console.log('입찰등록통신실패')
+			 } ,         
    });
 	
 }//f()
@@ -229,7 +240,7 @@ function getBuyTop(ano){
      	data : {type:'getBuyTop',ano:ano},   
         async: false,   
       	success : r=>{ 
-			  console.log('배팅컨트롤러에서 상위 한개의 값을 가져오는 아작스 통신성공'); //console.log(r)
+			 // console.log('배팅컨트롤러에서 상위 한개의 값을 가져오는 아작스 통신성공'); //console.log(r)
 			  // ------------------- 아래는 샘플 또는 기존에 입찰가 가 없일때 [ !!! 최초 입찰 ]
 			 if(r==null){ return;} 
 			  // ------------------- 아래는 샘플 또는 기존에 입찰가 가 있을때 [ 최초 입찰일대 아래 코드가 실행되는 데이터가 없으므로 오류 발생 ]
@@ -241,15 +252,19 @@ function getBuyTop(ano){
      			data : {type:'입찰금환급', mno:returnMno, gold:returnBprice},   
          	    async: false,   
       			success : b=>{
-					  console.log('환급성공')
+					  //console.log('환급성공')
       			} ,       
 	      			
-	     error : e=>{console.log('포인트컨트롤러연동통신실패')} ,         
+	     error : e=>{
+			 //console.log('포인트컨트롤러연동통신실패')
+			 } ,         
 	  		 });
       		
       	 // ---------------------------------------------------------- 
 			  } ,       
-      	error : e=>{console.log('최근입찰자정보가져오기 통신실패')} ,         
+      	error : e=>{
+			  //console.log('최근입찰자정보가져오기 통신실패')
+			  } ,         
    });
 
 	
@@ -281,7 +296,7 @@ function endDate(z){console.log('날짜변환함수실행')
  */
 
 function settimer(){ 
-	console.log('타이머함수실행')
+	//console.log('타이머함수실행')
 	endTime=endDate(x);//숫자로 바꾼 날짜
 
 	//1초마다함수실행
@@ -317,9 +332,11 @@ function settimer(){
       	      method : "put",   
          	  data : {ano:ano},      
           	  success : r=>{
-					console.log('경매상태변경 통신성공');
+					//console.log('경매상태변경 통신성공');
       					} ,       
-              error : e=>{console.log('경매상태변경통신실패')} ,         
+              error : e=>{
+				  //console.log('경매상태변경통신실패')
+				  } ,         
 		   });
 			//입찰자확정함수(10분뒤 확정)
 			setTimeout(() => alert('입찰자와 매칭되었습니다')
@@ -348,12 +365,15 @@ function clipping(){
         method : "post",  
         async: false, 
         data : {ano:ano}, //회원번호는 세션에 저장(전달x)      
-         success : r=>{console.log('찜하기통신성공');
+         success : r=>{
+			 //console.log('찜하기통신성공');
             if(r){
 				 clipState();
             }
          } ,       
-         error : e=>{console.log(e); console.log('찜하기통신실패')} ,         
+         error : e=>{
+			 //console.log(e); console.log('찜하기통신실패')
+			 } ,         
    });//ajax()
 
 }//f()
@@ -376,11 +396,14 @@ function clipState(){ console.log('찜하기상태변화함수실행')
          method : "get",
          async : false ,   
          data : {type:'findByWish',ano:ano},      
-         success : r=>{console.log('찜상태통신성공')
+         success : r=>{
+			 //console.log('찜상태통신성공')
             if(r){state.innerHTML='♥'}//찜하기성공
             else{state.innerHTML='♡'}//찜취소
          } ,       
-         error : e=>{console.log(e)} ,         
+         error : e=>{
+			 //console.log(e)
+			 } ,         
    });
 
 }//f()
@@ -393,7 +416,7 @@ function checkAstate(){
 	        async: false, 
 	        data : {type:'거래종료유효성',ano:ano},      
 	        success : r=>{
-				console.log('거래종료됐음을 확인하는 ajax 통신성공')
+				//console.log('거래종료됐음을 확인하는 ajax 통신성공')
 	         	astate=r	//거래종료시 상태
 	         	if(r!=0){
 					 alert('경매가 종료되었습니다');
@@ -401,7 +424,9 @@ function checkAstate(){
 					 return false;
 					 }
 	         } ,       
-	         error : e=>{console.log('거래종료됐음을 확인하는 ajax 통신실패')} ,         
+	         error : e=>{
+				 //console.log('거래종료됐음을 확인하는 ajax 통신실패')
+				 } ,         
 	   });
 } //f()
 
