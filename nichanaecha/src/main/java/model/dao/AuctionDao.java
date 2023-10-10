@@ -139,7 +139,7 @@ public class AuctionDao extends Dao {
 	
 	
 	// 1.차 등록 성호
-	  public boolean bcarsubmit(CarDto dto) {
+	  public int bcarsubmit(CarDto dto) {
 	      try {
 	         // ---------------------------------------------- 차량 등록 ---------------------------------------- // 
 	         String sql ="insert into car( ccompany , cnum , csize , cc , coil , cname , cdate ,  ckm , mno )"
@@ -188,11 +188,47 @@ public class AuctionDao extends Dao {
 	                     ps.executeUpdate();
 	                  }catch (Exception e) {System.out.println(e);}
 	               });
-	               return true;
+	               return cno;
 	            }
 	         }
 	      }catch (Exception e) {System.out.println(e);}
-	      return false;
+	      return -1;
+	  }
+	  
+	  //2. 경매등록 성호
+	  public AuctionDto Auctionregistration( AuctionDto auctionDto ) {
+		  try {
+			// ---------------------------------------------- 경매 등록 ---------------------------------------- // 
+		         String sql ="insert into auctionInfo( ano , atitle , acontent , aenddate , aprice , astate ,  cno )"
+		               + "values(?,?,?,?,?,?,?)";
+		         System.out.println("1"+auctionDto);
+		         ps = conn.prepareStatement(sql , Statement.RETURN_GENERATED_KEYS ); // 실행후 식별키[PK] 를 반환할 예정
+		         ps.setInt( 1 , auctionDto.getAno() );				// 경매 번호 
+		         ps.setString( 2 , auctionDto.getAtitle() );		// 경매 제목
+		         ps.setString( 3 , auctionDto.getAcontent() );		// 경매 내용 
+		         ps.setString( 4 , auctionDto.getAenddate() );		// 경매 종료 날짜 
+		         ps.setLong( 5 , auctionDto.getAprice() );			// 경매 등록 가격
+		         ps.setInt( 6 , auctionDto.getAstate() );			// 경매 상태
+		         ps.setInt( 7 , auctionDto.getCno() );				// 매물 정보
+		         System.out.println("2"+auctionDto);
+		         int count = ps.executeUpdate();
+		         // ********** insert 후 생성된 pk번호 가져오기 
+		         System.out.println("3"+auctionDto);
+		         rs = ps.getGeneratedKeys();
+		         System.out.println("4"+auctionDto);
+		         boolean result = rs.next();
+		         System.out.println("등록 성공 여부 : "+result);
+		         if(!result) { return null; }
+		        
+		         int ano = rs.getInt(1);
+		         auctionDto.setAno(ano);
+		         
+		  }catch (Exception e) {
+			  System.out.println("경매 등록 에러 : "+e);
+			  
+		  }
+		  
+		return auctionDto;
 	  }
 	
 //게시물 상세조회 [9월19일 고연진]------------------------------------------------------------

@@ -15,17 +15,17 @@
 		<form class="carsubmitForm">
 			<div>
 				<div>
-					경매 제목 : 		<input type="text" class="ccompany">	<br/>
-					경매 내용 : 		<input type="text" class="cnum">		<br/>
-					경매종료 날짜 : 	<input type="date" class="cc">			<br/>
-					가격 : 			<input type="member" class="price">		<br/>
+					경매 제목 : 		<input type="text" class="atitle" name="atitle">			<br/>
+					경매 내용 : 		<input type="text" class="acontent" name="acontent">		<br/>
+					경매종료 날짜 : 	<input type="date" class="aenddate" name="aenddate">			<br/>
+					가격 : 			<input type="number" class="aprice" name="aprice">		<br/>
 				</div>
 				<div>
 					<!-- 첨부파일에 사진 첨부하면 사진 보여지는 구간  -->
 				</div>
 			</div>
 			<div>
-				<button onclick="" type="button">등록</button>
+				<button onclick="auction()" type="button">등록</button>
 				<button>취소</button>
 			</div>
 		</form>

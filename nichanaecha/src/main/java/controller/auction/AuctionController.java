@@ -135,7 +135,7 @@ public class AuctionController extends HttpServlet {
 
 			// FileItem 으로 가져온 데이터들을 각 필드에 맞춰서 제품Dto 에 저장하기 
 			
-			// 제품 등록한 회원번호 [ 서블릿 세션 ] 
+			// 차 등록한 회원번호 [ 서블릿 세션 ] 
 	      		
 	      		String ccompany = fileList.get(0).getString();		//제조사
 	      			System.out.println(ccompany);
@@ -189,12 +189,13 @@ public class AuctionController extends HttpServlet {
 	      		System.out.println(carDto);
 	      		
 	      		//3. Dao 처리
-			    boolean result = AuctionDao.getInstence().bcarsubmit(carDto);
+			    int result = AuctionDao.getInstence().bcarsubmit(carDto);
 			    //4. (Dao 결과) 응답
+			    request.getSession().setAttribute("cno", result);
 			    response.setContentType("application/json; charset=UTF-8"); 
 			    response.getWriter().print(result);
 	      	
-	        }catch (Exception e) {}	
+	        }catch (Exception e) { }	
 		
 	}
  
