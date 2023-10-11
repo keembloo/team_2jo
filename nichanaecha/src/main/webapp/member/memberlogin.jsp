@@ -15,9 +15,9 @@
 	
 	<div class="container-xl"><!-- 회원가입 전체구역 시작 -->
 		<form class="signupForm"><!-- 폼 전송시 각 input에 name속성 -->
-			아이디 : <br/><input name="mid" class="mid" type="text">
+			아이디 <br/><input name="mid" class="mid" type="text">
 			<br/>
-			비밀번호 : <br/><input name="mpw" class="mpw" type="password"> 
+			비밀번호 <br/><input name="mpw" class="mpw" type="password"> 
 			<br/>
 		
 		

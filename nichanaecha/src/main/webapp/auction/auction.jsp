@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-	<link href="/nichanaecha/css/auction/carsubmit.css" rel="stylesheet">
+	<link href="/nichanaecha/css/auction/auction.css" rel="stylesheet">
 </head>
 <body>
 	<!-- jsp  파일안에 다른 jsp파일 import -->
@@ -13,20 +13,25 @@
 	<div class="container-xl">
 	<h3>경매등록 페이지</h3>
 		<form class="carsubmitForm">
-			<div>
-				<div>
-					경매 제목 : 		<input type="text" class="atitle" name="atitle">			<br/>
-					경매 내용 : 		<input type="text" class="acontent" name="acontent">		<br/>
-					경매종료 날짜 : 	<input type="date" class="aenddate" name="aenddate">			<br/>
-					가격 : 			<input type="number" class="aprice" name="aprice">		<br/>
+			<div class="auctionzone">
+				<div class="auctiontitle">
+					<span>경매 제목</span>  		
+					<input type="text" class="atitle" name="atitle">			
 				</div>
-				<div>
-					<!-- 첨부파일에 사진 첨부하면 사진 보여지는 구간  -->
+				<div class="auctioncontent">
+					<span>경매 내용</span>
+					<textarea class="acontent" name="acontent" placeholder="내용을 입력해 주세요."></textarea>	
+				</div>
+				<div class="auctionenddate">
+					경매종료 날짜  	<input type="date" class="aenddate" name="aenddate">			
+				</div>
+				<div class="auctionprice">
+					가격  			<input type="number" class="aprice" name="aprice">		
 				</div>
 			</div>
-			<div>
-				<button onclick="auction()" type="button">등록</button>
-				<button>취소</button>
+			<div class="buttonzone">
+				<button class="bbtn" onclick="auction()" type="button">등록</button>
+				<a href="../index.jsp"><button class="bbtn">취소</button></a>
 			</div>
 		</form>
 	</div>

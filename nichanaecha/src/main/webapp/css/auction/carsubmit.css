@@ -1,64 +1,105 @@
 @charset "UTF-8";
 
-
-/* 컨테이너 스타일링 */
+/* 전체 컨테이너 스타일 */
 .container-xl {
-  max-width: 1200px;
+  width: 80%;
   margin: 0 auto;
   padding: 20px;
-  background-color: #f2f2f2;
-  border-radius: 10px;
 }
 
-/* 폼 스타일링 */
-.carsubmitForm {
+/* 페이지 제목 스타일 */
+h3 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* 차량 정보와 주소를 감싸는 컨테이너 스타일 */
+.carsubmitdiv {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
-/* 폼 요소 스타일링 */
-select,
-input[type="text"] {
-  margin-bottom: 10px;
+/* 차량 정보와 주소를 감싸는 컨테이너 스타일 */
+.carsubmitdiv {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+/* 차량 정보 컨테이너 스타일 */
+.vehicleinformation, .vehicleAddress {
+  flex: 1;
   padding: 10px;
+}
+
+/* 입력 필드 스타일 */
+select, input[type="text"], input[type="month"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
 }
 
-select {
-  width: 21%;
+/* 파일 업로드 박스 스타일 */
+.fileDropBox {
+  width: 100%;
+  height: 100px;
+  border: 1px dashed #ccc;
+  text-align: center;
+  line-height: 100px;
 }
 
-/* 버튼 스타일링 */
+/* 버튼 스타일 */
 button {
-  background-color: #007bff;
-  color: #fff;
-  padding: 10px 20px;
+  background-color: #191D88;
+  color: #FFC436;
   border: none;
-  border-radius: 5px;
+  padding: 10px 20px;
+  margin: 5px;
   cursor: pointer;
-  font-size: 16px;
-  margin-right: 10px;
 }
 
-button:last-child {
-  margin-right: 0;
+/* 차량 사진 드래그 구역 스타일 */
+.vehiclephotozone {
+	color: #191D88;
+}
+/* 버튼 구역 스타일 */
+.buttonzone {
+	margin-top: 30px;
+	width: 600px;
+	height: 100%;
+	margin: 0 auto;
+	text-align: center;
+	
+}
+.bbtn{
+	border-radius: 22px;
+	width: 200px;
+	height: 45px;
 }
 
-/* 지도 및 파일 드롭 박스 스타일링 */
+/* 지도 스타일 */
 #map {
   width: 100%;
-  height: 350px;
+  height: 300px;
+  border: 1px solid #ccc;
   margin-bottom: 10px;
 }
 
-.fileDropBox {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #fff;
-  border: 2px dashed #007bff;
-  color: #007bff;
-  font-weight: bold;
-  cursor: pointer;
+/* 클릭한 위도와 경도를 표시하는 요소 스타일 */
+#clickLatlng {
+  margin-bottom: 10px;
+}
+
+/* 작은 강조 텍스트 스타일 */
+em {
+  color: #999;
+}
+
+/* 차량 사진 구역 스타일 */
+.vehicleAddressbottom{
+	margin-top: 6%;
 }

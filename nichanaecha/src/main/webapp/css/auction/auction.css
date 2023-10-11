@@ -1,0 +1,89 @@
+@charset "UTF-8";
+
+.container-xl {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h3 {
+    font-size: 24px;
+    color: #333;
+ }
+ 
+.carsubmitForm {
+	margin-top : 70px;
+}
+
+.auctiontitle, .auctioncontent, .auctionenddate, .auctionprice {
+    /* flex: 1;*/
+    padding: 10px;
+}
+.auctiontitle , .auctioncontent , .auctionenddate , .auctionprice{
+	width: 620px;
+	display: flex;
+    align-items: center;
+    margin: 0 auto;
+    margin-bottom: 25px;
+    justify-content: space-between;
+}
+
+.acontent{
+	width: 620px;
+	height: 300px;
+	display: inline-block;
+	margin-left: 20px;
+	resize: none;
+	border: 1px solid #ccc;
+	border-radius: 15px;
+	padding: 20px;
+}
+
+.auctionzone {
+    /*display: flex;*/
+    flex-wrap: wrap;
+    margin-bottom: 50px;
+    /*justify-content: space-between;*/
+}
+
+ 
+ 
+/*
+input[type="text"],
+input[type="date"],
+input[type="number"] {
+    width: 100%;
+    margin-left : 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+}*/
+.atitle , .acontent, .aenddate , .aprice {
+	width: 80%;
+    margin-left : 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    
+}
+.buttonzone {
+	width: 600px;
+    margin: 0 auto;
+    display: flex;
+    gap : 20px;
+    justify-content: center;
+    margin-bottom: 100px;
+}
+
+.bbtn {
+    background-color: #191D88;
+    color: #FFC436;
+    border: none;
+    padding: 10px 20px;
+    margin: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    border-radius: 22px;
+    width: 250px;
+    
+  }
