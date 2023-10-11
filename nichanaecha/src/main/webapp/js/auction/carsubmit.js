@@ -149,7 +149,7 @@ function bcarsubmit(){
 		success : r => {
 			
 			if( r > 0 ){
-				alert('차량등록 성공 경매등록 갑시다');
+				//alert('차량등록 성공 경매등록 페이지갑시다');
 				location.href="/nichanaecha/auction/auction.jsp";
 				 
 			}else{
@@ -257,11 +257,9 @@ function fileListPrint(){
 			let fname = f.name; // 파일의 이름 
 			let fsize = ( f.size/1024 ).toFixed(1) // 파일의 용량 [ 바이트 단위 ] kb 변환 
 						// .toFixed(소수점단위) : 소수점 자르기 
-			html += `<div>
-						<span> ${fname} </span>
-						<span> ${fsize} </span>
-						<span> <button onclick="fileDelete(${ i })" type="button">삭제</button> </span>
-					</div>`;
+						//${fname}${fsize}
+			html += `${fname}
+						<button class="btn imgClearbtn" onclick="fileDelete(${ i })" type="button">삭제</button><br/>`;
 		})
 	// 3. [ 대입 ]
 	fileDropBox.innerHTML = html;

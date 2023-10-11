@@ -49,7 +49,7 @@
 										<div id="clickLatlng"></div>
 					</div>
 					<div class="vehicleAddressbottom">
-						차량 사진  		<div class="fileDropBox" style="width: 100%; height: 100px; border: 1px solid #191D88;" >
+						차량 사진  		<div class="fileDropBox">
 											<p class="vehiclephotozone">여기에 드래그 해서 파일을 올려주세요.</p>
 										</div>
 					</div>			

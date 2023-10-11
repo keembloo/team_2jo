@@ -51,7 +51,7 @@ public class MypageDao extends Dao {
 				String sql ="select c.cno , c.mno , a.ano , a.atitle , a.aenddate , a.aprice , a.astate , i.img from car as c"
 						+ " inner join auctionInfo as a on c.cno = a.cno"
 						+ " inner join (select cno, MAX(ciimg) as img from carimg group by cno)"
-						+ " as i on c.cno = i.cno where c.mno = ? limit 10";
+						+ " as i on c.cno = i.cno where c.mno = ? order by a.astartdate desc limit 10";
 				ps = conn.prepareStatement(sql);
 				ps.setInt(1, mno);
 				rs = ps.executeQuery();}
@@ -88,7 +88,7 @@ public class MypageDao extends Dao {
 					+ " inner join auctionInfo as a on b.ano = a.ano"
 					+ " inner join car as c on c.cno = a.cno"
 					+ " left join (select cno, MAX(ciimg) as img from carimg group by cno) as i on c.cno=i.cno"
-					+ " where b.mno = ? limit 10";
+					+ " where b.mno = ? order by a.astartdate desc limit 10";
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, mno);
 			rs = ps.executeQuery();
@@ -122,7 +122,7 @@ public class MypageDao extends Dao {
 					+ " inner join auctionInfo as a on w.ano = a.ano"
 					+ " inner join car as c on c.cno = a.cno"
 					+ " inner join (select cno, MAX(ciimg) as img from carimg group by cno)"
-					+ " as i on c.cno = i.cno where w.mno = ? limit 30";
+					+ " as i on c.cno = i.cno where w.mno = ? order by a.astartdate desc limit 30";
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, mno);
 			rs = ps.executeQuery();
