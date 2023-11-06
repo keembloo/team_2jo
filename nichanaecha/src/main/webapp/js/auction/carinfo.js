@@ -37,7 +37,7 @@ function auctionPrint(cno){
         url : "/nichanaecha/AuctionController",     
         method : "get", 
         async: false,  
-        data : {type:'상세페이지조회',cno : cno},      
+        data : {type:'PageInquiry',cno : cno},      
         success : r=>{
             //console.log('차정보출력성공'); console.log(r)
             ano = r.ano;//경매번호 
@@ -129,8 +129,6 @@ function batPrint(ano){
 	
 }//f()
 
-
-
 //경매참여버튼 누를 시-----------------------------------------------------------
 function battingBtn(){console.log('battingBtn() 실행')
 	if(loginMid==''){location.href=location.href='/nichanaecha/member/memberlogin.jsp'}
@@ -139,7 +137,7 @@ function battingBtn(){console.log('battingBtn() 실행')
 		$.ajax({
 	      	url : "/nichanaecha/AuctionController",     
 	     	method : "get",   
-	     	data : {type:'본인글유효성',ano:ano},   
+	     	data : {type:'MyWriteVal',ano:ano},   
 	            async: false,   
 	      	success : r=>{
 				  //console.log('본인글 유효성 검사 통신성공');
@@ -149,7 +147,6 @@ function battingBtn(){console.log('battingBtn() 실행')
 	      	} ,         
 	   });
 
-	
 	//1.보유금액가져오기	
 	 $.ajax({
         url : "/nichanaecha/MypageController",     
@@ -164,48 +161,31 @@ function battingBtn(){console.log('battingBtn() 실행')
          error : e=>{console.log('보유금액가져오기실패')} ,         
  	  });
  }//f()
- 	  
-
 
 //입찰등록버튼 누를 시[1,2,3 순서 수정 추천]------------------------------------------------------
 function batting(){
-	//console.log('batting()함수실행')
 	getBprice = document.querySelector('.bprice'); 
 	gold=getBprice.value// 입력받은 입찰가
-	//console.log(gold);
-	
 	//0.경매상태확인하고 종료됐으면 batting() 실행 종료
 	let valTime=checkAstate()
 	if(valTime==false){return;}
-	//console.log('1 유효성 검사 후 batting()함수실행')
 	//0.보유금액을 넘기지 않도록 유효성
 	let valmcash=valMcash(getBprice.value);
 	if(valmcash==false){return;}
-	//console.log('2유효성 검사 후 batting()함수실행')
 	//0. 현재가보다 높은 가격
 	let valnowpay=valNowPay(getBprice.value);
 	if(valnowpay==false){return;}
-	//console.log('3유효성검사 후 batting()실행')
-
 	//1. 등록 전 가장 상위에 있는 사람에게 금액 돌려줌.
-	//console.log('돌려주는 함수 실행됨??')
 	getBuyTop(ano)
-
 	//2. 신규 입찰자의 보유금액 차감(update)+포인트테이블 (add)
 	  $.ajax({
         url : "/nichanaecha/MemberPointController",     
         method : "put",   
         async: false, 
         data : {type:'입찰참여출금',ano:ano, gold:getBprice.value},  
-        success : r=>{
-			//console.log('포인트차감통신성공')
-			} ,       
-        error : e=>{
-			//console.log(e)
-			} ,         
+        success : r=>{console.log(r)} ,       
+        error : e=>{console.log(e)} ,         
    });
-
-
 	//3.입찰등록
    	$.ajax({
         url : "/nichanaecha/BattingController",     
@@ -215,20 +195,18 @@ function batting(){
         success : r=>{
 			//console.log('입찰등록통신성공'); //console.log(r)
             if(r){
-            	alert('입찰등록 성공');
-           		getBprice=``;
+            	alert('입찰등록 성공'); getBprice=``;
            		document.querySelector('#closebtn').click()//코드가 실행 된 뒤에 #를 강제로 닫겠다(close안에 기능사용 가능)
              }//i
             else{alert('입찰등록 실패')}
          } ,       
-         error : e=>{
-			 //console.log('입찰등록통신실패')
-			 } ,         
+         error : e=>{ //console.log('입찰등록통신실패')
+         } ,         
    });
 	
 }//f()
 
-//이전입찰자에게 돈 돌려주는 함수[10월6일 고연진]--------------------------------------
+//이전입찰자에게 돈 돌려주는 함수--------------------------------------
 /*
 	1.가장 최근에 입찰한 사람의 mno와 가격을 가져옴
 	2.결과를 pointcontroller로 전달
@@ -243,7 +221,7 @@ function getBuyTop(ano){
 			 // console.log('배팅컨트롤러에서 상위 한개의 값을 가져오는 아작스 통신성공'); //console.log(r)
 			  // ------------------- 아래는 샘플 또는 기존에 입찰가 가 없일때 [ !!! 최초 입찰 ]
 			 if(r==null){ return;} 
-			  // ------------------- 아래는 샘플 또는 기존에 입찰가 가 있을때 [ 최초 입찰일대 아래 코드가 실행되는 데이터가 없으므로 오류 발생 ]
+			  // ------------------- 아래는 샘플 또는 기존에 입찰가 가 있을때 
 			  returnMno=r.mno; //환급 받을 회원번호
 			  returnBprice=r.bprice//환급 받을 금액
 			  $.ajax({
@@ -254,9 +232,7 @@ function getBuyTop(ano){
       			success : b=>{
 					  //console.log('환급성공')
       			} ,       
-	      			
-	     error : e=>{
-			 //console.log('포인트컨트롤러연동통신실패')
+	     error : e=>{//console.log('포인트컨트롤러연동통신실패')
 			 } ,         
 	  		 });
       		
@@ -408,15 +384,14 @@ function clipState(){ console.log('찜하기상태변화함수실행')
 
 }//f()
 
-//경매상태가 0이 아닐 때 종료되는 함수[10월6일 고연진]------------------------------------------------
+//경매상태가 0이 아닐 때 종료되는 함수]------------------------------------------------
 function checkAstate(){
 		 $.ajax({
 	        url : "/nichanaecha/AuctionController",     
 	        method : "get",   
 	        async: false, 
-	        data : {type:'거래종료유효성',ano:ano},      
+	        data : {type:'TerminationVal',ano:ano},      
 	        success : r=>{
-				//console.log('거래종료됐음을 확인하는 ajax 통신성공')
 	         	astate=r	//거래종료시 상태
 	         	if(r!=0){
 					 alert('경매가 종료되었습니다');

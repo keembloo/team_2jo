@@ -42,14 +42,13 @@ public class AuctionController extends HttpServlet {
 		String type= request.getParameter("type");
 		System.out.println("타입확인 > "+type);
 		ObjectMapper mapper=new ObjectMapper(); 
-		if(type.equals("거래종료유효성")) {
+		if(type.equals("TerminationVal")) {
 			int ano = Integer.parseInt(request.getParameter("ano"));
 			int astate = AuctionDao.getInstence().astate(ano);
-			//System.out.println("컨트롤러에서 출력되는 astate > "+astate);
 			response.setContentType("application/json;charset=UTF-8");
 			response.getWriter().print(astate);
 		}
-		else if(type.equals("상세페이지조회")) {
+		else if(type.equals("PageInquiry")) {
 			int cno = Integer.parseInt(request.getParameter("cno"));
 			//System.out.println("cno : "+cno);
 			AuctionDto result= AuctionDao.getInstence().auctionPrint(cno);
@@ -59,17 +58,17 @@ public class AuctionController extends HttpServlet {
 			response.getWriter().print(jsonObject);
 			
 		}
-		else if(type.equals("본인글유효성")) {
+		else if(type.equals("MyWriteVal")) {
 			int ano = Integer.parseInt(request.getParameter("ano"));
 			
 		}
 		else if(type.equals("경매글작성자")) {
-			System.out.println("[컨트롤러들어옴] 경매글작성자 타입 확인> "+type);
+			//System.out.println("[컨트롤러들어옴] 경매글작성자 타입 확인> "+type);
 			int mno= Integer.parseInt(request.getParameter("mno"));
 			System.out.println("경매글 작성자> "+mno);
 			AuctionDto result = AuctionDao.getInstence().findAuctionMid(mno);
 			String json=mapper.writeValueAsString(result);
-			System.out.println("dao에서 전달된 dto> "+result);
+			//System.out.println("dao에서 전달된 dto> "+result);
 			response.setContentType("application/json;charset=UTF-8");
 			response.getWriter().print(json);
 			
