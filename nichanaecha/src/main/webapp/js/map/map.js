@@ -20,6 +20,14 @@ var optionsData = {
 			"준중형",
 			"소형"
 		],
+		fuelType: [
+		"휘발유",
+		"디젤",
+		"LPG",
+		"하이브리드",
+		"전기",
+		"수소"
+	]
 	},
 	year: {
 		minYear: startMonth,
@@ -35,14 +43,7 @@ var optionsData = {
 		maxPrice: 2000000000,
 	},
 	
-	fuelType: [
-		"휘발유",
-		"디젤",
-		"LPG",
-		"하이브리드",
-		"전기",
-		"수소"
-	],
+	
 };
 
 // 카카오 지도 api
